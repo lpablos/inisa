@@ -15,7 +15,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                 <div className="sm:fixed sm:top-0 sm:left-0 p-6">
 
                     <div className="flex align-items-center">
-                        <img src={`/images/logo/-${layoutConfig.colorScheme !== 'light' ? 'white' : 'dark'}.svg`} width="100.22px" height={'35px'} alt="logo" className="mr-3"/>
+                        <img src={`/images/logo.jpeg`} width="100%" height='100' alt="logo" className="mr-3"/>
 
                         {auth.user ? (
                             <Link
