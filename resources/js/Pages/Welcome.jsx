@@ -17,7 +17,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                     <div className="flex align-items-center">
                         <img src={`/images/logo.jpeg`} width="100%" height='100' alt="logo" className="mr-3"/>
 
-                        {auth.user ? (
+                        {/* {auth.user ? (
                             <Link
                                 href={route('dashboard')}
                                 className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
@@ -40,7 +40,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                     Register
                                 </Link>
                             </>
-                        )}
+                        )} */}
                     </div>
                 </div>
 
@@ -52,11 +52,20 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                             <div className="text-6xl text-primary font-bold mb-3">your clients deserve to see</div>
                             <p className="mt-0 mb-4 text-700 line-height-3">Craft a visually stunning and user-centric dashboard that showcases the information your clients deserve with bold, impactful design elements.</p>
 
-                            <Button label="Learn More" type="button" className="mr-3 p-button-raised" />
-                            <Button label="Live Demo" type="button" className="p-button-outlined" />
+                            {/* <Button label="Learn More" type="button" className="mr-3 p-button-raised" />
+                            <Button label="Live Demo" type="button" className="p-button-outlined" /> */}
                         </section>
                     </div>
                     <div className="col-12 md:col-6 overflow-hidden">
+                        {/* <video
+                            src={`/images/video/promo.mp4`} // Ruta del video
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            className="absolute top-0 left-0 w-full h-full object-cover"
+                            style={{ clipPath: 'polygon(8% 0, 100% 0%, 100% 100%, 0 100%)' }}
+                        /> */}
                         <img src="/images/hero/hero-1.png" alt="hero-1" className="md:ml-auto block md:h-full" style={{ clipPath: 'polygon(8% 0, 100% 0%, 100% 100%, 0 100%)' }} />
                     </div>
                 </div>

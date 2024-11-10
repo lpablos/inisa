@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\CatalogosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,11 +39,23 @@ Route::middleware('auth')->group(function () {
 });
 
 
+
+
 Route::get('/uikit/button', function () {
     return Inertia::render('main/uikit/button/page');
 })->name('button');
 
 
+// Todo lo relacionado con la administracion
+Route::prefix('admin')->group(function () {
+    // Sección de catálogos
+    Route::prefix('catalogos')->group(function () {
+        Route::controller(CatalogosController::class)->group(function () {
+            Route::get('show', 'index')->name('catalogo.gral.index');  // Especifica el método 'index' en el controlador
+        });
+    });
+    // Agrega otros grupos según el nombre de la sección con su controlador y funciones
+});
 
 
 

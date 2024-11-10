@@ -16,9 +16,12 @@ use App\Models\CatProvedor;
 class CatalogosController extends Controller
 {
     //
-    public function showCliente(){
-        return Inertia::render('Catalogos/Cliente');
+    public function index(){
+        return Inertia::render('Catalogos/Index');
     }
+    // public function showCliente(){
+    //     return Inertia::render('Catalogos/Cliente');
+    // }
     // public function showCotizacion(){
 
         

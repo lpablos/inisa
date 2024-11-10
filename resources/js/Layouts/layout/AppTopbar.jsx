@@ -21,8 +21,8 @@ const AppTopbar = forwardRef((props, ref) => {
     return (
         <div className="layout-topbar">
             <Link href="/" className="layout-topbar-logo">
-                <img src={`/images/logo.jpeg`} width="20%" height="100%" alt="logo" />
-
+                <img src={`/images/logo.jpeg`} width="15%" height="100%" alt="logo" />
+                Bienvenido
                 {/*<span>LaraReact</span>*/}
             </Link>
 
