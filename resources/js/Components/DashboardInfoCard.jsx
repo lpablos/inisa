@@ -1,6 +1,7 @@
 import React from "react";
+import { Button } from 'primereact/button';
 
-export default function DashboardInfoCard({ title, value, icon = '', iconColor = '', descriptionValue = '', descriptionText = '' }) {
+export default function DashboardInfoCard({ title, value, icon = '', iconColor = '', descriptionValue = '', descriptionText = '', clickOpt, valueTitle='' }) {
     const iconClass = `pi pi-${icon} text-${iconColor}-500 text-xl`;
     const iconBackgroundClass = `flex align-items-center justify-content-center bg-${iconColor}-100 border-round`;
 
@@ -19,6 +20,9 @@ export default function DashboardInfoCard({ title, value, icon = '', iconColor =
                 </div>
                 <span className="text-green-500 font-medium">{ descriptionValue}</span>
                 <span className="text-500"> {descriptionText}</span>
+                <div className="mt-3 flex flex-column align-items-center">
+                    <Button label="Detalles" severity="Primary" size="small" onClick={()=>clickOpt(valueTitle)} raised/>
+                </div>
             </div>
         </div>
     );

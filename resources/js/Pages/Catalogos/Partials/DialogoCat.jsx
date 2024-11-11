@@ -1,58 +1,54 @@
 import React, { useState, useEffect } from "react";
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
+import { Card } from 'primereact/card';
+import TablasCatalogos from "./TablasCatalogos";
+        
 
-export default function DialogoCat ({tpCatalogo}) {
+export default function DialogoCat ({tpOperacion, setOperacion}) {
     const [visible, setVisible] = useState(false);
+    const [titulo, setTitulo] = useState('')
     useEffect(()=>{
-        switch (tpCatalogo) {
-            case 'provedor':
-                
+        console.log("Aqui la info ",tpOperacion);
+        
+        switch (tpOperacion) {
+            case 'provedores':                
                 setVisible(true);
+                setTitulo('Catalogo de Provedores');
                 break;
-            case 'departamento':
-            
+            case 'departamentos':            
                 setVisible(true);
+                setTitulo('Catalogo de Departamentos')
                 break;
-            case 'clientes':
-            
+            case 'clientes':            
                 setVisible(true);
+                setTitulo('Catalogo de Clientes')
                 break;
             case 'unidadesMedidas':
-            
+                setTitulo('Catalogo de Unidades de Medida')
+                setVisible(true);                
+                break;
+            case 'usuarios':            
+                setTitulo('Catalogo de Usuarios')
                 setVisible(true);
                 break;
-            case 'provedor':
-                
+            case 'datosEmpresa':            
+                setTitulo('Datos de la Empresa')
                 setVisible(true);
-                break;
-
-            case 'usuarios':
-            
-                setVisible(true);
-                break;
-            case 'datosEmpresa':
-            
-                setVisible(true);
-                break;
-        
+                break;        
             default:
-                    setVisible(false);
+                setTitulo('')
+                setVisible(false);
+                setOperacion(null);
                 break;
         }
-    },[tpCatalogo])
-    return (
-        <div className="card flex justify-content-center">
-            {/* <Button label="Show" icon="pi pi-external-link" onClick={() => setVisible(true)} /> */}
-            <Dialog header="Header" visible={visible} style={{ width: '50vw' }} onHide={() => {if (!visible) return; setVisible(false); }}>
-                <p className="m-0">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </p>
-            </Dialog>
-        </div>
+    },[tpOperacion])
+    return (      
+        <Dialog header={titulo} visible={visible} style={{ width: '85vw' }} onHide={() => {if (!visible) return; setVisible(false); }}>
+            <Card>
+                <TablasCatalogos opMostrar={tpOperacion}/>           
+            </Card>
+        </Dialog>
     );
     
 }

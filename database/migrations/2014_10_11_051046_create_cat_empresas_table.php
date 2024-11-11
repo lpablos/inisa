@@ -14,16 +14,16 @@ return new class extends Migration
         Schema::create('cat_empresas', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->text('descripcion');
-            $table->string('logotipo');
-            $table->string('direccion');
-            $table->string('colonia');
-            $table->string('codigo_postal');
-            $table->string('correo');
-            $table->string('telefono1');
-            $table->string('telefono2');
-            $table->string('telefono_urgencias1');
-            $table->string('telefono_urgencias2');
+            $table->text('descripcion')->nullable();
+            $table->string('logotipo')->nullable();
+            $table->string('direccion')->nullable();
+            $table->string('colonia')->nullable();
+            $table->string('codigo_postal')->nullable();
+            $table->string('correo')->nullable();
+            $table->string('telefono1')->nullable();
+            $table->string('telefono2')->nullable();
+            $table->string('telefono_urgencias1')->nullable();
+            $table->string('telefono_urgencias2')->nullable();
             $table->timestamps();
         });
     }
