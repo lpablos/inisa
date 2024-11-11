@@ -17,6 +17,11 @@ class RolesSeeder extends Seeder
     {
         // Crear el rol de admin si no existe
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
+        $administrativoRole = Role::firstOrCreate(['name' => 'administrativo']);
+        $jefeRole = Role::firstOrCreate(['name' => 'jefe_administrativo']);
+        $empleadoRole = Role::firstOrCreate(['name' => 'empleado_area']);
+
+
 
         // Crear el usuario admin o buscarlo si ya existe
         $user = User::firstOrCreate(
@@ -29,5 +34,36 @@ class RolesSeeder extends Seeder
 
         // Asignar el rol de admin al usuario
         $user->assignRole($adminRole);
+
+
+        // Crear usuario jefe administrativo o buscarlo si ya existe
+        $jefeUser = User::firstOrCreate(
+            ['email' => 'jefe@example.com'],
+            [
+                'name' => 'Jefe_Administrativo_test',
+                'password' => Hash::make('jefeInisa123_'), // Cambia la contraseña
+            ]
+        );
+        $jefeUser->assignRole($jefeRole);
+
+        // Crear usuario empleado de área o buscarlo si ya existe
+        $empleadoUser = User::firstOrCreate(
+            ['email' => 'empleado@example.com'],
+            [
+                'name' => 'Empleado_Área_test',
+                'password' => Hash::make('empleadoInisa123_'), // Cambia la contraseña
+            ]
+        );
+        $empleadoUser->assignRole($empleadoRole);
+
+
+        $administrativoUser = User::firstOrCreate(
+            ['email' => 'administrativo@example.com'],
+            [
+                'name' => 'Administrativo_test',
+                'password' => Hash::make('administrativoInisa123_'), // Cambia la contraseña
+            ]
+        );
+        $administrativoUser->assignRole($administrativoRole);
     }
 }
