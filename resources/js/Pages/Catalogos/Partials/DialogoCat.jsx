@@ -3,12 +3,15 @@ import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { Card } from 'primereact/card';
 import TablasCatalogos from "./TablasCatalogos";
+import FormularioProvedor from "./FormularioProvedor";
         
 
 export default function DialogoCat ({tpOperacion, setOperacion}) {
     const [visible, setVisible] = useState(false);
     const [titulo, setTitulo] = useState('');
     const [data, setData] = useState([]); // La data de los request
+
+    const [mostrarFomulario, setMostrarFomulario] = useState('')
 
     useEffect(()=>{
         console.log("Aqui la info ",tpOperacion);
@@ -54,10 +57,53 @@ export default function DialogoCat ({tpOperacion, setOperacion}) {
             setData(data);
         });
     }
+
+    const eliminiarRegistro = async(tipo,identy) => {
+        switch (tipo) {
+            case 'provedor':
+                await eliminarProvedor(identy)
+                break;
+        
+            default:
+                break;
+        }
+        
+    }
+
+    const mostrarFormulario = (tipo) =>{
+        switch (tipo) {
+            case 'provedores':
+                alert("Vamos a mostrar el formulario")
+                setMostrarFomulario(tipo)
+                break;
+        
+            default:
+                break;
+        }
+    }
+    
+    const eliminarProvedor = async (identy) =>{
+        await axios.delete(`${route('catalogo.delete.provedor',{ id: identy })}`).then(() => {
+            alert("Post deleted!");          
+        });       
+    }
+
+    const agregarProvedor = async (datos) =>{
+        await axios.post(`${route('catalogo.nuevo.provedor')}`, datos).then(() => {
+            alert("Post creado!");          
+        }); 
+    }
+
+
     return (      
         <Dialog header={titulo} visible={visible} style={{ width: '85vw' }} onHide={() => {if (!visible) return; setVisible(false); }}>
             <Card>
-                <TablasCatalogos opMostrar={tpOperacion} data={data}/>           
+                {/* Aqui se van a manejar todos los datos  */}
+                <TablasCatalogos opMostrar={tpOperacion} data={data} eliminar={eliminiarRegistro} shoAgregar={mostrarFormulario}/>   
+
+                {/* Aqui se tienen que mostrar los formulario segun lo seleccionado */}
+                {mostrarFomulario == 'provedores' && <FormularioProvedor/>   }     
+                
             </Card>
         </Dialog>
     );

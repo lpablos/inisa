@@ -13,7 +13,8 @@ class CatProvedor extends Model
     protected $table = 'cat_provedores';
 
     // Especificar la clave primaria personalizada
-    protected $primaryKey = 'id_provedor';
+    protected $primaryKey = 'id';
+    protected $keyType = 'int';
 
     protected $fillable = [
         'id_provedor',
@@ -26,7 +27,7 @@ class CatProvedor extends Model
 
     public function cotizaciones()
     {
-        return $this->hasMany(Cotizacion::class, 'provedor_id', 'id_provedor'); // Referencia a la clave foránea y primaria
+        return $this->hasMany(Cotizacion::class, 'provedor_id', 'id'); // Referencia a la clave foránea y primaria
     }
 
     

@@ -24,16 +24,42 @@ class CatalogosController extends Controller
         $data = CatProvedor::all();    
         return response()->json($data);
     }
-    // public function showCliente(){
-    //     return Inertia::render('Catalogos/Cliente');
-    // }
-    // public function showCotizacion(){
 
+    public function deleteProvedor($id){
         
-    //     return Inertia::render('Catalogos/Cliente/Cliente');
-    // }
-    // public function showDepartamento(){
-    //     return Inertia::render('Catalogos/Departamento/index');
-    // }
+        try {
+            $data = CatProvedor::find($id);
+            if (!$data) {
+                return response()->json(['error' => 'Proveedor no encontrado'], 404);
+            }            
+            // Eliminar el proveedor
+            $data->delete();
+            return response()->json(['success' => 'Proveedor eliminado exitosamente'], 200);
+           
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No se pudo eliminar... Intenta mas tarde'
+            ], 404);
+        }
+    }
+
+    public function registrarProvedor(Request $request){
+          // Validación de los datos del formulario
+        $validatedData = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'abreviacion' => 'nullable|string|max:100',
+            'direccion' => 'nullable|string|max:255',
+            'telefono' => 'nullable|numeric|digits:10',
+            'colonia' => 'nullable|string|max:255',
+        ]);
+        // Crear el nuevo proveedor con los datos validados
+        $proveedor = Proveedor::create($validatedData);
+
+        return response()->json(['success' => 'Proveedor creado exitosamente', 'data' => $proveedor], 201);
+    }
+
+
+    
 
 }
