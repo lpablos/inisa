@@ -22,7 +22,6 @@ class CatalogosController extends Controller
 
     public function listaProvedores(){
         $data = CatProvedor::all();    
-        dd("Este es el data", $data);
         return response()->json($data);
     }
     // public function showCliente(){

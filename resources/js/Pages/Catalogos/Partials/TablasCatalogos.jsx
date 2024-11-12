@@ -5,15 +5,15 @@ import { useEffect } from 'react';
 import axios from "axios";
 
 
-const TablasCatalogos = ({opMostrar}) => {
+const TablasCatalogos = ({opMostrar, data}) => {
     
     
     const [opcionTabla, setOpcionTabla] = useState(0)
+    const [registros, setRegistros] = useState([])
 
     const selecionTabla = (opMostrar) =>{
         switch (opMostrar) {
             case 'provedores':
-                obtenerProvedores()
                 setOpcionTabla(1)               
                 break;
             case 'departamentos':
@@ -39,22 +39,28 @@ const TablasCatalogos = ({opMostrar}) => {
     useEffect(()=>{
         selecionTabla(opMostrar)
     },[opMostrar])
+
+    useEffect(()=>{
+        console.log("Aqui son los datos", data);
+        if(data.length > 0){
+            setRegistros(data);
+        }
+    },[data])
     
-    const obtenerProvedores = async() =>{
-        await axios.get(`${route('catalogo.list.provedores')}`).then((response) => {
-            console.log("Este es el listado", response);
-        });
-    }
+   
    
     return (
         <>
             {opcionTabla == 1 && (
-                <DataTable tableStyle={{ minWidth: '50rem' }}>
+                <DataTable  value={registros} tableStyle={{ minWidth: '50rem' }}>
                     <Column field="abreviacion" header="Abreviación"></Column>
                     <Column field="nombre" header="Nombre"></Column>
                     <Column field="telefono" header="Telefono"></Column>
                     <Column field="direccion" header="Dirección"></Column>
                     <Column field="colonia" header="Colonia"></Column>
+                    <Column header="Opciones">
+                        <Button label="Warning" severity="warning" />
+                    </Column>
                 </DataTable>  
             )}
             {opcionTabla == 2 && (

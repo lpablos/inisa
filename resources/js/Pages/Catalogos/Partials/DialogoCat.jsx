@@ -7,13 +7,16 @@ import TablasCatalogos from "./TablasCatalogos";
 
 export default function DialogoCat ({tpOperacion, setOperacion}) {
     const [visible, setVisible] = useState(false);
-    const [titulo, setTitulo] = useState('')
+    const [titulo, setTitulo] = useState('');
+    const [data, setData] = useState([]); // La data de los request
+
     useEffect(()=>{
         console.log("Aqui la info ",tpOperacion);
         
         switch (tpOperacion) {
             case 'provedores':                
                 setVisible(true);
+                obtenerProvedores()
                 setTitulo('Catalogo de Provedores');
                 break;
             case 'departamentos':            
@@ -43,10 +46,18 @@ export default function DialogoCat ({tpOperacion, setOperacion}) {
                 break;
         }
     },[tpOperacion])
+
+
+    const obtenerProvedores = async() =>{
+        await axios.get(`${route('catalogo.list.provedores')}`).then((response) => {
+            const {data} = response;
+            setData(data);
+        });
+    }
     return (      
         <Dialog header={titulo} visible={visible} style={{ width: '85vw' }} onHide={() => {if (!visible) return; setVisible(false); }}>
             <Card>
-                <TablasCatalogos opMostrar={tpOperacion}/>           
+                <TablasCatalogos opMostrar={tpOperacion} data={data}/>           
             </Card>
         </Dialog>
     );
