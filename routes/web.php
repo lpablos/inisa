@@ -54,7 +54,18 @@ Route::prefix('admin')->group(function () {
             Route::get('show', 'index')->name('catalogo.gral.index');  // Especifica el método 'index' en el controlador
             //CRUD para eliminar un provedor
             Route::get('list-provedores', 'listaProvedores')->name('catalogo.list.provedores'); 
+            Route::post('registrar-provedor','nuevoProvedor')->name('catalogo.nuevo.provedor');
             Route::delete('provedor/{id}', 'deleteProvedor')->name('catalogo.delete.provedor'); 
+            //CRUD para eliminar un departamentos
+            // Route::get('list-departamento', 'listaDepartamentos')->name('catalogo.list.departamento'); 
+          // .........
+            //CRUD para eliminar un clientes
+            // .........
+            //CRUD para eliminar un Unidades de medida
+            // .........
+            //CRUD para eliminar un usuarios sistema
+            // .........
+
         });
     });
     // Agrega otros grupos según el nombre de la sección con su controlador y funciones

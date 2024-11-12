@@ -70,6 +70,7 @@ const TablasCatalogos = ({opMostrar, data, eliminar, shoAgregar}) => {
             </div>
             
             {opcionTabla == 1 && (
+                // Este es la tabla para Provedores
                 <DataTable  value={registros} tableStyle={{ minWidth: '50rem' }}>
                     <Column field="abreviacion" header="Abreviación"></Column>
                     <Column field="nombre" header="Nombre"></Column>
@@ -80,7 +81,8 @@ const TablasCatalogos = ({opMostrar, data, eliminar, shoAgregar}) => {
                 </DataTable>  
             )}
             {opcionTabla == 2 && (
-                <DataTable tableStyle={{ minWidth: '50rem' }}>
+                // Este es la tabla para Departamentos
+                <DataTable  value={registros} tableStyle={{ minWidth: '50rem' }}>
                     <Column field="telefono" header="Telefono"></Column>
                     <Column field="direccion" header="Dirección"></Column>
                     <Column field="colonia" header="Colonia"></Column>

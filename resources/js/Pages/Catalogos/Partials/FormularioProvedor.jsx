@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { InputNumber } from 'primereact/inputnumber';
 import { InputText } from "primereact/inputtext";
-// import { FloatLabel } from "primereact/floatlabel";
+import { FloatLabel } from "primereact/floatlabel";
 
 const FormularioProvedor = () =>  {    
     return (
@@ -9,42 +9,45 @@ const FormularioProvedor = () =>  {
             <form>
                 <div className="card flex flex-column md:flex-row gap-3">
                     <div className="p-inputgroup flex-1">
-                        {/* <FloatLabel>
-                            <InputText id="username" value={value} onChange={(e) => setValue(e.target.value)} />
-                            <label htmlFor="username">Username</label>
-                        </FloatLabel> */}
+                        <FloatLabel>
+                            <InputText id="abreviacion"  onChange={(e) => setValue(e.target.value)} invalid />
+                            <label htmlFor="abreviacion">Abreviacion</label>
+                        </FloatLabel>
                     </div>
                     <div className="p-inputgroup flex-1">
-                        <span className="p-inputgroup-addon">
-                            <i className="pi pi-user"></i>
-                        </span>
-                        <InputText placeholder="Nombre" />
+                        <FloatLabel>
+                            <InputText id="nombre"  onChange={(e) => setValue(e.target.value)} />
+                            <label htmlFor="nombre">Nombre</label>
+                        </FloatLabel>
                     </div>
 
                     <div className="p-inputgroup flex-1">
-                        <span className="p-inputgroup-addon">
-                            <i className="pi pi-user"></i>
-                        </span>
-                        <InputText placeholder="Telefono" />
+                        <FloatLabel>
+                            <InputText id="telefono"  onChange={(e) => setValue(e.target.value)} />
+                            <label htmlFor="telefono">Telefono</label>
+                        </FloatLabel>
                     </div>
                 </div>
                 <div className="card flex flex-column md:flex-row gap-3">
                     <div className="p-inputgroup flex-1">
-                        <span className="p-inputgroup-addon">
-                            <i className="pi pi-user"></i>
-                        </span>
-                        <InputText placeholder="Username" />
+                        <FloatLabel>
+                            <InputText id="colonia"  onChange={(e) => setValue(e.target.value)} />
+                            <label htmlFor="colonia">Colonia</label>
+                        </FloatLabel>
                     </div>
 
                     <div className="p-inputgroup flex-1">
-                        <span className="p-inputgroup-addon">$</span>
-                        <InputNumber placeholder="Price" />
-                        <span className="p-inputgroup-addon">.00</span>
+                        <FloatLabel>
+                            <InputText id="direccion"  onChange={(e) => setValue(e.target.value)} />
+                            <label htmlFor="direccion">Dirección</label>
+                        </FloatLabel>
                     </div>
 
                     <div className="p-inputgroup flex-1">
-                        <span className="p-inputgroup-addon">www</span>
-                        <InputText placeholder="Website" />
+                        <FloatLabel>
+                            <InputText id="colonia"  onChange={(e) => setValue(e.target.value)} />
+                            <label htmlFor="colonia">Colonia</label>
+                        </FloatLabel>
                     </div>
                 </div>
                 

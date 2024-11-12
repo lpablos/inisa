@@ -11,7 +11,9 @@ export default function DialogoCat ({tpOperacion, setOperacion}) {
     const [titulo, setTitulo] = useState('');
     const [data, setData] = useState([]); // La data de los request
 
-    const [mostrarFomulario, setMostrarFomulario] = useState('')
+    const [tipoFomulario, setTipoFomulario] = useState('');
+    const [ocultarTabla, setOcultarTabla] = useState(false);
+    const [ocultarFormulario, setOcultarFormulario] = useState(false);
 
     useEffect(()=>{
         console.log("Aqui la info ",tpOperacion);
@@ -58,6 +60,10 @@ export default function DialogoCat ({tpOperacion, setOperacion}) {
         });
     }
 
+    const obtenerDepartamento = async () =>{
+        
+    }
+
     const eliminiarRegistro = async(tipo,identy) => {
         switch (tipo) {
             case 'provedor':
@@ -70,21 +76,26 @@ export default function DialogoCat ({tpOperacion, setOperacion}) {
         
     }
 
+    //aqui vamos a ver que formularios vamos a mostrar segun se seleccione
     const mostrarFormulario = (tipo) =>{
         switch (tipo) {
             case 'provedores':
-                alert("Vamos a mostrar el formulario")
-                setMostrarFomulario(tipo)
-                break;
-        
+                setTipoFomulario(tipo)
+                setOcultarTabla(true) // Ocultas Tabla
+                setOcultarFormulario(false) // Muestras Formulario
+                break;        
             default:
+                setTipoFomulario('') 
+                setOcultarTabla(true) // Muestras Tabla
+                setOcultarFormulario(false) // Ocultas Formulario
                 break;
         }
     }
     
     const eliminarProvedor = async (identy) =>{
         await axios.delete(`${route('catalogo.delete.provedor',{ id: identy })}`).then(() => {
-            alert("Post deleted!");          
+            alert("Post deleted!"); 
+            obtenerProvedores();  
         });       
     }
 
@@ -99,10 +110,11 @@ export default function DialogoCat ({tpOperacion, setOperacion}) {
         <Dialog header={titulo} visible={visible} style={{ width: '85vw' }} onHide={() => {if (!visible) return; setVisible(false); }}>
             <Card>
                 {/* Aqui se van a manejar todos los datos  */}
-                <TablasCatalogos opMostrar={tpOperacion} data={data} eliminar={eliminiarRegistro} shoAgregar={mostrarFormulario}/>   
+                {ocultarTabla==false && <TablasCatalogos opMostrar={tpOperacion} data={data} eliminar={eliminiarRegistro} shoAgregar={mostrarFormulario}/>}
+                
 
                 {/* Aqui se tienen que mostrar los formulario segun lo seleccionado */}
-                {mostrarFomulario == 'provedores' && <FormularioProvedor/>   }     
+                {tipoFomulario === 'provedores' && ocultarFormulario==false && <FormularioProvedor/>}     
                 
             </Card>
         </Dialog>
