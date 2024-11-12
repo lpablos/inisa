@@ -28,4 +28,10 @@ class CatEmpresa extends Model
         'telefono_urgencias1',
         'telefono_urgencias2',
     ];
+
+    // Relación con CatCliente
+    public function clientes()
+    {
+        return $this->hasMany(CatCliente::class);
+    }
 }

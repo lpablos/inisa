@@ -52,20 +52,26 @@ Route::prefix('admin')->group(function () {
     Route::prefix('catalogos')->group(function () {
         Route::controller(CatalogosController::class)->group(function () {
             Route::get('show', 'index')->name('catalogo.gral.index');  // Especifica el método 'index' en el controlador
-            //CRUD para eliminar un provedor
-            Route::get('list-provedores', 'listaProvedores')->name('catalogo.list.provedores'); 
-            Route::post('registrar-provedor','nuevoProvedor')->name('catalogo.nuevo.provedor');
-            Route::delete('provedor/{id}', 'deleteProvedor')->name('catalogo.delete.provedor'); 
-            //CRUD para eliminar un departamentos
-            // Route::get('list-departamento', 'listaDepartamentos')->name('catalogo.list.departamento'); 
-          // .........
-            //CRUD para eliminar un clientes
-            // .........
-            //CRUD para eliminar un Unidades de medida
-            // .........
-            //CRUD para eliminar un usuarios sistema
-            // .........
 
+            //CRUD para eliminar un provedor
+            Route::get('list-provedores', 'listaProvedores')->name('catalogo.list.provedores');
+            Route::post('registrar-provedor', 'nuevoProvedor')->name('catalogo.nuevo.provedor');
+            Route::delete('provedor/{id}', 'deleteProvedor')->name('catalogo.delete.provedor');
+
+            //CRUD  departamentos
+            Route::get('list-departamentos', 'listaDepartamentos')->name('catalogo.list.departamentos');
+
+            //CRUD  clientes
+            Route::get('list-clientes', 'listaClientes')->name('catalogo.list.clientes');
+
+            //CRUD  Unidades de medida
+            Route::get('list-unidadesmedidas', 'listaUnidadMedidas')->name('catalogo.list.unidadesmedidas');
+
+            //CRUD Usuarios
+            Route::get('list-usuarios', 'listaUsuarios')->name('catalogo.list.usuarios');
+
+            //CRUD  empresa
+            Route::get('list-empresas', 'listaEmpresas')->name('catalogo.list.empresas');
         });
     });
     // Agrega otros grupos según el nombre de la sección con su controlador y funciones
@@ -73,4 +79,4 @@ Route::prefix('admin')->group(function () {
 
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -26,7 +26,7 @@ class CatCliente extends Model
         'descripcion',
         'telefono',
         'ext',
-        
+
     ];
 
     public function representantes()
@@ -37,5 +37,11 @@ class CatCliente extends Model
     public function cotizaciones()
     {
         return $this->hasMany(Cotizacion::class, 'cliente_id', 'id_cliente'); // Referencia a la clave foránea y primaria
+    }
+
+    // Relación con CatEmpresa
+    public function empresa()
+    {
+        return $this->belongsTo(CatEmpresa::class);
     }
 }
