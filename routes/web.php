@@ -52,6 +52,7 @@ Route::prefix('admin')->group(function () {
     Route::prefix('catalogos')->group(function () {
         Route::controller(CatalogosController::class)->group(function () {
             Route::get('show', 'index')->name('catalogo.gral.index');  // Especifica el método 'index' en el controlador
+            Route::get('list-provedores', 'listaProvedores')->name('catalogo.list.provedores');  
         });
     });
     // Agrega otros grupos según el nombre de la sección con su controlador y funciones

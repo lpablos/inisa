@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('cat_provedores', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('abreviacion');
-            $table->string('direccion');
-            $table->string('telefono');
-            $table->string('colonia');
+            $table->string('abreviacion')->nullable();
+            $table->string('direccion')->nullable();
+            $table->string('telefono')->nullable();
+            $table->string('colonia')->nullable();
 
             $table->unsignedBigInteger('empresa_id')->nullable();
             $table->foreign('empresa_id')->references('id')->on('cat_empresas'); 

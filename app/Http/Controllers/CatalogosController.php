@@ -20,10 +20,10 @@ class CatalogosController extends Controller
         return Inertia::render('Catalogos/Index');
     }
 
-    public function getCatProvedor(){
-        $data = CatProvedor::all();
-        dd();
-        // return response()->json($data);
+    public function listaProvedores(){
+        $data = CatProvedor::all();    
+        dd("Este es el data", $data);
+        return response()->json($data);
     }
     // public function showCliente(){
     //     return Inertia::render('Catalogos/Cliente');

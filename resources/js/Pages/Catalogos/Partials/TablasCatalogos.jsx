@@ -41,7 +41,7 @@ const TablasCatalogos = ({opMostrar}) => {
     },[opMostrar])
     
     const obtenerProvedores = async() =>{
-        await axios.get(`${route('catalogos.paises.listado')}`).then((response) => {
+        await axios.get(`${route('catalogo.list.provedores')}`).then((response) => {
             console.log("Este es el listado", response);
         });
     }
