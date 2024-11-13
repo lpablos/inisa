@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { Button } from "primereact/button";
 
-const TablasCatalogos = ({ opMostrar, data, eliminar, shoAgregar }) => {
+const TablasCatalogos = ({ opMostrar, data, eliminar, shoAgregar,updateRegistro}) => {
     const [opcionTabla, setOpcionTabla] = useState(0);
     const [registros, setRegistros] = useState([]);
     const [nombreTabla, setNombreTabla] = useState("");
@@ -55,6 +55,7 @@ const TablasCatalogos = ({ opMostrar, data, eliminar, shoAgregar }) => {
                     value={registros.id}
                     label="Actualizar"
                     severity="Editar"
+                    onClick={()=>updateRegistro(registros.id)}
                 />
                 <Button
                     value={registros.id}
@@ -72,7 +73,7 @@ const TablasCatalogos = ({ opMostrar, data, eliminar, shoAgregar }) => {
                 <Button
                     label="Registrar"
                     className="ml-auto"
-                    onClick={() => shoAgregar(nombreTabla)}
+                    onClick={() => shoAgregar()}
                 />
             </div>
 

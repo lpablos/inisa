@@ -49,6 +49,15 @@ class CatalogosController extends Controller
         }
     }
 
+    public function detalleProvedor($id)
+    {
+        $data = CatProvedor::find($id);
+        if (!$data) {
+            return response()->json(['error' => 'Proveedor no encontrado'], 404);
+        }        
+        return response()->json($data, 200);
+    }
+
     public function registrarProvedor(Request $request)
     {
         // Validación de los datos del formulario

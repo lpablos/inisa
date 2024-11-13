@@ -9,10 +9,12 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
     const [visible, setVisible] = useState(false);
     const [titulo, setTitulo] = useState("");
     const [data, setData] = useState([]); // La data de los request
+    const [dataDetalle, setDataDetalle] = useState({});
 
-    const [tipoFomulario, setTipoFomulario] = useState("");
+    
     const [ocultarTabla, setOcultarTabla] = useState(false);
-    const [ocultarFormulario, setOcultarFormulario] = useState(false);
+    const [ocultarFormulario, setOcultarFormulario] = useState(true);
+    
 
     useEffect(() => {
         console.log("Aqui la info ", tpOperacion);
@@ -56,6 +58,7 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
         }
     }, [tpOperacion]);
 
+    // CRUD Provedor
     const obtenerProvedores = async () => {
         await axios
             .get(`${route("catalogo.list.provedores")}`)
@@ -64,53 +67,14 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                 setData(data);
             });
     };
-
-    const obtenerDepartamentos = async () => {
+    const obtenerDetalleProvedor = async (identy) =>{            
         await axios
-            .get(`${route("catalogo.list.departamentos")}`)
+            .get(`${route("catalogo.detalle.proveedor", { id: identy })}`)
             .then((response) => {
-                const { data } = response;
-                setData(data);
-            });
-    };
-
-    const obtenerEmpresa = async () => {
-        await axios
-            .get(`${route("catalogo.list.empresas")}`)
-            .then((response) => {
-                const { data } = response;
-                setData(data);
-            });
-    };
-
-    const obtenerClientes = async () => {
-        await axios
-            .get(`${route("catalogo.list.clientes")}`)
-            .then((response) => {
-                const { data } = response;
-                setData(data);
-            });
-    };
-
-    const obtenerUsuarios = async () => {
-        await axios
-            .get(`${route("catalogo.list.usuarios")}`)
-            .then((response) => {
-                const { data } = response;
-                setData(data);
-            });
-    };
-
-
-
-    const obtenerUnidadesMedidas = async () => {
-        await axios
-            .get(`${route("catalogo.list.unidadesmedidas")}`)
-            .then((response) => {
-                const { data } = response;
-                setData(data);
+                setDataDetalle(response)                
             });
     }
+
     const eliminiarRegistro = async (tipo, identy) => {
         switch (tipo) {
             case "provedor":
@@ -122,21 +86,99 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
         }
     };
 
+    // CRUD Departamento
+    const obtenerDepartamentos = async () => {
+        await axios
+            .get(`${route("catalogo.list.departamentos")}`)
+            .then((response) => {
+                const { data } = response;
+                setData(data);
+            });
+    };
+
+    // CRUD Empresa
+    const obtenerEmpresa = async () => {
+        await axios
+            .get(`${route("catalogo.list.empresas")}`)
+            .then((response) => {
+                const { data } = response;
+                setData(data);
+            });
+    };
+
+    // CRUD Clientes
+    const obtenerClientes = async () => {
+        await axios
+            .get(`${route("catalogo.list.clientes")}`)
+            .then((response) => {
+                const { data } = response;
+                setData(data);
+            });
+    };
+
+    // CRUD Usuarios
+    const obtenerUsuarios = async () => {
+        await axios
+            .get(`${route("catalogo.list.usuarios")}`)
+            .then((response) => {
+                const { data } = response;
+                setData(data);
+            });
+    };
+
+    // CRUD Unidades Medidas
+    const obtenerUnidadesMedidas = async () => {
+        await axios
+            .get(`${route("catalogo.list.unidadesmedidas")}`)
+            .then((response) => {
+                const { data } = response;
+                setData(data);
+            });
+    }
+    
+   
+
     //aqui vamos a ver que formularios vamos a mostrar segun se seleccione
-    const mostrarFormulario = (tipo) => {
-        switch (tipo) {
+    const showAgregar = () => { 
+        setOcultarFormulario(false)
+        setOcultarTabla(true)
+    };
+
+    const showTabla = () =>{
+        setOcultarFormulario(true)
+        setOcultarTabla(false)
+    }
+
+    const updateRegistro = (identy) =>{
+        switch (tpOperacion) {
             case "provedores":
-                setTipoFomulario(tipo);
-                setOcultarTabla(true); // Ocultas Tabla
-                setOcultarFormulario(false); // Muestras Formulario
+                obtenerDetalleProvedor(identy)
+                break;
+            case "departamentos":
+                // ...
+                break;
+            case "clientes":
+               // ...
+                break;
+            case "unidadesMedidas":
+                // ...
+                break;
+            case "usuarios":
+               // ...
+                break;
+            case "datosEmpresa":
+               // ...
                 break;
             default:
-                setTipoFomulario("");
-                setOcultarTabla(true); // Muestras Tabla
-                setOcultarFormulario(false); // Ocultas Formulario
+                // ...
                 break;
         }
-    };
+        // Mostrar o oculatar formularo
+        setOcultarFormulario(false)
+        setOcultarTabla(true)
+        
+    }
+    
 
     const eliminarProvedor = async (identy) => {
         await axios
@@ -147,13 +189,13 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
             });
     };
 
-    const agregarProvedor = async (datos) => {
-        await axios
-            .post(`${route("catalogo.nuevo.provedor")}`, datos)
-            .then(() => {
-                alert("Post creado!");
-            });
-    };
+    // const agregarProvedor = async (datos) => {
+    //     await axios
+    //         .post(`${route("catalogo.nuevo.provedor")}`, datos)
+    //         .then(() => {
+    //             alert("Post creado!");
+    //         });
+    // };
 
     return (
         <Dialog
@@ -169,16 +211,16 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                 {/* Aqui se van a manejar todos los datos  */}
                 {ocultarTabla == false && (
                     <TablasCatalogos
-                        opMostrar={tpOperacion}
+                        opMostrar={tpOperacion} // Esta es la operacion
                         data={data}
                         eliminar={eliminiarRegistro}
-                        shoAgregar={mostrarFormulario}
+                        shoAgregar={showAgregar}
+                        updateRegistro = {updateRegistro}
                     />
                 )}
 
                 {/* Aqui se tienen que mostrar los formulario segun lo seleccionado */}
-                {tipoFomulario === "provedores" &&
-                    ocultarFormulario == false && <FormularioProvedor />}
+                {tpOperacion === "provedores" && ocultarFormulario == false && <FormularioProvedor showTabla={showTabla} dataDetalle={dataDetalle}/>}
             </Card>
         </Dialog>
     );
