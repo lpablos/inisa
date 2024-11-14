@@ -56,6 +56,7 @@ Route::prefix('admin')->group(function () {
             //CRUD para eliminar un provedor
             Route::get('list-proveedores', 'listaProvedores')->name('catalogo.list.provedores');
             Route::post('registrar-proveedor', 'nuevoProvedor')->name('catalogo.nuevo.provedor');
+            Route::post('actualiza-proveedor', 'actualizaProvedor')->name('catalogo.actualiza.provedor');
             Route::delete('proveedor/{id}', 'deleteProvedor')->name('catalogo.delete.provedor');
             Route::get('detalle-proveedor/{id}','detalleProvedor')->name('catalogo.detalle.proveedor');
 

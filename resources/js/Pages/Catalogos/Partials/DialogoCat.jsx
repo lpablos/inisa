@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { Card } from "primereact/card";
@@ -9,6 +9,7 @@ import FormularioClientes from "./FormularioClientes";
 import FormularioUnidadMedida from "./FormularioUnidadMedida";
 import FormularioUsuario from "./FormularioUsuario";
 import FormularioEmpresa from "./FormularioEmpresa";
+import { Toast } from 'primereact/toast';
 
 export default function DialogoCat({ tpOperacion, setOperacion }) {
     const [visible, setVisible] = useState(false);
@@ -18,8 +19,12 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
 
     const [ocultarTabla, setOcultarTabla] = useState(false);
     const [ocultarFormulario, setOcultarFormulario] = useState(true);
+    const toast = useRef(null);
+    
 
     useEffect(() => {
+        
+
         switch (tpOperacion) {
             case "provedores":
                 setVisible(true);
@@ -75,6 +80,23 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                 setDataDetalle(response);
             });
     };
+
+    const actualizarProvedor = async (datos) =>{
+        await axios
+            .post(`${route("catalogo.actualiza.provedor")}`,datos)
+            .then((response) => {
+                const {status, data} = response
+                // setDataDetalle(response)         
+                if(status==201){
+                    toast.current.show({severity:'success', summary: 'Success', detail:`${data.success}`, life: 3000});       
+                    showTabla()
+                    obtenerProvedores()
+                }
+                
+            });
+        
+        
+    }
 
     const eliminiarRegistro = async (tipo, identy) => {
         switch (tipo) {
@@ -309,6 +331,8 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                         dataDetalle={dataDetalle}
                     />
                 )}
+                {tpOperacion === "provedores" && ocultarFormulario == false && <FormularioProvedor showTabla={showTabla} dataDetalle={dataDetalle} actualizarProvedor={actualizarProvedor}/>}
+                <Toast ref={toast} />
             </Card>
         </Dialog>
     );

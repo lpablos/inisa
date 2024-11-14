@@ -74,6 +74,29 @@ class CatalogosController extends Controller
         return response()->json(['success' => 'Proveedor creado exitosamente', 'data' => $proveedor], 201);
     }
 
+    public function actualizaProvedor(Request $request)
+    {
+        // Validación de los datos del formulario
+        
+        $validatedData = $request->validate([
+            'id' => 'required',
+            'nombre' => 'required|string|max:255',
+            'abreviacion' => 'nullable|string|max:100',
+            'direccion' => 'nullable|string|max:255',
+            'telefono' => 'nullable|string|min:8',
+            'colonia' => 'nullable|string|max:255',
+        ]);
+        // Crear el nuevo proveedor con los datos validados
+        $proveedor = CatProvedor::find($request->id);
+        $proveedor-> nombre = $request->nombre;
+        $proveedor-> abreviacion = $request->abreviacion;
+        $proveedor-> direccion = $request->direccion;
+        $proveedor-> telefono = $request->telefono;
+        $proveedor-> colonia = $request->colonia;
+        $proveedor->save();
+        return response()->json(['success' => 'Actualizado correctamente', $proveedor], 201);
+    }
+
     //Departamentos
     public function listaDepartamentos()
     {
