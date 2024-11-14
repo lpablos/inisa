@@ -54,7 +54,7 @@ class CatalogosController extends Controller
         $data = CatProvedor::find($id);
         if (!$data) {
             return response()->json(['error' => 'Proveedor no encontrado'], 404);
-        }        
+        }
         return response()->json($data, 200);
     }
 
@@ -81,12 +81,35 @@ class CatalogosController extends Controller
         return response()->json($data);
     }
 
+    public function detalleDepartamento($id)
+    {
+        //Recuerda el id esta mal en el model se maneja como id__departamento
+        $data = CatDepartamento::where('id', $id)->first();
+
+        if (!$data) {
+            return response()->json(['error' => 'Departamento no encontrado'], 404);
+        }
+        return response()->json($data, 200);
+    }
+
+
+
 
     // Empresas
     public function listaEmpresas()
     {
         $data = CatEmpresa::all();
         return response()->json($data);
+    }
+
+
+    public function detalleEmpresa($id)
+    {
+        $data = CatEmpresa::where('id', $id)->first();
+        if (!$data) {
+            return response()->json(['error' => 'Empresa no encontrado'], 404);
+        }
+        return response()->json($data, 200);
     }
 
     // Clientes
@@ -99,7 +122,8 @@ class CatalogosController extends Controller
         $data = DB::table('cat_clientes')
             ->join('cat_empresas', 'cat_clientes.empresa_id', '=', 'cat_empresas.id')
             ->select(
-        'cat_clientes.nombre as nombre',
+                'cat_clientes.id',
+                'cat_clientes.nombre as nombre',
                 'cat_clientes.abreviacion',
                 'cat_clientes.ap_materno',
                 'cat_clientes.direccion',
@@ -112,12 +136,33 @@ class CatalogosController extends Controller
         return response()->json($data);
     }
 
+    public function detalleCliente($id =  null)
+    {
+        //Recuerda el id esta mal en el model se maneja como id__departamento
+        $data = CatCliente::where('id', $id)->first();
+        //  $data = $id;
+        if (!$data) {
+            return response()->json(['error' => 'Cliente no encontrado'], 404);
+        }
+        return response()->json($data, 200);
+    }
+
 
     // Unidades de Medida
     public function listaUnidadMedidas()
     {
         $data = CatUnidadMedida::all();
         return response()->json($data);
+    }
+
+    public function detalleUnidadMedida($id =  null)
+    {
+
+        $data = CatUnidadMedida::where('id', $id)->first();
+        if (!$data) {
+            return response()->json(['error' => 'Unidad de medida no encontrado'], 404);
+        }
+        return response()->json($data, 200);
     }
 
 
@@ -129,4 +174,13 @@ class CatalogosController extends Controller
     }
 
 
+    public function detalleUsuario($id =  null)
+    {
+
+        $data = User::where('id', $id)->first();
+        if (!$data) {
+            return response()->json(['error' => 'Usuario no encontrado'], 404);
+        }
+        return response()->json($data, 200);
+    }
 }

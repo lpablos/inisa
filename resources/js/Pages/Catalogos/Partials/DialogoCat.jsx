@@ -4,6 +4,11 @@ import { Dialog } from "primereact/dialog";
 import { Card } from "primereact/card";
 import TablasCatalogos from "./TablasCatalogos";
 import FormularioProvedor from "./FormularioProvedor";
+import FormularioDepartamento from "./FormularioDepartamento";
+import FormularioClientes from "./FormularioClientes";
+import FormularioUnidadMedida from "./FormularioUnidadMedida";
+import FormularioUsuario from "./FormularioUsuario";
+import FormularioEmpresa from "./FormularioEmpresa";
 
 export default function DialogoCat({ tpOperacion, setOperacion }) {
     const [visible, setVisible] = useState(false);
@@ -11,14 +16,10 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
     const [data, setData] = useState([]); // La data de los request
     const [dataDetalle, setDataDetalle] = useState({});
 
-    
     const [ocultarTabla, setOcultarTabla] = useState(false);
     const [ocultarFormulario, setOcultarFormulario] = useState(true);
-    
 
     useEffect(() => {
-        console.log("Aqui la info ", tpOperacion);
-
         switch (tpOperacion) {
             case "provedores":
                 setVisible(true);
@@ -67,13 +68,13 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                 setData(data);
             });
     };
-    const obtenerDetalleProvedor = async (identy) =>{            
+    const obtenerDetalleProvedor = async (identy) => {
         await axios
             .get(`${route("catalogo.detalle.proveedor", { id: identy })}`)
             .then((response) => {
-                setDataDetalle(response)                
+                setDataDetalle(response);
             });
-    }
+    };
 
     const eliminiarRegistro = async (tipo, identy) => {
         switch (tipo) {
@@ -96,6 +97,15 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
             });
     };
 
+    const obtenerDetalleDepartamento = async (identy) => {
+        await axios
+            .get(`${route("catalogo.detalle.departamento", { id: identy })}`)
+            .then((response) => {
+                console.log("datos departamento", response);
+                setDataDetalle(response);
+            });
+    };
+
     // CRUD Empresa
     const obtenerEmpresa = async () => {
         await axios
@@ -103,6 +113,15 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
             .then((response) => {
                 const { data } = response;
                 setData(data);
+            });
+    };
+
+    const obtenerDetalleEmpresa = async (identy) => {
+        await axios
+            .get(`${route("catalogo.detalle.empresa", { id: identy })}`)
+            .then((response) => {
+                console.log("datos empresa", response);
+                setDataDetalle(response);
             });
     };
 
@@ -116,6 +135,16 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
             });
     };
 
+    const obtenerDetalleCliente = async (identy) => {
+        console.log("identy en obtenerDetalleCliente:", identy); // Agrega este log
+        await axios
+            .get(`${route("catalogo.detalle.cliente", { id: identy })}`)
+            .then((response) => {
+                console.log("datos cliente", response);
+                setDataDetalle(response);
+            });
+    };
+
     // CRUD Usuarios
     const obtenerUsuarios = async () => {
         await axios
@@ -123,6 +152,16 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
             .then((response) => {
                 const { data } = response;
                 setData(data);
+            });
+    };
+
+    const obtenerDetalleUsuario = async (identy) => {
+        console.log("identy en obtenerDetalleUsuario:", identy); // Agrega este log
+        await axios
+            .get(`${route("catalogo.detalle.usuario", { id: identy })}`)
+            .then((response) => {
+                console.log("datos usuario", response);
+                setDataDetalle(response);
             });
     };
 
@@ -134,51 +173,58 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                 const { data } = response;
                 setData(data);
             });
-    }
-    
-   
-
-    //aqui vamos a ver que formularios vamos a mostrar segun se seleccione
-    const showAgregar = () => { 
-        setOcultarFormulario(false)
-        setOcultarTabla(true)
     };
 
-    const showTabla = () =>{
-        setOcultarFormulario(true)
-        setOcultarTabla(false)
-    }
+    // obtenerDetalleCliente
+    const obtenerDetalleUnidadMedida = async (identy) => {
+        console.log("identy en obtenerDetalleUnidadMedida:", identy);
+        await axios
+            .get(`${route("catalogo.detalle.unidadmedida", { id: identy })}`)
+            .then((response) => {
+                setDataDetalle(response);
+            });
+    };
 
-    const updateRegistro = (identy) =>{
+    //aqui vamos a ver que formularios vamos a mostrar segun se seleccione
+    const showAgregar = () => {
+        setOcultarFormulario(false);
+        setOcultarTabla(true);
+    };
+
+    const showTabla = () => {
+        setOcultarFormulario(true);
+        setOcultarTabla(false);
+    };
+
+    const updateRegistro = (identy) => {
+        console.log("Valor de identy recibido en updateRegistro:", identy);
         switch (tpOperacion) {
             case "provedores":
-                obtenerDetalleProvedor(identy)
+                obtenerDetalleProvedor(identy);
                 break;
             case "departamentos":
-                // ...
+                obtenerDetalleDepartamento(identy);
                 break;
             case "clientes":
-               // ...
+                obtenerDetalleCliente(identy);
                 break;
             case "unidadesMedidas":
-                // ...
+                obtenerDetalleUnidadMedida(identy);
                 break;
             case "usuarios":
-               // ...
+                obtenerDetalleUsuario(identy);
                 break;
             case "datosEmpresa":
-               // ...
+                obtenerDetalleEmpresa(identy);
                 break;
             default:
                 // ...
                 break;
         }
         // Mostrar o oculatar formularo
-        setOcultarFormulario(false)
-        setOcultarTabla(true)
-        
-    }
-    
+        setOcultarFormulario(false);
+        setOcultarTabla(true);
+    };
 
     const eliminarProvedor = async (identy) => {
         await axios
@@ -215,12 +261,54 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                         data={data}
                         eliminar={eliminiarRegistro}
                         shoAgregar={showAgregar}
-                        updateRegistro = {updateRegistro}
+                        updateRegistro={updateRegistro}
                     />
                 )}
 
                 {/* Aqui se tienen que mostrar los formulario segun lo seleccionado */}
-                {tpOperacion === "provedores" && ocultarFormulario == false && <FormularioProvedor showTabla={showTabla} dataDetalle={dataDetalle}/>}
+                {tpOperacion === "provedores" && ocultarFormulario == false && (
+                    <FormularioProvedor
+                        showTabla={showTabla}
+                        dataDetalle={dataDetalle}
+                    />
+                )}
+
+                {tpOperacion === "departamentos" &&
+                    ocultarFormulario == false && (
+                        <FormularioDepartamento
+                            showTabla={showTabla}
+                            dataDetalle={dataDetalle}
+                        />
+                    )}
+
+                {tpOperacion === "clientes" && ocultarFormulario == false && (
+                    <FormularioClientes
+                        showTabla={showTabla}
+                        dataDetalle={dataDetalle}
+                    />
+                )}
+
+                {tpOperacion === "unidadesMedidas" &&
+                    ocultarFormulario == false && (
+                        <FormularioUnidadMedida
+                            showTabla={showTabla}
+                            dataDetalle={dataDetalle}
+                        />
+                    )}
+
+                {tpOperacion === "usuarios" && ocultarFormulario == false && (
+                    <FormularioUsuario
+                        showTabla={showTabla}
+                        dataDetalle={dataDetalle}
+                    />
+                )}
+
+                {tpOperacion === "datosEmpresa" && ocultarFormulario == false && (
+                    <FormularioEmpresa
+                        showTabla={showTabla}
+                        dataDetalle={dataDetalle}
+                    />
+                )}
             </Card>
         </Dialog>
     );
