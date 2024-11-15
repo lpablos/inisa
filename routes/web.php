@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\CatalogosController;
+use App\Http\Controllers\CotizacionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,6 +83,12 @@ Route::prefix('admin')->group(function () {
         });
     });
     // Agrega otros grupos según el nombre de la sección con su controlador y funciones
+
+    Route::prefix('cotizacion')->group(function(){
+        Route::controller(CotizacionController::class)->group(function(){
+            Route::get('show', 'index')->name('cotizacion.show.index');
+        });
+    });
 });
 
 
