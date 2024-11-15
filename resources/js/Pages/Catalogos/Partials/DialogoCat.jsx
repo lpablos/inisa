@@ -9,7 +9,8 @@ import FormularioClientes from "./FormularioClientes";
 import FormularioUnidadMedida from "./FormularioUnidadMedida";
 import FormularioUsuario from "./FormularioUsuario";
 import FormularioEmpresa from "./FormularioEmpresa";
-import { Toast } from 'primereact/toast';
+import ConfirmarEliminacion from './ConfirmarEliminacion';
+import { Toast } from "primereact/toast";
 
 export default function DialogoCat({ tpOperacion, setOperacion }) {
     const [visible, setVisible] = useState(false);
@@ -20,11 +21,8 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
     const [ocultarTabla, setOcultarTabla] = useState(false);
     const [ocultarFormulario, setOcultarFormulario] = useState(true);
     const toast = useRef(null);
-    
 
     useEffect(() => {
-        
-
         switch (tpOperacion) {
             case "provedores":
                 setVisible(true);
@@ -81,27 +79,29 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
             });
     };
 
-    const actualizarProvedor = async (datos) =>{
+    const actualizarProvedor = async (datos) => {
         await axios
-            .post(`${route("catalogo.actualiza.provedor")}`,datos)
+            .post(`${route("catalogo.actualiza.provedor")}`, datos)
             .then((response) => {
-                const {status, data} = response
-                // setDataDetalle(response)         
-                if(status==201){
-                    toast.current.show({severity:'success', summary: 'Success', detail:`${data.success}`, life: 3000});       
-                    showTabla()
-                    obtenerProvedores()
+                const { status, data } = response;
+                // setDataDetalle(response)
+                if (status == 201) {
+                    toast.current.show({
+                        severity: "success",
+                        summary: "Success",
+                        detail: `${data.success}`,
+                        life: 3000,
+                    });
+                    showTabla();
+                    obtenerProvedores();
                 }
-                
             });
-        
-        
-    }
+    };
 
     const eliminiarRegistro = async (tipo, identy) => {
         switch (tipo) {
             case "provedor":
-                await eliminarProvedor(identy);
+                await confirmarEliminacion(identy);
                 break;
 
             default:
@@ -249,12 +249,42 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
     };
 
     const eliminarProvedor = async (identy) => {
-        await axios
-            .delete(`${route("catalogo.delete.provedor", { id: identy })}`)
-            .then(() => {
-                alert("Post deleted!");
-                obtenerProvedores();
+        console.log("identy en eliminarProvedor:", identy);
+        try {
+            await axios.delete(`${route("catalogo.delete.provedor", { id: identy })}`);
+            toast.current.show({
+                severity: 'success',
+                summary: 'Proveedor eliminado',
+                detail: 'El proveedor ha sido eliminado exitosamente.',
+                life: 3000
             });
+            obtenerProvedores();
+        } catch (error) {
+            toast.current.show({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'No se pudo eliminar el proveedor.',
+                life: 3000
+            });
+        }
+    };
+
+      // Función para mostrar el mensaje de confirmación
+      const confirmarEliminacion = (identy) => {
+        toast.current.show({
+            severity: 'warn',
+            summary: 'Confirmación',
+            sticky: true,
+            content: (
+                <ConfirmarEliminacion
+                    onConfirm={() => {
+                        eliminarProvedor(identy);
+                        toast.current.clear();
+                    }}
+                    onCancel={() => toast.current.clear()}
+                />
+            )
+        });
     };
 
     // const agregarProvedor = async (datos) => {
@@ -288,12 +318,12 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                 )}
 
                 {/* Aqui se tienen que mostrar los formulario segun lo seleccionado */}
-                {tpOperacion === "provedores" && ocultarFormulario == false && (
+                {/* {tpOperacion === "provedores" && ocultarFormulario == false && (
                     <FormularioProvedor
                         showTabla={showTabla}
                         dataDetalle={dataDetalle}
                     />
-                )}
+                )} */}
 
                 {tpOperacion === "departamentos" &&
                     ocultarFormulario == false && (
@@ -325,13 +355,22 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                     />
                 )}
 
-                {tpOperacion === "datosEmpresa" && ocultarFormulario == false && (
-                    <FormularioEmpresa
+                {tpOperacion === "datosEmpresa" &&
+                    ocultarFormulario == false && (
+                        <FormularioEmpresa
+                            showTabla={showTabla}
+                            dataDetalle={dataDetalle}
+                        />
+                    )}
+
+                    {/* // Aqui se tienen que mostrar los formulario segun lo seleccionado  con toas */}
+                {tpOperacion === "provedores" && ocultarFormulario == false && (
+                    <FormularioProvedor
                         showTabla={showTabla}
                         dataDetalle={dataDetalle}
+                        actualizarProvedor={actualizarProvedor}
                     />
                 )}
-                {tpOperacion === "provedores" && ocultarFormulario == false && <FormularioProvedor showTabla={showTabla} dataDetalle={dataDetalle} actualizarProvedor={actualizarProvedor}/>}
                 <Toast ref={toast} />
             </Card>
         </Dialog>

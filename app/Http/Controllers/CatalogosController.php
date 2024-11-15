@@ -33,8 +33,10 @@ class CatalogosController extends Controller
     public function deleteProvedor($id)
     {
 
+        // dd($id);
         try {
             $data = CatProvedor::find($id);
+            // dd($data);
             if (!$data) {
                 return response()->json(['error' => 'Proveedor no encontrado'], 404);
             }
@@ -77,7 +79,7 @@ class CatalogosController extends Controller
     public function actualizaProvedor(Request $request)
     {
         // Validación de los datos del formulario
-        
+
         $validatedData = $request->validate([
             'id' => 'required',
             'nombre' => 'required|string|max:255',
