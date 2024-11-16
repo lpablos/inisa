@@ -73,6 +73,44 @@ const TablasCatalogos = ({
         );
     };
 
+    const opcionesDepartamentosTemplate = (registros) => {
+        return (
+            <>
+                <Button
+                    value={registros.id}
+                    label="Actualizar"
+                    severity="Editar"
+                    onClick={() => updateRegistro(registros.id)}
+                />
+                <Button
+                    value={registros.id}
+                    label="Eliminar"
+                    severity="danger"
+                    onClick={() => eliminar("departamento", registros.id)}
+                />
+            </>
+        );
+    };
+
+    const opcionesClientesTemplate = (registros) => {
+        return (
+            <>
+                <Button
+                    value={registros.id}
+                    label="Actualizar"
+                    severity="Editar"
+                    onClick={() => updateRegistro(registros.id)}
+                />
+                <Button
+                    value={registros.id}
+                    label="Eliminar"
+                    severity="danger"
+                    onClick={() => eliminar("cliente", registros.id)}
+                />
+            </>
+        );
+    };
+
     return (
         <>
             <div className="flex gap-3 mb-4">
@@ -104,7 +142,7 @@ const TablasCatalogos = ({
                     <Column field="descripcion" header="Descripcion"></Column>
                     <Column
                         header="Opciones"
-                        body={opcionesProvedoresTemplate}
+                        body={opcionesDepartamentosTemplate}
                     ></Column>
                 </DataTable>
             )}
@@ -120,10 +158,9 @@ const TablasCatalogos = ({
                     <Column field="direccion" header="Direccion"></Column>
                     <Column field="telefono" header="Telefono"></Column>
                     <Column field="ext" header="Ext"></Column>
-                    <Column field="empresa" header="Empresa"></Column>
                     <Column
                         header="Opciones"
-                        body={opcionesProvedoresTemplate}
+                        body={opcionesClientesTemplate}
                     ></Column>
                 </DataTable>
             )}

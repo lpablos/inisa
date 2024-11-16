@@ -90,11 +90,11 @@ class CatalogosController extends Controller
         ]);
         // Crear el nuevo proveedor con los datos validados
         $proveedor = CatProvedor::find($request->id);
-        $proveedor-> nombre = $request->nombre;
-        $proveedor-> abreviacion = $request->abreviacion;
-        $proveedor-> direccion = $request->direccion;
-        $proveedor-> telefono = $request->telefono;
-        $proveedor-> colonia = $request->colonia;
+        $proveedor->nombre = $request->nombre;
+        $proveedor->abreviacion = $request->abreviacion;
+        $proveedor->direccion = $request->direccion;
+        $proveedor->telefono = $request->telefono;
+        $proveedor->colonia = $request->colonia;
         $proveedor->save();
         return response()->json(['success' => 'Actualizado correctamente', $proveedor], 201);
     }
@@ -115,6 +115,52 @@ class CatalogosController extends Controller
             return response()->json(['error' => 'Departamento no encontrado'], 404);
         }
         return response()->json($data, 200);
+    }
+
+
+    public function actualizaDepartamento(Request $request)
+    {
+        // dd($request->all());
+        // Validación de los datos del formulario
+        $validatedData = $request->validate([
+            'id' => 'required',
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'nullable|string|max:100',
+
+        ]);
+
+        // dd($departamento);
+        $departamento = CatDepartamento::where('id', $request->id)->first();
+        // Validar si el departamento existe
+        if (!$departamento) {
+            return response()->json(['error' => 'Departamento no encontrado'], 404);
+        }
+        // Crear el nuevo proveedor con los datos validados
+        $departamento->nombre = $request->nombre;
+        $departamento->descripcion = $request->descripcion;
+        $departamento->save();
+
+        return response()->json(['success' => 'Actualizado correctamente', $departamento], 201);
+    }
+
+    public function deleteDepartamento($id = null)
+    {
+        // dd($id);
+        try {
+            $data = CatDepartamento::find($id);
+            // dd($data);
+            if (!$data) {
+                return response()->json(['error' => 'Departamento no encontrado'], 404);
+            }
+            // Eliminar el proveedor
+            $data->delete();
+            return response()->json(['success' => 'Departamento eliminado exitosamente'], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No se pudo eliminar... Intenta mas tarde'
+            ], 404);
+        }
     }
 
 
@@ -170,6 +216,71 @@ class CatalogosController extends Controller
             return response()->json(['error' => 'Cliente no encontrado'], 404);
         }
         return response()->json($data, 200);
+    }
+
+    public function actualizaCliente(Request $request)
+    {
+
+        try {
+
+            $validatedData = $request->validate([
+                'id' => 'required',
+                'nombre' => 'required|string|max:255',
+                'abreviacion' => 'nullable|string|max:100',
+                'direccion' => 'nullable|string|max:255',
+                'telefono' => 'nullable|numeric|digits:10',
+                'colonia' => 'nullable|string|max:255',
+            ]);
+            // dd($departamento);
+            $cliente = CatCliente::where('id', $request->id)->first();
+            // Validar si el departamento existe
+            if (!$cliente) {
+                return response()->json(['error' => 'Cliente no encontrado'], 404);
+            }
+            // Crear el nuevo proveedor con los datos validados
+            $cliente->nombre = $request->nombre;
+            $cliente->abreviacion = $request->abreviacion;
+            $cliente->ap_materno = $request->ap_materno;
+            $cliente->direccion = $request->direccion;
+            $cliente->telefono = $request->telefono;
+            $cliente->ext = $request->ext;
+            $cliente->save();
+            return response()->json(['success' => 'Actualizado correctamente', $cliente], 201);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Capturar y retornar errores de validación
+            return response()->json([
+                'errors' => $e->errors(),
+            ], 422); // Código HTTP 422 para errores de validación
+        } catch (\Exception $e) {
+             // Capturar cualquier otro error
+        return response()->json([
+            'error' => 'Ocurrió un error al actualizar el cliente',
+            'message' => $e->getMessage(),
+        ], 500);
+        }
+    }
+
+    public function deleteCliente($id = null)
+    {
+        // dd($id);
+        try {
+            // $data = CatCliente::find($id);
+            $data = CatCliente::where('id', $id)->first();
+            // dd($data, $id);
+            if (!$data) {
+                return response()->json(['error' => 'Cliente no encontrado'], 404);
+            }
+            // Eliminar el proveedor
+            CatCliente::where('id', $id)->delete();
+
+            // dd($data);
+            return response()->json(['success' => 'Cliente eliminado exitosamente'], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th
+            ], 404);
+        }
     }
 
 

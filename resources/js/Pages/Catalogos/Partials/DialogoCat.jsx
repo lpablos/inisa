@@ -9,7 +9,7 @@ import FormularioClientes from "./FormularioClientes";
 import FormularioUnidadMedida from "./FormularioUnidadMedida";
 import FormularioUsuario from "./FormularioUsuario";
 import FormularioEmpresa from "./FormularioEmpresa";
-import ConfirmarEliminacion from './ConfirmarEliminacion';
+import ConfirmarEliminacion from "./ConfirmarEliminacion";
 import { Toast } from "primereact/toast";
 
 export default function DialogoCat({ tpOperacion, setOperacion }) {
@@ -62,6 +62,57 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
         }
     }, [tpOperacion]);
 
+    const eliminiarRegistro = async (tipo, identy) => {
+        console.log("identy en eliminiarRegistro:", identy);
+        console.log("tipo en eliminiarRegistro:", tipo);
+        switch (tipo) {
+            case "provedor":
+                await confirmarEliminacion(identy);
+                break;
+
+            case "departamento":
+                await confirmarEliminacionDepartamento(identy);
+                break;
+
+            case "cliente":
+                await confirmarEliminacionClientes(identy);
+                break;
+
+            default:
+                break;
+        }
+    };
+
+    const updateRegistro = (identy) => {
+        console.log("Valor de identy recibido en updateRegistro:", identy);
+        switch (tpOperacion) {
+            case "provedores":
+                obtenerDetalleProvedor(identy);
+                break;
+            case "departamentos":
+                obtenerDetalleDepartamento(identy);
+                break;
+            case "clientes":
+                obtenerDetalleCliente(identy);
+                break;
+            case "unidadesMedidas":
+                obtenerDetalleUnidadMedida(identy);
+                break;
+            case "usuarios":
+                obtenerDetalleUsuario(identy);
+                break;
+            case "datosEmpresa":
+                obtenerDetalleEmpresa(identy);
+                break;
+            default:
+                // ...
+                break;
+        }
+        // Mostrar o oculatar formularo
+        setOcultarFormulario(false);
+        setOcultarTabla(true);
+    };
+
     // CRUD Provedor
     const obtenerProvedores = async () => {
         await axios
@@ -98,17 +149,6 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
             });
     };
 
-    const eliminiarRegistro = async (tipo, identy) => {
-        switch (tipo) {
-            case "provedor":
-                await confirmarEliminacion(identy);
-                break;
-
-            default:
-                break;
-        }
-    };
-
     // CRUD Departamento
     const obtenerDepartamentos = async () => {
         await axios
@@ -126,6 +166,39 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                 console.log("datos departamento", response);
                 setDataDetalle(response);
             });
+    };
+
+    const actualizarDepartamento = async (datos) => {
+        try {
+            const response = await axios.post(
+                `${route("catalogo.actualiza.departamento")}`,
+                datos
+            );
+
+            const { status, data } = response;
+
+            if (status === 201) {
+                toast.current.show({
+                    severity: "success",
+                    summary: "Success",
+                    detail: `${data.success}`,
+                    life: 3000,
+                });
+
+                // Actualizar la tabla y obtener los departamentos
+                showTabla();
+                obtenerDepartamentos();
+            }
+        } catch (error) {
+            console.error("Error actualizando el departamento:", error);
+
+            toast.current.show({
+                severity: "error",
+                summary: "Error",
+                detail: "Ocurrió un error al actualizar el departamento.",
+                life: 3000,
+            });
+        }
     };
 
     // CRUD Empresa
@@ -155,6 +228,98 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                 const { data } = response;
                 setData(data);
             });
+    };
+
+    const actualizarCliente = async (datos) => {
+        try {
+            const response = await axios.post(
+                `${route("catalogo.actualiza.cliente")}`,
+                datos
+            );
+
+            const { status, data } = response;
+
+            if (status === 201) {
+                // Mostrar mensaje de éxito
+                toast.current.show({
+                    severity: "success",
+                    summary: "Success",
+                    detail: `${data.success}`,
+                    life: 3000,
+                });
+                showTabla();
+                obtenerClientes();
+            } else {
+                // Mostrar mensaje de error si no es un código de éxito esperado
+                toast.current.show({
+                    severity: "error",
+                    summary: "Error",
+                    detail: `${data.error || "Ocurrió un error inesperado"}`,
+                    life: 3000,
+                });
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 422) {
+                // Capturar errores de validación
+                const errores = error.response.data.errors;
+                const mensajes = Object.values(errores).flat().join(", "); // Combina los errores en una sola cadena
+
+                toast.current.show({
+                    severity: "warn",
+                    summary: "Errores de validación",
+                    detail: mensajes,
+                    life: 5000,
+                });
+            } else {
+                // Mostrar cualquier otro error
+                toast.current.show({
+                    severity: "error",
+                    summary: "Error inesperado",
+                    detail: "Algo salió mal, por favor intente de nuevo.",
+                    life: 3000,
+                });
+            }
+        }
+    };
+
+    const eliminarClientes = async (identy) => {
+        console.log("identy en eliminarCklientes:", identy);
+        try {
+            await axios.delete(
+                `${route("catalogo.delete.cliente", { id: identy })}`
+            );
+            toast.current.show({
+                severity: "success",
+                summary: "cliente eliminado",
+                detail: "El cliente ha sido eliminado exitosamente.",
+                life: 3000,
+            });
+            obtenerClientes();
+        } catch (error) {
+            toast.current.show({
+                severity: "error",
+                summary: "Error",
+                detail: "No se pudo eliminar el cliente.",
+                life: 3000,
+            });
+        }
+    };
+
+    const confirmarEliminacionClientes = (identy) => {
+        toast.current.show({
+            severity: "warn",
+            summary: "Confirmación",
+            sticky: true,
+            content: (
+                <ConfirmarEliminacion
+                    onConfirm={() => {
+                        eliminarClientes(identy);
+                        toast.current.clear();
+                    }}
+                    onCancel={() => toast.current.clear()}
+                />
+            ),
+        });
     };
 
     const obtenerDetalleCliente = async (identy) => {
@@ -218,62 +383,34 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
         setOcultarTabla(false);
     };
 
-    const updateRegistro = (identy) => {
-        console.log("Valor de identy recibido en updateRegistro:", identy);
-        switch (tpOperacion) {
-            case "provedores":
-                obtenerDetalleProvedor(identy);
-                break;
-            case "departamentos":
-                obtenerDetalleDepartamento(identy);
-                break;
-            case "clientes":
-                obtenerDetalleCliente(identy);
-                break;
-            case "unidadesMedidas":
-                obtenerDetalleUnidadMedida(identy);
-                break;
-            case "usuarios":
-                obtenerDetalleUsuario(identy);
-                break;
-            case "datosEmpresa":
-                obtenerDetalleEmpresa(identy);
-                break;
-            default:
-                // ...
-                break;
-        }
-        // Mostrar o oculatar formularo
-        setOcultarFormulario(false);
-        setOcultarTabla(true);
-    };
-
     const eliminarProvedor = async (identy) => {
         console.log("identy en eliminarProvedor:", identy);
         try {
-            await axios.delete(`${route("catalogo.delete.provedor", { id: identy })}`);
+            await axios.delete(
+                `${route("catalogo.delete.provedor", { id: identy })}`
+            );
             toast.current.show({
-                severity: 'success',
-                summary: 'Proveedor eliminado',
-                detail: 'El proveedor ha sido eliminado exitosamente.',
-                life: 3000
+                severity: "success",
+                summary: "Proveedor eliminado",
+                detail: "El proveedor ha sido eliminado exitosamente.",
+                life: 3000,
             });
             obtenerProvedores();
         } catch (error) {
             toast.current.show({
-                severity: 'error',
-                summary: 'Error',
-                detail: 'No se pudo eliminar el proveedor.',
-                life: 3000
+                severity: "error",
+                summary: "Error",
+                detail: "No se pudo eliminar el proveedor.",
+                life: 3000,
             });
         }
     };
 
-      // Función para mostrar el mensaje de confirmación
-      const confirmarEliminacion = (identy) => {
+    // Función para mostrar el mensaje de confirmación
+    const confirmarEliminacion = (identy) => {
         toast.current.show({
-            severity: 'warn',
-            summary: 'Confirmación',
+            severity: "warn",
+            summary: "Confirmación",
             sticky: true,
             content: (
                 <ConfirmarEliminacion
@@ -283,7 +420,47 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                     }}
                     onCancel={() => toast.current.clear()}
                 />
-            )
+            ),
+        });
+    };
+
+    const eliminarDepertamento = async (identy) => {
+        console.log("identy en eliminarDepertamento:", identy);
+        try {
+            await axios.delete(
+                `${route("catalogo.delete.departamento", { id: identy })}`
+            );
+            toast.current.show({
+                severity: "success",
+                summary: "departamento eliminado",
+                detail: "El departamento ha sido eliminado exitosamente.",
+                life: 3000,
+            });
+            obtenerDepartamentos();
+        } catch (error) {
+            toast.current.show({
+                severity: "error",
+                summary: "Error",
+                detail: "No se pudo eliminar el departamento.",
+                life: 3000,
+            });
+        }
+    };
+
+    const confirmarEliminacionDepartamento = (identy) => {
+        toast.current.show({
+            severity: "warn",
+            summary: "Confirmación",
+            sticky: true,
+            content: (
+                <ConfirmarEliminacion
+                    onConfirm={() => {
+                        eliminarDepertamento(identy);
+                        toast.current.clear();
+                    }}
+                    onCancel={() => toast.current.clear()}
+                />
+            ),
         });
     };
 
@@ -325,11 +502,21 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                     />
                 )} */}
 
+                {/* // Aqui se tienen que mostrar los formulario segun lo seleccionado  con toas */}
+                {tpOperacion === "provedores" && ocultarFormulario == false && (
+                    <FormularioProvedor
+                        showTabla={showTabla}
+                        dataDetalle={dataDetalle}
+                        actualizarProvedor={actualizarProvedor}
+                    />
+                )}
+
                 {tpOperacion === "departamentos" &&
                     ocultarFormulario == false && (
                         <FormularioDepartamento
                             showTabla={showTabla}
                             dataDetalle={dataDetalle}
+                            actualizarDepartamento={actualizarDepartamento}
                         />
                     )}
 
@@ -337,6 +524,7 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                     <FormularioClientes
                         showTabla={showTabla}
                         dataDetalle={dataDetalle}
+                        actualizarCliente={actualizarCliente}
                     />
                 )}
 
@@ -363,14 +551,6 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                         />
                     )}
 
-                    {/* // Aqui se tienen que mostrar los formulario segun lo seleccionado  con toas */}
-                {tpOperacion === "provedores" && ocultarFormulario == false && (
-                    <FormularioProvedor
-                        showTabla={showTabla}
-                        dataDetalle={dataDetalle}
-                        actualizarProvedor={actualizarProvedor}
-                    />
-                )}
                 <Toast ref={toast} />
             </Card>
         </Dialog>

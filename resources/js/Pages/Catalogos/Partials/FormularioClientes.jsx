@@ -3,8 +3,10 @@ import { InputNumber } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
 import { FloatLabel } from "primereact/floatlabel";
 import { Button } from "primereact/button";
+import { useForm } from "react-hook-form";
+const FormularioClientes = ({ showTabla, dataDetalle, actualizarCliente }) => {
 
-const FormularioClientes = ({ showTabla, dataDetalle }) => {
+    const {register, handleSubmit, formState: { errors }} = useForm()
     const [id, setId] = useState("");
     const [nombre, setNombre] = useState("");
     const [abreviacion, setAbreviacion] = useState("");
@@ -40,6 +42,20 @@ const FormularioClientes = ({ showTabla, dataDetalle }) => {
         }
     }, [dataDetalle]);
 
+    const enviarFormulario = () =>{
+        const datos = {
+            id: id,
+            nombre: nombre,
+            abreviacion: abreviacion,
+            ap_materno: apellido_m,
+            direccion: direccion,
+            telefono: telefono,
+            ext: ext
+        }
+        actualizarCliente(datos)
+
+    }
+
     return (
         <>
             <div className="flex gap-3 mb-4">
@@ -49,14 +65,34 @@ const FormularioClientes = ({ showTabla, dataDetalle }) => {
                     onClick={() => showTabla()}
                 />
             </div>
-            <form>
+            <form onSubmit={handleSubmit(enviarFormulario)}>
+
+            {errors && (
+                    <>
+                        <label htmlFor="">Errores en los campos del formulario</label>
+                        <ul>
+                            {errors.nombre && <li><label htmlFor="abreviacion">{errors.nombre.message}</label></li>}
+                        </ul>
+
+                    </>
+                )}
+
                 <div className="card flex flex-column md:flex-row gap-3">
                     <div className="p-inputgroup flex-1">
                         <FloatLabel>
                             <InputText
                                 value={nombre}
                                 id="nombre"
-                                onChange={(e) => setValue(e.target.value)}
+                                {...register(
+                                    "nombre",
+                                    {
+                                        required: "Nombre:'Requerido'",
+
+                                    }
+                                )}
+
+                                invalid={!!errors.nombre}
+                                onChange={(e) => setNombre(e.target.value)}
                             />
                             <label htmlFor="nombre">Nombre</label>
                         </FloatLabel>
@@ -67,7 +103,7 @@ const FormularioClientes = ({ showTabla, dataDetalle }) => {
                             <InputText
                                 value={abreviacion}
                                 id="abreviacion"
-                                onChange={(e) => setValue(e.target.value)}
+                                onChange={(e) => setAbreviacion(e.target.value)}
                             />
                             <label htmlFor="abreviacion">Abreviacion</label>
                         </FloatLabel>
@@ -78,7 +114,7 @@ const FormularioClientes = ({ showTabla, dataDetalle }) => {
                             <InputText
                                 value={apellido_m}
                                 id="ap_materno"
-                                onChange={(e) => setValue(e.target.value)}
+                                onChange={(e) => setApellidoM(e.target.value)}
                             />
                             <label htmlFor="ap_materno">Apellidos</label>
                         </FloatLabel>
@@ -93,7 +129,7 @@ const FormularioClientes = ({ showTabla, dataDetalle }) => {
                             <InputText
                                 value={telefono}
                                 id="telefono"
-                                onChange={(e) => setValue(e.target.value)}
+                                onChange={(e) => setTelefono(e.target.value)}
                             />
                             <label htmlFor="telefono">telefono</label>
                         </FloatLabel>
@@ -117,7 +153,7 @@ const FormularioClientes = ({ showTabla, dataDetalle }) => {
                             <InputText
                                 value={direccion}
                                 id="direccion"
-                                onChange={(e) => setValue(e.target.value)}
+                                onChange={(e) => setDireccion(e.target.value)}
                             />
                             <label htmlFor="direccion">direccion</label>
                         </FloatLabel>

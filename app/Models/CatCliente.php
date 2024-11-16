@@ -14,10 +14,10 @@ class CatCliente extends Model
     protected $table = 'cat_clientes';
 
     // Especificar la clave primaria personalizada
-    protected $primaryKey = 'id_cliente';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
-        'id_cliente',
+        'id',
         'representante_id',
         'nombre',
         'ap_paterno',
@@ -31,12 +31,12 @@ class CatCliente extends Model
 
     public function representantes()
     {
-        return $this->hasMany(CatRepresentante::class, 'cliente_id', 'id_cliente'); // Referencia a la clave foránea y primaria
+        return $this->hasMany(CatRepresentante::class, 'cliente_id', 'id'); // Referencia a la clave foránea y primaria
     }
 
     public function cotizaciones()
     {
-        return $this->hasMany(Cotizacion::class, 'cliente_id', 'id_cliente'); // Referencia a la clave foránea y primaria
+        return $this->hasMany(Cotizacion::class, 'cliente_id', 'id'); // Referencia a la clave foránea y primaria
     }
 
     // Relación con CatEmpresa

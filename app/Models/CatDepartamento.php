@@ -12,19 +12,19 @@ class CatDepartamento extends Model
     protected $table = 'cat_departamentos';
 
     // Especificar la clave primaria personalizada
-    protected $primaryKey = 'id_departamento';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
-        'id_departamento',
+        'id',
         'nombre',
         'abreviacion',
         'direccion',
         'telefono',
-        'colonia',        
+        'colonia',
     ];
 
     public function cotizaciones()
     {
-        return $this->hasMany(Cotizacion::class, 'departamento_id', 'id_departamento'); // Referencia a la clave foránea y primaria
+        return $this->hasMany(Cotizacion::class, 'departamento_id', 'id'); // Referencia a la clave foránea y primaria
     }
 }

@@ -59,33 +59,37 @@ Route::prefix('admin')->group(function () {
             Route::post('registrar-proveedor', 'nuevoProvedor')->name('catalogo.nuevo.provedor');
             Route::post('actualiza-proveedor', 'actualizaProvedor')->name('catalogo.actualiza.provedor');
             Route::delete('proveedor/{id}', 'deleteProvedor')->name('catalogo.delete.provedor');
-            Route::get('detalle-proveedor/{id}','detalleProvedor')->name('catalogo.detalle.proveedor');
+            Route::get('detalle-proveedor/{id}', 'detalleProvedor')->name('catalogo.detalle.proveedor');
 
             //CRUD  departamentos
             Route::get('list-departamentos', 'listaDepartamentos')->name('catalogo.list.departamentos');
-            Route::get('detalle-departamento/{id}','detalleDepartamento')->name('catalogo.detalle.departamento');
+            Route::get('detalle-departamento/{id}', 'detalleDepartamento')->name('catalogo.detalle.departamento');
+            Route::post('actualiza-departamento', 'actualizaDepartamento')->name('catalogo.actualiza.departamento');
+            Route::delete('departamento/{id}', 'deleteDepartamento')->name('catalogo.delete.departamento');
 
             //CRUD  clientes
             Route::get('list-clientes', 'listaClientes')->name('catalogo.list.clientes');
-            Route::get('detalle-cliente/{id}','detalleCliente')->name('catalogo.detalle.cliente');
+            Route::get('detalle-cliente/{id}', 'detalleCliente')->name('catalogo.detalle.cliente');
+            Route::delete('cliente/{id}', 'deleteCliente')->name('catalogo.delete.cliente');
+            Route::post('actualiza-cliente', 'actualizaCliente')->name('catalogo.actualiza.cliente');
 
             //CRUD  Unidades de medida
             Route::get('list-unidadesmedidas', 'listaUnidadMedidas')->name('catalogo.list.unidadesmedidas');
-            Route::get('detalle-unidadmedida/{id}','detalleUnidadMedida')->name('catalogo.detalle.unidadmedida');
+            Route::get('detalle-unidadmedida/{id}', 'detalleUnidadMedida')->name('catalogo.detalle.unidadmedida');
 
             //CRUD Usuarios
             Route::get('list-usuarios', 'listaUsuarios')->name('catalogo.list.usuarios');
-            Route::get('detalle-usuario/{id}','detalleUsuario')->name('catalogo.detalle.usuario');
+            Route::get('detalle-usuario/{id}', 'detalleUsuario')->name('catalogo.detalle.usuario');
 
             //CRUD  empresa
             Route::get('list-empresas', 'listaEmpresas')->name('catalogo.list.empresas');
-            Route::get('detalle-empresa/{id}','detalleEmpresa')->name('catalogo.detalle.empresa');
+            Route::get('detalle-empresa/{id}', 'detalleEmpresa')->name('catalogo.detalle.empresa');
         });
     });
     // Agrega otros grupos según el nombre de la sección con su controlador y funciones
 
-    Route::prefix('cotizacion')->group(function(){
-        Route::controller(CotizacionController::class)->group(function(){
+    Route::prefix('cotizacion')->group(function () {
+        Route::controller(CotizacionController::class)->group(function () {
             Route::get('show', 'index')->name('cotizacion.show.index');
         });
     });
