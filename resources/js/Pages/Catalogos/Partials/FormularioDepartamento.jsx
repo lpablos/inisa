@@ -23,10 +23,7 @@ const FormularioDepartamento = ({
         defaultValues: {
             id:'',
             nombre:'',
-            abreviacion:'',
-            direccion:'',
-            telefono:'',
-            colonia:'',
+            descripcion:'',       
         },
     })    
 
@@ -49,10 +46,7 @@ const FormularioDepartamento = ({
                 reset({
                     id:'',
                     nombre:'',
-                    abreviacion:'',
-                    direccion:'',
-                    telefono:'',
-                    colonia:'',
+                    descripcion:'',                  
                 });
                 
 
@@ -61,13 +55,13 @@ const FormularioDepartamento = ({
         }
     },[limpiarFormulario])
 
-    const enviarFormulario = () => {
+    const enviarFormulario = (data) => {
 
         if(modoForm == 'Actualizar'){
-            actualizarProvedor(data)
+            actualizarDepartamento(data)
         }
         if(modoForm == 'Guardar'){
-            nuevoProvedor(data)
+            nuevoDepartamento(data)
         }
       
     };

@@ -17,10 +17,7 @@ class CatDepartamento extends Model
     protected $fillable = [
         'id',
         'nombre',
-        'abreviacion',
-        'direccion',
-        'telefono',
-        'colonia',
+        'descripcion',
     ];
 
     public function cotizaciones()

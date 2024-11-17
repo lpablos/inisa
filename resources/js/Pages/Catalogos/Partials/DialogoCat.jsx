@@ -28,6 +28,8 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
 
     useEffect(() => {
         setLoader(true)
+        setOcultarFormulario(true);
+        setOcultarTabla(false);
         switch (tpOperacion) {
             case "provedores":
                 setVisible(true);
@@ -215,15 +217,20 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
     };
 
     const obtenerDetalleDepartamento = async (identy) => {
+        setLoader(true);
         await axios
             .get(`${route("catalogo.detalle.departamento", { id: identy })}`)
             .then((response) => {
                 console.log("datos departamento", response);
                 setDataDetalle(response);
+            }).
+            finally(() => {
+                setLoader(false);
             });
     };
 
     const actualizarDepartamento = async (datos) => {
+        setLoader(true);
         try {
             const response = await axios.post(
                 `${route("catalogo.actualiza.departamento")}`,
@@ -239,14 +246,15 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                     detail: `${data.success}`,
                     life: 3000,
                 });
-
+                
                 // Actualizar la tabla y obtener los departamentos
                 showTabla();
                 obtenerDepartamentos();
+                setLoader(false);
             }
         } catch (error) {
             console.error("Error actualizando el departamento:", error);
-
+            setLoader(false);
             toast.current.show({
                 severity: "error",
                 summary: "Error",
@@ -271,7 +279,8 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                     life: 3000,
                 });
                 showTabla();
-                obtenerProvedores();
+                obtenerDepartamentos()
+                
             }
         })
         .finally(() => {
