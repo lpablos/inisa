@@ -54,12 +54,12 @@ const TablasCatalogos = ({
         }
     }, [data]);
 
-    const opcionesProvedoresTemplate = (registros) => {
+    const opcionesTemplate = (registros) => {
         return (
             <>
                 <Button
                     value={registros.id}
-                    label="Actualizar"
+                    label="Detalle / Actualizar"
                     severity="Editar"
                     onClick={() => updateRegistro(registros.id)}
                 />
@@ -67,49 +67,14 @@ const TablasCatalogos = ({
                     value={registros.id}
                     label="Eliminar"
                     severity="danger"
-                    onClick={() => eliminar("provedor", registros.id)}
+                    onClick={() => eliminar(registros.id)}
                 />
             </>
         );
     };
 
-    const opcionesDepartamentosTemplate = (registros) => {
-        return (
-            <>
-                <Button
-                    value={registros.id}
-                    label="Actualizar"
-                    severity="Editar"
-                    onClick={() => updateRegistro(registros.id)}
-                />
-                <Button
-                    value={registros.id}
-                    label="Eliminar"
-                    severity="danger"
-                    onClick={() => eliminar("departamento", registros.id)}
-                />
-            </>
-        );
-    };
 
-    const opcionesClientesTemplate = (registros) => {
-        return (
-            <>
-                <Button
-                    value={registros.id}
-                    label="Actualizar"
-                    severity="Editar"
-                    onClick={() => updateRegistro(registros.id)}
-                />
-                <Button
-                    value={registros.id}
-                    label="Eliminar"
-                    severity="danger"
-                    onClick={() => eliminar("cliente", registros.id)}
-                />
-            </>
-        );
-    };
+
 
     return (
         <>
@@ -127,41 +92,24 @@ const TablasCatalogos = ({
                     <Column field="abreviacion" header="Abreviación"></Column>
                     <Column field="nombre" header="Nombre"></Column>
                     <Column field="telefono" header="Telefono"></Column>
-                    <Column field="direccion" header="Dirección"></Column>
-                    <Column field="colonia" header="Colonia"></Column>
-                    <Column
-                        header="Opciones"
-                        body={opcionesProvedoresTemplate}
-                    ></Column>
+                    <Column header="Opciones" body={opcionesTemplate}></Column>
                 </DataTable>
             )}
             {opcionTabla == 2 && (
                 // Este es la tabla para Departamentos
-                <DataTable value={registros} tableStyle={{ minWidth: "100%" }}>
+                <DataTable value={registros} tableStyle={{ minWidth: "50rem" }}>
                     <Column field="nombre" header="Nombre"></Column>
-                    <Column field="descripcion" header="Descripcion"></Column>
-                    <Column
-                        header="Opciones"
-                        body={opcionesDepartamentosTemplate}
-                    ></Column>
+                    <Column header="Opciones" body={opcionesTemplate}></Column>
                 </DataTable>
             )}
             {opcionTabla == 3 && (
                 // Este es la tabla para clientes
-                <DataTable value={registros} tableStyle={{ minWidth: "100%" }}>
+                <DataTable value={registros} tableStyle={{ minWidth: "50rem" }}>
                     <Column field="nombre" header="Nombre"></Column>
                     <Column field="abreviacion" header="Abreviación"></Column>
-                    <Column
-                        field="ap_materno"
-                        header="Apellido Materno"
-                    ></Column>
-                    <Column field="direccion" header="Direccion"></Column>
                     <Column field="telefono" header="Telefono"></Column>
                     <Column field="ext" header="Ext"></Column>
-                    <Column
-                        header="Opciones"
-                        body={opcionesClientesTemplate}
-                    ></Column>
+                    <Column header="Opciones" body={opcionesTemplate}></Column>
                 </DataTable>
             )}
 
@@ -173,7 +121,7 @@ const TablasCatalogos = ({
                     <Column field="descripcion" header="Descripcion"></Column>
                     <Column
                         header="Opciones"
-                        body={opcionesProvedoresTemplate}
+                        body={opcionesTemplate}
                     ></Column>
                 </DataTable>
             )}
@@ -185,7 +133,7 @@ const TablasCatalogos = ({
                     <Column field="email" header="Correo"></Column>
                     <Column
                         header="Opciones"
-                        body={opcionesProvedoresTemplate}
+                        body={opcionesTemplate}
                     ></Column>
                 </DataTable>
             )}
@@ -207,7 +155,7 @@ const TablasCatalogos = ({
                     ></Column>
                     <Column
                         header="Opciones"
-                        body={opcionesProvedoresTemplate}
+                        body={opcionesTemplate}
                     ></Column>
                 </DataTable>
             )}

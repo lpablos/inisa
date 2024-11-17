@@ -71,8 +71,6 @@ const FormularioProvedor = ({
         if(modoForm == 'Guardar'){
             nuevoProvedor(data)
         }
-        
-        
     }
 
     return (

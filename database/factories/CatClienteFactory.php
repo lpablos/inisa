@@ -21,7 +21,7 @@ class CatClienteFactory extends Factory
          return [
             'nombre' => $this->faker->firstName(),       // Nombre ficticio del cliente
             'abreviacion' => strtoupper($this->faker->lexify('???')), // Tres letras como abreviación
-            'ap_materno' => $this->faker->lastName(),    // Apellido materno
+            // 'ap_materno' => $this->faker->lastName(),    // Apellido materno
             'direccion' => $this->faker->address(),      // Dirección ficticia
             'telefono' => $this->faker->phoneNumber(),   // Número de teléfono
             'ext' => $this->faker->numerify('###'),      // Extensión de tres dígitos

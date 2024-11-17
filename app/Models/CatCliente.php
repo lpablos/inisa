@@ -18,15 +18,14 @@ class CatCliente extends Model
 
     protected $fillable = [
         'id',
-        'representante_id',
         'nombre',
-        'ap_paterno',
-        'ap_materno',
-        'titulo',
-        'descripcion',
+        'abreviacion',
+        'direccion',
         'telefono',
         'ext',
-
+        'empresa_id',
+        'created_at',
+        'updated_at',
     ];
 
     public function representantes()

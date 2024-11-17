@@ -4,57 +4,71 @@ import { InputText } from "primereact/inputtext";
 import { FloatLabel } from "primereact/floatlabel";
 import { Button } from "primereact/button";
 import { useForm } from "react-hook-form";
-const FormularioClientes = ({ showTabla, dataDetalle, actualizarCliente }) => {
 
-    const {register, handleSubmit, formState: { errors }} = useForm()
-    const [id, setId] = useState("");
-    const [nombre, setNombre] = useState("");
-    const [abreviacion, setAbreviacion] = useState("");
-    const [apellido_m, setApellidoM] = useState("");
-    const [direccion, setDireccion] = useState("");
-    const [telefono, setTelefono] = useState("");
-    const [ext, setExt] = useState("");
+const FormularioClientes = ({ 
+    showTabla, 
+    dataDetalle, 
+    actualizarCliente,
+    limpiarFormulario, 
+    modoForm,
+    nuevoCliente
+}) => {
 
-    useEffect(() => {
-        if (dataDetalle) {
-            //Destrcutura el valor del data para solo almacenar el objecto
-            console.log("este es el detalle ", dataDetalle.data);
+    const {
+        register, 
+        handleSubmit, 
+        formState: { errors }, 
+        reset
+    } = useForm( {
+        // Datos del form por defecto
+        defaultValues: {
+            id:'',
+            nombre: '',
+            abreviacion: '',
+            direccion: '',
+            telefono: '',
+            ext: '',
+        },
+      })
 
-            const {
-                id,
-                nombre,
-                abreviacion,
-                ap_materno,
-                direccion,
-                telefono,
-                ext,
-            } = dataDetalle?.data || {};
-            //  Asignacion de valores
-            setId(id);
-            setNombre(nombre);
-            setAbreviacion(abreviacion);
-            setApellidoM(ap_materno);
-            setDireccion(direccion);
-            setTelefono(telefono);
-            setExt(ext);
-        } else {
-            setData({});
+      useEffect(()=>{
+        if(dataDetalle){
+            //Esto es para el detalle del validador
+            const {data} = dataDetalle            
+            reset(data);
+
+        }else{
+            setData({})
         }
-    }, [dataDetalle]);
+    },[dataDetalle]);
 
-    const enviarFormulario = () =>{
-        const datos = {
-            id: id,
-            nombre: nombre,
-            abreviacion: abreviacion,
-            ap_materno: apellido_m,
-            direccion: direccion,
-            telefono: telefono,
-            ext: ext
+    useState(()=>{
+        
+        if(limpiarFormulario){
+                      
+            setTimeout(() => {
+                reset({
+                    id:'',
+                    nombre:'',
+                    abreviacion:'',
+                    direccion:'',
+                    telefono:'',                    
+                    ext: '',
+                });
+            }, 800);
+            
         }
-        actualizarCliente(datos)
+    },[limpiarFormulario])
 
+    const enviarFormulario = (data) =>{
+        if(modoForm == 'Actualizar'){
+            actualizarCliente(data)
+        }
+        if(modoForm == 'Guardar'){
+            nuevoCliente(data)
+        }
     }
+
 
     return (
         <>
@@ -66,106 +80,111 @@ const FormularioClientes = ({ showTabla, dataDetalle, actualizarCliente }) => {
                 />
             </div>
             <form onSubmit={handleSubmit(enviarFormulario)}>
-
-            {errors && (
-                    <>
-                        <label htmlFor="">Errores en los campos del formulario</label>
-                        <ul>
-                            {errors.nombre && <li><label htmlFor="abreviacion">{errors.nombre.message}</label></li>}
-                        </ul>
-
-                    </>
-                )}
-
-                <div className="card flex flex-column md:flex-row gap-3">
-                    <div className="p-inputgroup flex-1">
-                        <FloatLabel>
-                            <InputText
-                                value={nombre}
-                                id="nombre"
-                                {...register(
-                                    "nombre",
-                                    {
-                                        required: "Nombre:'Requerido'",
-
+                <div className="card flex flex-wrap gap-4 p-fluid">
+                    <div className="flex-auto">
+                        <label htmlFor="nombre">Nombre</label>
+                        <InputText 
+                            id="nombre" 
+                            aria-describedby="nombre-help"
+                            {...register(
+                                "nombre", 
+                                { 
+                                    required: "Valor requerido",
+                                    minLength:{
+                                        value:3,
+                                        message: "Minimo 4 Caracteres"
                                     }
-                                )}
-
-                                invalid={!!errors.nombre}
-                                onChange={(e) => setNombre(e.target.value)}
-                            />
-                            <label htmlFor="nombre">Nombre</label>
-                        </FloatLabel>
+                                }
+                            )}
+                            invalid={!!errors.nombre}
+                        />
+                        {errors.nombre && <small id="nombre-help" className="text-red-500">{errors.nombre.message}</small>}  
+                    </div>
+                    <div className="flex-auto">
+                        <label htmlFor="abreviacion">Abreviación</label>
+                        <InputText 
+                            id="abreviacion" 
+                            aria-describedby="abreviacion-help"
+                            {...register(
+                                "abreviacion", 
+                                { 
+                                    minLength:{
+                                        value:1,
+                                        message: "Minimo 4 Caracteres"
+                                    }
+                                }
+                            )}
+                            invalid={!!errors.abreviacion}
+                        />
+                        {errors.abreviacion && <small id="abreviacion-help" className="text-red-500">{errors.abreviacion.message}</small>}  
+                    </div>
+                  
+                    <div className="flex-auto">
+                        <label htmlFor="telefono">Teléfono</label>
+                        <InputText 
+                            id="telefono" 
+                            aria-describedby="telefono-help"
+                            {...register(
+                                "telefono", 
+                                { 
+                                    minLength:{
+                                        value:8,
+                                        message: "Minimo 8 Caracteres"
+                                    }
+                                }
+                            )}
+                            invalid={!!errors.telefono}
+                        />
+                        {errors.telefono && <small id="telefono-help" className="text-red-500">{errors.telefono.message}</small>}  
                     </div>
 
-                    <div className="p-inputgroup flex-1">
-                        <FloatLabel>
-                            <InputText
-                                value={abreviacion}
-                                id="abreviacion"
-                                onChange={(e) => setAbreviacion(e.target.value)}
-                            />
-                            <label htmlFor="abreviacion">Abreviacion</label>
-                        </FloatLabel>
+                    <div className="flex-auto">
+                        <label htmlFor="ext">Extensión(s)</label>
+                        <InputText 
+                            id="ext" 
+                            aria-describedby="ext-help"
+                            {...register(
+                                "ext", 
+                                { 
+                                    minLength:{
+                                        value:1,
+                                        message: "Minimo 4 Caracteres"
+                                    }
+                                }
+                            )}
+                            invalid={!!errors.ext}
+                        />
+                        {errors.ext && <small id="ext-help" className="text-red-500">{errors.ext.message}</small>}  
                     </div>
 
-                    <div className="p-inputgroup flex-1">
-                        <FloatLabel>
-                            <InputText
-                                value={apellido_m}
-                                id="ap_materno"
-                                onChange={(e) => setApellidoM(e.target.value)}
-                            />
-                            <label htmlFor="ap_materno">Apellidos</label>
-                        </FloatLabel>
-                    </div>
-                </div>
-
-
-
-                <div className="card flex flex-column md:flex-row gap-3">
-                    <div className="p-inputgroup flex-1">
-                        <FloatLabel>
-                            <InputText
-                                value={telefono}
-                                id="telefono"
-                                onChange={(e) => setTelefono(e.target.value)}
-                            />
-                            <label htmlFor="telefono">telefono</label>
-                        </FloatLabel>
+                    <div className="flex-auto">
+                        <label htmlFor="direccion">Dirección(s)</label>
+                        <InputText 
+                            id="direccion" 
+                            aria-describedby="direccion-help"
+                            {...register(
+                                "direccion", 
+                                { 
+                                    
+                                    minLength:{
+                                        value:3,
+                                        message: "Minimo 3 Caracteres"
+                                    }
+                                }
+                            )}
+                            invalid={!!errors.ext}
+                        />
+                        {errors.direccionext && <small id="direccion-help" className="text-red-500">{errors.direccion.message}</small>}  
                     </div>
 
-                    <div className="p-inputgroup flex-1">
-                        <FloatLabel>
-                            <InputText
-                                value={ext}
-                                id="ext"
-                                onChange={(e) => setValue(e.target.value)}
-                            />
-                            <label htmlFor="ext">ext</label>
-                        </FloatLabel>
+                    <div className="mt-4 flex justify-end w-full">
+                        <Button
+                            type="submit"
+                            severity="success"
+                            label="Guardar"
+                            className="ml-auto"
+                        />
                     </div>
-                </div>
-
-                <div className="card flex flex-column md:flex-row gap-3">
-                    <div className="p-inputgroup flex-1">
-                        <FloatLabel>
-                            <InputText
-                                value={direccion}
-                                id="direccion"
-                                onChange={(e) => setDireccion(e.target.value)}
-                            />
-                            <label htmlFor="direccion">direccion</label>
-                        </FloatLabel>
-                    </div>
-                </div>
-
-                <div className="flex gap-3 mb-4">
-                    <Button
-                        severity="success"
-                        label="Guardar"
-                        className="ml-auto"
-                    />
                 </div>
             </form>
         </>

@@ -15,11 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('abreviacion');
-            $table->string('ap_materno');
             $table->string('direccion');
             $table->string('telefono');
             $table->string('ext');
-
             $table->unsignedBigInteger('empresa_id')->nullable();
             $table->foreign('empresa_id')->references('id')->on('cat_empresas'); 
             

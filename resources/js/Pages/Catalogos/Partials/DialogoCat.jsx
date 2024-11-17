@@ -69,25 +69,39 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
         }
     }, [tpOperacion]);
 
-    const eliminiarRegistro = async (tipo, identy) => {
-        console.log("identy en eliminiarRegistro:", identy);
-        console.log("tipo en eliminiarRegistro:", tipo);
-        switch (tipo) {
-            case "provedor":
+    const eliminiarRegistro = async (identy) => {
+        switch (tpOperacion) {
+            case "provedores":
                 await confirmarEliminacion(identy);
                 break;
-
-            case "departamento":
+            case "departamentos":
                 await confirmarEliminacionDepartamento(identy);
                 break;
-
-            case "cliente":
+            case "clientes":
                 await confirmarEliminacionClientes(identy);
                 break;
-
+            // case "unidadesMedidas":
+            //     setTitulo("Catalogo de Unidades de Medida");
+            //     obtenerUnidadesMedidas();
+            //     setVisible(true);
+            //     break;
+            // case "usuarios":
+            //     setTitulo("Catalogo de Usuarios");
+            //     obtenerUsuarios();
+            //     setVisible(true);
+            //     break;
+            // case "datosEmpresa":
+            //     setTitulo("Datos de la Empresa");
+            //     obtenerEmpresa();
+            //     setVisible(true);
+            //     break;
             default:
+                setTitulo("");
+                setVisible(false);
+                setOperacion(null);
                 break;
         }
+      
     };
 
     const updateRegistro = (identy) => {
@@ -290,43 +304,22 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
     }
 
 
-
-
-
-
-
-
-
-    // CRUD Empresa
-    const obtenerEmpresa = async () => {
-        await axios
-            .get(`${route("catalogo.list.empresas")}`)
-            .then((response) => {
-                const { data } = response;
-                setData(data);
-            });
-    };
-
-    const obtenerDetalleEmpresa = async (identy) => {
-        await axios
-            .get(`${route("catalogo.detalle.empresa", { id: identy })}`)
-            .then((response) => {
-                console.log("datos empresa", response);
-                setDataDetalle(response);
-            });
-    };
-
     // CRUD Clientes
     const obtenerClientes = async () => {
+        setLoader(true);
         await axios
             .get(`${route("catalogo.list.clientes")}`)
             .then((response) => {
                 const { data } = response;
                 setData(data);
+            })
+            .finally(() => {
+                setLoader(false);
             });
     };
 
     const actualizarCliente = async (datos) => {
+        setLoader(true);
         try {
             const response = await axios.post(
                 `${route("catalogo.actualiza.cliente")}`,
@@ -334,7 +327,7 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
             );
 
             const { status, data } = response;
-
+            
             if (status === 201) {
                 // Mostrar mensaje de éxito
                 toast.current.show({
@@ -354,6 +347,7 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                     life: 3000,
                 });
             }
+            setLoader(false);
         } catch (error) {
             if (error.response && error.response.status === 422) {
                 // Capturar errores de validación
@@ -375,11 +369,12 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                     life: 3000,
                 });
             }
+            setLoader(false);
         }
     };
 
     const eliminarClientes = async (identy) => {
-        console.log("identy en eliminarCklientes:", identy);
+        setLoader(true);
         try {
             await axios.delete(
                 `${route("catalogo.delete.cliente", { id: identy })}`
@@ -390,6 +385,7 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                 detail: "El cliente ha sido eliminado exitosamente.",
                 life: 3000,
             });
+            setLoader(false);
             obtenerClientes();
         } catch (error) {
             toast.current.show({
@@ -398,6 +394,7 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                 detail: "No se pudo eliminar el cliente.",
                 life: 3000,
             });
+            setLoader(false);
         }
     };
 
@@ -427,6 +424,57 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                 setDataDetalle(response);
             });
     };
+
+    const nuevoCliente = async (datos) =>{
+        setLoader(true); 
+        await axios
+        .post(`${route("catalogo.nuevo.cliente")}`, datos)
+        .then((response) => {
+            const { status, data } = response;
+            // setDataDetalle(response)
+            if (status == 201) {
+                toast.current.show({
+                    severity: "success",
+                    summary: "Success",
+                    detail: `${data.success}`,
+                    life: 3000,
+                });
+                showTabla();
+                obtenerClientes();
+                
+            }
+        })
+        .finally(() => {
+            setLoader(false);
+        });
+        
+    }
+
+
+
+
+
+
+
+    // CRUD Empresa
+    const obtenerEmpresa = async () => {
+        await axios
+            .get(`${route("catalogo.list.empresas")}`)
+            .then((response) => {
+                const { data } = response;
+                setData(data);
+            });
+    };
+
+    const obtenerDetalleEmpresa = async (identy) => {
+        await axios
+            .get(`${route("catalogo.detalle.empresa", { id: identy })}`)
+            .then((response) => {
+                console.log("datos empresa", response);
+                setDataDetalle(response);
+            });
+    };
+
 
     // CRUD Usuarios
     const obtenerUsuarios = async () => {
@@ -569,7 +617,7 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
         <Dialog
             header={titulo}
             visible={visible}
-            style={{ width: "85vw" }}
+            style={{ width: "65vw" }}
             onHide={() => {
                 if (!visible) return;
                 setVisible(false);
@@ -617,6 +665,10 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                         showTabla={showTabla}
                         dataDetalle={dataDetalle}
                         actualizarCliente={actualizarCliente}
+                        limpiarFormulario = {limpiarFormulario}
+                        setLimpiarFormulario  = {setLimpiarFormulario}
+                        modoForm={modoForm}
+                        nuevoCliente={nuevoCliente}
                     />
                 )}
 

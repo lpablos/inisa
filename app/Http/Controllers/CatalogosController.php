@@ -14,7 +14,7 @@ use App\Models\CatEstatu;
 use App\Models\CatProvedor;
 use App\Models\CatUnidadMedida;
 use App\Models\User;
-
+use Illuminate\Support\Facades\Auth;
 
 class CatalogosController extends Controller
 {
@@ -177,45 +177,11 @@ class CatalogosController extends Controller
     }
 
 
-
-
-    // Empresas
-    public function listaEmpresas()
-    {
-        $data = CatEmpresa::all();
-        return response()->json($data);
-    }
-
-
-    public function detalleEmpresa($id)
-    {
-        $data = CatEmpresa::where('id', $id)->first();
-        if (!$data) {
-            return response()->json(['error' => 'Empresa no encontrado'], 404);
-        }
-        return response()->json($data, 200);
-    }
-
     // Clientes
     public function listaClientes()
     {
 
-        // $data = CatCliente::with('empresa')->get();
-        // dd($data);
-
-        $data = DB::table('cat_clientes')
-            ->join('cat_empresas', 'cat_clientes.empresa_id', '=', 'cat_empresas.id')
-            ->select(
-                'cat_clientes.id',
-                'cat_clientes.nombre as nombre',
-                'cat_clientes.abreviacion',
-                'cat_clientes.ap_materno',
-                'cat_clientes.direccion',
-                'cat_clientes.telefono',
-                'cat_clientes.ext',
-                'cat_empresas.nombre as empresa'
-            )
-            ->get();
+        $data = CatCliente::with('empresa')->get();
 
         return response()->json($data);
     }
@@ -273,6 +239,31 @@ class CatalogosController extends Controller
         }
     }
 
+    public function registrarCliente(Request $request)
+    {
+        
+        
+        $validatedData = $request->validate([
+            'nombre' =>'required|string',
+            'abreviacion' =>'nullable|string',
+            'direccion' =>'nullable|string',
+            'telefono' =>'nullable|string',
+            'ext'=>'nullable|string',
+        ]);
+        
+        $user = Auth::user();
+        $cliente = new CatCliente;
+        $cliente->nombre = $validatedData['nombre'];
+        $cliente->abreviacion = $validatedData['abreviacion'];
+        $cliente->direccion = $validatedData['direccion'];
+        $cliente->telefono = $validatedData['telefono'];
+        $cliente->ext = $validatedData['ext'];
+        $cliente->empresa_id = $user->empresa_id;
+        $cliente->save();
+        // $proveedor = CatCliente::create($validatedData);
+        return response()->json(['success' => 'Cliente creado exitosamente', 'data' => $cliente], 201);
+    }
+
     public function deleteCliente($id = null)
     {
         // dd($id);
@@ -295,6 +286,28 @@ class CatalogosController extends Controller
             ], 404);
         }
     }
+
+
+
+
+    // Empresas
+    public function listaEmpresas()
+    {
+        $data = CatEmpresa::all();
+        return response()->json($data);
+    }
+
+
+    public function detalleEmpresa($id)
+    {
+        $data = CatEmpresa::where('id', $id)->first();
+        if (!$data) {
+            return response()->json(['error' => 'Empresa no encontrado'], 404);
+        }
+        return response()->json($data, 200);
+    }
+
+
 
 
     // Unidades de Medida

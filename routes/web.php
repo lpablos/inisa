@@ -70,9 +70,10 @@ Route::prefix('admin')->group(function () {
 
             //CRUD  clientes
             Route::get('list-clientes', 'listaClientes')->name('catalogo.list.clientes');
-            Route::get('detalle-cliente/{id}', 'detalleCliente')->name('catalogo.detalle.cliente');
-            Route::delete('cliente/{id}', 'deleteCliente')->name('catalogo.delete.cliente');
+            Route::post('registrar-clientes', 'registrarCliente')->name('catalogo.nuevo.cliente');
             Route::post('actualiza-cliente', 'actualizaCliente')->name('catalogo.actualiza.cliente');
+            Route::delete('cliente/{id}', 'deleteCliente')->name('catalogo.delete.cliente');
+            Route::get('detalle-cliente/{id}', 'detalleCliente')->name('catalogo.detalle.cliente');
 
             //CRUD  Unidades de medida
             Route::get('list-unidadesmedidas', 'listaUnidadMedidas')->name('catalogo.list.unidadesmedidas');
