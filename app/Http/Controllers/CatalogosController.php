@@ -63,16 +63,16 @@ class CatalogosController extends Controller
     public function registrarProvedor(Request $request)
     {
         // Validación de los datos del formulario
+        
         $validatedData = $request->validate([
             'nombre' => 'required|string|max:255',
             'abreviacion' => 'nullable|string|max:100',
             'direccion' => 'nullable|string|max:255',
-            'telefono' => 'nullable|numeric|digits:10',
+            'telefono' => 'nullable|string|min:8',
             'colonia' => 'nullable|string|max:255',
         ]);
-        // Crear el nuevo proveedor con los datos validados
-        $proveedor = Proveedor::create($validatedData);
-
+        
+        $proveedor = CatProvedor::create($validatedData);
         return response()->json(['success' => 'Proveedor creado exitosamente', 'data' => $proveedor], 201);
     }
 

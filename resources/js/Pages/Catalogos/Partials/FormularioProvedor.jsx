@@ -4,46 +4,77 @@ import { FloatLabel } from "primereact/floatlabel";
 import { Button } from "primereact/button";
 import { useForm } from "react-hook-form";
 import { Messages } from 'primereact/messages';
+import { Divider } from 'primereact/divider';
+import { InputNumber } from 'primereact/inputnumber';
 
 
 
-const FormularioProvedor = ({showTabla, dataDetalle, actualizarProvedor}) =>  {  
+const FormularioProvedor = ({
+    showTabla, 
+    dataDetalle, 
+    actualizarProvedor, 
+    limpiarFormulario, 
+    modoForm,
+    nuevoProvedor
 
-    const {register, handleSubmit, formState: { errors }} = useForm()
-    
-    const[id, setId] = useState('');
-    const[nombre, setNombre] = useState('');
-    const[abreviacion, setAbreviacion] = useState('');
-    const[direccion, setDireccion] = useState('');
-    const[telefono, setTelefono] = useState('');
-    const[colonia, setColonia] = useState('');
-
+}) =>  {  
+    // Todo lo relacionado con la manipulacion del formulario
+    const {
+        register, 
+        handleSubmit, 
+        formState: { errors }, 
+        reset
+    } = useForm( {
+        // Datos del form por defecto
+        defaultValues: {
+            id:'',
+            nombre:'',
+            abreviacion:'',
+            direccion:'',
+            telefono:'',
+            colonia:'',
+        },
+      })
     useEffect(()=>{
         if(dataDetalle){
-            //Destrcutura el valor del data para solo almacenar el objecto
-            const {id,nombre,abreviacion,direccion,telefono,colonia} = dataDetalle?.data || {};            // // Asignacion de valores
-            setId(id);
-            setNombre(nombre);
-            setAbreviacion(abreviacion);
-            setDireccion(direccion);
-            setTelefono(telefono);
-            setColonia(colonia);
+            //Esto es para el detalle del validador
+            const {data} = dataDetalle            
+            reset(data);
 
         }else{
             setData({})
         }
     },[dataDetalle]);
 
-    const enviarFormulario = () =>{
-        const datos = {
-            id: id,
-            nombre: nombre,
-            abreviacion: abreviacion,
-            direccion: direccion,
-            telefono: telefono,
-            colonia: colonia,
+    useState(()=>{
+        
+        if(limpiarFormulario){
+                      
+            setTimeout(() => {
+                reset({
+                    id:'',
+                    nombre:'',
+                    abreviacion:'',
+                    direccion:'',
+                    telefono:'',
+                    colonia:'',
+                });
+                
+
+            }, 800);
+            
         }
-        actualizarProvedor(datos)
+    },[limpiarFormulario])
+
+    
+    const enviarFormulario = (data) =>{
+        if(modoForm == 'Actualizar'){
+            actualizarProvedor(data)
+        }
+        if(modoForm == 'Guardar'){
+            nuevoProvedor(data)
+        }
+        
         
     }
 
@@ -57,137 +88,116 @@ const FormularioProvedor = ({showTabla, dataDetalle, actualizarProvedor}) =>  {
                 />
             </div>
             <form onSubmit={handleSubmit(enviarFormulario)}>
-                {errors && (
-                    <>
-                        <label htmlFor="">Errores en los campos del formulario</label>
-                        <ul>
-                            {errors.nombre && <li><label htmlFor="abreviacion">{errors.nombre.message}</label></li>}  
-                            {errors.abreviacion && <li><label htmlFor="abreviacion">{errors.abreviacion.message}</label></li>}
-                            {errors.telefono && <li><label htmlFor="abreviacion">{errors.telefono.message}</label></li>}  
-                            {errors.colonia && <li><label htmlFor="abreviacion">{errors.colonia.message}</label></li>}  
-                            {errors.direccion && <li><label htmlFor="abreviacion">{errors.direccion.message}</label></li>}    
-                        </ul>
-                        
-                    </>
-                )}
-                
-                
-                
-                <div className="card flex flex-column md:flex-row gap-3">
-                                      
-                    <div className="p-inputgroup flex-1">
-                        <FloatLabel>
-                            <InputText value={nombre} 
-                                id="nombre"  
-                                {...register(
-                                    "nombre", 
-                                    { 
-                                        required: "Nombre:'Requerido'",
-                                        minLength:{
-                                            value:4,
-                                            message: "Nombre: 'Minimo 4'"
-                                        }
+                <div className="card flex flex-wrap gap-4 p-fluid">
+
+                    <div className="flex-auto">
+                        <label htmlFor="nombre">Nombre</label>
+                        <InputText 
+                            id="nombre" 
+                            aria-describedby="username-help"
+                            {...register(
+                                "nombre", 
+                                { 
+                                    required: "Valor requerido",
+                                    minLength:{
+                                        value:4,
+                                        message: "Minimo 4 Caracteres"
                                     }
-                                )}
-                                invalid={!!errors.nombre}
-                                onChange={(e) => setNombre(e.target.value)} 
-                                />
-                            <label htmlFor="nombre">Nombre</label>
-                        </FloatLabel>
+                                }
+                            )}
+                            invalid={!!errors.nombre}
+                        />
+                        {errors.nombre && <small id="username-help" className="text-red-500">{errors.nombre.message}</small>}  
                     </div>
-                    <div className="p-inputgroup flex-1">
-                        <FloatLabel>
-                            <InputText 
-                                value={abreviacion} 
-                                {...register(
-                                    "abreviacion", 
-                                    { 
-                                        minLength:{
-                                            value:4,
-                                            message: "Dirección: 'Caracteres mínimo 4 Caracteres'"
-                                        }
+
+                    <div className="flex-auto">
+                        <label htmlFor="abreviacion">Abreviación</label>
+                        <InputText 
+                            id="abreviacion" 
+                            aria-describedby="abreviacion-help"
+                            {...register(
+                                "abreviacion", 
+                                { 
+                                    minLength:{
+                                        value:2,
+                                        message: "Mínimo 2 Caracteres"
                                     }
-                                )}
-                                invalid={!!errors.abreviacion}
-                                id="abreviacion"  
-                                onChange={(e) => setAbreviacion(e.target.value)} 
-                                />
-                            <label htmlFor="abreviacion">Abreviacion</label>     
-                        </FloatLabel>
+                                }
+                            )}
+                        />
+                        {errors.abreviacion && <small id="abreviacion-help" className="text-red-500">{errors.abreviacion.message}</small>}  
+                    </div>
+
+                    <div className="flex-auto">
+                        <label htmlFor="telefono">Teléfono</label>
+                        <InputText 
+                            id="telefono" 
+                            aria-describedby="telefono-help"
+                            {...register(
+                                "telefono", 
+                                { 
+                                    minLength:{
+                                        value:8,
+                                        message: "Mínimo 8 Caracteres"
+                                    }
+                                }
+                            )}
+                        />
+                        {errors.telefono && <small id="telefono-help" className="text-red-500">{errors.telefono.message}</small>}  
+
+                    </div>
+
+                    <div className="flex-auto">
+                        <label htmlFor="colonia">Colonia</label>
+                        <InputText 
+                            id="colonia" 
+                            aria-describedby="colonia-help"
+                            {...register(
+                                "colonia", 
+                                { 
+                                    minLength:{
+                                        value:2,
+                                        message: "Mínimo 2 Caracteres"
+                                    }
+                                }
+                            )}
+                        />
+                        {errors.colonia && <small id="colonia-help" className="text-red-500">{errors.colonia.message}</small>}  
+
+                    </div>
+
+                    <div className="flex-auto">
+                        <label htmlFor="direccion">Dirección</label>
+                        <InputText 
+                            id="direccion" 
+                            aria-describedby="direccion-help"
+                            {...register(
+                                "direccion", 
+                                { 
+                                    minLength:{
+                                        value:2,
+                                        message: "Mínimo 2 Caracteres"
+                                    }
+                                }
+                            )}
+                        />
+                        {errors.direccion && <small id="direccion-help" className="text-red-500">{errors.direccion.message}</small>}  
+
+                    </div>
+
+                    {/* <div className="w-full">
                        
-                    </div>
-                    <div className="p-inputgroup flex-1">
-                        <FloatLabel>
-                            <InputText 
-                                value={telefono} 
-                                id="telefono"  
-                                {...register(
-                                    "telefono", 
-                                    { 
-                                        minLength:{
-                                            value:8,
-                                            message: "Teléfono: 'Mínimo 8 Digitos'"
-                                        }
-                                    }
-                                )}
-                                invalid={!!errors.telefono}
-                                onChange={(e) => setTelefono(e.target.value)} />
-                            <label htmlFor="telefono">Telefono</label>
-                        </FloatLabel>
+                    </div> */}
+                    <div className="mt-4 flex justify-end w-full">
+                        <Button
+                            type="submit"
+                            severity="success"
+                            label="Guardar"
+                            className="ml-auto"
+                        />
                     </div>
                 </div>
-                <div className="card flex flex-column md:flex-row gap-3">
-                    <div className="p-inputgroup flex-1">
-                        <FloatLabel>
-                            <InputText value={colonia} 
-                                        id="colonia"  
-                                        {...register(
-                                            "colonia", 
-                                            { 
-                                                minLength:{
-                                                    value:8,
-                                                    message: "Colonia: 'Mínimo 3 Digitos'"
-                                                }
-                                            }
-                                        )}
-                                        invalid={!!errors.colonia}
-                                        onChange={(e) => setColonia(e.target.value)} />
-                            <label htmlFor="colonia">Colonia</label>
-                        </FloatLabel>
-                    </div>
-
-                    <div className="p-inputgroup flex-1">
-                        <FloatLabel>
-                            <InputText value={direccion} 
-                                        {...register(
-                                            "direccion", 
-                                            { 
-                                                minLength:{
-                                                    value:8,
-                                                    message: "Dorección: 'Mínimo 3 Digitos'"
-                                                }
-                                            }
-                                        )}
-                                        invalid={!!errors.direccion}
-                                        id="direccion"  
-                                        onChange={(e) => setDireccion(e.target.value)} />
-                            <label htmlFor="direccion">Dirección</label>
-                        </FloatLabel>
-                    </div>
-
-                   
-                </div>
-
-                  
-
-                <div className="flex gap-3 mb-4">
-                    <Button
-                        type="submit"
-                        severity="success"
-                        label="Guardar"
-                        className="ml-auto"
-                    />
-                </div>
+                
 
             </form>
 

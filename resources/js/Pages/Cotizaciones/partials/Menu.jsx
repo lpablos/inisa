@@ -100,8 +100,7 @@ const Menu = () => {
         }
     ];
     
-    return (
-        
+    return (        
             
         <MegaMenu model={items} breakpoint="960px" />
         

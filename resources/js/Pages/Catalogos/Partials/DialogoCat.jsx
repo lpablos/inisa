@@ -11,18 +11,23 @@ import FormularioUsuario from "./FormularioUsuario";
 import FormularioEmpresa from "./FormularioEmpresa";
 import ConfirmarEliminacion from "./ConfirmarEliminacion";
 import { Toast } from "primereact/toast";
+import { ProgressSpinner } from 'primereact/progressspinner';
 
 export default function DialogoCat({ tpOperacion, setOperacion }) {
     const [visible, setVisible] = useState(false);
     const [titulo, setTitulo] = useState("");
     const [data, setData] = useState([]); // La data de los request
     const [dataDetalle, setDataDetalle] = useState({});
+    const [limpiarFormulario, setLimpiarFormulario] = useState(false)
+    const [modoForm, setModoForm] = useState('Guardar');
+    const [loader, setLoader] = useState(false);
 
     const [ocultarTabla, setOcultarTabla] = useState(false);
     const [ocultarFormulario, setOcultarFormulario] = useState(true);
     const toast = useRef(null);
 
     useEffect(() => {
+        setLoader(true)
         switch (tpOperacion) {
             case "provedores":
                 setVisible(true);
@@ -84,7 +89,7 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
     };
 
     const updateRegistro = (identy) => {
-        console.log("Valor de identy recibido en updateRegistro:", identy);
+        
         switch (tpOperacion) {
             case "provedores":
                 obtenerDetalleProvedor(identy);
@@ -109,10 +114,12 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                 break;
         }
         // Mostrar o oculatar formularo
+        setLimpiarFormulario(false)
         setOcultarFormulario(false);
         setOcultarTabla(true);
+        setModoForm('Actualizar')
+        
     };
-
     // CRUD Provedor
     const obtenerProvedores = async () => {
         await axios
@@ -120,7 +127,11 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
             .then((response) => {
                 const { data } = response;
                 setData(data);
-            });
+                setLoader(true)
+            })
+            .finally(()=>{
+                setLoader(false)
+            })
     };
     const obtenerDetalleProvedor = async (identy) => {
         await axios
@@ -131,6 +142,7 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
     };
 
     const actualizarProvedor = async (datos) => {
+        setLoader(true);        
         await axios
             .post(`${route("catalogo.actualiza.provedor")}`, datos)
             .then((response) => {
@@ -146,8 +158,37 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                     showTabla();
                     obtenerProvedores();
                 }
+            })
+            .finally(() => {
+                setLoader(false);
             });
     };
+
+    const nuevoProvedor = async (datos) =>{
+        setLoader(true); 
+        await axios
+        .post(`${route("catalogo.nuevo.provedor")}`, datos)
+        .then((response) => {
+            const { status, data } = response;
+            // setDataDetalle(response)
+            if (status == 201) {
+                toast.current.show({
+                    severity: "success",
+                    summary: "Success",
+                    detail: `${data.success}`,
+                    life: 3000,
+                });
+                showTabla();
+                obtenerProvedores();
+            }
+        })
+        .finally(() => {
+            setLoader(false);
+        });
+        
+    }
+
+ 
 
     // CRUD Departamento
     const obtenerDepartamentos = async () => {
@@ -374,8 +415,11 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
 
     //aqui vamos a ver que formularios vamos a mostrar segun se seleccione
     const showAgregar = () => {
+        
+        setLimpiarFormulario(true)
         setOcultarFormulario(false);
         setOcultarTabla(true);
+        setModoForm('Guardar')
     };
 
     const showTabla = () => {
@@ -464,13 +508,7 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
         });
     };
 
-    // const agregarProvedor = async (datos) => {
-    //     await axios
-    //         .post(`${route("catalogo.nuevo.provedor")}`, datos)
-    //         .then(() => {
-    //             alert("Post creado!");
-    //         });
-    // };
+  
 
     return (
         <Dialog
@@ -494,20 +532,17 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                     />
                 )}
 
-                {/* Aqui se tienen que mostrar los formulario segun lo seleccionado */}
-                {/* {tpOperacion === "provedores" && ocultarFormulario == false && (
-                    <FormularioProvedor
-                        showTabla={showTabla}
-                        dataDetalle={dataDetalle}
-                    />
-                )} */}
-
                 {/* // Aqui se tienen que mostrar los formulario segun lo seleccionado  con toas */}
                 {tpOperacion === "provedores" && ocultarFormulario == false && (
                     <FormularioProvedor
                         showTabla={showTabla}
                         dataDetalle={dataDetalle}
                         actualizarProvedor={actualizarProvedor}
+                        limpiarFormulario = {limpiarFormulario}
+                        setLimpiarFormulario  = {setLimpiarFormulario}
+                        modoForm={modoForm}
+                        nuevoProvedor={nuevoProvedor}
+
                     />
                 )}
 
@@ -517,6 +552,7 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                             showTabla={showTabla}
                             dataDetalle={dataDetalle}
                             actualizarDepartamento={actualizarDepartamento}
+                            modoForm={modoForm}
                         />
                     )}
 
@@ -550,7 +586,11 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                             dataDetalle={dataDetalle}
                         />
                     )}
-
+                {loader && (
+                    <div className="flex justify-content-center">
+                        <ProgressSpinner style={{width: '50px', height: '50px'}} strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s" />
+                    </div>
+                )}
                 <Toast ref={toast} />
             </Card>
         </Dialog>
