@@ -143,6 +143,18 @@ class CatalogosController extends Controller
         return response()->json(['success' => 'Actualizado correctamente', $departamento], 201);
     }
 
+    public function registrarDepartamento(Request $request)
+    {
+        // Validación de los datos del formulario        
+        $validatedData = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'nullable|string|max:100',
+        ]);
+        
+        $proveedor = CatProvedor::create($validatedData);
+        return response()->json(['success' => 'Proveedor creado exitosamente', 'data' => $proveedor], 201);
+    }
+
     public function deleteDepartamento($id = null)
     {
         // dd($id);

@@ -120,8 +120,13 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
         setModoForm('Actualizar')
         
     };
+
+
+
+
     // CRUD Provedor
     const obtenerProvedores = async () => {
+        setLoader(true);
         await axios
             .get(`${route("catalogo.list.provedores")}`)
             .then((response) => {
@@ -134,10 +139,14 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
             })
     };
     const obtenerDetalleProvedor = async (identy) => {
+        setLoader(true);
         await axios
             .get(`${route("catalogo.detalle.proveedor", { id: identy })}`)
             .then((response) => {
                 setDataDetalle(response);
+            })
+            .finally(()=>{
+                setLoader(false)
             });
     };
 
@@ -188,15 +197,20 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
         
     }
 
- 
+
+
 
     // CRUD Departamento
     const obtenerDepartamentos = async () => {
+        setLoader(true);
         await axios
             .get(`${route("catalogo.list.departamentos")}`)
             .then((response) => {
                 const { data } = response;
                 setData(data);
+            }).
+            finally(() => {
+                setLoader(false);
             });
     };
 
@@ -241,6 +255,38 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
             });
         }
     };
+
+    const nuevoDepartamento = async (datos) =>{
+        setLoader(true); 
+        await axios
+        .post(`${route("catalogo.nuevo.departamento")}`, datos)
+        .then((response) => {
+            const { status, data } = response;
+            // setDataDetalle(response)
+            if (status == 201) {
+                toast.current.show({
+                    severity: "success",
+                    summary: "Success",
+                    detail: `${data.success}`,
+                    life: 3000,
+                });
+                showTabla();
+                obtenerProvedores();
+            }
+        })
+        .finally(() => {
+            setLoader(false);
+        });
+        
+    }
+
+
+
+
+
+
+
+
 
     // CRUD Empresa
     const obtenerEmpresa = async () => {
@@ -546,13 +592,14 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                     />
                 )}
 
-                {tpOperacion === "departamentos" &&
-                    ocultarFormulario == false && (
+                {tpOperacion === "departamentos" && ocultarFormulario == false && (
                         <FormularioDepartamento
                             showTabla={showTabla}
                             dataDetalle={dataDetalle}
                             actualizarDepartamento={actualizarDepartamento}
+                            limpiarFormulario = {limpiarFormulario}
                             modoForm={modoForm}
+                            nuevoDepartamento={nuevoDepartamento}
                         />
                     )}
 

@@ -1,44 +1,75 @@
 import React, { Component, useEffect, useState } from "react";
-import { InputNumber } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
-import { FloatLabel } from "primereact/floatlabel";
 import { useForm } from "react-hook-form"; // IMPORTA useForm correctamente
 import { Button } from "primereact/button";
+
 
 const FormularioDepartamento = ({
     showTabla,
     dataDetalle,
     actualizarDepartamento,
+    limpiarFormulario,
+    modoForm,
+    nuevoDepartamento
 }) => {
-    const {register, handleSubmit, formState: { errors }} = useForm()
-    const [id, setId] = useState("");
-    const [nombre, setNombre] = useState("");
-    const [descripcion, setDescripcion] = useState("");
 
-    useEffect(() => {
-        if (dataDetalle) {
-            //Destrcutura el valor del data para solo almacenar el objecto
-            console.log("este es el detalle ", dataDetalle.data);
+    const {
+        register, 
+        handleSubmit, 
+        formState: { errors }, 
+        reset
+    } = useForm( {
+        // Datos del form por defecto
+        defaultValues: {
+            id:'',
+            nombre:'',
+            abreviacion:'',
+            direccion:'',
+            telefono:'',
+            colonia:'',
+        },
+    })    
 
-            const { id, nombre, descripcion } = dataDetalle?.data || {};
-            // Asignacion de valores
-            setId(id);
-            setNombre(nombre);
-            setDescripcion(descripcion);
-        } else {
-            setData({});
+    useEffect(()=>{
+        if(dataDetalle){
+            //Esto es para el detalle del validador
+            const {data} = dataDetalle            
+            reset(data);
+
+        }else{
+            setData({})
         }
-    }, [dataDetalle]);
+    },[dataDetalle]);
+
+    useState(()=>{
+        
+        if(limpiarFormulario){
+                      
+            setTimeout(() => {
+                reset({
+                    id:'',
+                    nombre:'',
+                    abreviacion:'',
+                    direccion:'',
+                    telefono:'',
+                    colonia:'',
+                });
+                
+
+            }, 800);
+            
+        }
+    },[limpiarFormulario])
 
     const enviarFormulario = () => {
 
-        const datos = {
-            id: id,
-            nombre: nombre,
-            descripcion: descripcion,
-
+        if(modoForm == 'Actualizar'){
+            actualizarProvedor(data)
         }
-        actualizarDepartamento(datos); // Llama a la función pasada por props con los datos del formulario
+        if(modoForm == 'Guardar'){
+            nuevoProvedor(data)
+        }
+      
     };
 
     return (
@@ -51,66 +82,53 @@ const FormularioDepartamento = ({
                 />
             </div>
             <form onSubmit={handleSubmit(enviarFormulario)}>
+                <div className="card flex flex-wrap gap-4 p-fluid">
 
-            {errors && (
-                    <>
-                        <label htmlFor="">Errores en los campos del formulario</label>
-                        <ul>
-                            {errors.nombre && <li><label htmlFor="abreviacion">{errors.nombre.message}</label></li>}
-                            {errors.descripcion && <li><label htmlFor="descripcion">{errors.descripcion.message}</label></li>}
-                        </ul>
-
-                    </>
-                )}
-                <div className="card flex flex-column md:flex-row gap-3">
-                    <div className="p-inputgroup flex-1">
-                        <FloatLabel>
-                            <InputText
-                                value={nombre}
-                                id="nombre"
-                                {...register(
-                                    "nombre",
-                                    {
-                                        required: "Nombre:'Requerido'",
-                                        minLength:{
-                                            value:8,
-                                            message: "Nombre: 'Minimo 8'"
-                                        }
+                    <div className="flex-auto">
+                        <label htmlFor="nombre">Nombre</label>
+                        <InputText 
+                            id="nombre" 
+                            aria-describedby="username-help"
+                            {...register(
+                                "nombre", 
+                                { 
+                                    required: "Valor requerido",
+                                    minLength:{
+                                        value:4,
+                                        message: "Minimo 4 Caracteres"
                                     }
-                                )}
-                                invalid={!!errors.nombre}
-                                onChange={(e) => setNombre(e.target.value)}
-                            />
-                            <label htmlFor="nombre">Nombre</label>
-                        </FloatLabel>
+                                }
+                            )}
+                            invalid={!!errors.nombre}
+                        />
+                        {errors.nombre && <small id="username-help" className="text-red-500">{errors.nombre.message}</small>}  
                     </div>
-
-                    <div className="p-inputgroup flex-1">
-                        <FloatLabel>
-                            <InputText
-                                value={descripcion}
-                                id="descripcion"
-                                {...register(
-                                    "descripcion",
-                                    {
-                                        required: "Descripcion:'Requerido'",
-
+                            
+                    <div className="flex-auto">
+                        <label htmlFor="descripcion">Descripción</label>
+                        <InputText 
+                            id="descripcion" 
+                            aria-describedby="descripcion-help"
+                            {...register(
+                                "descripcion", 
+                                { 
+                                    minLength:{
+                                        value:2,
+                                        message: "Mínimo 2 Caracteres"
                                     }
-                                )}
-                                invalid={!!errors.descripcion}
-                                onChange={(e) => setDescripcion(e.target.value)}
-                            />
-                            <label htmlFor="descripcion">Descripcion</label>
-                        </FloatLabel>
+                                }
+                            )}
+                        />
+                        {errors.descripcion && <small id="descripcion-help" className="text-red-500">{errors.descripcion.message}</small>}  
                     </div>
-                </div>
-
-                <div className="flex gap-3 mb-4">
-                    <Button
-                        severity="success"
-                        label="Guardar"
-                        className="ml-auto"
-                    />
+                    <div className="mt-4 flex justify-end w-full">
+                        <Button
+                            type="submit"
+                            severity="success"
+                            label="Guardar"
+                            className="ml-auto"
+                        />
+                    </div>
                 </div>
             </form>
         </>

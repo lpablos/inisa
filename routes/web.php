@@ -63,9 +63,10 @@ Route::prefix('admin')->group(function () {
 
             //CRUD  departamentos
             Route::get('list-departamentos', 'listaDepartamentos')->name('catalogo.list.departamentos');
-            Route::get('detalle-departamento/{id}', 'detalleDepartamento')->name('catalogo.detalle.departamento');
+            Route::post('registrar-departamento', 'registrarDepartamento')->name('catalogo.nuevo.departamento');
             Route::post('actualiza-departamento', 'actualizaDepartamento')->name('catalogo.actualiza.departamento');
             Route::delete('departamento/{id}', 'deleteDepartamento')->name('catalogo.delete.departamento');
+            Route::get('detalle-departamento/{id}', 'detalleDepartamento')->name('catalogo.detalle.departamento');
 
             //CRUD  clientes
             Route::get('list-clientes', 'listaClientes')->name('catalogo.list.clientes');
