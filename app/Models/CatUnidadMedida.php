@@ -12,17 +12,17 @@ class CatUnidadMedida extends Model
     protected $table = 'cat_unidades_medidas';
 
     // Especificar la clave primaria personalizada
-    protected $primaryKey = 'unidad_medida_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
-        'unidad_medida_id',
+        'id',
         'nombre',
-        'abreviacion',
+        'abreviatura',
         'descripcion',
     ];
 
     public function cotizaciones()
     {
-        return $this->hasMany(Cotizacion::class, 'status_id', 'unidad_medida_id'); // Referencia a la clave foránea y primaria
+        // return $this->hasMany(Cotizacion::class, 'status_id', 'unidad_medida_id'); // Referencia a la clave foránea y primaria
     }
 }

@@ -77,6 +77,9 @@ Route::prefix('admin')->group(function () {
 
             //CRUD  Unidades de medida
             Route::get('list-unidadesmedidas', 'listaUnidadMedidas')->name('catalogo.list.unidadesmedidas');
+            Route::post('registrar-unidadmedida', 'registrarUnidadMedida')->name('catalogo.nuevo.unidadmedida');
+            Route::post('actualiza-unidadmedida', 'actualizaUnidadMedida')->name('catalogo.actualiza.unidadmedida');
+            Route::delete('unidadmedida/{id}', 'deleteUnidadMedida')->name('catalogo.delete.unidadmedida');            
             Route::get('detalle-unidadmedida/{id}', 'detalleUnidadMedida')->name('catalogo.detalle.unidadmedida');
 
             //CRUD Usuarios
