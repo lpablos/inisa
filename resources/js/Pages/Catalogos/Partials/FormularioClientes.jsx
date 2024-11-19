@@ -1,7 +1,5 @@
 import React, { Component, useEffect, useState } from "react";
-import { InputNumber } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
-import { FloatLabel } from "primereact/floatlabel";
 import { Button } from "primereact/button";
 import { useForm } from "react-hook-form";
 

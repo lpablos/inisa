@@ -70,6 +70,8 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
     }, [tpOperacion]);
 
     const eliminiarRegistro = async (identy) => {
+        console.log("Este es el identy", identy,tpOperacion);
+        
         switch (tpOperacion) {
             case "provedores":
                 await confirmarEliminacion(identy);
@@ -80,11 +82,9 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
             case "clientes":
                 await confirmarEliminacionClientes(identy);
                 break;
-            // case "unidadesMedidas":
-            //     setTitulo("Catalogo de Unidades de Medida");
-            //     obtenerUnidadesMedidas();
-            //     setVisible(true);
-            //     break;
+            case "unidadesMedidas":
+                await confirmarEliminacionUnidadMedida(identy);
+                break;
             // case "usuarios":
             //     setTitulo("Catalogo de Usuarios");
             //     obtenerUsuarios();
@@ -105,7 +105,6 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
     };
 
     const updateRegistro = (identy) => {
-        
         switch (tpOperacion) {
             case "provedores":
                 obtenerDetalleProvedor(identy);
@@ -450,12 +449,158 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
         
     }
 
+     // CRUD Unidades Medidas
+     const obtenerUnidadesMedidas = async () => {
+        setLoader(true);
+        await axios
+            .get(`${route("catalogo.list.unidadesmedidas")}`)
+            .then((response) => {
+                const { data } = response;
+                setData(data);
+            }).finally(() => {
+                setLoader(false);
+            });
+    };
+
+    const actualizarUnidadMedida = async (datos) => {
+        setLoader(true);        
+        try {
+            const response = await axios.post(
+                `${route("catalogo.actualiza.unidadmedida")}`,
+                datos
+            );
+
+            const { status, data } = response;
+            
+            if (status === 201) {
+                // Mostrar mensaje de éxito
+                toast.current.show({
+                    severity: "success",
+                    summary: "Success",
+                    detail: `${data.success}`,
+                    life: 3000,
+                });
+                showTabla();
+                obtenerUnidadesMedidas();
+            } else {
+                // Mostrar mensaje de error si no es un código de éxito esperado
+                toast.current.show({
+                    severity: "error",
+                    summary: "Error",
+                    detail: `${data.error || "Ocurrió un error inesperado"}`,
+                    life: 3000,
+                });
+            }
+            setLoader(false);
+        } catch (error) {
+            if (error.response && error.response.status === 422) {
+                // Capturar errores de validación
+                const errores = error.response.data.errors;
+                const mensajes = Object.values(errores).flat().join(", "); // Combina los errores en una sola cadena
+
+                toast.current.show({
+                    severity: "warn",
+                    summary: "Errores de validación",
+                    detail: mensajes,
+                    life: 5000,
+                });
+            } else {
+                // Mostrar cualquier otro error
+                toast.current.show({
+                    severity: "error",
+                    summary: "Error inesperado",
+                    detail: "Algo salió mal, por favor intente de nuevo.",
+                    life: 3000,
+                });
+            }
+            setLoader(false);
+        }
+    };
+
+    const eliminarUnidadMedida = async (identy) => {
+        setLoader(true);
+        try {
+            await axios.delete(
+                `${route("catalogo.delete.unidadmedida", { id: identy })}`
+            );
+            toast.current.show({
+                severity: "success",
+                summary: "Unidad de Medida eliminado",
+                detail: "La Unidad de Medida ha sido eliminado exitosamente.",
+                life: 3000,
+            });
+            setLoader(false);
+            obtenerUnidadesMedidas();
+        } catch (error) {
+            toast.current.show({
+                severity: "error",
+                summary: "Error",
+                detail: "No se pudo eliminar el cliente.",
+                life: 3000,
+            });
+            setLoader(false);
+        }
+    };
+
+    const confirmarEliminacionUnidadMedida = (identy) => {
+        toast.current.show({
+            severity: "warn",
+            summary: "Confirmación",
+            sticky: true,
+            content: (
+                <ConfirmarEliminacion
+                    onConfirm={() => {
+                        eliminarUnidadMedida(identy);
+                        toast.current.clear();
+                    }}
+                    onCancel={() => toast.current.clear()}
+                />
+            ),
+        });
+    };
+
+    const obtenerDetalleUnidadMedida = async (identy) => {
+        setLoader(true);
+        await axios
+            .get(`${route("catalogo.detalle.unidadmedida", { id: identy })}`)
+            .then((response) => {
+                setDataDetalle(response);
+            }).finally(() => {
+                setLoader(false);
+            });
+    };
+
+
+    const nuevoUnidadMedida = async (datos) =>{
+        setLoader(true); 
+        await axios
+        .post(`${route("catalogo.nuevo.unidadmedida")}`, datos)
+        .then((response) => {
+            const { status, data } = response;
+            // setDataDetalle(response)
+            if (status == 201) {
+                toast.current.show({
+                    severity: "success",
+                    summary: "Success",
+                    detail: `${data.success}`,
+                    life: 3000,
+                });
+                showTabla();
+                obtenerUnidadesMedidas();
+            }
+        })
+        .finally(() => {
+            setLoader(false);
+        });
+        
+    }
+
+    
 
 
 
 
-
-
+// ____________________
     // CRUD Empresa
     const obtenerEmpresa = async () => {
         await axios
@@ -496,25 +641,10 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
             });
     };
 
-    // CRUD Unidades Medidas
-    const obtenerUnidadesMedidas = async () => {
-        await axios
-            .get(`${route("catalogo.list.unidadesmedidas")}`)
-            .then((response) => {
-                const { data } = response;
-                setData(data);
-            });
-    };
+   
 
     // obtenerDetalleCliente
-    const obtenerDetalleUnidadMedida = async (identy) => {
-        console.log("identy en obtenerDetalleUnidadMedida:", identy);
-        await axios
-            .get(`${route("catalogo.detalle.unidadmedida", { id: identy })}`)
-            .then((response) => {
-                setDataDetalle(response);
-            });
-    };
+
 
     //aqui vamos a ver que formularios vamos a mostrar segun se seleccione
     const showAgregar = () => {
@@ -677,6 +807,11 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                         <FormularioUnidadMedida
                             showTabla={showTabla}
                             dataDetalle={dataDetalle}
+                            actualizarUnidadMedida={actualizarUnidadMedida}
+                            limpiarFormulario = {limpiarFormulario}
+                            setLimpiarFormulario  = {setLimpiarFormulario}
+                            modoForm={modoForm}
+                            nuevoUnidadMedida={nuevoUnidadMedida}
                         />
                     )}
 

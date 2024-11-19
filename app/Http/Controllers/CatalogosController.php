@@ -287,6 +287,97 @@ class CatalogosController extends Controller
         }
     }
 
+    // Unidades de Medida
+    public function listaUnidadMedidas()
+    {
+        $data = CatUnidadMedida::all();
+        return response()->json($data);
+    }
+
+    public function detalleUnidadMedida($id)
+    {
+        $data = CatUnidadMedida::where('id', $id)->first();
+        if (!$data) {
+            return response()->json(['error' => 'Unidad de medida no encontrado'], 404);
+        }
+        return response()->json($data, 200);
+    }
+    
+    public function actualizaUnidadMedida(Request $request)
+    {
+
+        try {
+
+            $validatedData = $request->validate([
+                'id' => 'required',
+                'nombre' => 'required|string|max:255',
+                'abreviatura'=> 'nullable|string|max:100',
+                'descripcion'=> 'nullable|string|max:100',
+            ]);
+            // dd($departamento);
+            $data = CatUnidadMedida::where('id', $request->id)->first();
+            // Validar si el departamento existe
+            if (!$data) {
+                return response()->json(['error' => 'Unidad de Medida no encontrado'], 404);
+            }
+            // Crear el nuevo proveedor con los datos validados
+            $data->nombre = $request->nombre;
+            $data->abreviatura = $request->abreviatura;
+            $data->descripcion = $request->descripcion;
+            $data->save();
+            return response()->json(['success' => 'Actualizado correctamente', $data], 201);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Capturar y retornar errores de validación
+            return response()->json([
+                'errors' => $e->errors(),
+            ], 422); // Código HTTP 422 para errores de validación
+        } catch (\Exception $e) {
+             // Capturar cualquier otro error
+        return response()->json([
+            'error' => 'Ocurrió un error al actualizar el cliente',
+            'message' => $e->getMessage(),
+        ], 500);
+        }
+    }
+
+    public function registrarUnidadMedida(Request $request)
+    {
+        
+        $validatedData = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'abreviatura'=> 'nullable|string|max:100',
+            'descripcion'=> 'nullable|string|max:100',
+        ]);
+        
+        $data = new CatUnidadMedida;
+        $data->nombre = $validatedData['nombre'];
+        $data->abreviatura = $validatedData['abreviatura'];
+        $data->descripcion = $validatedData['descripcion'];
+        $data->save();
+        // $proveedor = CatCliente::create($validatedData);
+        return response()->json(['success' => 'Unidad de Medida creado exitosamente', 'data' => $data], 201);
+    }
+
+    public function deleteUnidadMedida($id)
+    {
+        
+        try {
+            
+            $data = CatUnidadMedida::where('id', $id)->first();            
+            if (!$data) {
+                return response()->json(['error' => 'Unidad de Medida no encontrado'], 404);
+            }
+            // Eliminar
+            $data->delete();
+            return response()->json(['success' => 'Unidad de Medida eliminado exitosamente'], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th
+            ], 404);
+        }
+    }
+
 
 
 
@@ -310,22 +401,7 @@ class CatalogosController extends Controller
 
 
 
-    // Unidades de Medida
-    public function listaUnidadMedidas()
-    {
-        $data = CatUnidadMedida::all();
-        return response()->json($data);
-    }
-
-    public function detalleUnidadMedida($id =  null)
-    {
-
-        $data = CatUnidadMedida::where('id', $id)->first();
-        if (!$data) {
-            return response()->json(['error' => 'Unidad de medida no encontrado'], 404);
-        }
-        return response()->json($data, 200);
-    }
+  
 
 
     // USER
