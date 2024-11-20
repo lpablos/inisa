@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\CatEstatu;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,13 +23,20 @@ class DatabaseSeeder extends Seeder
 
 
         $this->call([
-            // RolesSeeder::class,
             CatEmpresaSeeder::class,
             CatProveedorSeeder::class,
             CatDepartamentoSeeder::class,
             CatClienteSeeder::class,
             CatUnidadMedidaSeeder::class,
-            UserSeeder::class
+            UserSeeder::class,
+            CatPrioridadSeeder::class,
+            CatEstatusSeeder::class,
+            CatMonedaSeeder::class,
+            DetalleCotizacionSeeder::class,
+            CotizacionSeeder::class,
+
+
+
         ]);
     }
 }

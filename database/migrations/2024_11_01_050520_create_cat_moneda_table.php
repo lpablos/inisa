@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cat_estatus', function (Blueprint $table) {
+        Schema::create('cat_moneda', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre')->nullable();
-            $table->string('abreviacion')->nullable();
-            $table->string('descripcion')->nullable();
+            $table->string('nombre', 120)->nullable();
+            $table->string('abreviacion', 45)->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cat_estatus');
+        Schema::dropIfExists('cat_moneda');
     }
 };

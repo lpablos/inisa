@@ -16,56 +16,68 @@ return new class extends Migration
             $table->string('titulo');
             $table->string('consecutivo');
             $table->text('descripcion');
-            // materiales
-            $table->float('material_cantidad');
-            $table->float('material_costo_unitario');
-            $table->float('material_subtotal');
-            // obra
-            $table->float('obra_costo_unitario');
-            $table->float('obra_subtotal');
-            $table->float('mat_obra_subtotal');
-
+            $table->date('fecha');
             $table->integer('vigencia_dias');
-            $table->text('notas_extra');
-            $table->string('folio');
-            $table->date('fecha_cotiza_inicio');
+            $table->date(column: 'fecha_cotiza_inicio');
             $table->date('fecha_cotiza_fin');
             $table->float('subtotal');
-            $table->boolean('iva');
+            $table->float('total');
+            $table->text('notas_extra');
 
-            $table->unsignedBigInteger('cliente_id');
-            $table->foreign('cliente_id')->references('id')->on('cat_clientes'); 
 
-            $table->unsignedBigInteger('status_id');
-            $table->foreign('status_id')->references('id')->on('cat_estatus'); 
+            // $table->boolean('iva');
+            // $table->string('folio');
+            // materiales
+            // $table->float('material_cantidad');
+            // $table->float('material_costo_unitario');
+            // $table->float('material_subtotal');
+            // // obra
+            // $table->float('obra_costo_unitario');
+            // $table->float('obra_subtotal');
+            // $table->float('mat_obra_subtotal');
 
-            $table->unsignedBigInteger('provedor_id');
-            $table->foreign('provedor_id')->references('id')->on('cat_provedores'); 
 
-            $table->unsignedBigInteger('unidad_medida_id');
-            $table->foreign('unidad_medida_id')->references('id')->on('cat_unidades_medidas'); 
-            
-            $table->unsignedBigInteger('departamento_id');
-            $table->foreign('departamento_id')->references('id')->on('cat_departamentos'); 
+            // Relación con cliente
+            $table->unsignedBigInteger('cliente_id')->nullable();
+            $table->foreign('cliente_id')->references('id')->on('cat_clientes');
 
-            $table->unsignedBigInteger('tipo_servicio_id');
-            $table->foreign('tipo_servicio_id')->references('id')->on('cat_tipos_servicios'); 
+            // Relación con status
+            $table->unsignedBigInteger('status_id')->nullable();
+            $table->foreign('status_id')->references('id')->on('cat_estatus');
 
+            // Relación con proveedor
+            $table->unsignedBigInteger('provedor_id')->nullable();
+            $table->foreign('provedor_id')->references('id')->on('cat_provedores');
+
+            // Relación con departamento
+            $table->unsignedBigInteger('departamento_id')->nullable();
+            $table->foreign('departamento_id')->references('id')->on('cat_departamentos');
+
+            // Relación con empresa
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('cat_empresas'); 
+            $table->foreign('empresa_id')->references('id')->on('cat_empresas');
 
-            $table->unsignedBigInteger('tipo_cotizacion_id');
-            $table->foreign('tipo_cotizacion_id')->references('id')->on('cat_tipos_cotizaciones'); 
+            // Relación con tipo de cotización
+            $table->unsignedBigInteger('tipo_cotizacion_id')->nullable();
+            $table->foreign('tipo_cotizacion_id')->references('id')->on('cat_tipos_cotizaciones');
 
-            $table->unsignedBigInteger('tomo_id');
-            $table->foreign('tomo_id')->references('id')->on('cat_tomos'); 
+            // Relación con tomo
+            $table->unsignedBigInteger('tomo_id')->nullable();
+            $table->foreign('tomo_id')->references('id')->on('cat_tomos');
 
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users'); 
+            // Relación con usuario
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
+
+            // Relación con prioridad
+            $table->unsignedBigInteger('cat_prioridad_id')->nullable();
+            $table->foreign('cat_prioridad_id')->references('id')->on('cat_prioridad');
+
+            // Relación con moneda
+            $table->unsignedBigInteger('cat_moneda_id')->nullable();
+            $table->foreign('cat_moneda_id')->references('id')->on('cat_moneda');
 
             $table->timestamps();
-
-            
         });
     }
 

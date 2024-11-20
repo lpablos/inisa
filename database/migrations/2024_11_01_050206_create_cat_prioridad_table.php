@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cat_estatus', function (Blueprint $table) {
+        Schema::create('cat_prioridad', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre')->nullable();
-            $table->string('abreviacion')->nullable();
-            $table->string('descripcion')->nullable();
+            $table->string('nombre', 45);
+            $table->string('descripcion', 45);
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cat_estatus');
+        Schema::dropIfExists('cat_prioridad');
     }
 };

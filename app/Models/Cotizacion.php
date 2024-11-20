@@ -6,11 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\CatCliente;
 use App\Models\CatProvedor;
-use App\Models\CatEstatu;
-use App\Models\CatUnidadMedida;
-use App\Models\CatTipoServicio;
-use App\Models\CatTipoCotizacion;
 use App\Models\CatTomo;
+use App\Models\CatDepartamento;
+use App\Models\CatEmpresa;
+use App\Models\User;
+use App\Models\DetalleCotizacion;
+use App\Models\CatPrioridad;
+use App\Models\CatMoneda;
+use App\Models\CatEstatu;
+
+
+
 
 class Cotizacion extends Model
 {
@@ -19,88 +25,112 @@ class Cotizacion extends Model
     protected $table = 'cotizaciones';
 
     // Especificar la clave primaria personalizada
-    protected $primaryKey = 'id_cotizacion';
+    // protected $primaryKey = 'id_cotizacion';
 
     protected $fillable = [
-        'id_cotizacion',
         'titulo',
         'consecutivo',
         'descripcion',
-        // materiales
-        'material_cantidad',
-        'material_costo_unitario',
-        'material_subtotal',
-        // obra
-        'obra_costo_unitario',
-        'obra_subtotal',
-        'mat_obra_subtotal',
-
+        'fecha',
         'vigencia_dias',
-        'notas_extra',
-        'folio',
         'fecha_cotiza_inicio',
         'fecha_cotiza_fin',
         'subtotal',
-        'iva',
-
-        //LLaves foraneas
+        'total',
+        'notas_extra',
         'cliente_id',
-        'provedor_id',
         'status_id',
+        'provedor_id',
         'unidad_medida_id',
         'departamento_id',
-        'tipo_servicio_id',
-        'user_id',
+        'empresa_id',
         'tipo_cotizacion_id',
-        'tomo_id'
-        
+        'tomo_id',
+        'user_id',
+        'cat_prioridad_id', // Nueva relación con prioridad
+        'cat_moneda_id',
+
     ];
 
+    /**
+     * Relación con Cliente
+     */
     public function cliente()
     {
-        return $this->belongsTo(CatCliente::class, 'cliente_id', 'id_cliente'); // Referencia a la clave foránea y primaria
+        return $this->belongsTo(CatCliente::class, 'cliente_id');
     }
 
-    public function provedor()
+    /**
+     * Relación con Estatus
+     */
+    public function estatus()
     {
-        return $this->belongsTo(CatProvedor::class, 'provedor_id', 'id_provedor'); // Referencia a la clave foránea y primaria
+        return $this->belongsTo(CatEstatu::class, 'status_id');
     }
 
-    public function estatu()
+    /**
+     * Relación con Proveedor
+     */
+    public function proveedor()
     {
-        return $this->belongsTo(CatEstatu::class, 'status_id', 'id_status'); // Referencia a la clave foránea y primaria
+        return $this->belongsTo(CatProvedor::class, 'provedor_id');
     }
 
-    public function unidadMedida()
-    {
-        return $this->belongsTo(CatUnidadMedida::class, 'unidad_medida_id', 'id_unidad_medida'); // Referencia a la clave foránea y primaria
-    }
-
+    /**
+     * Relación con Departamento
+     */
     public function departamento()
     {
-        return $this->belongsTo(CatUnidadMedida::class, 'departamento_id', 'id_departamento'); // Referencia a la clave foránea y primaria
+        return $this->belongsTo(CatDepartamento::class, 'departamento_id');
     }
 
-    public function tipoServicio()
+    /**
+     * Relación con Empresa
+     */
+    public function empresa()
     {
-        return $this->belongsTo(CatTipoServicio::class, 'tipo_servicio_id', 'id_tipo_servicio'); // Referencia a la clave foránea y primaria
+        return $this->belongsTo(CatEmpresa::class, 'empresa_id');
     }
 
-    public function usuario()
-    {
-        return $this->belongsTo(User::class, 'user_id', 'id'); // Referencia a la clave foránea y primaria
-    }
 
-    public function cotizacion()
-    {
-        return $this->belongsTo(CatTipoCotizacion::class, 'tipo_cotizacion_id', 'id_tipo_cotizacion'); // Referencia a la clave foránea y primaria
-    }
 
+    /**
+     * Relación con Tomo
+     */
     public function tomo()
     {
-        return $this->belongsTo(CatTomo::class, 'tipo_cotizacion_id', 'id_tipo_cotizacion'); // Referencia a la clave foránea y primaria
+        return $this->belongsTo(CatTomo::class, 'tomo_id');
     }
 
+    /**
+     * Relación con Usuario
+     */
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
-   
+    /**
+     * Relación con Prioridad
+     */
+    public function prioridad()
+    {
+        return $this->belongsTo(CatPrioridad::class, 'cat_prioridad_id');
+    }
+
+    /**
+     * Relación con Moneda
+     */
+    public function moneda()
+    {
+        return $this->belongsTo(CatMoneda::class, 'cat_moneda_id');
+    }
+
+    /**
+     * Relación con Detalles de Cotización
+     */
+    public function detalles()
+    {
+        return $this->hasMany(DetalleCotizacion::class, 'cotizaciones_id');
+    }
 }
