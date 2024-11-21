@@ -11,10 +11,10 @@ class CatTipoServicio extends Model
     
     protected $table = 'cat_tipos_servicios';
 
-    protected $primaryKey = 'id_tipo_servicio';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
-        'id_tipo_servicio',
+        'id',
         'abreviacion',
         'nombre',
         'descripcion'
@@ -22,6 +22,6 @@ class CatTipoServicio extends Model
 
     public function cotizaciones()
     {
-        return $this->hasMany(Cotizacion::class, 'tipo_servicio_id', 'id_tipo_servicio'); // Referencia a la clave foránea y primaria
+        return $this->hasMany(Cotizacion::class, 'tipo_servicio_id', 'id'); // Referencia a la clave foránea y primaria
     }
 }

@@ -82,8 +82,19 @@ Route::prefix('admin')->group(function () {
             Route::delete('unidadmedida/{id}', 'deleteUnidadMedida')->name('catalogo.delete.unidadmedida');            
             Route::get('detalle-unidadmedida/{id}', 'detalleUnidadMedida')->name('catalogo.detalle.unidadmedida');
 
+            //CRUD  Tipos de Servicios
+            Route::get('list-tiposservicios', 'listaTiposServicios')->name('catalogo.list.tiposservicios');
+            Route::post('registrar-tiposervicio', 'registrarTipoServicio')->name('catalogo.nuevo.tiposervicio');
+            Route::post('actualiza-tiposervicio', 'actualizaTipoServicio')->name('catalogo.actualiza.tiposervicio');
+            Route::delete('tiposervicio/{id}', 'deleteTipoServicio')->name('catalogo.delete.tiposervicio');            
+            Route::get('detalle-tiposervicio/{id}', 'detalleTipoServicio')->name('catalogo.detalle.tiposervicio');
+ 
+
             //CRUD Usuarios
             Route::get('list-usuarios', 'listaUsuarios')->name('catalogo.list.usuarios');
+            Route::post('registrar-usuario', 'registrarUsuario')->name('catalogo.nuevo.usuario');
+            Route::post('actualiza-usuario', 'actualizaUsuario')->name('catalogo.actualiza.usuario');
+            Route::delete('usuario/{id}', 'deleteUsuario')->name('catalogo.delete.usuario');     
             Route::get('detalle-usuario/{id}', 'detalleUsuario')->name('catalogo.detalle.usuario');
 
             //CRUD  empresa

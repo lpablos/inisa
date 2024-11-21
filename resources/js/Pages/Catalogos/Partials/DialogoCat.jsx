@@ -56,6 +56,9 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                 obtenerUsuarios();
                 setVisible(true);
                 break;
+
+
+
             case "datosEmpresa":
                 setTitulo("Datos de la Empresa");
                 obtenerEmpresa();
@@ -595,8 +598,146 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
         
     }
 
-    
+     // CRUD Usuarios
+     const obtenerUsuarios = async () => {
+        await axios
+            .get(`${route("catalogo.list.usuarios")}`)
+            .then((response) => {
+                const { data } = response;
+                setData(data);
+            });
+    };
 
+    const obtenerDetalleUsuario = async (identy) => {
+        console.log("identy en obtenerDetalleUsuario:", identy); // Agrega este log
+        await axios
+            .get(`${route("catalogo.detalle.usuario", { id: identy })}`)
+            .then((response) => {
+                console.log("datos usuario", response);
+                setDataDetalle(response);
+            });
+    };
+
+    const actualizarUsuario = async (datos) => {
+        setLoader(true);        
+        try {
+            const response = await axios.post(
+                `${route("catalogo.actualiza.unidadmedida")}`,
+                datos
+            );
+
+            const { status, data } = response;
+            
+            if (status === 201) {
+                // Mostrar mensaje de éxito
+                toast.current.show({
+                    severity: "success",
+                    summary: "Success",
+                    detail: `${data.success}`,
+                    life: 3000,
+                });
+                showTabla();
+                obtenerUnidadesMedidas();
+            } else {
+                // Mostrar mensaje de error si no es un código de éxito esperado
+                toast.current.show({
+                    severity: "error",
+                    summary: "Error",
+                    detail: `${data.error || "Ocurrió un error inesperado"}`,
+                    life: 3000,
+                });
+            }
+            setLoader(false);
+        } catch (error) {
+            if (error.response && error.response.status === 422) {
+                // Capturar errores de validación
+                const errores = error.response.data.errors;
+                const mensajes = Object.values(errores).flat().join(", "); // Combina los errores en una sola cadena
+
+                toast.current.show({
+                    severity: "warn",
+                    summary: "Errores de validación",
+                    detail: mensajes,
+                    life: 5000,
+                });
+            } else {
+                // Mostrar cualquier otro error
+                toast.current.show({
+                    severity: "error",
+                    summary: "Error inesperado",
+                    detail: "Algo salió mal, por favor intente de nuevo.",
+                    life: 3000,
+                });
+            }
+            setLoader(false);
+        }
+    };
+
+    const eliminarUsuario = async (identy) => {
+        setLoader(true);
+        try {
+            await axios.delete(
+                `${route("catalogo.delete.unidadmedida", { id: identy })}`
+            );
+            toast.current.show({
+                severity: "success",
+                summary: "Unidad de Medida eliminado",
+                detail: "La Unidad de Medida ha sido eliminado exitosamente.",
+                life: 3000,
+            });
+            setLoader(false);
+            obtenerUnidadesMedidas();
+        } catch (error) {
+            toast.current.show({
+                severity: "error",
+                summary: "Error",
+                detail: "No se pudo eliminar el cliente.",
+                life: 3000,
+            });
+            setLoader(false);
+        }
+    };
+
+    const confirmarEliminacionUsuario= (identy) => {
+        toast.current.show({
+            severity: "warn",
+            summary: "Confirmación",
+            sticky: true,
+            content: (
+                <ConfirmarEliminacion
+                    onConfirm={() => {
+                        eliminarUnidadMedida(identy);
+                        toast.current.clear();
+                    }}
+                    onCancel={() => toast.current.clear()}
+                />
+            ),
+        });
+    };
+
+    const nuevoUsuario = async (datos) =>{
+        setLoader(true); 
+        await axios
+        .post(`${route("catalogo.nuevo.unidadmedida")}`, datos)
+        .then((response) => {
+            const { status, data } = response;
+            // setDataDetalle(response)
+            if (status == 201) {
+                toast.current.show({
+                    severity: "success",
+                    summary: "Success",
+                    detail: `${data.success}`,
+                    life: 3000,
+                });
+                showTabla();
+                obtenerUnidadesMedidas();
+            }
+        })
+        .finally(() => {
+            setLoader(false);
+        });
+        
+    }
 
 
 
@@ -621,26 +762,7 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
     };
 
 
-    // CRUD Usuarios
-    const obtenerUsuarios = async () => {
-        await axios
-            .get(`${route("catalogo.list.usuarios")}`)
-            .then((response) => {
-                const { data } = response;
-                setData(data);
-            });
-    };
-
-    const obtenerDetalleUsuario = async (identy) => {
-        console.log("identy en obtenerDetalleUsuario:", identy); // Agrega este log
-        await axios
-            .get(`${route("catalogo.detalle.usuario", { id: identy })}`)
-            .then((response) => {
-                console.log("datos usuario", response);
-                setDataDetalle(response);
-            });
-    };
-
+   
    
 
     // obtenerDetalleCliente
