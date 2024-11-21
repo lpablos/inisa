@@ -13,16 +13,16 @@ return new class extends Migration
     {
         Schema::create('cotizaciones', function (Blueprint $table) {
             $table->id();
-            $table->string('titulo');
-            $table->string('consecutivo');
-            $table->text('descripcion');
-            $table->date('fecha');
-            $table->integer('vigencia_dias');
-            $table->date(column: 'fecha_cotiza_inicio');
-            $table->date('fecha_cotiza_fin');
-            $table->float('subtotal');
-            $table->float('total');
-            $table->text('notas_extra');
+            $table->string('titulo')->nullable();
+            $table->string('consecutivo')->nullable();
+            $table->text('descripcion')->nullable();
+            $table->date('fecha')->nullable();
+            $table->integer('vigencia_dias')->nullable();
+            $table->date(column: 'fecha_cotiza_inicio')->nullable();
+            $table->date('fecha_cotiza_fin')->nullable();
+            $table->float('subtotal')->nullable();
+            $table->float('total')->nullable();
+            $table->text('notas_extra')->nullable();
 
 
             // $table->boolean('iva');
@@ -54,7 +54,7 @@ return new class extends Migration
             $table->foreign('departamento_id')->references('id')->on('cat_departamentos');
 
             // Relación con empresa
-            $table->unsignedBigInteger('empresa_id');
+            $table->unsignedBigInteger('empresa_id')->nullable();
             $table->foreign('empresa_id')->references('id')->on('cat_empresas');
 
             // Relación con tipo de cotización

@@ -79,7 +79,7 @@ Route::prefix('admin')->group(function () {
             Route::get('list-unidadesmedidas', 'listaUnidadMedidas')->name('catalogo.list.unidadesmedidas');
             Route::post('registrar-unidadmedida', 'registrarUnidadMedida')->name('catalogo.nuevo.unidadmedida');
             Route::post('actualiza-unidadmedida', 'actualizaUnidadMedida')->name('catalogo.actualiza.unidadmedida');
-            Route::delete('unidadmedida/{id}', 'deleteUnidadMedida')->name('catalogo.delete.unidadmedida');            
+            Route::delete('unidadmedida/{id}', 'deleteUnidadMedida')->name('catalogo.delete.unidadmedida');
             Route::get('detalle-unidadmedida/{id}', 'detalleUnidadMedida')->name('catalogo.detalle.unidadmedida');
 
             //CRUD Usuarios
@@ -99,6 +99,8 @@ Route::prefix('admin')->group(function () {
 
             Route::get('list-cotizaciones', 'listCotizaciones')->name('cotizacion.list.cotizaciones');
             Route::post('registrar-cotizacion', 'RegistrarCotizacion')->name('cotizacion.registrar.cotizacion');
+            Route::put('actualiza-cotizacion', 'updateCotizacion')->name('cotizacion.actualiza.cotizacion');
+            Route::delete('cotizacion/{id}', 'deleteCotizacion')->name('cotizacion.delete.cotizacion');
 
         });
     });

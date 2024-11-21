@@ -12,9 +12,7 @@ const Index = (props) => {
         <Layout>
             <div className="card grid">
                 {/* <Menu/> */}
-                <div className="col">
-                    <Dialogo />
-                </div>
+
 
                 <div className="col-12">
                     <ConceptoTabla />
