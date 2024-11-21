@@ -82,12 +82,20 @@ Route::prefix('admin')->group(function () {
             Route::delete('unidadmedida/{id}', 'deleteUnidadMedida')->name('catalogo.delete.unidadmedida');            
             Route::get('detalle-unidadmedida/{id}', 'detalleUnidadMedida')->name('catalogo.detalle.unidadmedida');
 
-            //CRUD  Tipos de Servicios
-            Route::get('list-tiposservicios', 'listaTiposServicios')->name('catalogo.list.tiposservicios');
-            Route::post('registrar-tiposervicio', 'registrarTipoServicio')->name('catalogo.nuevo.tiposervicio');
-            Route::post('actualiza-tiposervicio', 'actualizaTipoServicio')->name('catalogo.actualiza.tiposervicio');
-            Route::delete('tiposervicio/{id}', 'deleteTipoServicio')->name('catalogo.delete.tiposervicio');            
-            Route::get('detalle-tiposervicio/{id}', 'detalleTipoServicio')->name('catalogo.detalle.tiposervicio');
+            //CRUD  Tipos de Monedas
+            Route::get('list-tiposmonedas', 'listaTiposMonedas')->name('catalogo.list.tiposmonedas');
+            Route::post('registrar-tiposervicio', 'registrarTipoMoneda')->name('catalogo.nuevo.tipomoneda');
+            Route::post('actualiza-tipomoneda', 'actualizaTipoMoneda')->name('catalogo.actualiza.tipomoneda');
+            Route::delete('tipomoneda/{id}', 'deleteTipoMoneda')->name('catalogo.delete.tipomoneda');            
+            Route::get('detalle-tipomoneda/{id}', 'detalleTipoMoneda')->name('catalogo.detalle.tipomoneda');
+
+             //CRUD  Tipos de Status
+            //  Route::get('list-status', 'listaStatus')->name('catalogo.list.status');
+            //  Route::post('registrar-statu', 'registrarStatu')->name('catalogo.nuevo.statu');
+            //  Route::post('actualiza-statu', 'actualizaStatu')->name('catalogo.actualiza.statu');
+            //  Route::delete('statu/{id}', 'deleteStatu')->name('catalogo.delete.statu');            
+            //  Route::get('detalle-statu/{id}', 'detalleStatu')->name('catalogo.detalle.statu');
+  
  
 
             //CRUD Usuarios

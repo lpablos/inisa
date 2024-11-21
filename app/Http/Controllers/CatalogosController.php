@@ -15,6 +15,7 @@ use App\Models\CatProvedor;
 use App\Models\CatUnidadMedida;
 use App\Models\CatTipoServicio;
 use App\Models\User;
+use App\Models\CatMoneda;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -380,6 +381,95 @@ class CatalogosController extends Controller
         }
     }
 
+    // Moneda
+    public function listaTiposMonedas()
+    {
+        $data = CatMoneda::all();
+        return response()->json($data);
+    }
+
+    public function detalleTipoMoneda($id)
+    {
+        $data = CatMoneda::where('id', $id)->first();
+        if (!$data) {
+            return response()->json(['error' => 'Unidad de medida no encontrado'], 404);
+        }
+        return response()->json($data, 200);
+    }
+    
+    public function actualizaTipoMoneda(Request $request)
+    {
+
+        try {
+
+            $validatedData = $request->validate([
+                'id' => 'required',
+                'nombre' => 'required|string|max:255',
+                'abreviacion'=> 'required|string|max:100',
+                
+            ]);
+            // dd($departamento);
+            $data = CatMoneda::where('id', $request->id)->first();
+            // Validar si el departamento existe
+            if (!$data) {
+                return response()->json(['error' => 'Moneda no encontrado'], 404);
+            }
+            // Crear el nuevo proveedor con los datos validados
+            $data->nombre = $request->nombre;
+            $data->abreviacion = $request->abreviacion;
+            $data->save();
+            return response()->json(['success' => 'Actualizado correctamente', $data], 201);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Capturar y retornar errores de validación
+            return response()->json([
+                'errors' => $e->errors(),
+            ], 422); // Código HTTP 422 para errores de validación
+        } catch (\Exception $e) {
+             // Capturar cualquier otro error
+        return response()->json([
+            'error' => 'Ocurrió un error al actualizar el cliente',
+            'message' => $e->getMessage(),
+        ], 500);
+        }
+    }
+
+    public function registrarTipoMoneda(Request $request)
+    {
+        
+        $validatedData = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'abreviacion'=> 'required|string|max:100',
+        ]);
+        
+        $data = new CatMoneda;
+        $data->nombre = $validatedData['nombre'];
+        $data->abreviacion = $validatedData['abreviacion'];
+        $data->save();
+        // $proveedor = CatCliente::create($validatedData);
+        return response()->json(['success' => 'Moneda creado exitosamente', 'data' => $data], 201);
+    }
+
+    public function deleteTipoMoneda($id)
+    {
+        
+        try {            
+            $data = CatMoneda::where('id', $id)->first();            
+            
+            if (!$data) {
+                return response()->json(['error' => 'Moneda no encontrado'], 404);
+            }
+            // Eliminar
+            
+            $data->delete();
+            return response()->json(['success' => 'Moneda eliminado exitosamente'], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th
+            ], 404);
+        }
+    }
+
 
       // Unidades de Medida
     //   public function listaTiposServicios()
@@ -581,7 +671,7 @@ class CatalogosController extends Controller
             ], 404);
         }
     }
-    
+
     public function detalleUsuario($id =  null)
     {
 

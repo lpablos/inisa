@@ -45,13 +45,21 @@ const Index = (props) =>{
                     iconColor="purple"
                     clickOpt = {setCatalogo}/>
 
-                {/* <DashboardInfoCard 
-                    title="Tipos de Servicios"                     
-                    valueTitle='tiposServicios'
+                <DashboardInfoCard 
+                    title="Tipos de Monedas"                     
+                    valueTitle='tiposMonedas'
                     value="152 Unread"
                     icon="tags"
                     iconColor="purple"
-                    clickOpt = {setCatalogo}/> */}
+                    clickOpt = {setCatalogo}/>
+                    
+                <DashboardInfoCard 
+                    title="Tipos de Status"                     
+                    valueTitle='tiposStatus'
+                    value="152 Unread"
+                    icon="tags"
+                    iconColor="purple"
+                    clickOpt = {setCatalogo}/>
 
                 <DashboardInfoCard 
                     title="Usuarios" 
