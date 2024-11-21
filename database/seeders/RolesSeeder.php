@@ -29,6 +29,7 @@ class RolesSeeder extends Seeder
             [
                 'name' => 'Admin_User',        // Nombre del usuario administrador
                 'password' => Hash::make('inisa123_'), // Cambia la contraseña a una segura
+                'empresa_id' => 1,
             ]
         );
 
@@ -42,6 +43,7 @@ class RolesSeeder extends Seeder
             [
                 'name' => 'Jefe_Administrativo_test',
                 'password' => Hash::make('jefeInisa123_'), // Cambia la contraseña
+                'empresa_id' => 1,
             ]
         );
         $jefeUser->assignRole($jefeRole);
@@ -52,6 +54,7 @@ class RolesSeeder extends Seeder
             [
                 'name' => 'Empleado_Área_test',
                 'password' => Hash::make('empleadoInisa123_'), // Cambia la contraseña
+                'empresa_id' => 1,
             ]
         );
         $empleadoUser->assignRole($empleadoRole);
@@ -62,6 +65,7 @@ class RolesSeeder extends Seeder
             [
                 'name' => 'Administrativo_test',
                 'password' => Hash::make('administrativoInisa123_'), // Cambia la contraseña
+                'empresa_id' => 1,
             ]
         );
         $administrativoUser->assignRole($administrativoRole);
