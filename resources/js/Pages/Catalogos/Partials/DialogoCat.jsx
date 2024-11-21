@@ -13,6 +13,7 @@ import ConfirmarEliminacion from "./ConfirmarEliminacion";
 import { Toast } from "primereact/toast";
 import { ProgressSpinner } from 'primereact/progressspinner';
 import FormularioMoneda from "./FormularioMoneda";
+import FormularioStatus from "./FormularioStatus";
 
 export default function DialogoCat({ tpOperacion, setOperacion }) {
     const [visible, setVisible] = useState(false);
@@ -57,6 +58,11 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
             case "tiposMonedas":
                 setTitulo("Catalogo de Tipos de Monedas");
                 obtenerTiposMonedas();
+                setVisible(true);
+                break;
+            case "tiposStatus":
+                setTitulo("Catalogo de Status");
+                obtenerStatus();
                 setVisible(true);
                 break;
             // case "tiposStatus":
@@ -104,6 +110,9 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
             case "tiposMonedas":
                 await confirmarEliminacionTipoMoneda(identy);
                 break;
+            case "tiposStatus":
+                await confirmarEliminacionStatu(identy);
+                break;
             // case "usuarios":
             //     setTitulo("Catalogo de Usuarios");
             //     obtenerUsuarios();
@@ -139,6 +148,9 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                 break;
             case "tiposMonedas":
                 obtenerDetalleTipoMoneda(identy);
+                break;
+            case "tiposStatus":
+                obtenerDetalleStatu(identy);
                 break;
             // case "usuarios":
             //     obtenerDetalleUsuario(identy);
@@ -764,6 +776,155 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
         
     }
 
+    // CRUD Status
+    const obtenerStatus = async () => {
+    
+        setLoader(true);
+        await axios
+            .get(`${route("catalogo.list.status")}`)
+            .then((response) => {
+                const { data } = response;
+                setData(data);
+            }).finally(() => {
+                setLoader(false);
+            });
+    };
+
+    const actualizarStatu = async (datos) => {
+        setLoader(true);        
+        try {
+            const response = await axios.post(
+                `${route("catalogo.actualiza.statu")}`,
+                datos
+            );
+
+            const { status, data } = response;
+            
+            if (status === 201) {
+                // Mostrar mensaje de éxito
+                toast.current.show({
+                    severity: "success",
+                    summary: "Success",
+                    detail: `${data.success}`,
+                    life: 3000,
+                });
+                showTabla();
+                obtenerStatus();
+            } else {
+                // Mostrar mensaje de error si no es un código de éxito esperado
+                toast.current.show({
+                    severity: "error",
+                    summary: "Error",
+                    detail: `${data.error || "Ocurrió un error inesperado"}`,
+                    life: 3000,
+                });
+            }
+            setLoader(false);
+        } catch (error) {
+            if (error.response && error.response.status === 422) {
+                // Capturar errores de validación
+                const errores = error.response.data.errors;
+                const mensajes = Object.values(errores).flat().join(", "); // Combina los errores en una sola cadena
+
+                toast.current.show({
+                    severity: "warn",
+                    summary: "Errores de validación",
+                    detail: mensajes,
+                    life: 5000,
+                });
+            } else {
+                // Mostrar cualquier otro error
+                toast.current.show({
+                    severity: "error",
+                    summary: "Error inesperado",
+                    detail: "Algo salió mal, por favor intente de nuevo.",
+                    life: 3000,
+                });
+            }
+            setLoader(false);
+        }
+    };
+
+    const eliminarStatu = async (identy) => {
+        setLoader(true);
+        try {
+            await axios.delete(
+                `${route("catalogo.delete.statu", { id: identy })}`
+            );
+            toast.current.show({
+                severity: "success",
+                summary: "Unidad de Medida eliminado",
+                detail: "El tipo de moneda ha sido eliminado exitosamente.",
+                life: 3000,
+            });
+            setLoader(false);
+            obtenerStatus();
+            
+        } catch (error) {
+            toast.current.show({
+                severity: "error",
+                summary: "Error",
+                detail: "No se pudo eliminar el tipo de moneda.",
+                life: 3000,
+            });
+            setLoader(false);
+        }
+    };
+
+    const confirmarEliminacionStatu = (identy) => {
+        toast.current.show({
+            severity: "warn",
+            summary: "Confirmación",
+            sticky: true,
+            content: (
+                <ConfirmarEliminacion
+                    onConfirm={() => {
+                        eliminarStatu(identy);
+                        toast.current.clear();
+                    }}
+                    onCancel={() => toast.current.clear()}
+                />
+            ),
+        });
+    };
+
+    const obtenerDetalleStatu = async (identy) => {
+        setLoader(true);
+        await axios
+            .get(`${route("catalogo.detalle.statu", { id: identy })}`)
+            .then((response) => {
+                setDataDetalle(response);
+            }).finally(() => {
+                setLoader(false);
+            });
+    };
+
+    const nuevoStatu = async (datos) =>{
+        
+        setLoader(true); 
+        await axios
+        .post(`${route("catalogo.nuevo.statu")}`, datos)
+        .then((response) => {
+            const { status, data } = response;
+            // setDataDetalle(response)
+            if (status == 201) {
+                toast.current.show({
+                    severity: "success",
+                    summary: "Success",
+                    detail: `${data.success}`,
+                    life: 3000,
+                });
+                showTabla();
+                obtenerStatus();
+                // obtenerTiposMonedas();
+            }
+        })
+        .finally(() => {
+            setLoader(false);
+        });
+        
+    }
+
 
 
 
@@ -912,23 +1073,23 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
 
 // ____________________
     // CRUD Empresa
-    const obtenerEmpresa = async () => {
-        await axios
-            .get(`${route("catalogo.list.empresas")}`)
-            .then((response) => {
-                const { data } = response;
-                setData(data);
-            });
-    };
+    // const obtenerEmpresa = async () => {
+    //     await axios
+    //         .get(`${route("catalogo.list.empresas")}`)
+    //         .then((response) => {
+    //             const { data } = response;
+    //             setData(data);
+    //         });
+    // };
 
-    const obtenerDetalleEmpresa = async (identy) => {
-        await axios
-            .get(`${route("catalogo.detalle.empresa", { id: identy })}`)
-            .then((response) => {
-                console.log("datos empresa", response);
-                setDataDetalle(response);
-            });
-    };
+    // const obtenerDetalleEmpresa = async (identy) => {
+    //     await axios
+    //         .get(`${route("catalogo.detalle.empresa", { id: identy })}`)
+    //         .then((response) => {
+    //             console.log("datos empresa", response);
+    //             setDataDetalle(response);
+    //         });
+    // };
 
 
    
@@ -1114,6 +1275,19 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                         setLimpiarFormulario  = {setLimpiarFormulario}
                         modoForm={modoForm}
                         nuevoTipoMoneda={nuevoTipoMoneda}///esto
+                    />
+                )}
+
+                {tpOperacion === "tiposStatus" && ocultarFormulario == false && (
+                    <FormularioStatus
+                        showTabla={showTabla}
+                        dataDetalle={dataDetalle}
+                        actualizarStatu = {actualizarStatu}
+                        limpiarFormulario = {limpiarFormulario}
+                        setLimpiarFormulario  = {setLimpiarFormulario}
+                        modoForm={modoForm}
+                        nuevoStatu={nuevoStatu}
+                        
                     />
                 )}
 

@@ -90,11 +90,11 @@ Route::prefix('admin')->group(function () {
             Route::get('detalle-tipomoneda/{id}', 'detalleTipoMoneda')->name('catalogo.detalle.tipomoneda');
 
              //CRUD  Tipos de Status
-            //  Route::get('list-status', 'listaStatus')->name('catalogo.list.status');
-            //  Route::post('registrar-statu', 'registrarStatu')->name('catalogo.nuevo.statu');
-            //  Route::post('actualiza-statu', 'actualizaStatu')->name('catalogo.actualiza.statu');
-            //  Route::delete('statu/{id}', 'deleteStatu')->name('catalogo.delete.statu');            
-            //  Route::get('detalle-statu/{id}', 'detalleStatu')->name('catalogo.detalle.statu');
+             Route::get('list-status', 'listaStatus')->name('catalogo.list.status');
+             Route::post('registrar-statu', 'registrarStatu')->name('catalogo.nuevo.statu');
+             Route::post('actualiza-statu', 'actualizaStatu')->name('catalogo.actualiza.statu');
+             Route::delete('statu/{id}', 'deleteStatu')->name('catalogo.delete.statu');            
+             Route::get('detalle-statu/{id}', 'detalleStatu')->name('catalogo.detalle.statu');
   
  
 

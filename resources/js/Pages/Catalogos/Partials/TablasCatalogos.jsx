@@ -33,6 +33,9 @@ const TablasCatalogos = ({
             case "tiposMonedas":
                 setOpcionTabla(5);
                 break;
+            case "tiposStatus":
+                setOpcionTabla(6);
+                break;
             // case "usuarios":
             //     setOpcionTabla(5);
             //     break;
@@ -133,6 +136,17 @@ const TablasCatalogos = ({
                 <DataTable value={registros} tableStyle={{ minWidth: "100%" }}>
                     <Column field="nombre" header="Nombre"></Column>
                     <Column field="abreviacion" header="Abreviación"></Column>
+                    <Column
+                        header="Opciones"
+                        body={opcionesTemplate}
+                    ></Column>
+                </DataTable>
+            )}
+            {opcionTabla == 6 && (
+                <DataTable value={registros} tableStyle={{ minWidth: "100%" }}>
+                    <Column field="nombre" header="Nombre"></Column>
+                    <Column field="abreviacion" header="Abreviación"></Column>
+                    <Column field="descripcion" header="Descripción"></Column>
                     <Column
                         header="Opciones"
                         body={opcionesTemplate}
