@@ -46,6 +46,22 @@ const Index = (props) =>{
                     clickOpt = {setCatalogo}/>
 
                 <DashboardInfoCard 
+                    title="Tipos de Monedas"                     
+                    valueTitle='tiposMonedas'
+                    value="152 Unread"
+                    icon="tags"
+                    iconColor="purple"
+                    clickOpt = {setCatalogo}/>
+                    
+                <DashboardInfoCard 
+                    title="Tipos de Status"                     
+                    valueTitle='tiposStatus'
+                    value="152 Unread"
+                    icon="tags"
+                    iconColor="purple"
+                    clickOpt = {setCatalogo}/>
+
+                <DashboardInfoCard 
                     title="Usuarios" 
                     valueTitle='usuarios'
                     value="152 Unread"

@@ -82,8 +82,27 @@ Route::prefix('admin')->group(function () {
             Route::delete('unidadmedida/{id}', 'deleteUnidadMedida')->name('catalogo.delete.unidadmedida');
             Route::get('detalle-unidadmedida/{id}', 'detalleUnidadMedida')->name('catalogo.detalle.unidadmedida');
 
+            //CRUD  Tipos de Monedas
+            Route::get('list-tiposmonedas', 'listaTiposMonedas')->name('catalogo.list.tiposmonedas');
+            Route::post('registrar-tiposervicio', 'registrarTipoMoneda')->name('catalogo.nuevo.tipomoneda');
+            Route::post('actualiza-tipomoneda', 'actualizaTipoMoneda')->name('catalogo.actualiza.tipomoneda');
+            Route::delete('tipomoneda/{id}', 'deleteTipoMoneda')->name('catalogo.delete.tipomoneda');            
+            Route::get('detalle-tipomoneda/{id}', 'detalleTipoMoneda')->name('catalogo.detalle.tipomoneda');
+
+             //CRUD  Tipos de Status
+             Route::get('list-status', 'listaStatus')->name('catalogo.list.status');
+             Route::post('registrar-statu', 'registrarStatu')->name('catalogo.nuevo.statu');
+             Route::post('actualiza-statu', 'actualizaStatu')->name('catalogo.actualiza.statu');
+             Route::delete('statu/{id}', 'deleteStatu')->name('catalogo.delete.statu');            
+             Route::get('detalle-statu/{id}', 'detalleStatu')->name('catalogo.detalle.statu');
+  
+ 
+
             //CRUD Usuarios
             Route::get('list-usuarios', 'listaUsuarios')->name('catalogo.list.usuarios');
+            Route::post('registrar-usuario', 'registrarUsuario')->name('catalogo.nuevo.usuario');
+            Route::post('actualiza-usuario', 'actualizaUsuario')->name('catalogo.actualiza.usuario');
+            Route::delete('usuario/{id}', 'deleteUsuario')->name('catalogo.delete.usuario');     
             Route::get('detalle-usuario/{id}', 'detalleUsuario')->name('catalogo.detalle.usuario');
 
             //CRUD  empresa

@@ -13,8 +13,11 @@ use App\Models\CatEmpresa;
 use App\Models\CatEstatu;
 use App\Models\CatProvedor;
 use App\Models\CatUnidadMedida;
+use App\Models\CatTipoServicio;
 use App\Models\User;
+use App\Models\CatMoneda;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class CatalogosController extends Controller
 {
@@ -33,7 +36,7 @@ class CatalogosController extends Controller
     public function deleteProvedor($id)
     {
 
-        // dd($id);
+        
         try {
             $data = CatProvedor::find($id);
             // dd($data);
@@ -378,6 +381,278 @@ class CatalogosController extends Controller
         }
     }
 
+    // Moneda
+    public function listaTiposMonedas()
+    {
+        $data = CatMoneda::all();
+        return response()->json($data);
+    }
+
+    public function detalleTipoMoneda($id)
+    {
+        $data = CatMoneda::where('id', $id)->first();
+        if (!$data) {
+            return response()->json(['error' => 'Unidad de medida no encontrado'], 404);
+        }
+        return response()->json($data, 200);
+    }
+    
+    public function actualizaTipoMoneda(Request $request)
+    {
+
+        try {
+
+            $validatedData = $request->validate([
+                'id' => 'required',
+                'nombre' => 'required|string|max:255',
+                'abreviacion'=> 'required|string|max:100',
+                
+            ]);
+            // dd($departamento);
+            $data = CatMoneda::where('id', $request->id)->first();
+            // Validar si el departamento existe
+            if (!$data) {
+                return response()->json(['error' => 'Moneda no encontrado'], 404);
+            }
+            // Crear el nuevo proveedor con los datos validados
+            $data->nombre = $request->nombre;
+            $data->abreviacion = $request->abreviacion;
+            $data->save();
+            return response()->json(['success' => 'Actualizado correctamente', $data], 201);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Capturar y retornar errores de validación
+            return response()->json([
+                'errors' => $e->errors(),
+            ], 422); // Código HTTP 422 para errores de validación
+        } catch (\Exception $e) {
+             // Capturar cualquier otro error
+        return response()->json([
+            'error' => 'Ocurrió un error al actualizar el cliente',
+            'message' => $e->getMessage(),
+        ], 500);
+        }
+    }
+
+    public function registrarTipoMoneda(Request $request)
+    {
+        
+        $validatedData = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'abreviacion'=> 'required|string|max:100',
+        ]);
+        
+        $data = new CatMoneda;
+        $data->nombre = $validatedData['nombre'];
+        $data->abreviacion = $validatedData['abreviacion'];
+        $data->save();
+        // $proveedor = CatCliente::create($validatedData);
+        return response()->json(['success' => 'Moneda creado exitosamente', 'data' => $data], 201);
+    }
+
+    public function deleteTipoMoneda($id)
+    {
+        
+        try {            
+            $data = CatMoneda::where('id', $id)->first();            
+            
+            if (!$data) {
+                return response()->json(['error' => 'Moneda no encontrado'], 404);
+            }
+            // Eliminar
+            
+            $data->delete();
+            return response()->json(['success' => 'Moneda eliminado exitosamente'], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th
+            ], 404);
+        }
+    }
+
+    // Status
+    public function listaStatus()
+    {
+        $data = CatEstatu::all();
+        return response()->json($data);
+    }
+
+    public function detalleStatu($id)
+    {
+        $data = CatEstatu::where('id', $id)->first();
+        if (!$data) {
+            return response()->json(['error' => 'Unidad de medida no encontrado'], 404);
+        }
+        return response()->json($data, 200);
+    }
+    
+    public function actualizaStatu(Request $request)
+    {
+
+        try {
+
+            $validatedData = $request->validate([
+                'id' => 'required',
+                'nombre'=> 'required|string|max:255',
+                'abreviacion'=> 'required|string|max:255',
+                'descripcion'=> 'nullable|string|max:255',
+                
+            ]);
+            // dd($departamento);
+            $data = CatEstatu::where('id', $request->id)->first();
+            // Validar si el departamento existe
+            if (!$data) {
+                return response()->json(['error' => 'Moneda no encontrado'], 404);
+            }
+            // Crear el nuevo proveedor con los datos validados
+            $data->nombre = $request->nombre;
+            $data->abreviacion = $request->abreviacion;
+            $data->descripcion = $request->descripcion;
+            $data->save();
+            return response()->json(['success' => 'Actualizado correctamente', $data], 201);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Capturar y retornar errores de validación
+            return response()->json([
+                'errors' => $e->errors(),
+            ], 422); // Código HTTP 422 para errores de validación
+        } catch (\Exception $e) {
+                // Capturar cualquier otro error
+        return response()->json([
+            'error' => 'Ocurrió un error al actualizar el status',
+            'message' => $e->getMessage(),
+        ], 500);
+        }
+    }
+
+    public function registrarStatu(Request $request)
+    {
+        
+        $validatedData = $request->validate([
+            'nombre'=> 'required|string|max:255',
+            'abreviacion'=> 'required|string|max:255',
+            'descripcion'=> 'nullable|string|max:255',
+        ]);
+        
+        $data = new CatEstatu;
+        $data->nombre = $validatedData['nombre'];
+        $data->abreviacion = $validatedData['abreviacion'];
+        $data->descripcion = $validatedData['descripcion'];
+        $data->save();
+        // $proveedor = CatCliente::create($validatedData);
+        return response()->json(['success' => 'Status creado exitosamente', 'data' => $data], 201);
+    }
+
+    public function deleteStatu($id)
+    {
+        
+        try {            
+            $data = CatEstatu::where('id', $id)->first();            
+            
+            if (!$data) {
+                return response()->json(['error' => 'Status no encontrado'], 404);
+            }
+            // Eliminar
+            $data->delete();
+            return response()->json(['success' => 'Status eliminado exitosamente'], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th
+            ], 404);
+        }
+    }
+
+
+      // Unidades de Medida
+    //   public function listaTiposServicios()
+    //   {
+    //       $data = CatTipoServicio::all();
+    //       return response()->json($data);
+    //   }
+  
+    //   public function detalleTipoServicio($id)
+    //   {
+    //       $data = CatTipoServicio::where('id', $id)->first();
+    //       if (!$data) {
+    //           return response()->json(['error' => 'Unidad de medida no encontrado'], 404);
+    //       }
+    //       return response()->json($data, 200);
+    //   }
+      
+    //   public function actualizaTipoServicio(Request $request)
+    //   {
+  
+    //       try {
+  
+    //           $validatedData = $request->validate([
+    //               'id' => 'required',
+    //               'nombre' => 'required|string|max:255',
+    //               'abreviatura'=> 'nullable|string|max:100',
+    //               'descripcion'=> 'nullable|string|max:100',
+    //           ]);
+    //           // dd($departamento);
+    //           $data = CatTipoServicio::where('id', $request->id)->first();
+    //           // Validar si el departamento existe
+    //           if (!$data) {
+    //               return response()->json(['error' => 'Unidad de Medida no encontrado'], 404);
+    //           }
+    //           // Crear el nuevo proveedor con los datos validados
+    //           $data->nombre = $request->nombre;
+    //           $data->abreviatura = $request->abreviatura;
+    //           $data->descripcion = $request->descripcion;
+    //           $data->save();
+    //           return response()->json(['success' => 'Actualizado correctamente', $data], 201);
+    //       } catch (\Illuminate\Validation\ValidationException $e) {
+    //           // Capturar y retornar errores de validación
+    //           return response()->json([
+    //               'errors' => $e->errors(),
+    //           ], 422); // Código HTTP 422 para errores de validación
+    //       } catch (\Exception $e) {
+    //            // Capturar cualquier otro error
+    //       return response()->json([
+    //           'error' => 'Ocurrió un error al actualizar el cliente',
+    //           'message' => $e->getMessage(),
+    //       ], 500);
+    //       }
+    //   }
+  
+    //   public function registrarTipoServicio(Request $request)
+    //   {
+          
+    //       $validatedData = $request->validate([
+    //           'nombre' => 'required|string|max:255',
+    //           'abreviatura'=> 'nullable|string|max:100',
+    //           'descripcion'=> 'nullable|string|max:100',
+    //       ]);
+          
+    //       $data = new CatTipoServicio;
+    //       $data->nombre = $validatedData['nombre'];
+    //       $data->abreviatura = $validatedData['abreviatura'];
+    //       $data->descripcion = $validatedData['descripcion'];
+    //       $data->save();
+    //       // $proveedor = CatCliente::create($validatedData);
+    //       return response()->json(['success' => 'Unidad de Medida creado exitosamente', 'data' => $data], 201);
+    //   }
+  
+    //   public function deleteTipoServicio($id)
+    //   {
+          
+    //       try {
+              
+    //           $data = CatTipoServicio::where('id', $id)->first();            
+    //           if (!$data) {
+    //               return response()->json(['error' => 'Unidad de Medida no encontrado'], 404);
+    //           }
+    //           // Eliminar
+    //           $data->delete();
+    //           return response()->json(['success' => 'Unidad de Medida eliminado exitosamente'], 200);
+    //       } catch (\Throwable $th) {
+    //           return response()->json([
+    //               'status' => 'error',
+    //               'message' => $th
+    //           ], 404);
+    //       }
+    //   }
 
 
 
@@ -411,6 +686,83 @@ class CatalogosController extends Controller
         return response()->json($data);
     }
 
+    public function registrarUsuario(Request $request)
+    {
+        
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email'=> 'required|string|max:100',
+            'password'=> 'nullable|string|max:100',
+        ]);
+        
+        $data = new User;
+        $data->name = $validatedData['name'];
+        $data->email = $validatedData['email'];        
+        if($request->password!=='' && $request->password!==null){
+            $data->password = $validatedData['password'];
+        }
+        $data->save();
+        // $proveedor = CatCliente::create($validatedData);
+        return response()->json(['success' => 'Usuario creado exitosamente', 'data' => $data], 201);
+    }
+
+    public function actualizaUsuario(Request $request)
+    {
+
+        try {
+
+            $validatedData = $request->validate([
+                'id' => 'required',
+                'name' => 'required|string|max:255',
+                'email'=> 'required|string|max:100',
+                'password'=> 'nullable|string|max:100',
+            ]);
+            
+            // Validar si el departamento existe
+            if (!$data) {
+                return response()->json(['error' => 'Usuario no encontrado'], 404);
+            }
+            // Crear el nuevo proveedor con los datos validados
+            $data->name = $request->name;
+            $data->email = $request->email;
+            if($request->password!=='' && $request->password!==null){
+                $data->password = Hash::make($request->password);
+            }
+            $data->save();
+            return response()->json(['success' => 'Actualizado correctamente', $data], 201);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Capturar y retornar errores de validación
+            return response()->json([
+                'errors' => $e->errors(),
+            ], 422); // Código HTTP 422 para errores de validación
+        } catch (\Exception $e) {
+             // Capturar cualquier otro error
+        return response()->json([
+            'error' => 'Ocurrió un error al actualizar el cliente',
+            'message' => $e->getMessage(),
+        ], 500);
+        }
+    }
+
+    public function deleteUsuario($id)
+    {
+        
+        try {
+            
+            $data = User::where('id', $id)->first();            
+            if (!$data) {
+                return response()->json(['error' => 'Usuario no encontrado'], 404);
+            }
+            // Eliminar
+            $data->delete();
+            return response()->json(['success' => 'Usuario eliminado exitosamente'], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th
+            ], 404);
+        }
+    }
 
     public function detalleUsuario($id =  null)
     {
@@ -421,4 +773,11 @@ class CatalogosController extends Controller
         }
         return response()->json($data, 200);
     }
+
+    
+    
+
+    
+
+   
 }

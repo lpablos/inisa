@@ -30,12 +30,18 @@ const TablasCatalogos = ({
             case "unidadesMedidas":
                 setOpcionTabla(4);
                 break;
-            case "usuarios":
+            case "tiposMonedas":
                 setOpcionTabla(5);
                 break;
-            case "datosEmpresa":
+            case "tiposStatus":
                 setOpcionTabla(6);
                 break;
+            // case "usuarios":
+            //     setOpcionTabla(5);
+            //     break;
+            // case "datosEmpresa":
+            //     setOpcionTabla(6);
+            //     break;
             default:
                 setOpcionTabla(0);
                 break;
@@ -127,6 +133,28 @@ const TablasCatalogos = ({
             )}
 
             {opcionTabla == 5 && (
+                <DataTable value={registros} tableStyle={{ minWidth: "100%" }}>
+                    <Column field="nombre" header="Nombre"></Column>
+                    <Column field="abreviacion" header="Abreviación"></Column>
+                    <Column
+                        header="Opciones"
+                        body={opcionesTemplate}
+                    ></Column>
+                </DataTable>
+            )}
+            {opcionTabla == 6 && (
+                <DataTable value={registros} tableStyle={{ minWidth: "100%" }}>
+                    <Column field="nombre" header="Nombre"></Column>
+                    <Column field="abreviacion" header="Abreviación"></Column>
+                    <Column field="descripcion" header="Descripción"></Column>
+                    <Column
+                        header="Opciones"
+                        body={opcionesTemplate}
+                    ></Column>
+                </DataTable>
+            )}
+
+            {/* {opcionTabla == 5 && (
                 // Este es la tabla para clientes
                 <DataTable value={registros} tableStyle={{ minWidth: "100%" }}>
                     <Column field="name" header="Nombre"></Column>
@@ -136,9 +164,9 @@ const TablasCatalogos = ({
                         body={opcionesTemplate}
                     ></Column>
                 </DataTable>
-            )}
+            )} */}
 
-            {opcionTabla == 6 && (
+            {/* {opcionTabla == 6 && (
                 // Este es la tabla para Empresa
                 <DataTable value={registros} tableStyle={{ minWidth: "100%" }}>
                     <Column field="nombre" header="Nombre"></Column>
@@ -158,7 +186,7 @@ const TablasCatalogos = ({
                         body={opcionesTemplate}
                     ></Column>
                 </DataTable>
-            )}
+            )} */}
         </>
     );
 };

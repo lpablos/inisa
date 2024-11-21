@@ -16,7 +16,7 @@ class CatEstatu extends Model
     protected $primaryKey = 'id_status';
 
     protected $fillable = [
-        'id_status',
+        'id',
         'nombre',
         'abreviacion',
         'descripcion',
