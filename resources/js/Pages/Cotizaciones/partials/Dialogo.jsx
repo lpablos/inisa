@@ -155,7 +155,7 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
             <Toast ref={toast} />
             <div className="grid my-5">
                 <div className="col-12">
-                    <label htmlFor="proveedor">Proveedor</label>
+                    <label htmlFor="proveedor">Campaña</label>
                     <DropdownFilter
                         className="mb-3 col-12"
                         value={selectedProveedor}

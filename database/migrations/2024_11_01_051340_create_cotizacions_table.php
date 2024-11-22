@@ -23,6 +23,11 @@ return new class extends Migration
             $table->float('subtotal')->nullable();
             $table->float('total')->nullable();
             $table->text('notas_extra')->nullable();
+            $table->boolean('es_mano_obra')->nullable();
+            $table->boolean('es_material')->nullable();
+
+
+
 
 
             // $table->boolean('iva');
@@ -66,8 +71,8 @@ return new class extends Migration
             $table->foreign('tomo_id')->references('id')->on('cat_tomos');
 
             // Relación con usuario
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('user_crear')->nullable();
+            $table->foreign('user_crear')->references('id')->on('users');
 
             // Relación con prioridad
             $table->unsignedBigInteger('cat_prioridad_id')->nullable();

@@ -50,7 +50,7 @@ class CotizacionFactory extends Factory
             'departamento_id' => CatDepartamento::inRandomOrder()->first()->id ?? 1,
             'empresa_id' => CatEmpresa::inRandomOrder()->first()->id ?? 1,
             // 'tipo_cotizacion_id' => CatTipoCotizacion::inRandomOrder()->first()->id ?? 1,
-            'user_id' => User::inRandomOrder()->first()->id ?? 1,
+            'user_crear' => User::inRandomOrder()->first()->id ?? 1,
             'cat_prioridad_id' => CatPrioridad::inRandomOrder()->first()->id ?? 1,
             'cat_moneda_id' => CatMoneda::inRandomOrder()->first()->id ?? 1,
         ];
