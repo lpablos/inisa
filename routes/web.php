@@ -121,6 +121,9 @@ Route::prefix('admin')->group(function () {
             Route::put('actualiza-cotizacion', 'updateCotizacion')->name('cotizacion.actualiza.cotizacion');
             Route::delete('cotizacion/{id}', 'deleteCotizacion')->name('cotizacion.delete.cotizacion');
 
+
+            Route::get('captura/{identy}/detalle','datelleCaptura')->name('cotizacion.captura.detale');
+
         });
     });
 });

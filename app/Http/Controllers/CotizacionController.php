@@ -104,4 +104,9 @@ class CotizacionController extends Controller
         $cotizacion->delete();
         return response()->json(['success' => 'Cotizacion eliminada exitosamente'], 200);
     }
+
+
+    public function datelleCaptura($identy){
+        return Inertia::render('Cotizaciones/Index');
+    }
 }
