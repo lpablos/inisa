@@ -6,6 +6,7 @@ import { Toast } from "primereact/toast";
 import Dialogo from "./Dialogo"; // Componente para el modal
 import ConfirmarEliminacion from "./ConfirmarEliminacion";
 import axios from "axios";
+import { Tooltip } from 'primereact/tooltip';
 
 const ConceptoTabla = () => {
     const [cotizaciones, setCotizaciones] = useState([]); // Lista de cotizaciones
@@ -96,25 +97,30 @@ const ConceptoTabla = () => {
         <div className="flex gap-2">
             <Button
                 icon="pi pi-pencil"
-                label="Editar"
+                tooltip="Editar"
+                tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
                 className="p-button-rounded p-button-info p-button-sm"
                 onClick={() => handleEditar(rowData)}
             />
             <Button
                 icon="pi pi-trash"
-                label="Eliminar"
-                className="p-button-danger p-button-sm"
+                className="p-button-rounded p-button-danger p-button-sm"
+                tooltip="Eliminar"
+                tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
                 onClick={() =>
                     confirmarEliminacionCotizacion(rowData.id, rowData.titulo)
                 }
             />
-
-            <Button
-                icon="pi pi-eye"
-                label="Ver Detalle"
-                className="p-button-success p-button-sm"
-
-            />
+             <a
+                id="capture-link"
+                href={route("cotizacion.captura.detalle", { identy: rowData.id })} 
+                // href={`${route("cotizacion.captura.detale", { identy: rowData.id })}`}
+                rel="noopener noreferrer"
+                className="p-button-rounded p-button"
+            >
+                <i className="pi pi-pencil"></i>
+            </a>
+            <Tooltip target="#capture-link" content="Captura la cotizacion" position="bottom" />
         </div>
     );
 

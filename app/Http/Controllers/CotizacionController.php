@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Cotizacion as co;
 use App\Models\Cotizacion;
+use App\Models\DetalleCotizacion;
 
 class CotizacionController extends Controller
 {
@@ -107,6 +108,6 @@ class CotizacionController extends Controller
 
 
     public function datelleCaptura($identy){
-        return Inertia::render('Cotizaciones/Index');
+        return Inertia::render('Cotizaciones/DetalleCaptura',['cotizacion' => $identy]);
     }
 }
