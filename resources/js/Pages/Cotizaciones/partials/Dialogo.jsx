@@ -16,6 +16,49 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
     const [date, setDate] = useState(null);
     const toast = useRef(null);
 
+
+    const [selectedMoneda, setSelectedMoneda] = useState(null); // Status seleccionado
+    const [moneda, setMoneda] = useState([]); // Lista de statuses
+
+    useEffect(() => {
+        const obtenerMonedas = async () => {
+            try {
+                const response = await axios.get(route("catalogo.list.tiposmonedas"));
+                console.log("monedas", response.data);
+                setMoneda(response.data);
+            } catch (error) {
+                toast.current.show({
+                    severity: "error",
+                    summary: "Error",
+                    detail: "No se pudo obtener la lista de monedas.",
+                    life: 3000,
+                });
+            }
+        };
+        obtenerMonedas();
+    }, []);
+
+
+    const [selectedStatus, setSelectedStatus] = useState(null); // Status seleccionado
+    const [statuses, setStatuses] = useState([]); // Lista de statuses
+    useEffect(() => {
+        const obtenerStatuses = async () => {
+            try {
+                const response = await axios.get(route("catalogo.list.status"));
+                console.log("status", response.data);
+                setStatuses(response.data);
+            } catch (error) {
+                toast.current.show({
+                    severity: "error",
+                    summary: "Error",
+                    detail: "No se pudo obtener la lista de statuses.",
+                    life: 3000,
+                });
+            }
+        };
+        obtenerStatuses();
+    }, []);
+
     // Obtener la lista de proveedores
     useEffect(() => {
         const obtenerProveedores = async () => {
@@ -45,6 +88,17 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                 (p) => p.id === dataToEdit.provedor_id
             );
             setSelectedProveedor(proveedorEncontrado || null);
+
+            // Cargar el status seleccionado
+            const statusEncontrado = statuses.find(
+                (s) => s.id === dataToEdit.status_id
+            );
+            setSelectedStatus(statusEncontrado || null);
+
+            const monedaEncontrada = moneda.find(
+                (m) => m.id === dataToEdit.moneda_id
+            );
+            setSelectedMoneda(monedaEncontrada || null);
         }
     }, [isEdit, dataToEdit, proveedores]);
 
@@ -99,10 +153,7 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                 console.log(response);
                 console.log(response.status);
 
-
-
                 if (response.status === 201) {
-
                     toast.current.show({
                         severity: "success",
                         summary: "Éxito",
@@ -165,6 +216,51 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                         placeholder="Seleccione un proveedor"
                         filter
                         filterBy="nombre abreviacion"
+                        showClear
+                    />
+                </div>
+
+                <div className="col-4">
+                    <label htmlFor="proveedor">Status</label>
+                    <DropdownFilter
+                        className="mb-3 col-12"
+                        value={selectedStatus}
+                        onChange={(e) => setSelectedStatus(e.value)}
+                        options={statuses}
+                        optionLabel="nombre" // Cambia a la propiedad adecuada de tu modelo de Status
+                        placeholder="Seleccione un status"
+                        filter
+                        filterBy="nombre"
+                        showClear
+                    />
+                </div>
+
+                <div className="col-4">
+                    <label htmlFor="proveedor">Prioridad</label>
+                    <DropdownFilter
+                        className="mb-3 col-12"
+                        value={selectedStatus}
+                        onChange={(e) => setSelectedStatus(e.value)}
+                        options={statuses}
+                        optionLabel="nombre" // Cambia a la propiedad adecuada de tu modelo de Status
+                        placeholder="Seleccione un status"
+                        filter
+                        filterBy="nombre"
+                        showClear
+                    />
+                </div>
+
+                <div className="col-4">
+                    <label htmlFor="proveedor">Moneda</label>
+                    <DropdownFilter
+                        className="mb-3 col-12"
+                        value={selectedMoneda}
+                        onChange={(e) => setSelectedMoneda(e.value)}
+                        options={moneda}
+                        optionLabel="nombre" // Cambia a la propiedad adecuada de tu modelo de Status
+                        placeholder="Seleccione un status"
+                        filter
+                        filterBy="nombre"
                         showClear
                     />
                 </div>

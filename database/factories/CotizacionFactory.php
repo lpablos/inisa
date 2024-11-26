@@ -53,6 +53,8 @@ class CotizacionFactory extends Factory
             'user_crear' => User::inRandomOrder()->first()->id ?? 1,
             'cat_prioridad_id' => CatPrioridad::inRandomOrder()->first()->id ?? 1,
             'cat_moneda_id' => CatMoneda::inRandomOrder()->first()->id ?? 1,
+            'es_mano_obra' => $this->faker->boolean,
+            'es_material' => $this->faker->boolean,
         ];
     }
 }
