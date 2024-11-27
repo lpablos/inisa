@@ -25,6 +25,8 @@ return new class extends Migration
             $table->text('notas_extra')->nullable();
             $table->boolean('es_mano_obra')->nullable();
             $table->boolean('es_material')->nullable();
+            $table->double('costo_material')->nullable();
+            $table->double('costo_mano_obra')->nullable();
 
 
 
@@ -69,6 +71,10 @@ return new class extends Migration
             // Relación con tomo
             $table->unsignedBigInteger('tomo_id')->nullable();
             $table->foreign('tomo_id')->references('id')->on('cat_tomos');
+
+            // Relación con usuario
+            $table->unsignedBigInteger('user_autoriza')->nullable();
+            $table->foreign('user_autoriza')->references('id')->on('users');
 
             // Relación con usuario
             $table->unsignedBigInteger('user_crear')->nullable();

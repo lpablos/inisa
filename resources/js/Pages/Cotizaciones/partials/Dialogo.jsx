@@ -7,6 +7,11 @@ import { Calendar } from "primereact/calendar";
 import DropdownFilter from "./SelectorFilter";
 import { Toast } from "primereact/toast";
 import axios from "axios";
+import { set } from "react-hook-form";
+import { RadioButton } from "primereact/radiobutton";
+import "primereact/resources/themes/saga-blue/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
 
 const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
     const [visible, setVisible] = useState(true);
@@ -14,8 +19,40 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
     const [titulo, setTitulo] = useState("");
     const [proveedores, setProveedores] = useState([]);
     const [date, setDate] = useState(null);
+    const [fecha_inicio_cotizacion, setFecha_inicio_cotizacion] =
+        useState(null);
+    const [fecha_final_cotizacion, setFecha_final_cotizacion] = useState(null);
     const toast = useRef(null);
+    const [tipo, setTipo] = useState(""); // 'material' o 'mano_obra'
 
+    const [selectedCliente, setSelectedCliente] = useState(null); // Status seleccionado
+    const [cliente, setCliente] = useState([]); // Lista de statuses
+    const [ingredient, setIngredient] = useState("");
+
+    const handleChange = (e) => {
+        console.log("Seleccionado:", e.value); // Diagnóstico
+        setTipo(e.value);
+    };
+
+    useEffect(() => {
+        const obtenerClientes = async () => {
+            try {
+                const response = await axios.get(
+                    route("catalogo.list.clientes")
+                );
+                console.log("clientes", response.data);
+                setCliente(response.data);
+            } catch (error) {
+                toast.current.show({
+                    severity: "error",
+                    summary: "Error",
+                    detail: "No se pudo obtener la lista de clientes.",
+                    life: 3000,
+                });
+            }
+        };
+        obtenerClientes();
+    }, []);
 
     const [selectedMoneda, setSelectedMoneda] = useState(null); // Status seleccionado
     const [moneda, setMoneda] = useState([]); // Lista de statuses
@@ -23,7 +60,9 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
     useEffect(() => {
         const obtenerMonedas = async () => {
             try {
-                const response = await axios.get(route("catalogo.list.tiposmonedas"));
+                const response = await axios.get(
+                    route("catalogo.list.tiposmonedas")
+                );
                 console.log("monedas", response.data);
                 setMoneda(response.data);
             } catch (error) {
@@ -38,6 +77,28 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
         obtenerMonedas();
     }, []);
 
+    const [selectedPrioridad, setSelectedPropiedad] = useState(null); // Status seleccionado
+    const [prioridad, setPropiedad] = useState([]); // Lista de statuses
+
+    useEffect(() => {
+        const obtenerPropiedad = async () => {
+            try {
+                const response = await axios.get(
+                    route("catalogo.list.prioridades")
+                );
+                console.log("prioridad", response.data);
+                setPropiedad(response.data);
+            } catch (error) {
+                toast.current.show({
+                    severity: "error",
+                    summary: "Error",
+                    detail: "No se pudo obtener la lista de monedas.",
+                    life: 3000,
+                });
+            }
+        };
+        obtenerPropiedad();
+    }, []);
 
     const [selectedStatus, setSelectedStatus] = useState(null); // Status seleccionado
     const [statuses, setStatuses] = useState([]); // Lista de statuses
@@ -99,12 +160,33 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                 (m) => m.id === dataToEdit.moneda_id
             );
             setSelectedMoneda(monedaEncontrada || null);
+
+            const clienteEncontrado = cliente.find(
+                (m) => m.id === dataToEdit.cliente_id
+            );
+            setSelectedCliente(clienteEncontrado || null);
+
+            const prioridadEncontrada = prioridad.find(
+                (m) => m.id === dataToEdit.prioridad_id
+            );
+            setSelectedPrioridad(prioridadEncontrada || null);
         }
     }, [isEdit, dataToEdit, proveedores]);
 
     // Manejar el guardado
     const handleGuardar = async () => {
-        if (!selectedProveedor || !titulo || !date) {
+        if (
+            !selectedProveedor ||
+            !titulo ||
+            !date ||
+            !selectedStatus ||
+            !selectedMoneda ||
+            !selectedCliente ||
+            !selectedPrioridad ||
+            !fecha_inicio_cotizacion ||
+            !fecha_final_cotizacion
+
+        ) {
             toast.current.show({
                 severity: "warn",
                 summary: "Campos incompletos",
@@ -115,9 +197,16 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
         }
 
         const datos = {
-            proveedor: selectedProveedor.id,
+            provedor_id: selectedProveedor.id,
+            status_id: selectedStatus.id,
+            moneda_id: selectedMoneda.id,
+            cliente_id: selectedCliente.id,
+            prioridad_id: selectedPrioridad.id,
             titulo: titulo,
             fecha: date,
+            fecha_inicio_cotizacion: fecha_inicio_cotizacion,
+            fecha_final_cotizacion: fecha_final_cotizacion,
+            es_material: tipo,
         };
 
         try {
@@ -220,7 +309,7 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                     />
                 </div>
 
-                <div className="col-4">
+                <div className="col-6">
                     <label htmlFor="proveedor">Status</label>
                     <DropdownFilter
                         className="mb-3 col-12"
@@ -235,30 +324,45 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                     />
                 </div>
 
-                <div className="col-4">
+                <div className="col-6">
                     <label htmlFor="proveedor">Prioridad</label>
                     <DropdownFilter
                         className="mb-3 col-12"
-                        value={selectedStatus}
-                        onChange={(e) => setSelectedStatus(e.value)}
-                        options={statuses}
+                        value={selectedPrioridad}
+                        onChange={(e) => setSelectedPropiedad(e.value)}
+                        options={prioridad}
                         optionLabel="nombre" // Cambia a la propiedad adecuada de tu modelo de Status
-                        placeholder="Seleccione un status"
+                        placeholder="Seleccione un Prioridad"
                         filter
                         filterBy="nombre"
                         showClear
                     />
                 </div>
 
-                <div className="col-4">
-                    <label htmlFor="proveedor">Moneda</label>
+                <div className="col-6">
+                    <label htmlFor="Moneda">Moneda</label>
                     <DropdownFilter
                         className="mb-3 col-12"
                         value={selectedMoneda}
                         onChange={(e) => setSelectedMoneda(e.value)}
                         options={moneda}
                         optionLabel="nombre" // Cambia a la propiedad adecuada de tu modelo de Status
-                        placeholder="Seleccione un status"
+                        placeholder="Seleccione una Moneda"
+                        filter
+                        filterBy="nombre"
+                        showClear
+                    />
+                </div>
+
+                <div className="col-6">
+                    <label htmlFor="Cliente">Cliente</label>
+                    <DropdownFilter
+                        className="mb-3 col-12"
+                        value={selectedCliente}
+                        onChange={(e) => setSelectedCliente(e.value)}
+                        options={cliente}
+                        optionLabel="nombre" // Cambia a la propiedad adecuada de tu modelo de Status
+                        placeholder="Seleccione un Cliente"
                         filter
                         filterBy="nombre"
                         showClear
@@ -288,6 +392,73 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                         <label htmlFor="fecha">Fecha</label>
                     </FloatLabel>
                 </div>
+
+                <div className="col-12 md:col-6 mb-3">
+                    <FloatLabel>
+                        <Calendar
+                            id="fecha_inicio_cotizacion"
+                            value={fecha_inicio_cotizacion}
+                            onChange={(e) =>
+                                setFecha_inicio_cotizacion(e.value)
+                            }
+                            className="w-full"
+                            showIcon
+                            dateFormat="dd/mm/yy"
+                        />
+                        <label htmlFor="fecha_inicio_cotizacion">
+                            Fecha inicio Cotizacion
+                        </label>
+                    </FloatLabel>
+                </div>
+
+                <div className="col-12 md:col-6 mb-3">
+                    <FloatLabel>
+                        <Calendar
+                            id="fecha_fin_cotizacion"
+                            value={fecha_final_cotizacion}
+                            onChange={(e) => setFecha_final_cotizacion(e.value)}
+                            className="w-full"
+                            showIcon
+                            dateFormat="dd/mm/yy"
+                        />
+                        <label htmlFor="fecha_fin_cotizacion">
+                            Fecha fin Cotizacion
+                        </label>
+                    </FloatLabel>
+                </div>
+
+                <div className="grid my-5">
+                    <div className="col-2 md:col-3 mb-3">
+                        <RadioButton
+                            inputId="es_material"
+                            name="tipo"
+                            value="material"
+                            onChange={handleChange}
+                            checked={tipo === "material"}
+                        />
+                        <label htmlFor="es_material" className="ml-2">
+                            Material
+                        </label>
+                    </div>
+
+                    <div className="col-2 md:col-3 mb-3">
+                        <RadioButton
+                            inputId="es_mano_obra"
+                            name="tipo"
+                            value="mano_obra"
+                            onChange={handleChange}
+                            checked={tipo === "mano_obra"}
+                        />
+                        <label htmlFor="es_mano_obra" className="ml-2">
+                            Mano de Obra
+                        </label>
+                    </div>
+
+                    <div className="col-12">
+                        <p>Opción seleccionada: {tipo || "Ninguna"}</p>
+                    </div>
+                </div>
+
                 <div className="col-12">
                     <Button
                         label={isEdit ? "Actualizar" : "Guardar"}

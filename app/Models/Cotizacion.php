@@ -46,9 +46,15 @@ class Cotizacion extends Model
         'empresa_id',
         'tipo_cotizacion_id',
         'tomo_id',
-        'user_id',
+        'user_crear',
+        'user_actualizar',
         'cat_prioridad_id', // Nueva relación con prioridad
         'cat_moneda_id',
+        'es_mano_obra',
+        'es_material',
+        'costo_material',
+        'costo_mano_obra'
+
 
     ];
 

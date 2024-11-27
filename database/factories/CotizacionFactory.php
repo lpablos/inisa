@@ -51,10 +51,13 @@ class CotizacionFactory extends Factory
             'empresa_id' => CatEmpresa::inRandomOrder()->first()->id ?? 1,
             // 'tipo_cotizacion_id' => CatTipoCotizacion::inRandomOrder()->first()->id ?? 1,
             'user_crear' => User::inRandomOrder()->first()->id ?? 1,
+            'user_actualizar' => User::inRandomOrder()->first()->id ?? 1,
             'cat_prioridad_id' => CatPrioridad::inRandomOrder()->first()->id ?? 1,
             'cat_moneda_id' => CatMoneda::inRandomOrder()->first()->id ?? 1,
             'es_mano_obra' => $this->faker->boolean,
             'es_material' => $this->faker->boolean,
+            'costo_material' => $this->faker->randomFloat(2, 100, 1000),
+            'costo_mano_obra' => $this->faker->randomFloat(2, 100, 1000),
         ];
     }
 }

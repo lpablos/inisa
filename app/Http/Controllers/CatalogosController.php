@@ -16,6 +16,7 @@ use App\Models\CatUnidadMedida;
 use App\Models\CatTipoServicio;
 use App\Models\User;
 use App\Models\CatMoneda;
+use App\Models\CatPrioridad;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -36,7 +37,7 @@ class CatalogosController extends Controller
     public function deleteProvedor($id)
     {
 
-        
+
         try {
             $data = CatProvedor::find($id);
             // dd($data);
@@ -66,7 +67,7 @@ class CatalogosController extends Controller
     public function registrarProvedor(Request $request)
     {
         // Validación de los datos del formulario
-        
+
         $validatedData = $request->validate([
             'nombre' => 'required|string|max:255',
             'abreviacion' => 'nullable|string|max:100',
@@ -74,7 +75,7 @@ class CatalogosController extends Controller
             'telefono' => 'nullable|string|min:8',
             'colonia' => 'nullable|string|max:255',
         ]);
-        
+
         $proveedor = CatProvedor::create($validatedData);
         return response()->json(['success' => 'Proveedor creado exitosamente', 'data' => $proveedor], 201);
     }
@@ -148,13 +149,13 @@ class CatalogosController extends Controller
 
     public function registrarDepartamento(Request $request)
     {
-        // Validación de los datos del formulario    
+        // Validación de los datos del formulario
         ;
         $validatedData = $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string|max:100',
         ]);
-        
+
         $proveedor = CatDepartamento::create($validatedData);
         return response()->json(['success' => 'Proveedor creado exitosamente', 'data' => $proveedor], 201);
     }
@@ -244,8 +245,8 @@ class CatalogosController extends Controller
 
     public function registrarCliente(Request $request)
     {
-        
-        
+
+
         $validatedData = $request->validate([
             'nombre' =>'required|string',
             'abreviacion' =>'nullable|string',
@@ -253,7 +254,7 @@ class CatalogosController extends Controller
             'telefono' =>'nullable|string',
             'ext'=>'nullable|string',
         ]);
-        
+
         $user = Auth::user();
         $cliente = new CatCliente;
         $cliente->nombre = $validatedData['nombre'];
@@ -305,7 +306,7 @@ class CatalogosController extends Controller
         }
         return response()->json($data, 200);
     }
-    
+
     public function actualizaUnidadMedida(Request $request)
     {
 
@@ -345,13 +346,13 @@ class CatalogosController extends Controller
 
     public function registrarUnidadMedida(Request $request)
     {
-        
+
         $validatedData = $request->validate([
             'nombre' => 'required|string|max:255',
             'abreviatura'=> 'nullable|string|max:100',
             'descripcion'=> 'nullable|string|max:100',
         ]);
-        
+
         $data = new CatUnidadMedida;
         $data->nombre = $validatedData['nombre'];
         $data->abreviatura = $validatedData['abreviatura'];
@@ -363,10 +364,10 @@ class CatalogosController extends Controller
 
     public function deleteUnidadMedida($id)
     {
-        
+
         try {
-            
-            $data = CatUnidadMedida::where('id', $id)->first();            
+
+            $data = CatUnidadMedida::where('id', $id)->first();
             if (!$data) {
                 return response()->json(['error' => 'Unidad de Medida no encontrado'], 404);
             }
@@ -396,7 +397,7 @@ class CatalogosController extends Controller
         }
         return response()->json($data, 200);
     }
-    
+
     public function actualizaTipoMoneda(Request $request)
     {
 
@@ -406,7 +407,7 @@ class CatalogosController extends Controller
                 'id' => 'required',
                 'nombre' => 'required|string|max:255',
                 'abreviacion'=> 'required|string|max:100',
-                
+
             ]);
             // dd($departamento);
             $data = CatMoneda::where('id', $request->id)->first();
@@ -435,12 +436,12 @@ class CatalogosController extends Controller
 
     public function registrarTipoMoneda(Request $request)
     {
-        
+
         $validatedData = $request->validate([
             'nombre' => 'required|string|max:255',
             'abreviacion'=> 'required|string|max:100',
         ]);
-        
+
         $data = new CatMoneda;
         $data->nombre = $validatedData['nombre'];
         $data->abreviacion = $validatedData['abreviacion'];
@@ -451,15 +452,15 @@ class CatalogosController extends Controller
 
     public function deleteTipoMoneda($id)
     {
-        
-        try {            
-            $data = CatMoneda::where('id', $id)->first();            
-            
+
+        try {
+            $data = CatMoneda::where('id', $id)->first();
+
             if (!$data) {
                 return response()->json(['error' => 'Moneda no encontrado'], 404);
             }
             // Eliminar
-            
+
             $data->delete();
             return response()->json(['success' => 'Moneda eliminado exitosamente'], 200);
         } catch (\Throwable $th) {
@@ -485,10 +486,9 @@ class CatalogosController extends Controller
         }
         return response()->json($data, 200);
     }
-    
+
     public function actualizaStatu(Request $request)
     {
-
         try {
 
             $validatedData = $request->validate([
@@ -496,7 +496,7 @@ class CatalogosController extends Controller
                 'nombre'=> 'required|string|max:255',
                 'abreviacion'=> 'required|string|max:255',
                 'descripcion'=> 'nullable|string|max:255',
-                
+
             ]);
             // dd($departamento);
             $data = CatEstatu::where('id', $request->id)->first();
@@ -526,13 +526,13 @@ class CatalogosController extends Controller
 
     public function registrarStatu(Request $request)
     {
-        
+
         $validatedData = $request->validate([
             'nombre'=> 'required|string|max:255',
             'abreviacion'=> 'required|string|max:255',
             'descripcion'=> 'nullable|string|max:255',
         ]);
-        
+
         $data = new CatEstatu;
         $data->nombre = $validatedData['nombre'];
         $data->abreviacion = $validatedData['abreviacion'];
@@ -544,10 +544,10 @@ class CatalogosController extends Controller
 
     public function deleteStatu($id)
     {
-        
-        try {            
-            $data = CatEstatu::where('id', $id)->first();            
-            
+
+        try {
+            $data = CatEstatu::where('id', $id)->first();
+
             if (!$data) {
                 return response()->json(['error' => 'Status no encontrado'], 404);
             }
@@ -569,7 +569,7 @@ class CatalogosController extends Controller
     //       $data = CatTipoServicio::all();
     //       return response()->json($data);
     //   }
-  
+
     //   public function detalleTipoServicio($id)
     //   {
     //       $data = CatTipoServicio::where('id', $id)->first();
@@ -578,12 +578,12 @@ class CatalogosController extends Controller
     //       }
     //       return response()->json($data, 200);
     //   }
-      
+
     //   public function actualizaTipoServicio(Request $request)
     //   {
-  
+
     //       try {
-  
+
     //           $validatedData = $request->validate([
     //               'id' => 'required',
     //               'nombre' => 'required|string|max:255',
@@ -615,16 +615,16 @@ class CatalogosController extends Controller
     //       ], 500);
     //       }
     //   }
-  
+
     //   public function registrarTipoServicio(Request $request)
     //   {
-          
+
     //       $validatedData = $request->validate([
     //           'nombre' => 'required|string|max:255',
     //           'abreviatura'=> 'nullable|string|max:100',
     //           'descripcion'=> 'nullable|string|max:100',
     //       ]);
-          
+
     //       $data = new CatTipoServicio;
     //       $data->nombre = $validatedData['nombre'];
     //       $data->abreviatura = $validatedData['abreviatura'];
@@ -633,13 +633,13 @@ class CatalogosController extends Controller
     //       // $proveedor = CatCliente::create($validatedData);
     //       return response()->json(['success' => 'Unidad de Medida creado exitosamente', 'data' => $data], 201);
     //   }
-  
+
     //   public function deleteTipoServicio($id)
     //   {
-          
+
     //       try {
-              
-    //           $data = CatTipoServicio::where('id', $id)->first();            
+
+    //           $data = CatTipoServicio::where('id', $id)->first();
     //           if (!$data) {
     //               return response()->json(['error' => 'Unidad de Medida no encontrado'], 404);
     //           }
@@ -676,7 +676,7 @@ class CatalogosController extends Controller
 
 
 
-  
+
 
 
     // USER
@@ -688,16 +688,16 @@ class CatalogosController extends Controller
 
     public function registrarUsuario(Request $request)
     {
-        
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email'=> 'required|string|max:100',
             'password'=> 'nullable|string|max:100',
         ]);
-        
+
         $data = new User;
         $data->name = $validatedData['name'];
-        $data->email = $validatedData['email'];        
+        $data->email = $validatedData['email'];
         if($request->password!=='' && $request->password!==null){
             $data->password = $validatedData['password'];
         }
@@ -717,7 +717,7 @@ class CatalogosController extends Controller
                 'email'=> 'required|string|max:100',
                 'password'=> 'nullable|string|max:100',
             ]);
-            
+
             // Validar si el departamento existe
             if (!$data) {
                 return response()->json(['error' => 'Usuario no encontrado'], 404);
@@ -746,10 +746,10 @@ class CatalogosController extends Controller
 
     public function deleteUsuario($id)
     {
-        
+
         try {
-            
-            $data = User::where('id', $id)->first();            
+
+            $data = User::where('id', $id)->first();
             if (!$data) {
                 return response()->json(['error' => 'Usuario no encontrado'], 404);
             }
@@ -774,10 +774,14 @@ class CatalogosController extends Controller
         return response()->json($data, 200);
     }
 
-    
-    
 
-    
 
-   
+    // Prioridad
+    public function listaPrioridades()
+    {
+        $data = CatPrioridad::all();
+        return response()->json($data);
+    }
+
+
 }

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\CatalogosController;
 use App\Http\Controllers\CotizacionController;
+use Illuminate\Routing\Router;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,28 +87,31 @@ Route::prefix('admin')->group(function () {
             Route::get('list-tiposmonedas', 'listaTiposMonedas')->name('catalogo.list.tiposmonedas');
             Route::post('registrar-tiposervicio', 'registrarTipoMoneda')->name('catalogo.nuevo.tipomoneda');
             Route::post('actualiza-tipomoneda', 'actualizaTipoMoneda')->name('catalogo.actualiza.tipomoneda');
-            Route::delete('tipomoneda/{id}', 'deleteTipoMoneda')->name('catalogo.delete.tipomoneda');            
+            Route::delete('tipomoneda/{id}', 'deleteTipoMoneda')->name('catalogo.delete.tipomoneda');
             Route::get('detalle-tipomoneda/{id}', 'detalleTipoMoneda')->name('catalogo.detalle.tipomoneda');
 
              //CRUD  Tipos de Status
              Route::get('list-status', 'listaStatus')->name('catalogo.list.status');
              Route::post('registrar-statu', 'registrarStatu')->name('catalogo.nuevo.statu');
              Route::post('actualiza-statu', 'actualizaStatu')->name('catalogo.actualiza.statu');
-             Route::delete('statu/{id}', 'deleteStatu')->name('catalogo.delete.statu');            
+             Route::delete('statu/{id}', 'deleteStatu')->name('catalogo.delete.statu');
              Route::get('detalle-statu/{id}', 'detalleStatu')->name('catalogo.detalle.statu');
-  
- 
+
+
 
             //CRUD Usuarios
             Route::get('list-usuarios', 'listaUsuarios')->name('catalogo.list.usuarios');
             Route::post('registrar-usuario', 'registrarUsuario')->name('catalogo.nuevo.usuario');
             Route::post('actualiza-usuario', 'actualizaUsuario')->name('catalogo.actualiza.usuario');
-            Route::delete('usuario/{id}', 'deleteUsuario')->name('catalogo.delete.usuario');     
+            Route::delete('usuario/{id}', 'deleteUsuario')->name('catalogo.delete.usuario');
             Route::get('detalle-usuario/{id}', 'detalleUsuario')->name('catalogo.detalle.usuario');
 
             //CRUD  empresa
             Route::get('list-empresas', 'listaEmpresas')->name('catalogo.list.empresas');
             Route::get('detalle-empresa/{id}', 'detalleEmpresa')->name('catalogo.detalle.empresa');
+
+            //CRUD  prioridad
+            Route::get('list-prioridades', 'listaPrioridades')->name('catalogo.list.prioridades');
         });
     });
     // Agrega otros grupos según el nombre de la sección con su controlador y funciones
@@ -124,7 +128,7 @@ Route::prefix('admin')->group(function () {
             Route::prefix('captura')->group(function(){
                 Route::get('{identy?}/detalle','datelleCaptura')->name('cotizacion.captura.detalle');
             });
-            
+
 
         });
     });
