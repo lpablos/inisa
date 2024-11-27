@@ -66,7 +66,7 @@ const MenuDetalle = () => {
     return (
         <>
             <Menubar model={items} />
-            <DialogDetalleCotizacion showDialog={dialogVisible}/>
+            <DialogDetalleCotizacion showDialog={dialogVisible} closeDialog={closeDialog}/>
         </>
         
     );
