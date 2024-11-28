@@ -27,6 +27,7 @@ return new class extends Migration
             $table->boolean('es_material')->nullable();
             $table->double('costo_material')->nullable();
             $table->double('costo_mano_obra')->nullable();
+            $table->boolean('baja_logica')->nullable();
 
 
 
@@ -87,6 +88,9 @@ return new class extends Migration
             // Relación con moneda
             $table->unsignedBigInteger('cat_moneda_id')->nullable();
             $table->foreign('cat_moneda_id')->references('id')->on('cat_moneda');
+
+            $table->unsignedBigInteger('responsable_id')->nullable();
+            $table->foreign('responsable_id')->references('id')->on('cat_responsable');
 
             $table->timestamps();
         });

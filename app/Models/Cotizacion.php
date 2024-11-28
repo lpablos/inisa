@@ -53,7 +53,9 @@ class Cotizacion extends Model
         'es_mano_obra',
         'es_material',
         'costo_material',
-        'costo_mano_obra'
+        'costo_mano_obra',
+        'baja_logica',
+        'responsable_id'
 
 
     ];
@@ -138,5 +140,10 @@ class Cotizacion extends Model
     public function detalles()
     {
         return $this->hasMany(DetalleCotizacion::class, 'cotizaciones_id');
+    }
+
+    public function responsables()
+    {
+        return $this->hasMany(CatResponsable::class, 'cliente_id');
     }
 }

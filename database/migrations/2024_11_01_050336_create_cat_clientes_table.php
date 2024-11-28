@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('cat_clientes', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->string('abreviacion');
-            $table->string('direccion');
-            $table->string('telefono');
-            $table->string('ext');
+            $table->string('nombre')->nullable();
+            $table->string('abreviacion')->nullable();
+            $table->string('direccion')->nullable();
+            $table->string('telefono')->nullable();
+            $table->string('ext')->nullable();
             $table->unsignedBigInteger('empresa_id')->nullable();
-            $table->foreign('empresa_id')->references('id')->on('cat_empresas'); 
-            
+            $table->foreign('empresa_id')->references('id')->on('cat_empresas');
+
             $table->timestamps();
         });
     }

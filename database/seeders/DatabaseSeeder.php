@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CatEmpresaSeeder::class,
             CatProveedorSeeder::class,
+            CatPrioridadSeeder::class,
             CatDepartamentoSeeder::class,
             CatClienteSeeder::class,
             CatUnidadMedidaSeeder::class,

@@ -19,7 +19,7 @@ class CotizacionController extends Controller
 
     public function listCotizaciones()
     {
-        $cotizaciones = Cotizacion::with('proveedor')->get();
+        $cotizaciones = Cotizacion::with('proveedor')->where('baja_logica', 1)->get();
 
         // dd($cotizaciones->toArray());
         return response()->json(['cotizaciones' => $cotizaciones], 200);
@@ -70,7 +70,8 @@ class CotizacionController extends Controller
                 'es_mano_obra' => $validatedData['es_material'] == 'mano_obra' ? true : false,
                 'es_material' => $validatedData['es_material'] == 'material' ? true : false,
                 'user_crear' => $user->id,
-                'empresa_id' => $user->empresa_id
+                'empresa_id' => $user->empresa_id,
+                'baja_logica' => 1
             ]);
 
             return response()->json(
@@ -129,8 +130,10 @@ class CotizacionController extends Controller
 
     public function deleteCotizacion(Request $request)
     {
+
         $cotizacion = Cotizacion::find($request->id);
-        $cotizacion->delete();
+        $cotizacion->baja_logica = 0;
+        $cotizacion->save();
         return response()->json(['success' => 'Cotizacion eliminada exitosamente'], 200);
     }
 

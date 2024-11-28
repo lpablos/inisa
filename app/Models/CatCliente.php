@@ -43,4 +43,6 @@ class CatCliente extends Model
     {
         return $this->belongsTo(CatEmpresa::class);
     }
+
+
 }
