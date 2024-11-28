@@ -15,7 +15,7 @@ const DialogDetalleCotizacion = ({showDialog = false}) => {
         <>
             
             <Button icon="pi pi-pencil" rounded text severity="info" aria-label="User" onClick={() => setVisible(true)} />
-            <Dialog header="Header" visible={visible} maximizable style={{ width: '50vw' }} onHide={() => {if (!visible) return; setVisible(false); }}>
+            <Dialog header="Descripcion del elemento" visible={visible} maximizable style={{ width: '50vw' }} onHide={() => {if (!visible) return; setVisible(false); }}>
                 <FormItemDetalle/>     
             </Dialog>
         </>    

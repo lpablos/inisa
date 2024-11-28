@@ -6,6 +6,8 @@ import { AutoComplete } from "primereact/autocomplete";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Divider } from 'primereact/divider';
 import { InputText } from 'primereact/inputtext';
+import { Dropdown } from 'primereact/dropdown';
+
 
 const FormItemDetalle = () => {
     const [value1, setValue1] = useState(42723);
@@ -14,6 +16,15 @@ const FormItemDetalle = () => {
     const [value4, setValue4] = useState(50);
     const [ingredients, setIngredients] = useState([]);
     const [checked, setChecked] = useState(false);
+
+    const [selectedCity, setSelectedCity] = useState(null);
+    const cities = [
+        { name: 'New York', code: 'NY' },
+        { name: 'Rome', code: 'RM' },
+        { name: 'London', code: 'LDN' },
+        { name: 'Istanbul', code: 'IST' },
+        { name: 'Paris', code: 'PRS' }
+    ];
     
 
 
@@ -52,7 +63,7 @@ const FormItemDetalle = () => {
                 </div>
             </div>
             <Divider />
-            <p>Costo de Materiales</p>
+            <h5>Costo de Materiales</h5>
             <div class="formgrid grid">
                 <div class="field col-12">
                     <label htmlFor="percent" className="font-bold block mb-2">Descripcion</label>
@@ -62,58 +73,81 @@ const FormItemDetalle = () => {
             <div class="formgrid grid">
                 <div class="field col-4">
                     <label htmlFor="percent" className="font-bold block mb-2">Unidad</label>
-                    <InputTextarea className="w-full" value={value} onChange={(e) => setValue(e.target.value)} rows={2} cols={30} />
-                </div>  
-                <div class="field col-4">
-                    <label htmlFor="percent" className="font-bold block mb-2">Catidad</label>
-                    <InputTextarea className="w-full" value={value} onChange={(e) => setValue(e.target.value)} rows={2} cols={30} />
-                </div>  
-                <div class="field col-4">
-                    <label htmlFor="percent" className="font-bold block mb-2">Costo Unitario Sugerido</label>
-                    <InputText  className="w-full" placeholder="Username" />
+                    <Dropdown value={selectedCity} onChange={(e) => setSelectedCity(e.value)} options={cities} optionLabel="name" placeholder="Select a City" className="w-full md:w-14rem" />
                     
                 </div>  
                 <div class="field col-4">
-                    <label htmlFor="percent" className="font-bold block mb-2">Costo Unitario</label>
-                    <InputTextarea className="w-full" value={value} onChange={(e) => setValue(e.target.value)} rows={2} cols={30} />
-                </div>  
-                <div class="field col-4">
-                    <label htmlFor="percent" className="font-bold block mb-2">Subtotal</label>
-                    <InputTextarea className="w-full" value={value} onChange={(e) => setValue(e.target.value)} rows={2} cols={30} />
-                </div>  
-            </div>
-            <Divider />
-            <p>Costo de Mano de Obra</p>
-            <div class="formgrid grid">
-                <div class="field col-12">
-                    <label htmlFor="percent" className="font-bold block mb-2">Descripcion</label>
-                    <InputTextarea className="w-full" value={value} onChange={(e) => setValue(e.target.value)} rows={2} cols={30} />
-                </div>               
-            </div>
-            <div class="formgrid grid">
-                <div class="field col-4">
-                    <label htmlFor="percent" className="font-bold block mb-2">Unidad</label>
-                    <InputTextarea className="w-full" value={value} onChange={(e) => setValue(e.target.value)} rows={2} cols={30} />
-                </div>  
-                <div class="field col-4">
                     <label htmlFor="percent" className="font-bold block mb-2">Catidad</label>
-                    <InputTextarea className="w-full" value={value} onChange={(e) => setValue(e.target.value)} rows={2} cols={30} />
+                    <InputNumber placeholder="Cantidad" />
                 </div>  
                 <div class="field col-4">
                     <label htmlFor="percent" className="font-bold block mb-2">Costo Unitario Sugerido</label>
-                    <InputTextarea className="w-full" value={value} onChange={(e) => setValue(e.target.value)} rows={2} cols={30} />
+                    <div className="p-inputgroup flex-1">
+                        <span className="p-inputgroup-addon">$</span>
+                        <InputNumber placeholder="Costo Unitario Sugerido" />
+                    </div>
+                    
                 </div>  
                 <div class="field col-4">
+                    
                     <label htmlFor="percent" className="font-bold block mb-2">Costo Unitario</label>
-                    <InputTextarea className="w-full" value={value} onChange={(e) => setValue(e.target.value)} rows={2} cols={30} />
+                    <div className="p-inputgroup flex-1">
+                        <span className="p-inputgroup-addon">$</span>
+                        <InputNumber placeholder="Costo Unitario" />
+                    </div>
                 </div>  
                 <div class="field col-4">
                     <label htmlFor="percent" className="font-bold block mb-2">Subtotal</label>
-                    <InputTextarea className="w-full" value={value} onChange={(e) => setValue(e.target.value)} rows={2} cols={30} />
+                    <div className="p-inputgroup flex-1">
+                        <span className="p-inputgroup-addon">$</span>
+                        <InputNumber placeholder="Subtotal" />
+                    </div>
                 </div>  
             </div>
             <Divider />
-            <p>Costo de Mano de Obra</p>
+            <h5>Costo de Mano de Obra</h5>
+            
+           
+            <div class="formgrid grid">
+                
+                <div class="field col-4">
+                    <label htmlFor="percent" className="font-bold block mb-2">Costo Unitario Sugerido</label>
+                    <div className="p-inputgroup flex-1">
+                        <span className="p-inputgroup-addon">$</span>
+                        <InputNumber placeholder="Costo Unitario Sugerido" />
+                    </div>
+                    
+                </div>  
+                <div class="field col-4">
+                    
+                    <label htmlFor="percent" className="font-bold block mb-2">Costo Unitario</label>
+                    <div className="p-inputgroup flex-1">
+                        <span className="p-inputgroup-addon">$</span>
+                        <InputNumber placeholder="Costo Unitario" />
+                    </div>
+                </div>  
+                <div class="field col-4">
+                    <label htmlFor="percent" className="font-bold block mb-2">Subtotal</label>
+                    <div className="p-inputgroup flex-1">
+                        <span className="p-inputgroup-addon">$</span>
+                        <InputNumber placeholder="Subtotal" />
+                    </div>
+                </div>  
+            </div>
+            <Divider />
+            <h5>M.O./MATER.</h5>
+            <div class="formgrid grid">
+                <div class="field col-4">
+                    <label htmlFor="percent" className="font-bold block mb-2">Subtotal</label>
+                    <div className="p-inputgroup flex-1">
+                        <span className="p-inputgroup-addon">$</span>
+                        <InputNumber placeholder="Costo Unitario Sugerido" />
+                    </div>
+                    
+                </div>  
+            </div>
+            <Divider />
+            <h5>Agregar algun comentario</h5>
             <div class="formgrid grid">
                 <div class="field col-12">
                     <label htmlFor="percent" className="font-bold block mb-2">Descripcion</label>
