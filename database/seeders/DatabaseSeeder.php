@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             CatClienteSeeder::class,
             CatUnidadMedidaSeeder::class,
             UserSeeder::class,
-            CatPrioridadSeeder::class,
+            // CatPrioridadSeeder::class,
             CatEstatusSeeder::class,
             CatMonedaSeeder::class,
             DetalleCotizacionSeeder::class,

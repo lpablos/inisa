@@ -1,0 +1,25 @@
+.status-label {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    display: inline-block;
+    text-align: center;
+}
+
+.status-active {
+    background-color: green;
+}
+
+.status-inactive {
+    background-color: red;
+}
+
+.status-pending {
+    background-color: orange;
+}
+
+.status-default {
+    background-color: gray;
+}

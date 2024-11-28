@@ -25,9 +25,10 @@ class Cotizacion extends Model
     protected $table = 'cotizaciones';
 
     // Especificar la clave primaria personalizada
-    // protected $primaryKey = 'id_cotizacion';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
+        'id',
         'titulo',
         'consecutivo',
         'descripcion',
@@ -72,9 +73,9 @@ class Cotizacion extends Model
      * Relación con Estatus
      */
     public function estatus()
-    {
-        return $this->belongsTo(CatEstatu::class, 'status_id');
-    }
+{
+    return $this->belongsTo(CatEstatu::class, 'status_id', 'id'); // Ajustado para usar 'id'
+}
 
     /**
      * Relación con Proveedor

@@ -19,7 +19,7 @@ class CotizacionController extends Controller
 
     public function listCotizaciones()
     {
-        $cotizaciones = Cotizacion::with('proveedor')->where('baja_logica', 1)->get();
+        $cotizaciones = Cotizacion::with('proveedor', 'estatus')->where('baja_logica', 1)->get();
 
         // dd($cotizaciones->toArray());
         return response()->json(['cotizaciones' => $cotizaciones], 200);
@@ -29,11 +29,67 @@ class CotizacionController extends Controller
     {
 
         // dd($request->all());
-
-
-
         $user = Auth::user();
-        // dd($user);
+        if (!$user) {
+            return response()->json([
+                'error' => 'Usuario no autenticado',
+            ], 401);
+        }
+
+        $validatedData = $request->validate([
+            'provedor_id' => 'required|int|exists:cat_provedores,id',
+            'status_id' => 'required|int|exists:cat_estatus,id',
+            'moneda_id' => 'required|int|exists:cat_moneda,id',
+            'cliente_id' => 'required|int|exists:cat_clientes,id',
+            'prioridad_id' => 'required|int|exists:cat_prioridad,id',
+            'titulo' => 'required|string|max:255',
+            'fecha' => 'required|date',
+            'fecha_inicio_cotizacion' => 'required|date',
+            'fecha_final_cotizacion' => 'required|date',
+            'es_material' => 'required|in:material,mano_obra',
+        ]);
+
+        $validatedData['fecha'] = date('Y-m-d', strtotime($validatedData['fecha']));
+        $validatedData['fecha_inicio_cotizacion'] = date('Y-m-d', strtotime($validatedData['fecha_inicio_cotizacion']));
+        $validatedData['fecha_final_cotizacion'] = date('Y-m-d', strtotime($validatedData['fecha_final_cotizacion']));
+
+        $esManoObra = $validatedData['es_material'] === 'mano_obra';
+        $esMaterial = $validatedData['es_material'] === 'material';
+
+        try {
+            $cotizacion = Cotizacion::create([
+                'provedor_id' => $validatedData['provedor_id'],
+                'status_id' => $validatedData['status_id'],
+                'cat_moneda_id' => $validatedData['moneda_id'],
+                'cliente_id' => $validatedData['cliente_id'],
+                'cat_prioridad_id' => $validatedData['prioridad_id'],
+                'titulo' => strtoupper($validatedData['titulo']),
+                'fecha' => $validatedData['fecha'],
+                'fecha_cotiza_inicio' => $validatedData['fecha_inicio_cotizacion'],
+                'fecha_cotiza_fin' => $validatedData['fecha_final_cotizacion'],
+                'es_mano_obra' => $esManoObra,
+                'es_material' => $esMaterial,
+                'user_crear' => $user->id,
+                'empresa_id' => $user->empresa_id,
+                'baja_logica' => 1
+            ]);
+
+            return response()->json([
+                'success' => 'Cotizacion creada exitosamente',
+                'data' => $cotizacion
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Error de validación',
+                'details' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+
+    public function updateCotizacion(Request $request)
+    {
+
 
 
         $validatedData = $request->validate([
@@ -53,70 +109,25 @@ class CotizacionController extends Controller
         $validatedData['fecha_inicio_cotizacion'] = date('Y-m-d', strtotime($validatedData['fecha_inicio_cotizacion']));
         $validatedData['fecha_final_cotizacion'] = date('Y-m-d', strtotime($validatedData['fecha_final_cotizacion']));
 
-        // dd($validatedData, $request->all());
-        try {
-
-            // Guardar directamente con create()
-            $cotizacion = Cotizacion::create([
-                'provedor_id' => $validatedData['provedor_id'],
-                'status_id' => $validatedData['status_id'],
-                'cat_moneda_id' => $validatedData['moneda_id'],
-                'cliente_id' => $validatedData['cliente_id'],
-                'cat_prioridad_id' => $validatedData['prioridad_id'],
-                'titulo' => strtoupper($validatedData['titulo']), // Ejemplo de lógica adicional: convertir título a mayúsculas
-                'fecha' => $validatedData['fecha'],
-                'fecha_cotiza_inicio' => $validatedData['fecha_inicio_cotizacion'],
-                'fecha_cotiza_fin' => $validatedData['fecha_final_cotizacion'],
-                'es_mano_obra' => $validatedData['es_material'] == 'mano_obra' ? true : false,
-                'es_material' => $validatedData['es_material'] == 'material' ? true : false,
-                'user_crear' => $user->id,
-                'empresa_id' => $user->empresa_id,
-                'baja_logica' => 1
-            ]);
-
-            return response()->json(
-                [
-                    'success' => 'Cotizacion creado exitosamente',
-                    'data' => $cotizacion
-                ],
-                201
-            );
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Error de validación',
-                'details' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-
-    public function updateCotizacion(Request $request)
-    {
-
-        // dd($request->all());
-        // Cambiar el nombre del atributo "proveedor" a "provedor_id"
-        if ($request->has('proveedor')) {
-            $request->merge([
-                'provedor_id' => $request->input('proveedor'),
-            ])->except(['proveedor']); // Opcional: elimina el atributo original
-        }
-
-        $validatedData = $request->validate([
-            'provedor_id' => 'required|int',
-            'titulo' => 'required|string|max:255',
-            'fecha' => 'required|date',
-        ]);
-
-        $validatedData['fecha'] = date('Y-m-d', strtotime($validatedData['fecha']));
-
         // dd($validatedData);
 
         try {
 
             $cotizacion =  Cotizacion::find($request->id);
             $cotizacion->provedor_id = $validatedData['provedor_id'];
+            $cotizacion->status_id = $validatedData['status_id'];
+            $cotizacion->cat_moneda_id = $validatedData['moneda_id'];
+            $cotizacion->cliente_id = $validatedData['cliente_id'];
+            $cotizacion->cat_prioridad_id = $validatedData['prioridad_id'];
+            $cotizacion->user_crear = Auth::user()->id;
+            $cotizacion->empresa_id = Auth::user()->empresa_id;
             $cotizacion->titulo = $validatedData['titulo'];
             $cotizacion->fecha = $validatedData['fecha'];
+            $cotizacion->fecha_cotiza_inicio = $validatedData['fecha_inicio_cotizacion'];
+            $cotizacion->fecha_cotiza_fin = $validatedData['fecha_final_cotizacion'];
+            $cotizacion->es_mano_obra = $validatedData['es_material'] == 'mano_obra' ? true : false;
+            $cotizacion->es_material = $validatedData['es_material'] == 'material' ? true : false;
+
             $cotizacion->save();
 
             return response()->json(['success' => 'Cotizacion creado exitosamente', 'data' => $cotizacion], 200);

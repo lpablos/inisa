@@ -13,10 +13,10 @@ class CatEstatu extends Model
     protected $table = 'cat_estatus';
 
     // Especificar la clave primaria personalizada
-    protected $primaryKey = 'id_status';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
-        'id',
+        'id_status',
         'nombre',
         'abreviacion',
         'descripcion',

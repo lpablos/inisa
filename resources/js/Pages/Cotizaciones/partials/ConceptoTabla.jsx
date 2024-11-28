@@ -7,6 +7,8 @@ import Dialogo from "./Dialogo"; // Componente para el modal
 import ConfirmarEliminacion from "./ConfirmarEliminacion";
 import axios from "axios";
 import { Tooltip } from 'primereact/tooltip';
+import "../../../../css/style_cotizacion.css";
+
 
 const ConceptoTabla = () => {
     const [cotizaciones, setCotizaciones] = useState([]); // Lista de cotizaciones
@@ -46,7 +48,34 @@ const ConceptoTabla = () => {
         setSelectedCotizacion(rowData); // Establece la cotización seleccionada
         setIsEdit(true); // Cambia a modo edición
         setIsDialogVisible(true); // Abre el modal
+
+        console.log(rowData);
     };
+
+    const renderStatus = (rowData) => {
+        let statusClass = "";
+
+        switch (rowData.estatus.nombre.toLowerCase()) {
+            case "activo":
+                statusClass = "status-active";
+                break;
+            case "inactivo":
+                statusClass = "status-inactive";
+                break;
+            case "pendiente":
+                statusClass = "status-pending";
+                break;
+            default:
+                statusClass = "status-default";
+        }
+
+        return (
+            <span className={`status-label ${statusClass}`}>
+                {rowData.estatus.nombre}
+            </span>
+        );
+    };
+
 
     // Eliminar una cotización
     const eliminarCotizacion = async (id) => {
@@ -113,7 +142,7 @@ const ConceptoTabla = () => {
             />
              <a
                 id="capture-link"
-                href={route("cotizacion.captura.detalle", { identy: rowData.id })} 
+                href={route("cotizacion.captura.detalle", { identy: rowData.id })}
                 // href={`${route("cotizacion.captura.detale", { identy: rowData.id })}`}
                 rel="noopener noreferrer"
                 className="p-button-rounded p-button"
@@ -156,6 +185,12 @@ const ConceptoTabla = () => {
                 <Column field="titulo" header="Título" />
                 <Column field="proveedor.nombre" header="Proveedor" />
                 <Column field="fecha" header="Fecha" />
+                <Column field="fecha_cotiza_inicio" header="Fecha inicio" />
+                <Column field="fecha_cotiza_fin" header="fecha fin" />
+                <Column field="subtotal" header="fecha Subtotal" />
+                <Column field="total" header="Total" />
+                <Column field="estatus.nombre" header="Status" body={(rowData) => renderStatus(rowData)}  />
+
                 <Column header="Acciones" body={accionesTemplate} />
             </DataTable>
 

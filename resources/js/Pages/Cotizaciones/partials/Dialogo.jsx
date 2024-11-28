@@ -7,6 +7,7 @@ import { Calendar } from "primereact/calendar";
 import DropdownFilter from "./SelectorFilter";
 import { Toast } from "primereact/toast";
 import axios from "axios";
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { set } from "react-hook-form";
 import { RadioButton } from "primereact/radiobutton";
 import "primereact/resources/themes/saga-blue/theme.css";
@@ -19,8 +20,7 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
     const [titulo, setTitulo] = useState("");
     const [proveedores, setProveedores] = useState([]);
     const [date, setDate] = useState(null);
-    const [fecha_inicio_cotizacion, setFecha_inicio_cotizacion] =
-        useState(null);
+    const [fecha_inicio_cotizacion, setFecha_inicio_cotizacion] =useState(null);
     const [fecha_final_cotizacion, setFecha_final_cotizacion] = useState(null);
     const toast = useRef(null);
     const [tipo, setTipo] = useState(""); // 'material' o 'mano_obra'
@@ -77,27 +77,27 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
         obtenerMonedas();
     }, []);
 
-    const [selectedPrioridad, setSelectedPropiedad] = useState(null); // Status seleccionado
-    const [prioridad, setPropiedad] = useState([]); // Lista de statuses
+    const [selectedPrioridad, setSelectedPrioridad] = useState(null); // Status seleccionado
+    const [prioridad, setPrioridad] = useState([]); // Lista de statuses
 
     useEffect(() => {
-        const obtenerPropiedad = async () => {
+        const obtenerPrioridad = async () => {
             try {
                 const response = await axios.get(
                     route("catalogo.list.prioridades")
                 );
                 console.log("prioridad", response.data);
-                setPropiedad(response.data);
+                setPrioridad(response.data);
             } catch (error) {
                 toast.current.show({
                     severity: "error",
                     summary: "Error",
-                    detail: "No se pudo obtener la lista de monedas.",
+                    detail: "No se pudo obtener la lista de prioridades.",
                     life: 3000,
                 });
             }
         };
-        obtenerPropiedad();
+        obtenerPrioridad();
     }, []);
 
     const [selectedStatus, setSelectedStatus] = useState(null); // Status seleccionado
@@ -143,8 +143,24 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
     // Cargar datos en caso de edición
     useEffect(() => {
         if (isEdit && dataToEdit) {
+
+            console.log("dataToEdit", dataToEdit);
             setTitulo(dataToEdit.titulo || "");
             setDate(new Date(dataToEdit.fecha) || null);
+            setFecha_final_cotizacion(new Date(dataToEdit.fecha_cotiza_fin) || null);
+            setFecha_inicio_cotizacion(new Date(dataToEdit.fecha_cotiza_inicio) || null);
+
+            setTipo(dataToEdit.es_material || "");
+            let es_mano_obra
+            if (dataToEdit.es_mano_obra == 1) {
+                es_mano_obra = "mano_obra"
+            } else {
+                es_mano_obra = "material"
+            }
+            setTipo(es_mano_obra);
+            setIngredient(dataToEdit.ingredient || "");
+
+
             const proveedorEncontrado = proveedores.find(
                 (p) => p.id === dataToEdit.provedor_id
             );
@@ -157,7 +173,7 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
             setSelectedStatus(statusEncontrado || null);
 
             const monedaEncontrada = moneda.find(
-                (m) => m.id === dataToEdit.moneda_id
+                (m) => m.id === dataToEdit.cat_moneda_id
             );
             setSelectedMoneda(monedaEncontrada || null);
 
@@ -167,7 +183,7 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
             setSelectedCliente(clienteEncontrado || null);
 
             const prioridadEncontrada = prioridad.find(
-                (m) => m.id === dataToEdit.prioridad_id
+                (m) => m.id === dataToEdit.cat_prioridad_id
             );
             setSelectedPrioridad(prioridadEncontrada || null);
         }
@@ -185,7 +201,6 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
             !selectedPrioridad ||
             !fecha_inicio_cotizacion ||
             !fecha_final_cotizacion
-
         ) {
             toast.current.show({
                 severity: "warn",
@@ -209,79 +224,73 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
             es_material: tipo,
         };
 
-        try {
-            if (isEdit) {
-                const response = await axios.put(
-                    route("cotizacion.actualiza.cotizacion", {
-                        id: dataToEdit.id,
-                    }),
-                    datos
-                );
+        const confirmMessage = isEdit
+        ? "¿Está seguro de que desea actualizar esta cotización?"
+        : "¿Está seguro de que desea crear esta cotización?";
 
-                if (response.status === 200) {
-                    toast.current.show({
-                        severity: "success",
-                        summary: "Éxito",
-                        detail: "Cotización actualizada correctamente.",
-                        life: 3000,
-                    });
-                    onUpdate();
-                } else {
-                    toast.current.show({
-                        severity: "error",
-                        summary: "Error",
-                        detail: "No se pudo actualizar la cotización.",
-                        life: 3000,
-                    });
-                }
-            } else {
-                const response = await axios.post(
-                    route("cotizacion.registrar.cotizacion"),
-                    datos
-                );
-                console.log(response);
-                console.log(response.status);
-
-                if (response.status === 201) {
-                    toast.current.show({
-                        severity: "success",
-                        summary: "Éxito",
-                        detail:
-                            response.data.success ||
-                            "Cotización creada correctamente.",
-                        life: 3000,
-                    });
-                    onSave();
-                }
-            }
-            setVisible(false);
-            onClose();
-        } catch (error) {
-            if (error.response && error.response.data.errors) {
-                Object.entries(error.response.data.errors).forEach(
-                    ([field, messages]) => {
-                        messages.forEach((message) => {
+        confirmDialog({
+            message: confirmMessage,
+            header: isEdit ? "Confirmar Actualización" : "Confirmar Creación",
+            icon: "pi pi-exclamation-triangle",
+            accept: async () => {
+                try {
+                    if (isEdit) {
+                        const response = await axios.put(
+                            route("cotizacion.actualiza.cotizacion", {
+                                id: dataToEdit.id,
+                            }),
+                            datos
+                        );
+                        if (response.status === 200) {
                             toast.current.show({
-                                severity: "error",
-                                summary: `Error en ${field}`,
-                                detail: message,
+                                severity: "success",
+                                summary: "Éxito",
+                                detail: "Cotización actualizada correctamente.",
                                 life: 3000,
                             });
-                        });
+                            onUpdate();
+                        }
+                    } else {
+                        const response = await axios.post(
+                            route("cotizacion.registrar.cotizacion"),
+                            datos
+                        );
+                        if (response.status === 201) {
+                            toast.current.show({
+                                severity: "success",
+                                summary: "Éxito",
+                                detail: "Cotización creada correctamente.",
+                                life: 3000,
+                            });
+                            onSave();
+                        }
                     }
-                );
-            } else {
+                    setVisible(false);
+                    onClose();
+                } catch (error) {
+                    toast.current.show({
+                        severity: "error",
+                        summary: "Error inesperado",
+                        detail: "No se pudo procesar la solicitud.",
+                        life: 3000,
+                    });
+                }
+            },
+            reject: () => {
                 toast.current.show({
-                    severity: "error",
-                    summary: "Error inesperado",
-                    detail: "No se pudo procesar la solicitud.",
+                    severity: "info",
+                    summary: "Acción cancelada",
+                    detail: "No se realizó ningún cambio.",
                     life: 3000,
                 });
-            }
-        }
+            },
+        });
     };
 
+
     return (
+        <>
+        <ConfirmDialog />
         <Dialog
             header={isEdit ? "Editar Cotización" : "Nueva Cotización"}
             visible={visible}
@@ -309,66 +318,7 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                     />
                 </div>
 
-                <div className="col-6">
-                    <label htmlFor="proveedor">Status</label>
-                    <DropdownFilter
-                        className="mb-3 col-12"
-                        value={selectedStatus}
-                        onChange={(e) => setSelectedStatus(e.value)}
-                        options={statuses}
-                        optionLabel="nombre" // Cambia a la propiedad adecuada de tu modelo de Status
-                        placeholder="Seleccione un status"
-                        filter
-                        filterBy="nombre"
-                        showClear
-                    />
-                </div>
-
-                <div className="col-6">
-                    <label htmlFor="proveedor">Prioridad</label>
-                    <DropdownFilter
-                        className="mb-3 col-12"
-                        value={selectedPrioridad}
-                        onChange={(e) => setSelectedPropiedad(e.value)}
-                        options={prioridad}
-                        optionLabel="nombre" // Cambia a la propiedad adecuada de tu modelo de Status
-                        placeholder="Seleccione un Prioridad"
-                        filter
-                        filterBy="nombre"
-                        showClear
-                    />
-                </div>
-
-                <div className="col-6">
-                    <label htmlFor="Moneda">Moneda</label>
-                    <DropdownFilter
-                        className="mb-3 col-12"
-                        value={selectedMoneda}
-                        onChange={(e) => setSelectedMoneda(e.value)}
-                        options={moneda}
-                        optionLabel="nombre" // Cambia a la propiedad adecuada de tu modelo de Status
-                        placeholder="Seleccione una Moneda"
-                        filter
-                        filterBy="nombre"
-                        showClear
-                    />
-                </div>
-
-                <div className="col-6">
-                    <label htmlFor="Cliente">Cliente</label>
-                    <DropdownFilter
-                        className="mb-3 col-12"
-                        value={selectedCliente}
-                        onChange={(e) => setSelectedCliente(e.value)}
-                        options={cliente}
-                        optionLabel="nombre" // Cambia a la propiedad adecuada de tu modelo de Status
-                        placeholder="Seleccione un Cliente"
-                        filter
-                        filterBy="nombre"
-                        showClear
-                    />
-                </div>
-                <div className="col-12 md:col-8 mb-3">
+                <div className="col-6 md:col-12 mb-3">
                     <FloatLabel>
                         <InputText
                             id="titulo"
@@ -379,7 +329,8 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                         <label htmlFor="titulo">Título</label>
                     </FloatLabel>
                 </div>
-                <div className="col-12 md:col-4 mb-3">
+
+                <div className="col-4 md:col-4 mb-3">
                     <FloatLabel>
                         <Calendar
                             id="fecha"
@@ -393,7 +344,7 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                     </FloatLabel>
                 </div>
 
-                <div className="col-12 md:col-6 mb-3">
+                <div className="col-4 md:col-4 mb-3">
                     <FloatLabel>
                         <Calendar
                             id="fecha_inicio_cotizacion"
@@ -411,7 +362,7 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                     </FloatLabel>
                 </div>
 
-                <div className="col-12 md:col-6 mb-3">
+                <div className="col-4 md:col-4 mb-3">
                     <FloatLabel>
                         <Calendar
                             id="fecha_fin_cotizacion"
@@ -427,8 +378,68 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                     </FloatLabel>
                 </div>
 
+                <div className="col-4">
+                    <label htmlFor="proveedor">Status</label>
+                    <DropdownFilter
+                        className="mb-3 col-12"
+                        value={selectedStatus}
+                        onChange={(e) => setSelectedStatus(e.value)}
+                        options={statuses}
+                        optionLabel="nombre" // Cambia a la propiedad adecuada de tu modelo de Status
+                        placeholder="Seleccione un status"
+                        filter
+                        filterBy="nombre"
+                        showClear
+                    />
+                </div>
+
+                <div className="col-4">
+                    <label htmlFor="prioridad">Prioridad</label>
+                    <DropdownFilter
+                        className="mb-3 col-12"
+                        value={selectedPrioridad}
+                        onChange={(e) => setSelectedPrioridad(e.value)}
+                        options={prioridad}
+                        optionLabel="nombre" // Cambia a la propiedad adecuada de tu modelo de Status
+                        placeholder="Seleccione un Prioridad"
+                        filter
+                        filterBy="nombre"
+                        showClear
+                    />
+                </div>
+
+                <div className="col-4">
+                    <label htmlFor="Moneda">Moneda</label>
+                    <DropdownFilter
+                        className="mb-3 col-12"
+                        value={selectedMoneda}
+                        onChange={(e) => setSelectedMoneda(e.value)}
+                        options={moneda}
+                        optionLabel="nombre" // Cambia a la propiedad adecuada de tu modelo de Status
+                        placeholder="Seleccione una Moneda"
+                        filter
+                        filterBy="nombre"
+                        showClear
+                    />
+                </div>
+
+                <div className="col-4">
+                    <label htmlFor="Cliente">Cliente</label>
+                    <DropdownFilter
+                        className="mb-3 col-12"
+                        value={selectedCliente}
+                        onChange={(e) => setSelectedCliente(e.value)}
+                        options={cliente}
+                        optionLabel="nombre" // Cambia a la propiedad adecuada de tu modelo de Status
+                        placeholder="Seleccione un Cliente"
+                        filter
+                        filterBy="nombre"
+                        showClear
+                    />
+                </div>
+
                 <div className="grid my-5">
-                    <div className="col-2 md:col-3 mb-3">
+                    <div className="col-2 md:col-4 mb-3">
                         <RadioButton
                             inputId="es_material"
                             name="tipo"
@@ -468,6 +479,7 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                 </div>
             </div>
         </Dialog>
+        </>
     );
 };
 
