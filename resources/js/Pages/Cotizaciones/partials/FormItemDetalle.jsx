@@ -8,20 +8,10 @@ import { Button } from 'primereact/button';
 
 
 
+
 const FormItemDetalle = () => {
 
-    const [unidadesDeMedida, setUnidadesDeMedida] = useState([
-        { name: 'TRAMO', value: 1 },
-        { name: 'METRO', value: 2 },
-        { name: 'KILOGRAMO', value: 3 },
-        { name: 'LITRO', value: 4 },
-        { name: 'CAJA', value: 5 },
-        { name: 'PIEZA', value: 6 },
-        { name: 'TONELADA', value: 7 },
-        { name: 'GRAMO', value: 8 },
-        { name: 'CENTÍMETRO', value: 9 },
-        { name: 'MILILITRO', value: 10 }
-    ]);
+    const [unidadesDeMedida, setUnidadesDeMedida] = useState([]);
 
     // Todo lo relacionado con el tomo
     const [perteneceTomo, setPerteneceTomo] = useState(0);
@@ -74,6 +64,25 @@ const FormItemDetalle = () => {
     },[subTotal,subTotalManoObra])
     
     const [citaComentario, setCitaComentario] = useState(null);
+
+    useEffect(()=>{
+        getUnidadesMedida()
+    },[])
+
+    const getUnidadesMedida = async() =>{
+        await axios
+        .get(`${route("catalogo.list.unidadesmedidas")}`)
+        .then((response) => {
+            const {data, status } = response
+            if(status == 200){
+                const dataMapeada = data.map(item => ({
+                    value: item.id,
+                    name: item.nombre + ' - ' + item.abreviatura
+                }));
+                setUnidadesDeMedida(dataMapeada);
+            }
+        });
+    }
     
 
     return (
