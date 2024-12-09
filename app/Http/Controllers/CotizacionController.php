@@ -153,4 +153,44 @@ class CotizacionController extends Controller
     {
         return Inertia::render('Cotizaciones/detalleCaptura', ['cotizacion' => $identy]);
     }
+
+    public function saveCaptura(Request $request)
+    {
+        // dd("Este es todo", $request->costoMaterialFinal);
+        $validatedData = $request->validate([
+            "perteneceTomo" => 'required',
+            'capturaTomo' =>'nullable|string',
+            'seleccionTomo' =>'nullable|array',
+            // ------
+            "descripcionMaterial" => "string|nullable",
+            'seleccionUnidadMedida' => 'integer|required',
+            'cantidadMaterial' => 'required|integer|min:1',
+            'costoMaterialSugerido' => 'required|numeric|min:1',
+            'costoMaterialFinal' => 'required|numeric|min:1',
+            'subTotalMaterial' => 'required|numeric|min:1',
+            // -------
+            'costoManoObraSugerido' => 'nullable|numeric|min:1',
+            'costoManoObraFinal'=> 'nullable|numeric|min:1',
+            'subTotalManoObra' => 'nullable|numeric|min:1',
+            // --------
+            'subTotalMateObraTotal' => 'nullable|numeric|min:1',
+            'citaComentario' => 'nullable|string',
+        ]);
+
+        dd($request->perteneceTomo);
+        switch ($request->perteneceTomo) {
+            case 1:
+                // Registra un tomo nuevo 
+                break;
+            case 2:
+                // Es uno selecionado
+                break;
+            default:
+                # 0 En caso de s
+                // No tiene ninguo relacionado
+                break;
+        }
+
+        dd("Paso", $request->all());
+    }
 }

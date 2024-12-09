@@ -5,6 +5,7 @@ import { Divider } from 'primereact/divider';
 import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
+import axios from "axios";
 
 
 
@@ -12,7 +13,6 @@ import { Button } from 'primereact/button';
 const FormItemDetalle = () => {
 
     const [unidadesDeMedida, setUnidadesDeMedida] = useState([]);
-
     // Todo lo relacionado con el tomo
     const [perteneceTomo, setPerteneceTomo] = useState(0);
     const [tpAsoTomo, setTpAsoTomo] = useState([
@@ -25,23 +25,24 @@ const FormItemDetalle = () => {
     const [listaTomos, setListaTomo] = useState([
         { name: 'INSTALACIÓN ELÉCTRICA Y BOMBA.', id:1 },
         { name: 'INSTALACIÓN HIDRÁULICA.', id:2 },
-    ]);
-    
+    ]);    
     // Todo lo relacionado con el costo de materiales
     const [descripcionMaterial, setDescripcionMaterial]= useState('');
     const [seleccionUnidadMedida, setSeleccionUnidadMedida] = useState(null);
     const [cantidadMaterial, setCantidadMaterial] = useState(null);
     const [costoMaterialSugerido, setCostoMaterialSugerido] = useState(null);
     const [costoMaterialFinal,setCostoMaterialFinal] = useState(null);  
-    const [subTotal, setSubTotal] = useState(0);
+    const [subTotalMaterial, setSubTotalMaterial] = useState(0);
     // Efecto Espejo Costo Sugerido
     useEffect(()=>{        
         setCostoMaterialFinal(costoMaterialSugerido)
     },[costoMaterialSugerido])
     useEffect(()=>{
         const total = cantidadMaterial * costoMaterialFinal;
-        setSubTotal(total)
+        setSubTotalMaterial(total)
     },[cantidadMaterial, costoMaterialFinal])
+
+    // ---------------------------------------------
 
     // Todo lo relacionado con el costo de mano de obra
     const [costoManoObraSugerido, setCostoManoObraSugerido] = useState(null);
@@ -55,13 +56,14 @@ const FormItemDetalle = () => {
         setSubTotalManoObra(totalObra)
     },[cantidadMaterial,costoManoObraFinal]);
 
+    // ---------------------------------------------
 
     // --- final M.O./MATER.
-    const [subTotalMateObra, setSubTotalMateObra] = useState(0);
+    const [subTotalMateObraTotal, setSubTotalMateObraTotal] = useState(0);
     useEffect(()=>{
-        const totalTodo = subTotal+subTotalManoObra;
-        setSubTotalMateObra(totalTodo)
-    },[subTotal,subTotalManoObra])
+        const totalTodo = subTotalMaterial+subTotalManoObra;
+        setSubTotalMateObraTotal(totalTodo)
+    },[subTotalMaterial,subTotalManoObra])
     
     const [citaComentario, setCitaComentario] = useState(null);
 
@@ -83,11 +85,64 @@ const FormItemDetalle = () => {
             }
         });
     }
+
+    const almacenarRegistro = async () => {
+        const datos = {
+            perteneceTomo: perteneceTomo,
+            capturaTomo: capturaTomo,
+            seleccionTomo: seleccionTomo,
+            // -------------Material------------------------
+            descripcionMaterial: descripcionMaterial,
+            seleccionUnidadMedida: seleccionUnidadMedida,
+            cantidadMaterial: cantidadMaterial,
+            costoMaterialSugerido: costoMaterialSugerido,
+            costoMaterialFinal: costoMaterialFinal,
+            subTotalMaterial: subTotalMaterial,
+            // ----------------Mano Obra---------------------
+            costoManoObraSugerido: costoManoObraSugerido,
+            costoManoObraFinal: costoManoObraFinal,
+            subTotalManoObra: subTotalManoObra,
+            // ----------------M.O./MATER---------------------
+            subTotalMateObraTotal: subTotalMateObraTotal,
+            citaComentario: citaComentario,
+        }
+        
+        
+        // setLoader(true); 
+        await axios
+        .post(`${route("cotizacion.guardad.captura")}`, datos)
+        .then((response) => {
+            const { status, data } = response;
+            // setDataDetalle(response)
+            if (status == 201) {
+                toast.current.show({
+                    severity: "success",
+                    summary: "Success",
+                    detail: `${data.success}`,
+                    life: 3000,
+                });
+                showTabla();
+                obtenerStatus();
+                // obtenerTiposMonedas();
+            }
+        })
+        .finally(() => {
+            setLoader(false);
+        });
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault(); // Evita que la página se recargue   
+        almacenarRegistro();   
+    };
+
+
+
     
 
     return (
           <div className="card">
-            <form action="" method="post">
+            <form action="" method="post" onSubmit={handleSubmit}>
                 <div class="formgrid grid">
                     <div class="field col-4">
                         {/* <InputSwitch checked={perteneceTomo} onChange={(e) =>setPerteneceTomo(e.value)} /> */}
@@ -187,8 +242,8 @@ const FormItemDetalle = () => {
                             <InputNumber 
                                 inputId="cantidad" 
                                 disabled
-                                value={subTotal} 
-                                onValueChange={(e) => setSubTotal(e.value)} 
+                                value={subTotalMaterial} 
+                                onValueChange={(e) => setSubTotalMaterial(e.value)} 
                                 placeholder="Consto Unitario"/>
                         </div>
                     </div>  
@@ -245,9 +300,9 @@ const FormItemDetalle = () => {
                             <InputNumber 
                                 disabled
                                 inputId="cantidad" 
-                                value={subTotalMateObra} 
-                                onValueChange={(e) => setSubTotalMateObra(e.value)} 
-                                placeholder="Consto Unitario"/>
+                                value={subTotalMateObraTotal} 
+                                onValueChange={(e) => setSubTotalMateObraTotal(e.value)} 
+                                placeholder="Subtotal"/>
                         </div>
                         
                     </div>  
