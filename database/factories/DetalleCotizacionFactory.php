@@ -31,6 +31,7 @@ class DetalleCotizacionFactory extends Factory
             'obra_material_subtotal' => $this->faker->randomFloat(2, 500, 10000),
             'cotizaciones_id' => Cotizacion::factory(),
             'cat_unidad_medida_id' => CatUnidadMedida::factory(),
+            'tomo_pertenece' => fn () => rand(0, 1) ? DetalleCotizacion::factory()->create()->id : null, // Generar un padre aleatoriamente
         ];
     }
 }

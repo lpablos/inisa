@@ -14,13 +14,17 @@ return new class extends Migration
         Schema::create('detalle_cotizacion', function (Blueprint $table) {
             $table->id();
             $table->double('PDA')->nullable();
-            $table->string('descripcion', 45);
+            $table->binary('es_tomo')->nullable();
+            $table->string('descripcion', 45)->nullable();
             $table->double('costo_material_cantidad')->nullable();
             $table->double('costo_material_unitario')->nullable();
             $table->double('costo_material_subtotal')->nullable();
             $table->double('costo_mano_obra_unitario')->nullable();
             $table->double('costo_mano_obra_subtotal')->nullable();
             $table->double('obra_material_subtotal')->nullable();
+            $table->double('costo_material_unitario_sugerido')->nullable();
+            $table->double('costo_mano_obra_unitario_sugerido')->nullable();
+            $table->longText('comentarios_extras')->nullable();
 
             // Relación con `cotizaciones`
             $table->unsignedBigInteger('cotizaciones_id');
@@ -30,6 +34,12 @@ return new class extends Migration
             // Relación con `cat_unidades_medidas`
             $table->unsignedBigInteger('cat_unidad_medida_id')->nullable();
             $table->foreign('cat_unidad_medida_id')->references('id')->on('cat_unidades_medidas')->onDelete('set null');
+
+
+           // Relación autorreferencial
+           $table->unsignedBigInteger('tomo_pertenece')->nullable(); // Este campo se relaciona consigo misma
+           $table->foreign('tomo_pertenece')->references('id')->on('detalle_cotizacion')->onDelete('cascade');
+
 
             $table->timestamps();
         });

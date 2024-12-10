@@ -157,10 +157,12 @@ class CotizacionController extends Controller
     public function saveCaptura(Request $request)
     {
         // dd("Este es todo", $request->costoMaterialFinal);
+
+
         $validatedData = $request->validate([
             "perteneceTomo" => 'required',
-            'capturaTomo' =>'nullable|string',
-            'seleccionTomo' =>'nullable|array',
+            'capturaTomo' => 'nullable|string',
+            'seleccionTomo' => 'nullable|array',
             // ------
             "descripcionMaterial" => "string|nullable",
             'seleccionUnidadMedida' => 'integer|required',
@@ -170,17 +172,26 @@ class CotizacionController extends Controller
             'subTotalMaterial' => 'required|numeric|min:1',
             // -------
             'costoManoObraSugerido' => 'nullable|numeric|min:1',
-            'costoManoObraFinal'=> 'nullable|numeric|min:1',
+            'costoManoObraFinal' => 'nullable|numeric|min:1',
             'subTotalManoObra' => 'nullable|numeric|min:1',
             // --------
             'subTotalMateObraTotal' => 'nullable|numeric|min:1',
             'citaComentario' => 'nullable|string',
         ]);
 
+
+
+        (float) $subTotalMaterial = $request->costoMaterialFinal * $request->cantidadMaterial;
+        (float) $subTotalManoObra = $request->costoManoObraFinal * $request->cantidadMaterial;
+        (float) $subTotalMateObraTotal = $subTotalMaterial + $subTotalManoObra;
+
+        // dd($subTotalManoObra, $subTotalMaterial, $subTotalMateObraTotal);
+        dd($request->all());
         dd($request->perteneceTomo);
+
         switch ($request->perteneceTomo) {
             case 1:
-                // Registra un tomo nuevo 
+                // Registra un tomo nue
                 break;
             case 2:
                 // Es uno selecionado
