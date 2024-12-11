@@ -119,7 +119,7 @@ Route::prefix('admin')->group(function () {
     Route::prefix('cotizacion')->group(function () {
         Route::controller(CotizacionController::class)->group(function () {
             Route::get('show', 'index')->name('cotizacion.show.index');
-
+            Route::get('list-tomos/{identy}', 'listTomos')->name('cotizacion.list.tomos');
             Route::get('list-cotizaciones', 'listCotizaciones')->name('cotizacion.list.cotizaciones');
             Route::post('registrar-cotizacion', 'RegistrarCotizacion')->name('cotizacion.registrar.cotizacion');
             Route::put('actualiza-cotizacion', 'updateCotizacion')->name('cotizacion.actualiza.cotizacion');

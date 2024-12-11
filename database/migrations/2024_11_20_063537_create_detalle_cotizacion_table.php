@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('detalle_cotizacion', function (Blueprint $table) {
             $table->id();
             $table->double('PDA')->nullable();
-            $table->binary('es_tomo')->nullable();
-            $table->string('descripcion', 45)->nullable();
+            $table->boolean('es_tomo')->default(false)->nullable();
+            $table->string('descripcion', 345)->nullable();
             $table->double('costo_material_cantidad')->nullable();
             $table->double('costo_material_unitario')->nullable();
             $table->double('costo_material_subtotal')->nullable();

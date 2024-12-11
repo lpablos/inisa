@@ -4,8 +4,8 @@ import DetalleCotizacionTabla from './partials/DetalleCotizacionTabla';
 import MenuDetalle from './partials/MenuDetalle';
 import DialogDetalleCotizacion from './partials/DialogDetalleCotizacion';
 
-const detalleCaptura =() => {
-    
+const detalleCaptura =(props) => {    
+    const {cotizacion} = props
     return (
         <Layout>
             <div className="grid">
@@ -16,7 +16,7 @@ const detalleCaptura =() => {
                             <p>Título: INSTALACIÓN Y CANALIZACIÓN DE CCM BOMBAS DE CISTERNA DE AGUA.</p>
                         </div>                      
                         <div class="col-2 text-right">
-                            <DialogDetalleCotizacion/>
+                            <DialogDetalleCotizacion cotizacion={cotizacion}/>
                         </div>
                     </div>
                     <DetalleCotizacionTabla/>

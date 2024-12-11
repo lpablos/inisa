@@ -3,7 +3,7 @@ import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import FormItemDetalle from './FormItemDetalle';
 
-const DialogDetalleCotizacion = ({showDialog = false}) => {
+const DialogDetalleCotizacion = ({showDialog = false, cotizacion}) => {
     const [visible, setVisible] = useState(false);
 
     useEffect(()=>{
@@ -13,10 +13,9 @@ const DialogDetalleCotizacion = ({showDialog = false}) => {
     return (
           
         <>
-            
             <Button icon="pi pi-pencil" rounded text severity="info" aria-label="User" onClick={() => setVisible(true)} />
             <Dialog header="Descripcion del elemento" visible={visible} maximizable style={{ width: '50vw' }} onHide={() => {if (!visible) return; setVisible(false); }}>
-                <FormItemDetalle/>     
+                <FormItemDetalle cotizacion={cotizacion}/>     
             </Dialog>
         </>    
         

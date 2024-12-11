@@ -1,4 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
+
 import { InputNumber } from 'primereact/inputnumber';
 import { InputTextarea } from "primereact/inputtextarea";
 import { Divider } from 'primereact/divider';
@@ -10,11 +11,20 @@ import axios from "axios";
 
 
 
-const FormItemDetalle = () => {
-
+const FormItemDetalle = ({cotizacion}) => {
+    const [identyCotizacion, setIdentyCotizacion] = useState(null);    
+    useEffect(()=>{
+        setIdentyCotizacion(cotizacion)
+    },[cotizacion])
+    
     const [unidadesDeMedida, setUnidadesDeMedida] = useState([]);
     // Todo lo relacionado con el tomo
     const [perteneceTomo, setPerteneceTomo] = useState(0);
+    useEffect(()=>{
+        if(perteneceTomo==2){
+            getListadoTomoAsc()
+        }        
+    },[perteneceTomo])
     const [tpAsoTomo, setTpAsoTomo] = useState([
         { name: 'Ninguno', value:0 },
         { name: 'Captura Tomo', value:1 },
@@ -22,10 +32,7 @@ const FormItemDetalle = () => {
     ]);
     const [capturaTomo, setCapturaTomo] = useState('');
     const [seleccionTomo, setSeleccionTomo] = useState(null);
-    const [listaTomos, setListaTomo] = useState([
-        { name: 'INSTALACIÓN ELÉCTRICA Y BOMBA.', id:1 },
-        { name: 'INSTALACIÓN HIDRÁULICA.', id:2 },
-    ]);    
+    const [listaTomos, setListaTomo] = useState([]);    
     // Todo lo relacionado con el costo de materiales
     const [descripcionMaterial, setDescripcionMaterial]= useState('');
     const [seleccionUnidadMedida, setSeleccionUnidadMedida] = useState(null);
@@ -71,6 +78,21 @@ const FormItemDetalle = () => {
         getUnidadesMedida()
     },[])
 
+    const getListadoTomoAsc = async() =>{
+        await axios
+        .get(`${route("cotizacion.list.tomos", { identy: identyCotizacion })}`)
+        .then((response) => {
+            const {data, status } = response       
+            if(status == 200){
+                const dataMapeada = data.map(item => ({
+                    id: item.id,
+                    name: item.PDA + ' - ' + item.descripcion
+                }));
+                setListaTomo(dataMapeada)
+            }
+        });
+    }
+
     const getUnidadesMedida = async() =>{
         await axios
         .get(`${route("catalogo.list.unidadesmedidas")}`)
@@ -88,6 +110,7 @@ const FormItemDetalle = () => {
 
     const almacenarRegistro = async () => {
         const datos = {
+            identyCotizacion: identyCotizacion,
             perteneceTomo: perteneceTomo,
             capturaTomo: capturaTomo,
             seleccionTomo: seleccionTomo,
