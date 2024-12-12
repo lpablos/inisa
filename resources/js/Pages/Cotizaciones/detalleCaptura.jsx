@@ -19,7 +19,7 @@ const detalleCaptura =(props) => {
                             <DialogDetalleCotizacion cotizacion={cotizacion}/>
                         </div>
                     </div>
-                    <DetalleCotizacionTabla/>
+                    <DetalleCotizacionTabla cotizacion={cotizacion}/>
                 </div>
             </div>
         </Layout>

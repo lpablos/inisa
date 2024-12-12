@@ -17,7 +17,7 @@ class DetalleCotizacionAsociadoSeeder extends Seeder
         //
         DB::table('detalle_cotizacion')->insert([
             
-            'PDA' => 1.0,
+            'PDA' => 01.00,
             'es_tomo' => true, // Equivale al valor hexadecimal 0x31
             'descripcion' => 'SERVICIO DE REUBICACIÓN DE INYECTORA No 12.',
             'costo_material_cantidad' => null,
@@ -36,7 +36,7 @@ class DetalleCotizacionAsociadoSeeder extends Seeder
 
         DB::table('detalle_cotizacion')->insert([
             
-            'PDA' => 2.0,
+            'PDA' => 02.00,
             'es_tomo' => true, // Equivale al valor hexadecimal 0x31
             'descripcion' => 'INSTALACIÓN HIDRÁULICA',
             'costo_material_cantidad' => null,
@@ -55,7 +55,7 @@ class DetalleCotizacionAsociadoSeeder extends Seeder
         
         DB::table('detalle_cotizacion')->insert([
             
-            'PDA' => 3.0,
+            'PDA' => 03.00,
             'es_tomo' => true, // Equivale al valor hexadecimal 0x31
             'descripcion' => 'INSTALACIÓN ELÉCTRICA DE MÁQUINA 3F, 1N Y 1TF; Y UN CONTACTO DE 110 VCA',
             'costo_material_cantidad' => null,
@@ -113,22 +113,60 @@ class DetalleCotizacionAsociadoSeeder extends Seeder
             ]);
         DB::table('detalle_cotizacion')->insert([
                 
-                'PDA' => 01.02,
-                'es_tomo' => 0,
-                'descripcion' => 'Detalle de cotización para equipo A.',
-                'costo_material_cantidad' => 10,
-                'costo_material_unitario' => 100.00,
-                'costo_material_subtotal' => 1000.00,
-                'costo_mano_obra_unitario' => 50.00,
-                'costo_mano_obra_subtotal' => 500.00,
-                'obra_material_subtotal' => 1500.00,
-                'costo_material_unitario_sugerido' => 110.00,
-                'costo_mano_obra_unitario_sugerido' => 55.00,
-                'comentarios_extras' => 'Comentario adicional sobre la cotización.',
-                'cotizaciones_id' => 1,  // Relación con la cotización
-                'cat_unidad_medida_id' => 1,
-                'tomo_pertenece' => 1,
-            ]);
+            'PDA' => 01.03,
+            'es_tomo' => 0,
+            'descripcion' => 'Detalle de cotización para equipo A.',
+            'costo_material_cantidad' => 10,
+            'costo_material_unitario' => 100.00,
+            'costo_material_subtotal' => 1000.00,
+            'costo_mano_obra_unitario' => 50.00,
+            'costo_mano_obra_subtotal' => 500.00,
+            'obra_material_subtotal' => 1500.00,
+            'costo_material_unitario_sugerido' => 110.00,
+            'costo_mano_obra_unitario_sugerido' => 55.00,
+            'comentarios_extras' => 'Comentario adicional sobre la cotización.',
+            'cotizaciones_id' => 1,  // Relación con la cotización
+            'cat_unidad_medida_id' => 1,
+            'tomo_pertenece' => 1,
+        ]);
+        
+        DB::table('detalle_cotizacion')->insert([
+            
+            'PDA' => 02.01,
+            'es_tomo' => 0,
+            'descripcion' => 'Detalle de cotización para equipo A.',
+            'costo_material_cantidad' => 10,
+            'costo_material_unitario' => 100.00,
+            'costo_material_subtotal' => 1000.00,
+            'costo_mano_obra_unitario' => 50.00,
+            'costo_mano_obra_subtotal' => 500.00,
+            'obra_material_subtotal' => 1500.00,
+            'costo_material_unitario_sugerido' => 110.00,
+            'costo_mano_obra_unitario_sugerido' => 55.00,
+            'comentarios_extras' => 'Comentario adicional sobre la cotización.',
+            'cotizaciones_id' => 2,  // Relación con la cotización
+            'cat_unidad_medida_id' => 1,
+            'tomo_pertenece' => 1,
+        ]);
+
+        DB::table('detalle_cotizacion')->insert([
+            
+            'PDA' => 03.01,
+            'es_tomo' => 0,
+            'descripcion' => 'Detalle de cotización para equipo A.',
+            'costo_material_cantidad' => 10,
+            'costo_material_unitario' => 100.00,
+            'costo_material_subtotal' => 1000.00,
+            'costo_mano_obra_unitario' => 50.00,
+            'costo_mano_obra_subtotal' => 500.00,
+            'obra_material_subtotal' => 1500.00,
+            'costo_material_unitario_sugerido' => 110.00,
+            'costo_mano_obra_unitario_sugerido' => 55.00,
+            'comentarios_extras' => 'Comentario adicional sobre la cotización.',
+            'cotizaciones_id' => 3,  // Relación con la cotización
+            'cat_unidad_medida_id' => 1,
+            'tomo_pertenece' => 1,
+        ]);
 
        
     }

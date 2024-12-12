@@ -165,6 +165,14 @@ class CotizacionController extends Controller
         return response()->json($listTomos, 200);
     }
 
+    public function listadoDetalleCotizacion($identy){
+        $listDetalle = DetalleCotizacion::where('cotizaciones_id',$identy)
+                            ->with('unidadMedida')
+                            ->orderBy('PDA')
+                            ->get();
+        return response()->json($listDetalle, 200);
+    }
+
     public function saveCaptura(Request $request)
     {
         // dd("Este es todo", $request->costoMaterialFinal);
