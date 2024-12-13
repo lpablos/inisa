@@ -158,40 +158,79 @@ class CotizacionController extends Controller
     {
         // dd("Este es todo", $request->costoMaterialFinal);
 
+        // dd($request->all());
 
         $validatedData = $request->validate([
             "perteneceTomo" => 'required',
             'capturaTomo' => 'nullable|string',
             'seleccionTomo' => 'nullable|array',
             // ------
-            "descripcionMaterial" => "string|nullable",
-            'seleccionUnidadMedida' => 'integer|required',
-            'cantidadMaterial' => 'required|integer|min:1',
-            'costoMaterialSugerido' => 'required|numeric|min:1',
-            'costoMaterialFinal' => 'required|numeric|min:1',
-            'subTotalMaterial' => 'required|numeric|min:1',
+            "descripcionMaterial" => "string|nullable", //descripcion
+            'seleccionUnidadMedida' => 'integer|required', //cat_unidad_medida_id
+            'cantidadMaterial' => 'required|integer|min:1', //costo_material_cantidad
+            'costoMaterialSugerido' => 'required|numeric|min:1', //costo_mano_obra_unitario_sugerido
+            'costoMaterialFinal' => 'required|numeric|min:1', // costo_material_unitario
+            'subTotalMaterial' => 'required|numeric|min:1', //costo_material_subtotal
             // -------
-            'costoManoObraSugerido' => 'nullable|numeric|min:1',
-            'costoManoObraFinal' => 'nullable|numeric|min:1',
-            'subTotalManoObra' => 'nullable|numeric|min:1',
+            'costoManoObraSugerido' => 'nullable|numeric|min:1', //costo_material_unitario_sugerido
+            'costoManoObraFinal' => 'nullable|numeric|min:1', //costo_mano_obra_unitario
+            'subTotalManoObra' => 'nullable|numeric|min:1', //costo_mano_obra_subtotal
             // --------
-            'subTotalMateObraTotal' => 'nullable|numeric|min:1',
-            'citaComentario' => 'nullable|string',
+            'subTotalMateObraTotal' => 'nullable|numeric|min:1', //obra_material_subtotal
+            'citaComentario' => 'nullable|string', //comentarios_extras
         ]);
 
 
 
-        (float) $subTotalMaterial = $request->costoMaterialFinal * $request->cantidadMaterial;
-        (float) $subTotalManoObra = $request->costoManoObraFinal * $request->cantidadMaterial;
-        (float) $subTotalMateObraTotal = $subTotalMaterial + $subTotalManoObra;
+        (float) $subTotalMaterial_comprobacion = $request->costoMaterialFinal * $request->cantidadMaterial;
+        (float) $subTotalManoObra_comprobacion = $request->costoManoObraFinal * $request->cantidadMaterial;
+        (float) $subTotalMateObraTotal_comprobacion = $subTotalMaterial_comprobacion + $subTotalManoObra_comprobacion;
 
         // dd($subTotalManoObra, $subTotalMaterial, $subTotalMateObraTotal);
-        dd($request->all());
-        dd($request->perteneceTomo);
+        // dd($request->all());
+        // dd($request->perteneceTomo);
 
         switch ($request->perteneceTomo) {
             case 1:
                 // Registra un tomo nue
+                $tomoValidacion = DetalleCotizacion::where('descripcion', $request->capturaTomo)
+                ->count();
+
+                if ($tomoValidacion > 0) {
+                    return response()->json(['error' => 'El tomo ya existe'], 500);
+                } else {
+                    $detalleCotizacion = DetalleCotizacion::create([
+                        'es_tomo' => 1,
+                        'descripcion' =>  $request->capturaTomo
+                    ]);
+
+                    $tomo = DetalleCotizacion::where('descripcion', $request->capturaTomo)
+                    ->where('es_tomo', 1)->count();
+
+
+                    // dd( $this->PdaDinamicoTomo($tomo->id, 1));
+
+                    $detalleCotizacion = DetalleCotizacion::create([
+                        'PDA' => $this->PdaDinamicoTomo($tomo->id, 1),
+                        'descripcion' => $request->descripcionMaterial,
+                        'costo_material_cantidad' => $request->cantidadMaterial,
+                        'costo_material_unitario_sugerido' => $request->costoMaterialSugerido,
+                        'costo_material_unitario' => $request->costoMaterialFinal,
+                        'costo_material_subtotal' => $request->subTotalMaterial,
+                        'costo_mano_obra_unitario_sugerido' => $request->costoManoObraSugerido,
+                        'costo_mano_obra_unitario' => $request->costoManoObraFinal,
+                        'costo_mano_obra_subtotal' => $request->subTotalManoObra,
+                        'obra_material_subtotal' => $request->subTotalMateObraTotal,
+                        'comentarios_extras' => $request->citaComentario,
+                        'cotizaciones_id' => 1,
+                        'tomo_pertenece' => $tomo->id,
+                        'cat_unidad_medida_id' => $request->seleccionUnidadMedida
+                    ]);
+                }
+
+
+
+
                 break;
             case 2:
                 // Es uno selecionado
@@ -199,9 +238,89 @@ class CotizacionController extends Controller
             default:
                 # 0 En caso de s
                 // No tiene ninguo relacionado
+
+                // $cotizaciones = Cotizacion::with('proveedor', 'estatus')->where('baja_logica', 1)->get();
+
+                $detalleCotizacion = DetalleCotizacion::create([
+                    'PDA' => $this->PdaDinamico(1),
+                    'descripcion' => $request->descripcionMaterial,
+                    'costo_material_cantidad' => $request->cantidadMaterial,
+                    'costo_material_unitario_sugerido' => $request->costoMaterialSugerido,
+                    'costo_material_unitario' => $request->costoMaterialFinal,
+                    'costo_material_subtotal' => $request->subTotalMaterial,
+                    'costo_mano_obra_unitario_sugerido' => $request->costoManoObraSugerido,
+                    'costo_mano_obra_unitario' => $request->costoManoObraFinal,
+                    'costo_mano_obra_subtotal' => $request->subTotalManoObra,
+                    'obra_material_subtotal' => $request->subTotalMateObraTotal,
+                    'comentarios_extras' => $request->citaComentario,
+                    'cotizaciones_id' => 1,
+                    'es_tomo' => 0,
+                    'cat_unidad_medida_id' => $request->seleccionUnidadMedida
+                ]);
+
+
                 break;
         }
 
-        dd("Paso", $request->all());
+        return response()->json([
+            'success' => 'detalle cotizacion creado exitosamente',
+            'data' => $detalleCotizacion
+        ], 201);
+
+        // dd("Paso", $request->all());
+    }
+
+    public function PdaDinamico($cotizacionId = null)
+    {
+        // Obtener el último registro de PDA
+        $ultimoPDA = DetalleCotizacion::where('cotizaciones_id', $cotizacionId)
+            ->whereNull('es_tomo')
+            ->orderBy('id', 'desc')
+            ->value('PDA');
+        // Si no hay ningún registro, comenzar desde "1.01"
+        if (!$ultimoPDA) {
+            return '1.01';
+        }
+
+        // Dividir el último PDA en la parte entera y decimal
+        [$seccion, $numero] = explode('.', $ultimoPDA);
+
+        // Incrementar el número decimal
+        $nuevoNumero = str_pad((int)$numero + 1, 2, '0', STR_PAD_LEFT);
+
+        // Generar el nuevo PDA
+        return $seccion . '.' . $nuevoNumero;
+    }
+
+    public function PdaDinamicoTomo($tomoId = null, $cotizacionId = null)
+    {
+        // Obtener el último registro de PDA  y se suma 1
+        $pdaRegistros = DetalleCotizacion::where('cotizaciones_id', $cotizacionId)
+            ->whereNull('es_tomo')
+            ->whereRaw("SUBSTRING_INDEX(PDA, '.', -1) = '01'")
+            ->orderBy('PDA', 'desc') // Ordenar de menor a mayor
+            ->get(['PDA']);
+
+
+        $tomoPertenece = DetalleCotizacion::where('tomo_pertenece', $tomoId)->get();
+
+        $ultimoPDA = DetalleCotizacion::where('tomo_pertenece', $tomoId)
+            ->where('cotizaciones_id', $cotizacionId)
+            ->whereNull('es_tomo')
+            ->orderBy('id', 'desc')
+            ->value('PDA');
+
+        if (!$ultimoPDA) {
+            return $pdaRegistros[0]->PDA + 1;
+        }
+
+        // Dividir el último PDA en la parte entera y decimal
+        [$seccion, $numero] = explode('.', $ultimoPDA);
+
+        // Incrementar el número decimal
+        $nuevoNumero = str_pad((int)$numero + 1, 2, '0', STR_PAD_LEFT);
+
+        // Generar el nuevo PDA
+        return $seccion . '.' . $nuevoNumero;
     }
 }
