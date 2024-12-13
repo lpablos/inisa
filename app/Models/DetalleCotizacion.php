@@ -29,6 +29,11 @@ class DetalleCotizacion extends Model
         'tomo_pertenece',
     ];
 
+    public function setPdaAttribute($value)
+    {
+        $this->attributes['PDA'] = number_format($value, 2, '.', '');
+    }
+
     public function cotizacion()
     {
         return $this->belongsTo(Cotizacion::class, 'cotizaciones_id');

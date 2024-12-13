@@ -154,6 +154,25 @@ class CotizacionController extends Controller
         return Inertia::render('Cotizaciones/detalleCaptura', ['cotizacion' => $identy]);
     }
 
+    public function listTomos($identy)
+    {
+        
+        $listTomos = DetalleCotizacion::where('es_tomo',true)
+                                    ->where('cotizaciones_id',$identy)
+                                    ->select('id','PDA','descripcion')
+                                    ->get();
+                                    
+        return response()->json($listTomos, 200);
+    }
+
+    public function listadoDetalleCotizacion($identy){
+        $listDetalle = DetalleCotizacion::where('cotizaciones_id',$identy)
+                            ->with('unidadMedida')
+                            ->orderBy('PDA')
+                            ->get();
+        return response()->json($listDetalle, 200);
+    }
+
     public function saveCaptura(Request $request)
     {
         // dd("Este es todo", $request->costoMaterialFinal);

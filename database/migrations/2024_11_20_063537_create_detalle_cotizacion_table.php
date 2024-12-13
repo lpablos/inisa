@@ -13,17 +13,18 @@ return new class extends Migration
     {
         Schema::create('detalle_cotizacion', function (Blueprint $table) {
             $table->id();
-            $table->double('PDA')->nullable();
-            $table->binary('es_tomo')->nullable();
-            $table->string('descripcion', 45)->nullable();
+            // $table->double('PDA')->nullable();
+            $table->decimal('PDA', 8, 2)->nullable();
+            $table->boolean('es_tomo')->default(false)->nullable();
+            $table->string('descripcion', 345)->nullable();
             $table->double('costo_material_cantidad')->nullable();
+            $table->double('costo_material_unitario_sugerido')->nullable();
             $table->double('costo_material_unitario')->nullable();
             $table->double('costo_material_subtotal')->nullable();
+            $table->double('costo_mano_obra_unitario_sugerido')->nullable();
             $table->double('costo_mano_obra_unitario')->nullable();
             $table->double('costo_mano_obra_subtotal')->nullable();
             $table->double('obra_material_subtotal')->nullable();
-            $table->double('costo_material_unitario_sugerido')->nullable();
-            $table->double('costo_mano_obra_unitario_sugerido')->nullable();
             $table->longText('comentarios_extras')->nullable();
 
             // Relación con `cotizaciones`

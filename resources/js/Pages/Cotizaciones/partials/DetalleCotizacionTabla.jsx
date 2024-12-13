@@ -1,63 +1,52 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { ButtonGroup } from 'primereact/buttongroup';
 import { Button } from 'primereact/button';
 
-const  DetalleCotizacionTabla = () =>  {
+const tableStyles = {
+    width: '100%',
+    borderCollapse: 'collapse',
+};
 
-   
-    const [detalleCotizacion, setDetalleCotizacion] = useState([
-        {
-            pda:'1.01',
-            descripcion:'SUMINISTRO E INSTALACIÓN DE LUMINARIA TIPO VAPOR FIXTURE DE 75 W, 100-305 VCA, 3H, 2F, 50-60 HZ; EL CUAL INCLUYE TRABAJOS REALIZADOS POR PERSONAL ESPECIALIZADO, EJECUCIÓN A UNA ELEVACIÓN A 3 M DE ALTURA, EQUIPO DE ELEVACIÓN, ESCALERAS Y TODO LO NECESARIO PARA LA CORRECTA EJECUCIÓN DE LOS TRABAJOS A REALIZAR.',
-            material_unidad:'PIEZA',	
-            material_cantidad:'2',
-            material_costo_unitario:'$5,260.00',
-            material_subtotal:'$10,520.00',
-            mano_obra_costo_unitario: '$2,500.00',
+const cellStyles = {
+    border: '1px solid #ddd',
+    padding: '8px',
+    textAlign: 'center',
+    verticalAlign: 'middle',
+};
 
-            mano_obra_subtotal:'$5,000.00',
-            material_mano_obra_subtotal:'$15,520.00',
-        },
-        {
-            pda:'1.01',
-            descripcion:'SUMINISTRO E INSTALACIÓN DE LUMINARIA TIPO VAPOR FIXTURE DE 75 W, 100-305 VCA, 3H, 2F, 50-60 HZ; EL CUAL INCLUYE TRABAJOS REALIZADOS POR PERSONAL ESPECIALIZADO, EJECUCIÓN A UNA ELEVACIÓN A 3 M DE ALTURA, EQUIPO DE ELEVACIÓN, ESCALERAS Y TODO LO NECESARIO PARA LA CORRECTA EJECUCIÓN DE LOS TRABAJOS A REALIZAR.',
-            material_unidad:'PIEZA',	
-            material_cantidad:'2',
-            material_costo_unitario:'$5,260.00',
-            material_subtotal:'$10,520.00',
-            mano_obra_costo_unitario: '$2,500.00',
+const headerStyles = {
+    ...cellStyles,
+    backgroundColor: '#f2f2f2',
+    fontWeight: 'bold',
+};
 
-            mano_obra_subtotal:'$5,000.00',
-            material_mano_obra_subtotal:'$15,520.00',
-        },
-        {
-            pda:'1.01',
-            descripcion:'SUMINISTRO E INSTALACIÓN DE LUMINARIA TIPO VAPOR FIXTURE DE 75 W, 100-305 VCA, 3H, 2F, 50-60 HZ; EL CUAL INCLUYE TRABAJOS REALIZADOS POR PERSONAL ESPECIALIZADO, EJECUCIÓN A UNA ELEVACIÓN A 3 M DE ALTURA, EQUIPO DE ELEVACIÓN, ESCALERAS Y TODO LO NECESARIO PARA LA CORRECTA EJECUCIÓN DE LOS TRABAJOS A REALIZAR.',
-            material_unidad:'PIEZA',	
-            material_cantidad:'2',
-            material_costo_unitario:'$5,260.00',
-            material_subtotal:'$10,520.00',
-            mano_obra_costo_unitario: '$2,500.00',
+const yellowRowStyles = {
+    backgroundColor: '#fffbeb',
+};
 
-            mano_obra_subtotal:'$5,000.00',
-            material_mano_obra_subtotal:'$15,520.00',
-        },
-        {
-            pda:'1.01',
-            descripcion:'SUMINISTRO E INSTALACIÓN DE LUMINARIA TIPO VAPOR FIXTURE DE 75 W, 100-305 VCA, 3H, 2F, 50-60 HZ; EL CUAL INCLUYE TRABAJOS REALIZADOS POR PERSONAL ESPECIALIZADO, EJECUCIÓN A UNA ELEVACIÓN A 3 M DE ALTURA, EQUIPO DE ELEVACIÓN, ESCALERAS Y TODO LO NECESARIO PARA LA CORRECTA EJECUCIÓN DE LOS TRABAJOS A REALIZAR.',
-            material_unidad:'PIEZA',	
-            material_cantidad:'2',
-            material_costo_unitario:'$5,260.00',
-            material_subtotal:'$10,520.00',
-            mano_obra_costo_unitario: '$2,500.00',
+const  DetalleCotizacionTabla = ({cotizacion}) =>  {
+    
+    
+    const [detalleCotizacion, setDetalleCotizacion] = useState([]);
 
-            mano_obra_subtotal:'$5,000.00',
-            material_mano_obra_subtotal:'$15,520.00',
-        }
+    useEffect(async()=>{
+        getListadoDetalleCotizacionFactura();
+    },[])
 
-    ]);
+
+    const getListadoDetalleCotizacionFactura = async() =>{
+        await axios
+        .get(`${route("cotizacion.list.detalle.cotizacion", { identy: cotizacion })}`)
+        .then((response) => {
+            const {data, status } = response       
+            if(status == 200){
+                console.log("Aqui es", data);                
+                setDetalleCotizacion(data)
+            }
+        });
+    }
 
 
     const opcionesTemplate = (registros) => {
@@ -71,21 +60,59 @@ const  DetalleCotizacionTabla = () =>  {
     
     return (
         <div className="card">
-            
-            <DataTable value={detalleCotizacion} stripedRows size='small' paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]}>
-               
-                <Column field="pda" header="PDA"></Column>
-                <Column field="descripcion" header="Descripcion"></Column>
-                <Column field="material_unidad" header="Material Unidad"></Column>
-                <Column field="material_cantidad" header="Materia Cantidad"></Column>
-                <Column field="material_subtotal" header="Material Subtotal"></Column>
-
-                <Column field="mano_obra_costo_unitario" header="Mano Obra Costo Unitario"></Column>                
-                <Column field="mano_obra_subtotal" header="Mano Obra Subtotal"></Column>
-
-                <Column field="material_mano_obra_subtotal" header="Mterial/Mano Obra Subtotal"></Column>
-                <Column header="Opciones" body={opcionesTemplate}></Column>
-            </DataTable>
+            <table style={tableStyles}>
+                <thead>
+                    <tr>
+                        <th style={headerStyles}>PDA</th>
+                        <th style={headerStyles}>Descripcion</th>
+                        <th style={headerStyles}>Material Unidad</th>
+                        <th style={headerStyles}>Materia Cantidad</th>
+                        <th style={headerStyles}>Material Subtotal</th>
+                        <th style={headerStyles}>Mano Obra Costo Unitario</th>
+                        <th style={headerStyles}>Mano Obra Subtotal</th>
+                        <th style={headerStyles}>Material/Mano Obra Subtotal</th>
+                        <th style={headerStyles}>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {detalleCotizacion.map((item)=>(
+                        item.es_tomo ===1 ? (
+                            
+                            <tr key={item.id} style={yellowRowStyles}>
+                                <td style={cellStyles}>{item.PDA}</td>
+                                <td colSpan={7} style={cellStyles}> <h7>{item.descripcion}</h7></td>
+                                <td style={cellStyles}>
+                                    <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" />
+                                    <Button icon="pi pi-times" tooltip="Eliminar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="danger" aria-label="Eliminar" />
+                                </td>
+                                
+                            </tr>
+                            
+                        ):(
+                            
+                            <tr key={item.id}>
+                                <td style={cellStyles}>{item.PDA}</td>
+                                <td style={cellStyles}>{item.descripcion}</td>
+                                <td style={cellStyles}>{item.costo_material_cantidad}</td>
+                                <td style={cellStyles}>{item.costo_material_unitario}</td>
+                                <td style={cellStyles}>{item.costo_material_subtotal}</td>
+                                <td style={cellStyles}>{item.costo_mano_obra_unitario}</td>
+                                <td style={cellStyles}>{item.costo_mano_obra_subtotal}</td>
+                                <td style={cellStyles}>{item.obra_material_subtotal}</td>
+                                <td style={cellStyles}>
+                                    <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" />
+                                    <Button icon="pi pi-times" tooltip="Eliminar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="danger" aria-label="Eliminar" />
+                                </td>
+                                
+                            </tr>
+                        )
+                         
+                    ))}
+                    <tr>
+                      
+                    </tr>
+                </tbody>
+            </table>
         </div>
     );
     
