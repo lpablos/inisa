@@ -144,9 +144,9 @@ class DetalleCotizacionAsociadoSeeder extends Seeder
             'costo_material_unitario_sugerido' => 110.00,
             'costo_mano_obra_unitario_sugerido' => 55.00,
             'comentarios_extras' => 'Comentario adicional sobre la cotización.',
-            'cotizaciones_id' => 2,  // Relación con la cotización
+            'cotizaciones_id' => 1,  // Relación con la cotización
             'cat_unidad_medida_id' => 1,
-            'tomo_pertenece' => 1,
+            'tomo_pertenece' => 2,
         ]);
 
         DB::table('detalle_cotizacion')->insert([
@@ -163,9 +163,9 @@ class DetalleCotizacionAsociadoSeeder extends Seeder
             'costo_material_unitario_sugerido' => 110.00,
             'costo_mano_obra_unitario_sugerido' => 55.00,
             'comentarios_extras' => 'Comentario adicional sobre la cotización.',
-            'cotizaciones_id' => 3,  // Relación con la cotización
+            'cotizaciones_id' => 1,  // Relación con la cotización
             'cat_unidad_medida_id' => 1,
-            'tomo_pertenece' => 1,
+            'tomo_pertenece' => 2,
         ]);
 
        
