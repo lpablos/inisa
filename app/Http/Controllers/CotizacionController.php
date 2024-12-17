@@ -156,12 +156,12 @@ class CotizacionController extends Controller
 
     public function listTomos($identy)
     {
-        
+
         $listTomos = DetalleCotizacion::where('es_tomo',true)
                                     ->where('cotizaciones_id',$identy)
                                     ->select('id','PDA','descripcion')
                                     ->get();
-                                    
+
         return response()->json($listTomos, 200);
     }
 
@@ -293,9 +293,12 @@ class CotizacionController extends Controller
     {
         // Obtener el último registro de PDA
         $ultimoPDA = DetalleCotizacion::where('cotizaciones_id', $cotizacionId)
-            ->whereNull('es_tomo')
+            ->whereNull('es_tomo')->orWhere('es_tomo', 0)
             ->orderBy('id', 'desc')
             ->value('PDA');
+            // dd($ultimoPDA);
+
+
         // Si no hay ningún registro, comenzar desde "1.01"
         if (!$ultimoPDA) {
             return '1.01';
