@@ -157,19 +157,20 @@ class CotizacionController extends Controller
     public function listTomos($identy)
     {
 
-        $listTomos = DetalleCotizacion::where('es_tomo',true)
-                                    ->where('cotizaciones_id',$identy)
-                                    ->select('id','PDA','descripcion')
-                                    ->get();
+        $listTomos = DetalleCotizacion::where('es_tomo', true)
+            ->where('cotizaciones_id', $identy)
+            ->select('id', 'PDA', 'descripcion')
+            ->get();
 
         return response()->json($listTomos, 200);
     }
 
-    public function listadoDetalleCotizacion($identy){
-        $listDetalle = DetalleCotizacion::where('cotizaciones_id',$identy)
-                            ->with('unidadMedida')
-                            ->orderBy('PDA')
-                            ->get();
+    public function listadoDetalleCotizacion($identy)
+    {
+        $listDetalle = DetalleCotizacion::where('cotizaciones_id', $identy)
+            ->with('unidadMedida')
+            ->orderBy('PDA')
+            ->get();
         return response()->json($listDetalle, 200);
     }
 
@@ -213,24 +214,37 @@ class CotizacionController extends Controller
             case 1:
                 // Registra un tomo nue
                 $tomoValidacion = DetalleCotizacion::where('descripcion', $request->capturaTomo)
-                ->count();
+                    ->count();
+
+                // dd($tomoValidacion);
 
                 if ($tomoValidacion > 0) {
                     return response()->json(['error' => 'El tomo ya existe'], 500);
                 } else {
+
+                    // dd($request->all(),$this->pdaTomoConTomoCotizacion($request->identyCotizacion));
+
+                    // dd($this->pdaTomoConTomoCotizacion($request->identyCotizacion), $this->pdaTomoCotizacion($request->identyCotizacion));
+
                     $detalleCotizacion = DetalleCotizacion::create([
                         'es_tomo' => 1,
-                        'descripcion' =>  $request->capturaTomo
+                        'descripcion' =>  $request->capturaTomo,
+                        'PDA' => $this->pdaTomoCotizacion($request->identyCotizacion),
+                        'cotizaciones_id' => (int) $request->identyCotizacion
                     ]);
 
+                    // dd($detalleCotizacion);
+
                     $tomo = DetalleCotizacion::where('descripcion', $request->capturaTomo)
-                    ->where('es_tomo', 1)->count();
+                        ->where('es_tomo', 1)->first();
+
+                    // dd($tomo);
 
 
-                    // dd( $this->PdaDinamicoTomo($tomo->id, 1));
+                    // dd($this->pdaTomoCotizacion($request->identyCotizacion));
 
                     $detalleCotizacion = DetalleCotizacion::create([
-                        'PDA' => $this->PdaDinamicoTomo($tomo->id, 1),
+                        'PDA' => $this->PdaDinamicoTomo($tomo->id, (int) $request->identyCotizacion),
                         'descripcion' => $request->descripcionMaterial,
                         'costo_material_cantidad' => $request->cantidadMaterial,
                         'costo_material_unitario_sugerido' => $request->costoMaterialSugerido,
@@ -256,12 +270,10 @@ class CotizacionController extends Controller
                 break;
             default:
                 # 0 En caso de s
-                // No tiene ninguo relacionado
 
-                // $cotizaciones = Cotizacion::with('proveedor', 'estatus')->where('baja_logica', 1)->get();
 
                 $detalleCotizacion = DetalleCotizacion::create([
-                    'PDA' => $this->PdaDinamico(1),
+                    'PDA' => $this->PdaDinamicoSinTomo(1),
                     'descripcion' => $request->descripcionMaterial,
                     'costo_material_cantidad' => $request->cantidadMaterial,
                     'costo_material_unitario_sugerido' => $request->costoMaterialSugerido,
@@ -289,19 +301,94 @@ class CotizacionController extends Controller
         // dd("Paso", $request->all());
     }
 
-    public function PdaDinamico($cotizacionId = null)
+    public function pdaTomoConTomoCotizacion($cotizacionId = null)
+    {
+        // Obtener el último registro de PDA  y se suma 1
+        $pdaRegistrosTomo = DetalleCotizacion::where('cotizaciones_id', $cotizacionId)
+            ->where('es_tomo', 1)
+            ->orderBy('id', 'desc')
+            ->value('PDA');
+        $valorDinamicoTomo = number_format($pdaRegistrosTomo + 1, 2, '.', '');
+        // dd($valorDinamicoTomo);
+        return $valorDinamicoTomo;
+    }
+
+    public function pdaTomoCotizacion($cotizacionId = null)
+    {
+        $pdaRegistrosTomo = DetalleCotizacion::where('cotizaciones_id', $cotizacionId)
+            ->where('es_tomo', 1)
+            ->orderBy('id', 'desc') // Ordenar por ID en orden descendente
+            ->value('PDA'); // Obtener directamente el valor de PDA
+
+
+
+
+        $ultimoPDA = DetalleCotizacion::where('cotizaciones_id', $cotizacionId)
+            ->where(function ($query) {
+                $query->whereNull('es_tomo')
+                    ->orWhere('es_tomo', 0);
+            })
+            ->whereNull('tomo_pertenece') // Asegura que tomo_pertenece sea NULL
+            ->orderBy('id', 'desc') // Ordenar por ID en orden descendente
+            ->value('PDA'); // Obtener directamente el valor de PDA
+
+
+
+        if ($ultimoPDA) {
+
+            // Dividir el valor del tomo en la parte entera y decimal
+            [$parteEntera,] = explode('.', $ultimoPDA);
+
+            // Generar el valor reseteado con .00
+            $valorReseteado = $parteEntera . '.00';
+
+            $resultado = $valorDinamicoTomo = number_format($valorReseteado + 1, 2, '.', '');
+        } else {
+            $resultado = $valorDinamicoTomo = number_format($pdaRegistrosTomo + 1, 2, '.', '');
+        }
+
+
+
+        // dd($resultado);
+
+        return $resultado;
+    }
+
+    public function PdaDinamicoSinTomo($cotizacionId = null)
     {
         // Obtener el último registro de PDA
         $ultimoPDA = DetalleCotizacion::where('cotizaciones_id', $cotizacionId)
-            ->whereNull('es_tomo')->orWhere('es_tomo', 0)
-            ->orderBy('id', 'desc')
-            ->value('PDA');
-            // dd($ultimoPDA);
+            ->where(function ($query) {
+                $query->whereNull('es_tomo')
+                    ->orWhere('es_tomo', 0);
+            })
+            ->whereNull('tomo_pertenece') // Asegura que tomo_pertenece sea NULL
+            ->orderBy('id', 'desc') // Ordenar por ID en orden descendente
+            ->value('PDA'); // Obtener directamente el valor de PDA
 
+
+
+
+
+        $valorTomo = $this->pdaTomoConTomoCotizacion($cotizacionId);
+
+
+        // dd($valorTomo, $ultimoPDA);
 
         // Si no hay ningún registro, comenzar desde "1.01"
         if (!$ultimoPDA) {
-            return '1.01';
+
+            // Dividir el valor del tomo en la parte entera y decimal
+            [$parteEntera, $parteDecimal] = explode('.', $valorTomo);
+
+            // Incrementar la parte decimal
+            $nuevoDecimal = str_pad((int)$parteDecimal + 1, 2, '0', STR_PAD_LEFT);
+
+            // Generar el nuevo valor del PDA
+            $nuevoValorTomo = $parteEntera . '.' . $nuevoDecimal;
+
+            return $nuevoValorTomo;
+            // return   $valorTomo;
         }
 
         // Dividir el último PDA en la parte entera y decimal
@@ -316,33 +403,26 @@ class CotizacionController extends Controller
 
     public function PdaDinamicoTomo($tomoId = null, $cotizacionId = null)
     {
-        // Obtener el último registro de PDA  y se suma 1
-        $pdaRegistros = DetalleCotizacion::where('cotizaciones_id', $cotizacionId)
-            ->whereNull('es_tomo')
-            ->whereRaw("SUBSTRING_INDEX(PDA, '.', -1) = '01'")
-            ->orderBy('PDA', 'desc') // Ordenar de menor a mayor
-            ->get(['PDA']);
+        // Obtener el último registro de PDA correspondiente al tomo y cotización
+        $ultimoPDA = DetalleCotizacion::where('cotizaciones_id', $cotizacionId)
+            ->where('id', $tomoId)
+            ->orderBy('PDA', 'desc') // Ordenar para obtener el último PDA
+            ->value('PDA'); // Solo obtener el valor de PDA
 
-
-        $tomoPertenece = DetalleCotizacion::where('tomo_pertenece', $tomoId)->get();
-
-        $ultimoPDA = DetalleCotizacion::where('tomo_pertenece', $tomoId)
-            ->where('cotizaciones_id', $cotizacionId)
-            ->whereNull('es_tomo')
-            ->orderBy('id', 'desc')
-            ->value('PDA');
-
+        // Si no existe ningún registro previo, iniciar en "4.01" basado en el tomoId
         if (!$ultimoPDA) {
-            return $pdaRegistros[0]->PDA + 1;
+            return $tomoId . '.01';
         }
 
         // Dividir el último PDA en la parte entera y decimal
-        [$seccion, $numero] = explode('.', $ultimoPDA);
+        [$parteEntera, $parteDecimal] = explode('.', $ultimoPDA);
 
-        // Incrementar el número decimal
-        $nuevoNumero = str_pad((int)$numero + 1, 2, '0', STR_PAD_LEFT);
+        // Incrementar la parte decimal
+        $nuevoDecimal = str_pad((int)$parteDecimal + 1, 2, '0', STR_PAD_LEFT);
 
         // Generar el nuevo PDA
-        return $seccion . '.' . $nuevoNumero;
+        $nuevoPDA = $parteEntera . '.' . $nuevoDecimal;
+
+        return $nuevoPDA;
     }
 }
