@@ -16,7 +16,7 @@ const detalleCaptura =(props) => {
                             <p>Título: INSTALACIÓN Y CANALIZACIÓN DE CCM BOMBAS DE CISTERNA DE AGUA.</p>
                         </div>                      
                         <div class="col-2 text-right">
-                            <DialogDetalleCotizacion cotizacion={cotizacion}/>
+                            <DialogDetalleCotizacion cotizacion={cotizacion} modo={'Registrar'}/>
                         </div>
                     </div>
                     <DetalleCotizacionTabla cotizacion={cotizacion}/>
