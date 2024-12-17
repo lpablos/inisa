@@ -12,6 +12,8 @@ import axios from "axios";
 
 
 const FormItemDetalle = ({cotizacion, detalle, modo='Registrar'}) => {
+    console.log("Este es el modo -->", modo);
+    
     const [accionBtn, setAccionBtn] = useState('Registrar')
     useEffect(()=>{
         if(modo=='Registrar'){
@@ -203,7 +205,8 @@ const FormItemDetalle = ({cotizacion, detalle, modo='Registrar'}) => {
     return (
           <div className="card">
             <form action="" method="post" onSubmit={handleSubmit}>
-                {modo=='Registrar' || modo=="Actualizar-Tomo" && (                    
+                
+                {(modo=='Registrar' || modo=="Actualizar-Tomo") && (                    
                     <>
                         <div class="formgrid grid">
                             <div class="field col-4">
@@ -243,7 +246,7 @@ const FormItemDetalle = ({cotizacion, detalle, modo='Registrar'}) => {
                     </>
                 )}
                 
-                {modo=='Registrar' || modo=="Actualizar-Detalle" &&(
+                {(modo=='Registrar' || modo=="Actualizar-Detalle") &&(
                     <>
                         <h5>Costo de Materiales</h5>
                         <div class="formgrid grid">

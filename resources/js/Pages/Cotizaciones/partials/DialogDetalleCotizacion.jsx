@@ -9,6 +9,7 @@ const DialogDetalleCotizacion = ({showDialog = false, cotizacion, modo='Registra
     const [tituloAccion, setTituloAccion] = useState('Registrar')
     
     
+    
     useEffect(()=>{
         setVisible(showDialog);
     },[showDialog])
