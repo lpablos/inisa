@@ -216,15 +216,9 @@ class CotizacionController extends Controller
                 $tomoValidacion = DetalleCotizacion::where('descripcion', $request->capturaTomo)
                     ->count();
 
-                // dd($tomoValidacion);
-
                 if ($tomoValidacion > 0) {
                     return response()->json(['error' => 'El tomo ya existe'], 500);
                 } else {
-
-                    // dd($request->all(),$this->pdaTomoConTomoCotizacion($request->identyCotizacion));
-
-                    // dd($this->pdaTomoConTomoCotizacion($request->identyCotizacion), $this->pdaTomoCotizacion($request->identyCotizacion));
 
                     $detalleCotizacion = DetalleCotizacion::create([
                         'es_tomo' => 1,
@@ -237,11 +231,6 @@ class CotizacionController extends Controller
 
                     $tomo = DetalleCotizacion::where('descripcion', $request->capturaTomo)
                         ->where('es_tomo', 1)->first();
-
-                    // dd($tomo);
-
-
-                    // dd($this->pdaTomoCotizacion($request->identyCotizacion));
 
                     $detalleCotizacion = DetalleCotizacion::create([
                         'PDA' => $this->PdaDinamicoTomo($tomo->id, (int) $request->identyCotizacion),
@@ -260,18 +249,37 @@ class CotizacionController extends Controller
                         'cat_unidad_medida_id' => $request->seleccionUnidadMedida
                     ]);
                 }
-
-
-
-
                 break;
             case 2:
                 // Es uno selecionado
+
+                // dd($request->all(), $request->seleccionTomo['id'], $this->pdaSeleccionTomo($request->seleccionTomo['id'], (int) $request->identyCotizacion));
+
+                $detalleCotizacion = DetalleCotizacion::create([
+                    'PDA' => $this->pdaSeleccionTomo($request->seleccionTomo['id'], (int) $request->identyCotizacion),
+                    'descripcion' => $request->descripcionMaterial,
+                    'costo_material_cantidad' => $request->cantidadMaterial,
+                    'costo_material_unitario_sugerido' => $request->costoMaterialSugerido,
+                    'costo_material_unitario' => $request->costoMaterialFinal,
+                    'costo_material_subtotal' => $request->subTotalMaterial,
+                    'costo_mano_obra_unitario_sugerido' => $request->costoManoObraSugerido,
+                    'costo_mano_obra_unitario' => $request->costoManoObraFinal,
+                    'costo_mano_obra_subtotal' => $request->subTotalManoObra,
+                    'obra_material_subtotal' => $request->subTotalMateObraTotal,
+                    'comentarios_extras' => $request->citaComentario,
+                    'cotizaciones_id' => $request->identyCotizacion,
+                    'tomo_pertenece' => $request->seleccionTomo['id'],
+                    'cat_unidad_medida_id' => $request->seleccionUnidadMedida
+                ]);
+
+
+
+
+
+
                 break;
             default:
                 # 0 En caso de s
-
-
                 $detalleCotizacion = DetalleCotizacion::create([
                     'PDA' => $this->PdaDinamicoSinTomo(1),
                     'descripcion' => $request->descripcionMaterial,
@@ -284,12 +292,10 @@ class CotizacionController extends Controller
                     'costo_mano_obra_subtotal' => $request->subTotalManoObra,
                     'obra_material_subtotal' => $request->subTotalMateObraTotal,
                     'comentarios_extras' => $request->citaComentario,
-                    'cotizaciones_id' => 1,
+                    'cotizaciones_id' => $request->identyCotizacion,
                     'es_tomo' => 0,
                     'cat_unidad_medida_id' => $request->seleccionUnidadMedida
                 ]);
-
-
                 break;
         }
 
@@ -410,6 +416,34 @@ class CotizacionController extends Controller
             ->value('PDA'); // Solo obtener el valor de PDA
 
         // Si no existe ningún registro previo, iniciar en "4.01" basado en el tomoId
+        if (!$ultimoPDA) {
+            return $tomoId . '.01';
+        }
+
+        // Dividir el último PDA en la parte entera y decimal
+        [$parteEntera, $parteDecimal] = explode('.', $ultimoPDA);
+
+        // Incrementar la parte decimal
+        $nuevoDecimal = str_pad((int)$parteDecimal + 1, 2, '0', STR_PAD_LEFT);
+
+        // Generar el nuevo PDA
+        $nuevoPDA = $parteEntera . '.' . $nuevoDecimal;
+
+        return $nuevoPDA;
+    }
+
+
+    public function pdaSeleccionTomo($tomoId = null, $cotizacionId = null)
+    {
+        // Obtener elultimo registro de PDA correspondiente al tomo y cotización
+        $ultimoPDA = DetalleCotizacion::where('cotizaciones_id', $cotizacionId)
+            ->where('tomo_pertenece', $tomoId)
+            ->orderBy('PDA', 'desc') // Ordenar para obtener elultimo PDA
+            ->value('PDA'); // Solo obtener el valor de PDA
+
+        // return $ultimoPDA;
+
+        // Si no hay un valor previo, iniciar con el valor base "1.01"
         if (!$ultimoPDA) {
             return $tomoId . '.01';
         }
