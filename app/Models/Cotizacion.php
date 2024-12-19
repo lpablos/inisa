@@ -14,13 +14,14 @@ use App\Models\DetalleCotizacion;
 use App\Models\CatPrioridad;
 use App\Models\CatMoneda;
 use App\Models\CatEstatu;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 
 
 class Cotizacion extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'cotizaciones';
 
