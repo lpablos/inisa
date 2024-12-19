@@ -33,8 +33,8 @@ class DatabaseSeeder extends Seeder
             // CatPrioridadSeeder::class,
             CatEstatusSeeder::class,
             CatMonedaSeeder::class,
-            DetalleCotizacionSeeder::class,
-            // CotizacionSeeder::class,
+            // DetalleCotizacionSeeder::class,
+            CotizacionSeeder::class,
             DetalleCotizacionAsociadoSeeder::class,
 
 

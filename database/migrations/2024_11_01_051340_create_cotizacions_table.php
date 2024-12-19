@@ -28,6 +28,7 @@ return new class extends Migration
             $table->double('costo_material')->nullable();
             $table->double('costo_mano_obra')->nullable();
             $table->boolean('baja_logica')->nullable();
+            $table->softDeletes();
 
 
 
