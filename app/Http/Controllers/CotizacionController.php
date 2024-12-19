@@ -21,8 +21,41 @@ class CotizacionController extends Controller
     {
         $cotizaciones = Cotizacion::with('proveedor', 'estatus')->where('baja_logica', 1)->get();
 
+
+
+
         // dd($cotizaciones->toArray());
         return response()->json(['cotizaciones' => $cotizaciones], 200);
+    }
+
+    public function duplicarCotizacion(Request $request)
+    {
+        // Obtener la cotización original con sus detalles
+        $cotizacionOriginal = Cotizacion::with('detalles')->find($request->id);
+
+        // Verificar si el registro existe
+        if (!$cotizacionOriginal) {
+            return response()->json(['error' => 'Cotización no encontrada'], 404);
+        }
+
+        // Duplicar la cotización original
+        $nuevaCotizacion = $cotizacionOriginal->replicate();
+        $nuevaCotizacion->save();
+
+        // Duplicar los detalles relacionados
+        $detalleCotizacion = DetalleCotizacion::where('cotizaciones_id', $request->id)->get();
+
+        foreach ($detalleCotizacion as $detalle) {
+            $nuevoDetalle = $detalle->replicate();
+            $nuevoDetalle->cotizaciones_id = $nuevaCotizacion->id; // Asignar al nuevo ID de cotización
+            $nuevoDetalle->save();
+        }
+
+        return response()->json([
+            'message' => 'Cotización duplicada con éxito',
+            'cotizacion' => $nuevaCotizacion,
+            'detalles' => $detalleCotizacion
+        ]);
     }
 
     public function RegistrarCotizacion(Request $request)
@@ -447,9 +480,9 @@ class CotizacionController extends Controller
         if ($ultimoPDA == null) {
 
             $ultmoTomoPDA = DetalleCotizacion::where('cotizaciones_id', $cotizacionId)
-            ->where('id', $tomoId)
-            ->orderBy('PDA', 'desc') // Ordenar para obtener elultimo PDA
-            ->value('PDA');
+                ->where('id', $tomoId)
+                ->orderBy('PDA', 'desc') // Ordenar para obtener elultimo PDA
+                ->value('PDA');
 
             if (!$ultmoTomoPDA) {
                 return $tomoId . '.01';
@@ -467,16 +500,15 @@ class CotizacionController extends Controller
             return $nuevoPDA;
         }
 
-            // Dividir elultimo PDA en la parte entera y decimal
-            [$parteEntera, $parteDecimal] = explode('.', $ultimoPDA);
+        // Dividir elultimo PDA en la parte entera y decimal
+        [$parteEntera, $parteDecimal] = explode('.', $ultimoPDA);
 
-            // Incrementar la parte decimal
-            $nuevoDecimal = str_pad((int)$parteDecimal + 1, 2, '0', STR_PAD_LEFT);
+        // Incrementar la parte decimal
+        $nuevoDecimal = str_pad((int)$parteDecimal + 1, 2, '0', STR_PAD_LEFT);
 
-            // Generar el nuevo PDA
-            $nuevoPDA = $parteEntera . '.' . $nuevoDecimal;
+        // Generar el nuevo PDA
+        $nuevoPDA = $parteEntera . '.' . $nuevoDecimal;
 
-            return $nuevoPDA;
-
+        return $nuevoPDA;
     }
 }

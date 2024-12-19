@@ -5,6 +5,7 @@ import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
 import Dialogo from "./Dialogo"; // Componente para el modal
 import ConfirmarEliminacion from "./ConfirmarEliminacion";
+import ConfirmarDuplicacion from "./ConfirmarDuplicacion";
 import axios from "axios";
 import { Tooltip } from 'primereact/tooltip';
 import "../../../../css/style_cotizacion.css";
@@ -121,6 +122,49 @@ const ConceptoTabla = () => {
         });
     };
 
+
+    const confirmarDuplicacionCotizacion = (id, titulo) => {
+        toast.current.show({
+            severity: "warn",
+            summary: "Confirmación",
+            sticky: true,
+            content: (
+                <ConfirmarDuplicacion
+                    mensaje={`¿Estás seguro de duplicar la cotización "${titulo}"?`}
+                    onConfirm={() => {
+                        deplicarCotizacion(id);
+                        toast.current.clear();
+                    }}
+                    onCancel={() => toast.current.clear()}
+                />
+            ),
+        });
+    };
+
+    const deplicarCotizacion = async (id) => {
+        setLoader(true);
+        try {
+            await axios.post(route("cotizacion.duplicar.cotizacion", { id }));
+            toast.current.show({
+                severity: "success",
+                summary: "Cotización duplicada",
+                detail: "La cotización ha sido duplicada exitosamente.",
+                life: 3000,
+            });
+            obtenerCotizaciones(); // Refresca la tabla
+        } catch (error) {
+            toast.current.show({
+                severity: "error",
+                summary: "Error",
+                detail: "No se pudo duplicar la cotización.",
+                life: 3000,
+            });
+            console.error("Error al duplicar la  cotización:", error);
+        } finally {
+            setLoader(false);
+        }
+    };
+
     // Plantilla para las acciones
     const accionesTemplate = (rowData) => (
         <div className="flex gap-2">
@@ -138,6 +182,15 @@ const ConceptoTabla = () => {
                 tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
                 onClick={() =>
                     confirmarEliminacionCotizacion(rowData.id, rowData.titulo)
+                }
+            />
+            <Button
+                icon="pi pi-copy"
+                className="p-button-rounded p-button-warning p-button-sm"
+                tooltip="Duplicar"
+                tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
+                onClick={() =>
+                    confirmarDuplicacionCotizacion(rowData.id, rowData.titulo)
                 }
             />
              <a
