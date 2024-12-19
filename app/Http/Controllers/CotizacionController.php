@@ -269,6 +269,7 @@ class CotizacionController extends Controller
                     'comentarios_extras' => $request->citaComentario,
                     'cotizaciones_id' => $request->identyCotizacion,
                     'tomo_pertenece' => $request->seleccionTomo['id'],
+                    'es_tomo' => 0,
                     'cat_unidad_medida_id' => $request->seleccionUnidadMedida
                 ]);
 
@@ -441,22 +442,41 @@ class CotizacionController extends Controller
             ->orderBy('PDA', 'desc') // Ordenar para obtener elultimo PDA
             ->value('PDA'); // Solo obtener el valor de PDA
 
-        // return $ultimoPDA;
 
-        // Si no hay un valor previo, iniciar con el valor base "1.01"
-        if (!$ultimoPDA) {
-            return $tomoId . '.01';
+
+        if ($ultimoPDA == null) {
+
+            $ultmoTomoPDA = DetalleCotizacion::where('cotizaciones_id', $cotizacionId)
+            ->where('id', $tomoId)
+            ->orderBy('PDA', 'desc') // Ordenar para obtener elultimo PDA
+            ->value('PDA');
+
+            if (!$ultmoTomoPDA) {
+                return $tomoId . '.01';
+            }
+
+            // Dividir elultimo PDA en la parte entera y decimal
+            [$parteEntera, $parteDecimal] = explode('.', $ultmoTomoPDA);
+
+            // Incrementar la parte decimal
+            $nuevoDecimal = str_pad((int)$parteDecimal + 1, 2, '0', STR_PAD_LEFT);
+
+            // Generar el nuevo PDA
+            $nuevoPDA = $parteEntera . '.' . $nuevoDecimal;
+
+            return $nuevoPDA;
         }
 
-        // Dividir el último PDA en la parte entera y decimal
-        [$parteEntera, $parteDecimal] = explode('.', $ultimoPDA);
+            // Dividir elultimo PDA en la parte entera y decimal
+            [$parteEntera, $parteDecimal] = explode('.', $ultimoPDA);
 
-        // Incrementar la parte decimal
-        $nuevoDecimal = str_pad((int)$parteDecimal + 1, 2, '0', STR_PAD_LEFT);
+            // Incrementar la parte decimal
+            $nuevoDecimal = str_pad((int)$parteDecimal + 1, 2, '0', STR_PAD_LEFT);
 
-        // Generar el nuevo PDA
-        $nuevoPDA = $parteEntera . '.' . $nuevoDecimal;
+            // Generar el nuevo PDA
+            $nuevoPDA = $parteEntera . '.' . $nuevoDecimal;
 
-        return $nuevoPDA;
+            return $nuevoPDA;
+
     }
 }
