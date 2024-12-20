@@ -83,7 +83,7 @@ const  DetalleCotizacionTabla = ({cotizacion}) =>  {
                                 <td style={cellStyles}>{item.PDA}</td>
                                 <td colSpan={7} style={cellStyles}> <h7>{item.descripcion}</h7></td>
                                 <td style={cellStyles}>
-                                    <DialogDetalleCotizacion cotizacion={cotizacion} detalle={item.id} modo={'Actualizar-Tomo'} />
+                                <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" />                                    
                                     <Button icon="pi pi-times" tooltip="Eliminar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="danger" aria-label="Eliminar" />
                                 </td>
                                 
@@ -101,8 +101,8 @@ const  DetalleCotizacionTabla = ({cotizacion}) =>  {
                                 <td style={cellStyles}>{item.costo_mano_obra_subtotal}</td>
                                 <td style={cellStyles}>{item.obra_material_subtotal}</td>
                                 <td style={cellStyles}>
-                                    <DialogDetalleCotizacion cotizacion={cotizacion} detalle={item.id} modo={'Actualizar-Detalle'} />
-                                    {/* <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" /> */}
+                                    
+                                    <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" />
                                     <Button icon="pi pi-times" tooltip="Eliminar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="danger" aria-label="Eliminar" />
                                 </td>
                                 

@@ -11,34 +11,14 @@ import axios from "axios";
 
 
 
-const FormItemDetalle = ({cotizacion, detalle, modo='Registrar'}) => {
-    console.log("Este es el modo -->", modo);
-    
+const FormItemDetalle = ({cotizacion}) => {
     const [accionBtn, setAccionBtn] = useState('Registrar')
-    useEffect(()=>{
-        if(modo=='Registrar'){
-            setAccionBtn('Registrar')
-        }
-        if(modo=="Actualizar-Tomo"){
-            setAccionBtn('Actualizar')
-        }
-        if(modo=="Actualizar-Detalle"){
-            setAccionBtn('Actualizar')
-        }
-        // setAccionBtn(btnAccion)
-    }, [modo])
     const [identyCotizacion, setIdentyCotizacion] = useState(null);    
-    const [identyDetalle, setIdentyDetalle] = useState(null)
     useEffect(()=>{
         if(cotizacion){
             setIdentyCotizacion(cotizacion)
-        }
-        if(detalle){
-            setIdentyDetalle(detalle)
-        }
-        
-    },[cotizacion, detalle])
-    
+        } 
+    },[cotizacion])
     const [unidadesDeMedida, setUnidadesDeMedida] = useState([]);
     // Todo lo relacionado con el tomo
     const [perteneceTomo, setPerteneceTomo] = useState(0);
@@ -97,16 +77,7 @@ const FormItemDetalle = ({cotizacion, detalle, modo='Registrar'}) => {
     const [citaComentario, setCitaComentario] = useState(null);
 
     useEffect(()=>{
-        if(modo=='Registrar'){
-            getUnidadesMedida()
-        }
-        if(modo=='Actualizar-Tomo'){
-            
-        }
-        if(modo=='Actualizar-Detalle'){
-            
-        }
-        
+        getUnidadesMedida()  
     },[])
 
     const getListadoTomoAsc = async() =>{
@@ -140,6 +111,7 @@ const FormItemDetalle = ({cotizacion, detalle, modo='Registrar'}) => {
     }
 
     const almacenarRegistro = async () => {
+        
         const datos = {
             identyCotizacion: identyCotizacion,
             perteneceTomo: perteneceTomo,
@@ -167,6 +139,8 @@ const FormItemDetalle = ({cotizacion, detalle, modo='Registrar'}) => {
         .post(`${route("cotizacion.guardad.captura")}`, datos)
         .then((response) => {
             const { status, data } = response;
+            console.log("Esto se obtiene");
+            
             // setDataDetalle(response)
             if (status == 201) {
                 toast.current.show({
@@ -175,8 +149,8 @@ const FormItemDetalle = ({cotizacion, detalle, modo='Registrar'}) => {
                     detail: `${data.success}`,
                     life: 3000,
                 });
-                showTabla();
-                obtenerStatus();
+                // showTabla();
+                // obtenerStatus();
                 // obtenerTiposMonedas();
             }
         })
@@ -186,16 +160,9 @@ const FormItemDetalle = ({cotizacion, detalle, modo='Registrar'}) => {
     }
 
     const handleSubmit = (e) => {
+        alert("Hola")
         e.preventDefault(); // Evita que la página se recargue   
-        if(modo=='Registrar'){
-            almacenarRegistro();
-        }
-        if(modo=='Actualizar-Tomo'){
-            alert("Vaz a actualizar un tomo")
-        }
-        if(modo=='Actualizar-Detalle'){
-            alert("Vaz a actualizar un detalle")
-        }
+        almacenarRegistro();
     };
 
 
@@ -206,8 +173,8 @@ const FormItemDetalle = ({cotizacion, detalle, modo='Registrar'}) => {
           <div className="card">
             <form action="" method="post" onSubmit={handleSubmit}>
                 
-                {(modo=='Registrar' || modo=="Actualizar-Tomo") && (                    
-                    <>
+                            
+                
                         <div class="formgrid grid">
                             <div class="field col-4">
                                 <label htmlFor="defineTomo" className="font-bold block mb-2">Definición de Tomo</label>
@@ -243,11 +210,6 @@ const FormItemDetalle = ({cotizacion, detalle, modo='Registrar'}) => {
                             </div>
                         </div>
                         <Divider />
-                    </>
-                )}
-                
-                {(modo=='Registrar' || modo=="Actualizar-Detalle") &&(
-                    <>
                         <h5>Costo de Materiales</h5>
                         <div class="formgrid grid">
                             <div class="field col-12">
@@ -383,8 +345,8 @@ const FormItemDetalle = ({cotizacion, detalle, modo='Registrar'}) => {
                                 <InputTextarea className="w-full" value={citaComentario} onChange={(e) => setCitaComentario(e.target.value)} rows={2} cols={30} />
                             </div>               
                         </div>
-                    </>
-                )}
+                    
+                
                 
                 <div className="card flex justify-content-center">
                     <Button type="submit" label={accionBtn} />
