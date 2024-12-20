@@ -37,6 +37,7 @@ const  DetalleCotizacionTabla = ({cotizacion}) =>  {
     },[])
 
 
+
     const getListadoDetalleCotizacionFactura = async() =>{
         await axios
         .get(`${route("cotizacion.list.detalle.cotizacion", { identy: cotizacion })}`)
@@ -49,15 +50,16 @@ const  DetalleCotizacionTabla = ({cotizacion}) =>  {
         });
     }
 
+    const [idDetalleModal, setIdDetalleModal] = useState()
+    const [showModalAccion, setShowModalAccion] = useState(false)
+    const modalUpdate = (detalle) =>{
+        setIdDetalleModal(detalle); 
+        setShowModalAccion(true)       
+    }
 
-    const opcionesTemplate = (registros) => {
-        return (
-           <>
-            <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" />
-            <Button icon="pi pi-times" tooltip="Eliminar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="danger" aria-label="Eliminar" />
-           </>
-        );
-    };
+  
+
+  
     
     return (
         <div className="card">
@@ -77,20 +79,16 @@ const  DetalleCotizacionTabla = ({cotizacion}) =>  {
                 </thead>
                 <tbody>
                     {detalleCotizacion.map((item)=>(
-                        item.es_tomo ===1 ? (
-                            
+                        item.es_tomo ===1 ? (                            
                             <tr key={item.id} style={yellowRowStyles}>
                                 <td style={cellStyles}>{item.PDA}</td>
                                 <td colSpan={7} style={cellStyles}> <h7>{item.descripcion}</h7></td>
                                 <td style={cellStyles}>
-                                <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" />                                    
+                                    <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" onClick={()=>{modalUpdate(item.id)}} />
                                     <Button icon="pi pi-times" tooltip="Eliminar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="danger" aria-label="Eliminar" />
                                 </td>
-                                
                             </tr>
-                            
                         ):(
-                            
                             <tr key={item.id}>
                                 <td style={cellStyles}>{item.PDA}</td>
                                 <td style={cellStyles}>{item.descripcion}</td>
@@ -102,19 +100,22 @@ const  DetalleCotizacionTabla = ({cotizacion}) =>  {
                                 <td style={cellStyles}>{item.obra_material_subtotal}</td>
                                 <td style={cellStyles}>
                                     
-                                    <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" />
+                                    <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" onClick={()=>{modalUpdate(item.id)}} />
                                     <Button icon="pi pi-times" tooltip="Eliminar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="danger" aria-label="Eliminar" />
                                 </td>
-                                
                             </tr>
-                        )
-                         
+                        )  
                     ))}
-                    <tr>
-                      
-                    </tr>
                 </tbody>
             </table>
+            <DialogDetalleCotizacion 
+                cotizacion={cotizacion} 
+                // para el detalle
+                detalle={idDetalleModal} 
+                showModalAccion={showModalAccion} 
+                showbtn={false}
+                eventoVisible={setShowModalAccion}
+            />
         </div>
     );
     

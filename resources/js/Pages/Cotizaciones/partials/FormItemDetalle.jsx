@@ -11,7 +11,7 @@ import axios from "axios";
 
 
 
-const FormItemDetalle = ({cotizacion}) => {
+const FormItemDetalle = ({cotizacion, detalle}) => {
     const [accionBtn, setAccionBtn] = useState('Registrar')
     const [identyCotizacion, setIdentyCotizacion] = useState(null);    
     useEffect(()=>{
@@ -19,6 +19,13 @@ const FormItemDetalle = ({cotizacion}) => {
             setIdentyCotizacion(cotizacion)
         } 
     },[cotizacion])
+    const [identyDetalle, setIdentyDetalle] = useState(null); 
+    useEffect(()=>{
+        if(detalle){
+            setIdentyDetalle(detalle)
+        }
+    },[detalle])
+    
     const [unidadesDeMedida, setUnidadesDeMedida] = useState([]);
     // Todo lo relacionado con el tomo
     const [perteneceTomo, setPerteneceTomo] = useState(0);
@@ -172,9 +179,6 @@ const FormItemDetalle = ({cotizacion}) => {
     return (
           <div className="card">
             <form action="" method="post" onSubmit={handleSubmit}>
-                
-                            
-                
                         <div class="formgrid grid">
                             <div class="field col-4">
                                 <label htmlFor="defineTomo" className="font-bold block mb-2">Definición de Tomo</label>
