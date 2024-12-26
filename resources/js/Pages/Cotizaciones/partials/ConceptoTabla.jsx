@@ -26,7 +26,7 @@ const ConceptoTabla = () => {
                 route("cotizacion.list.cotizaciones")
             );
             setCotizaciones(response.data.cotizaciones || []);
-            console.log("cotizaciones", response.data.cotizaciones);
+            // console.log("cotizaciones", response.data.cotizaciones);
         } catch (error) {
             console.error("Error al obtener cotizaciones:", error);
             setCotizaciones([]);

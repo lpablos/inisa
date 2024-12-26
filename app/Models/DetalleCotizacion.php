@@ -13,6 +13,7 @@ class DetalleCotizacion extends Model
     protected $table = 'detalle_cotizacion';
 
     protected $fillable = [
+        'id',
         'PDA',
         'es_tomo',
         'descripcion',

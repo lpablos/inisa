@@ -22,7 +22,6 @@ const DialogDetalleCotizacion = ({cotizacion, detalle, showModalAccion=false, sh
     useEffect(()=>{setMostrarAccion(showbtn)},[showbtn])
 
     useEffect(()=>{
-        console.log("Asi entra",showModalAccion);
         if(showModalAccion == true){
             setVisible(showModalAccion)
         }else{

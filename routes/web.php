@@ -131,6 +131,8 @@ Route::prefix('admin')->group(function () {
             Route::prefix('captura')->group(function(){
                 Route::get('{identy?}/detalle','datelleCaptura')->name('cotizacion.captura.detalle');
                 Route::post('guardarDetalle','saveCaptura')->name('cotizacion.guardad.captura');
+                Route::get('item/{identy}/detalle','detalleItem')->name('cotizacion.captura.item.detalle');
+                Route::post('item/detalleItem/actualizar', 'actualizarDetalleIdenty')->name('cotizacion.captura.item.actualiza');
             });
 
 

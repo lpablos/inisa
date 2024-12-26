@@ -511,4 +511,13 @@ class CotizacionController extends Controller
 
         return $nuevoPDA;
     }
+
+    public function detalleItem($identy){
+        $detalleItem = DetalleCotizacion::find($identy);
+        return response()->json($detalleItem, 200);
+    }
+
+    public function actualizarDetalleIdenty(Request $request){
+        dd("Este es todo el objecto", $request->all());
+    }
 }

@@ -50,10 +50,10 @@ const  DetalleCotizacionTabla = ({cotizacion}) =>  {
         });
     }
 
-    const [idDetalleModal, setIdDetalleModal] = useState()
+    const [DetalleModal, setDetalleModal] = useState()
     const [showModalAccion, setShowModalAccion] = useState(false)
-    const modalUpdate = (detalle) =>{
-        setIdDetalleModal(detalle); 
+    const modalUpdate = (detalle) =>{        
+        setDetalleModal(detalle);
         setShowModalAccion(true)       
     }
 
@@ -84,7 +84,7 @@ const  DetalleCotizacionTabla = ({cotizacion}) =>  {
                                 <td style={cellStyles}>{item.PDA}</td>
                                 <td colSpan={7} style={cellStyles}> <h7>{item.descripcion}</h7></td>
                                 <td style={cellStyles}>
-                                    <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" onClick={()=>{modalUpdate(item.id)}} />
+                                    <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" onClick={()=>{modalUpdate(item)}} />
                                     <Button icon="pi pi-times" tooltip="Eliminar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="danger" aria-label="Eliminar" />
                                 </td>
                             </tr>
@@ -100,7 +100,7 @@ const  DetalleCotizacionTabla = ({cotizacion}) =>  {
                                 <td style={cellStyles}>{item.obra_material_subtotal}</td>
                                 <td style={cellStyles}>
                                     
-                                    <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" onClick={()=>{modalUpdate(item.id)}} />
+                                    <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" onClick={()=>{modalUpdate(item)}} />
                                     <Button icon="pi pi-times" tooltip="Eliminar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="danger" aria-label="Eliminar" />
                                 </td>
                             </tr>
@@ -111,7 +111,7 @@ const  DetalleCotizacionTabla = ({cotizacion}) =>  {
             <DialogDetalleCotizacion 
                 cotizacion={cotizacion} 
                 // para el detalle
-                detalle={idDetalleModal} 
+                detalle={DetalleModal} 
                 showModalAccion={showModalAccion} 
                 showbtn={false}
                 eventoVisible={setShowModalAccion}

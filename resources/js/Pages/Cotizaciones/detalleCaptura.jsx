@@ -4,8 +4,8 @@ import DetalleCotizacionTabla from './partials/DetalleCotizacionTabla';
 import MenuDetalle from './partials/MenuDetalle';
 import DialogDetalleCotizacion from './partials/DialogDetalleCotizacion';
 
-const detalleCaptura =(props) => {    
-    const {cotizacion} = props
+const detalleCaptura =({cotizacion}) => {    
+    // const {cotizacion} = props
     return (
         <Layout>
             <div className="grid">
