@@ -520,4 +520,17 @@ class CotizacionController extends Controller
     public function actualizarDetalleIdenty(Request $request){
         dd("Este es todo el objecto", $request->all());
     }
+
+    public function deleteTomoDetalle($id){
+        // Nota quie tienenes que eliminar conform a si es tomo o detalle
+        // *************************
+        //  en caso de veficar en el modelo que es tomox
+        // elimina el tomo y todos los elementos relacionados
+        // *************************
+        // En el caso de que sea no sea tomo (Detalle o elemento interno), 
+        // solo elimina ese elemento que corresponse
+        // *************************        
+        // nota: de prefesencia usa la relacion de los modelos para hacer la logica
+        dd("Este es todo el objecto", $id);
+    }
 }

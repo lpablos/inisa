@@ -1,9 +1,11 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { Component, useEffect, useState, useRef } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { ButtonGroup } from 'primereact/buttongroup';
 import { Button } from 'primereact/button';
 import DialogDetalleCotizacion from './DialogDetalleCotizacion';
+import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
+import { Toast } from 'primereact/toast';
 
 const tableStyles = {
     width: '100%',
@@ -29,7 +31,7 @@ const yellowRowStyles = {
 
 const  DetalleCotizacionTabla = ({cotizacion, reloadList, onRecargaCompleta}) =>  {
     
-    
+    const toast = useRef(null);
     const [detalleCotizacion, setDetalleCotizacion] = useState([]);
 
     useEffect(async()=>{
@@ -65,14 +67,66 @@ const  DetalleCotizacionTabla = ({cotizacion, reloadList, onRecargaCompleta}) =>
     }
 
   
-    const recargarListado = () =>{
-        
+    const recargarListado = () =>{        
         getListadoDetalleCotizacionFactura()
+    }
+
+    const preguntaEliminacion = (item) => {
+        console.log("Esto entra", item);
+        let mensaje
+        if(item.es_tomo == 1){
+            mensaje = `Al eliminar el tomo con el PDA "${item.PDA}", ten en cuenta que se se eliminarán automáticamente todos los elementos internos relacionados (por ejemplo, 1.01, 1.02, entre otros).`
+        }else{
+            mensaje = `Se eliminar el PDA "${item.PDA}", con la descripción: ${item.descripcion}.`
+        }
+        
+        
+        confirmDialog({
+            message: `${mensaje}`,
+            header: `Confirmacion de eliminación`,
+            icon: 'pi pi-info-circle',
+            defaultFocus: 'reject',
+            acceptClassName: 'p-button-danger',
+            accept: ()=>acceptDeleteDetalle(item.id),
+            reject
+        });
+    };
+
+    const acceptDeleteDetalle = async (identy) => {
+   
+        try {
+            await axios.delete(
+                `${route("tomo.detalle.elimina.identy", { id: identy })}`
+            );
+            toast.current.show({
+                severity: "success",
+                summary: "Eliminado correctamente",
+                detail: "El detalle fue eliminado exitosamente.",
+                life: 3000,
+            });
+            
+        } catch (error) {
+            toast.current.show({
+                severity: "error",
+                summary: "Error",
+                detail: "No se pudo eliminar el detalle.",
+                life: 3000,
+            });
+        }
+        
+        
+    }
+
+    const reject = () => {
+        toast.current.show({ severity: 'contrast', summary: 'Correcto', detail: 'Intenta con otro elemento de la lista', life: 3000 });
     }
   
     
     return (
+        
         <div className="card">
+             <Toast ref={toast} />
+             <ConfirmDialog />
             <table style={tableStyles}>
                 <thead>
                     <tr>
@@ -95,7 +149,7 @@ const  DetalleCotizacionTabla = ({cotizacion, reloadList, onRecargaCompleta}) =>
                                 <td colSpan={7} style={cellStyles}> <h7>{item.descripcion}</h7></td>
                                 <td style={cellStyles}>
                                     <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" onClick={()=>{modalUpdate(item)}} />
-                                    <Button icon="pi pi-times" tooltip="Eliminar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="danger" aria-label="Eliminar" />
+                                    <Button icon="pi pi-times" tooltip="Eliminar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="danger" aria-label="Eliminar" onClick={()=>{preguntaEliminacion(item)}}/>
                                 </td>
                             </tr>
                         ):(
@@ -111,7 +165,7 @@ const  DetalleCotizacionTabla = ({cotizacion, reloadList, onRecargaCompleta}) =>
                                 <td style={cellStyles}>
                                     
                                     <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" onClick={()=>{modalUpdate(item)}} />
-                                    <Button icon="pi pi-times" tooltip="Eliminar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="danger" aria-label="Eliminar" />
+                                    <Button icon="pi pi-times" tooltip="Eliminar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="danger" aria-label="Eliminar" onClick={()=>{preguntaEliminacion(item)}}/>
                                 </td>
                             </tr>
                         )  
