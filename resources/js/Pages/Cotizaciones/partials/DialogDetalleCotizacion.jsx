@@ -3,7 +3,7 @@ import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import FormItemDetalle from './FormItemDetalle';
 
-const DialogDetalleCotizacion = ({cotizacion, detalle, showModalAccion=false, showbtn=true, eventoVisible}) => {
+const DialogDetalleCotizacion = ({cotizacion, detalle, showModalAccion=false, showbtn=true, eventoVisible, recargarListado}) => {
 
     
     const [visible, setVisible] = useState(false);
@@ -37,7 +37,8 @@ const DialogDetalleCotizacion = ({cotizacion, detalle, showModalAccion=false, sh
     },[visible])
 
     const ocultarModal = () =>{
-        setVisible(false)
+        setVisible(false)  
+        recargarListado()      
     }
 
 

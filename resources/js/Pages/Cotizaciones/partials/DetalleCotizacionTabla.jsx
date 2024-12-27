@@ -27,7 +27,7 @@ const yellowRowStyles = {
     backgroundColor: '#fffbeb',
 };
 
-const  DetalleCotizacionTabla = ({cotizacion}) =>  {
+const  DetalleCotizacionTabla = ({cotizacion, reloadList, onRecargaCompleta}) =>  {
     
     
     const [detalleCotizacion, setDetalleCotizacion] = useState([]);
@@ -35,6 +35,13 @@ const  DetalleCotizacionTabla = ({cotizacion}) =>  {
     useEffect(async()=>{
         getListadoDetalleCotizacionFactura();
     },[])
+
+    useEffect(()=>{
+        if(reloadList){
+            getListadoDetalleCotizacionFactura();
+            onRecargaCompleta()
+        }
+    },[reloadList])
 
 
 
@@ -58,7 +65,10 @@ const  DetalleCotizacionTabla = ({cotizacion}) =>  {
     }
 
   
-
+    const recargarListado = () =>{
+        
+        getListadoDetalleCotizacionFactura()
+    }
   
     
     return (
@@ -115,6 +125,7 @@ const  DetalleCotizacionTabla = ({cotizacion}) =>  {
                 showModalAccion={showModalAccion} 
                 showbtn={false}
                 eventoVisible={setShowModalAccion}
+                recargarListado={recargarListado}
             />
         </div>
     );

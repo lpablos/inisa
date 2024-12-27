@@ -14,7 +14,7 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 
 
 
-const FormItemDetalle = ({cotizacion, detalle=null, modalVisible}) => {
+const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListado}) => {
     const toast = useRef(null);
     const [progress, setProgress] = useState(false)
     const [disabledDefiniciónTomo, setDisabledDefiniciónTomo]=useState(false)
@@ -245,6 +245,7 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible}) => {
         })
         .finally(() => {
             setProgress(false)
+            
             setTimeout(() => {
                 modalVisible()    
             }, 600);

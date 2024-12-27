@@ -3,9 +3,14 @@ import React, { Component } from 'react';
 import DetalleCotizacionTabla from './partials/DetalleCotizacionTabla';
 import MenuDetalle from './partials/MenuDetalle';
 import DialogDetalleCotizacion from './partials/DialogDetalleCotizacion';
+import { useState } from 'react';
 
 const detalleCaptura =({cotizacion}) => {    
-    // const {cotizacion} = props
+    const [reloadList, setReloadList] = useState(false)
+    const recargarListado = () =>{
+        setReloadList(true)
+    }
+
     return (
         <Layout>
             <div className="grid">
@@ -16,10 +21,10 @@ const detalleCaptura =({cotizacion}) => {
                             <p>Título: INSTALACIÓN Y CANALIZACIÓN DE CCM BOMBAS DE CISTERNA DE AGUA.</p>
                         </div>                      
                         <div class="col-2 text-right">
-                            <DialogDetalleCotizacion cotizacion={cotizacion} modo={'Registrar'}/>
+                            <DialogDetalleCotizacion cotizacion={cotizacion} modo={'Registrar'} recargarListado={recargarListado}/>
                         </div>
                     </div>
-                    <DetalleCotizacionTabla cotizacion={cotizacion}/>
+                    <DetalleCotizacionTabla cotizacion={cotizacion} reloadList={reloadList}  onRecargaCompleta={() => setReloadList(false)}/>
                 </div>
             </div>
         </Layout>
