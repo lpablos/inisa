@@ -51,7 +51,7 @@ const FormItemDetalle = ({cotizacion, detalle=null}) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                if (typeof detalle === "undefined") {
+                if (detalle == null) {                    
                     setSegmento('todo');
                     await getUnidadesMedida();
                 } else if (detalle.es_tomo === 1) {
@@ -65,6 +65,8 @@ const FormItemDetalle = ({cotizacion, detalle=null}) => {
                     await getDetalleItem(detalle.id);
                     setIdentyDetallle(detalle.id);
                     setAccionBtn('Actualizar');
+                }else{
+                    
                 }
             } catch (error) {
                 console.error("Error en fetchData:", error);
