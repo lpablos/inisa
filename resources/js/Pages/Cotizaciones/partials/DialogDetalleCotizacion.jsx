@@ -36,13 +36,17 @@ const DialogDetalleCotizacion = ({cotizacion, detalle, showModalAccion=false, sh
     
     },[visible])
 
+    const ocultarModal = () =>{
+        setVisible(false)
+    }
+
 
     return (
           
         <>
             {mostrarAccion && <Button icon={iconoAccion} rounded text severity="info" aria-label="User" onClick={() => setVisible(true)} />}
             <Dialog header={tituloAccion} visible={visible} maximizable style={{ width: '50vw' }} onHide={() => {if (!visible) return; setVisible(false); }}>
-                <FormItemDetalle cotizacion={cotizacion} detalle={detalle}/>     
+                <FormItemDetalle cotizacion={cotizacion} detalle={detalle} modalVisible={ocultarModal}/>     
             </Dialog>
         </>    
         

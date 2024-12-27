@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { Component, useEffect, useState, useRef } from 'react';
 
 import { InputNumber } from 'primereact/inputnumber';
 import { InputTextarea } from "primereact/inputtextarea";
@@ -8,19 +8,24 @@ import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import axios from "axios";
 import { Toast } from 'primereact/toast';
+import { ProgressSpinner } from 'primereact/progressspinner';
 
 
 
 
-const FormItemDetalle = ({cotizacion, detalle=null}) => {
-    // const toast = useRef(null);
+
+const FormItemDetalle = ({cotizacion, detalle=null, modalVisible}) => {
+    const toast = useRef(null);
+    const [progress, setProgress] = useState(false)
     const [disabledDefiniciónTomo, setDisabledDefiniciónTomo]=useState(false)
     const [accionBtn, setAccionBtn] = useState('Registrar')
     const [identyDetallle, setIdentyDetallle] = useState(null);  
     const [identyCotizacion, setIdentyCotizacion] = useState(null);    
     
     const [segmento, setSegmento] = useState('todo');
-    
+    const show = () => {
+        toast.current.show({ severity: 'info', summary: 'Info', detail: 'Message Content' });
+    };
 
     useEffect(()=>{
         if(cotizacion){
@@ -205,7 +210,7 @@ const FormItemDetalle = ({cotizacion, detalle=null}) => {
     }
 
     const almacenarRegistro = async () => {
-        
+        setProgress(true)
         const datos = {
             identyCotizacion: identyCotizacion,
             perteneceTomo: perteneceTomo,
@@ -233,29 +238,22 @@ const FormItemDetalle = ({cotizacion, detalle=null}) => {
         .post(`${route("cotizacion.guardad.captura")}`, datos)
         .then((response) => {
             const { status, data } = response;
-            console.log("Esto se obtiene");
             
-            // setDataDetalle(response)
             if (status == 201) {
-                toast.current.show({ severity: 'info', summary: 'Info', detail: 'Message Content' });
-                // toast.current.show({
-                //     severity: "success",
-                //     summary: "Success",
-                //     detail: `${data.success}`,
-                //     life: 3000,
-                // });
-                // showTabla();
-                // obtenerStatus();
-                // obtenerTiposMonedas();
+                toast.current.show({ severity: 'info', summary: 'Info', detail: `${data.success}`});
             }
         })
         .finally(() => {
-            setLoader(false);
+            setProgress(false)
+            setTimeout(() => {
+                modalVisible()    
+            }, 600);
+            
         });
     }
 
     const actualizarRegistro = async () =>{
-       
+        setProgress(true)
         const datos = {
             
             identyDetallle: identyDetallle,
@@ -288,19 +286,13 @@ const FormItemDetalle = ({cotizacion, detalle=null}) => {
             
             if (status == 201) {
                 toast.current.show({ severity: 'info', summary: 'Info', detail: 'Message Content' });
-                // toast.current.show({
-                //     severity: "success",
-                //     summary: "Success",
-                //     detail: `${data.success}`,
-                //     life: 3000,
-                // });
-                // showTabla();
-                // obtenerStatus();
-                // obtenerTiposMonedas();
             }
         })
         .finally(() => {
-            setLoader(false);
+            setProgress(false)
+            setTimeout(() => {
+                modalVisible()    
+            }, 600);
         });
     }
 
@@ -505,9 +497,17 @@ const FormItemDetalle = ({cotizacion, detalle=null}) => {
                 
                 
                 <div className="card flex justify-content-center">
-                    <Button type="submit" label={accionBtn} />
+                    {progress && (
+                        <ProgressSpinner style={{width: '50px', height: '50px'}} strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s" />
+                    )}
+                    {!progress && (
+                        <Button type="submit" label={accionBtn} />
+                    )}
                 </div>
             </form>
+            <Toast ref={toast} />
+            
+            
         </div>
     );
     
