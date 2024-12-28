@@ -133,7 +133,7 @@ Route::prefix('admin')->group(function () {
                 Route::post('guardarDetalle','saveCaptura')->name('cotizacion.guardad.captura');
                 Route::get('item/{identy}/detalle','detalleItem')->name('cotizacion.captura.item.detalle');
                 Route::post('item/detalleItem/actualizar', 'actualizarDetalleIdenty')->name('cotizacion.captura.item.actualiza');
-                Route::delete('item/detalleItem/actualizar', 'actualizarDetalleIdenty')->name('cotizacion.captura.item.actualiza');
+                // Route::delete('item/detalleItem/actualizar', 'actualizarDetalleIdenty')->name('cotizacion.captura.item.actualiza');
                 Route::delete('tomo/detalle/{id}', 'deleteTomoDetalle')->name('tomo.detalle.elimina.identy');
             });
 

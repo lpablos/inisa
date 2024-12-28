@@ -512,25 +512,115 @@ class CotizacionController extends Controller
         return $nuevoPDA;
     }
 
-    public function detalleItem($identy){
+    public function detalleItem($identy)
+    {
         $detalleItem = DetalleCotizacion::find($identy);
         return response()->json($detalleItem, 200);
     }
 
-    public function actualizarDetalleIdenty(Request $request){
+    public function actualizarDetalleIdenty(Request $request)
+    {
         dd("Este es todo el objecto", $request->all());
     }
 
-    public function deleteTomoDetalle($id){
+    public function deleteTomoDetalle($id)
+    {
         // Nota quie tienenes que eliminar conform a si es tomo o detalle
         // *************************
         //  en caso de veficar en el modelo que es tomox
         // elimina el tomo y todos los elementos relacionados
         // *************************
-        // En el caso de que sea no sea tomo (Detalle o elemento interno), 
+        // En el caso de que sea no sea tomo (Detalle o elemento interno),
         // solo elimina ese elemento que corresponse
-        // *************************        
+        // *************************
         // nota: de prefesencia usa la relacion de los modelos para hacer la logica
-        dd("Este es todo el objecto", $id);
+        // dd("Este es todo el objecto", $id);
+
+        // Buscar el detalle a eliminar
+        $detalle = DetalleCotizacion::find($id);
+
+        if (!$detalle) {
+            return response()->json(['error' => 'Detalle no encontrado'], 404);
+        }
+
+        // Si no es un tomo (es un detalle interno)
+        if ($detalle->es_tomo == 0) {
+            // Eliminar el detalle
+            $detalle->delete();
+
+            // Obtener el ID del tomo al que pertenece
+            $tomoId = $detalle->tomo_pertenece;
+
+            // Contar los elementos restantes del tomo
+            $total = DetalleCotizacion::where('tomo_pertenece', $tomoId)->count();
+
+            if ($total > 0) {
+                // Reasignar los valores de PDA si hay más elementos
+                $this->reasignarPDA($tomoId);
+            }
+
+            return response()->json([
+                'message' => 'Detalle eliminado con éxito y PDAs reasignados',
+                'tomo_id' => $tomoId,
+            ]);
+        }
+
+        // Si es un tomo (es_tomo == 1), eliminar el tomo y sus detalles
+        if ($detalle->es_tomo == 1) {
+            // Eliminar todos los detalles asociados al tomo
+            DetalleCotizacion::where('tomo_pertenece', $detalle->id)->delete();
+
+            // Eliminar el tomo en sí
+            $detalle->delete();
+
+            return response()->json([
+                'message' => 'Tomo y todos sus detalles eliminados con éxito',
+                'tomo_id' => $detalle->id,
+            ]);
+        }
+
+        return response()->json([
+            'error' => 'Tipo de detalle no reconocido',
+        ], 400);
     }
+
+    public function reasignarPDA($tomoId)
+{
+    // Obtener el PDA del tomo para tomar la parte entera (por ejemplo, 2 de 2.00)
+    $pdaTomo = DetalleCotizacion::where('id', $tomoId)->value('PDA');
+
+    if (!$pdaTomo) {
+        return response()->json(['error' => 'Tomo no encontrado'], 404);
+    }
+
+    // Extraer la parte entera del PDA del tomo
+    $parteEntera = explode('.', $pdaTomo)[0]; // Por ejemplo, "2" de "2.00"
+
+    // Obtener todos los registros del tomo ordenados por PDA
+    $detalles = DetalleCotizacion::where('tomo_pertenece', $tomoId)
+        ->orderBy('PDA', 'asc')
+        ->get();
+
+    // Inicializar el nuevo índice para los PDAs
+    $indice = 1;
+
+    foreach ($detalles as $detalle) {
+        // Generar el nuevo valor de PDA basado en la parte entera del tomo
+        $nuevaParteDecimal = str_pad($indice, 2, '0', STR_PAD_LEFT); // Ejemplo: 01, 02
+        $nuevoPDA = $parteEntera . '.' . $nuevaParteDecimal;
+
+        // Actualizar el registro con el nuevo PDA
+        $detalle->PDA = $nuevoPDA;
+        $detalle->save();
+
+        // Incrementar el índice
+        $indice++;
+    }
+
+    return response()->json([
+        'message' => 'Reasignación de PDA completada',
+        'detalles_actualizados' => $detalles
+    ]);
+}
+
 }
