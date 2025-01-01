@@ -72,15 +72,13 @@ const  DetalleCotizacionTabla = ({cotizacion, reloadList, onRecargaCompleta}) =>
     }
 
     const preguntaEliminacion = (item) => {
-        console.log("Esto entra", item);
+        
         let mensaje
         if(item.es_tomo == 1){
             mensaje = `Al eliminar el tomo con el PDA "${item.PDA}", ten en cuenta que se se eliminarán automáticamente todos los elementos internos relacionados (por ejemplo, 1.01, 1.02, entre otros).`
         }else{
             mensaje = `Se eliminar el PDA "${item.PDA}", con la descripción: ${item.descripcion}.`
         }
-        
-        
         confirmDialog({
             message: `${mensaje}`,
             header: `Confirmacion de eliminación`,
@@ -104,6 +102,10 @@ const  DetalleCotizacionTabla = ({cotizacion, reloadList, onRecargaCompleta}) =>
                 detail: "El detalle fue eliminado exitosamente.",
                 life: 3000,
             });
+            setTimeout(() => {
+                getListadoDetalleCotizacionFactura();
+                onRecargaCompleta()
+            }, 1000);
             
         } catch (error) {
             toast.current.show({

@@ -173,8 +173,7 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
         await axios
         .get(`${route("cotizacion.captura.item.detalle", { id: id })}`)
         .then((response) => {
-            const {data, status } = response
-            console.log("Este es", data);
+            const {data, status } = response            
             
             if(status == 200){
                 if(data.es_tomo==1){
@@ -233,7 +232,7 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
         }
         
         
-        // setLoader(true); 
+        setLoader(true); 
         await axios
         .post(`${route("cotizacion.guardad.captura")}`, datos)
         .then((response) => {
@@ -242,10 +241,10 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
             if (status == 201) {
                 toast.current.show({ severity: 'info', summary: 'Info', detail: `${data.success}`});
             }
+            setLoader(false); 
         })
         .finally(() => {
-            setProgress(false)
-            
+            setProgress(false)            
             setTimeout(() => {
                 modalVisible()    
             }, 600);
@@ -278,23 +277,28 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
             citaComentario: citaComentario,
         }
         
-        
-        // setLoader(true); 
-        await axios
-        .post(`${route("cotizacion.captura.item.actualiza")}`, datos)
-        .then((response) => {
-            const { status, data } = response;
-            
-            if (status == 201) {
-                toast.current.show({ severity: 'info', summary: 'Info', detail: 'Message Content' });
-            }
-        })
-        .finally(() => {
-            setProgress(false)
-            setTimeout(() => {
-                modalVisible()    
-            }, 600);
-        });
+        try {
+            setLoader(true); 
+            await axios
+            .post(`${route("cotizacion.captura.item.actualiza")}`, datos)
+            .then((response) => {
+                const { status, data } = response;                
+                if (status == 201) {
+                    toast.current.show({ severity: 'info', summary: 'Info', detail: 'Message Content' });
+                }
+                setLoader(false); 
+            })
+            .finally(() => {
+                setProgress(false)
+                setTimeout(() => {
+                    modalVisible()    
+                }, 600);
+            });            
+        } catch (error) {
+            console.log("Esto pasa", error);
+            setLoader(false); 
+        }
+       
     }
 
     const handleSubmit = (e) => {
