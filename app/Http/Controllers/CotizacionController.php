@@ -520,7 +520,48 @@ class CotizacionController extends Controller
 
     public function actualizarDetalleIdenty(Request $request)
     {
-        dd("Este es todo el objecto", $request->all());
+        // dd("Este es todo el objecto actualizar", $request->all());
+
+        $detalleCotizacion = DetalleCotizacion::find($request->identyDetallle);
+
+        if (!$detalleCotizacion) {
+            return response()->json([
+                'error' => 'Detalle no encontrado'
+            ], 404);
+        }
+
+
+        // Crear un arreglo con los datos a actualizar
+        $dataToUpdate = [];
+
+        // Si es un tomo
+        if ($detalleCotizacion->es_tomo == 1) {
+            $dataToUpdate['descripcion'] = $request->capturaTomo;
+        } else {
+            // Si es un detalle interno
+            $dataToUpdate = array_filter([
+                'descripcion' => $request->descripcionMaterial,
+                'costo_material_cantidad' => $request->cantidadMaterial,
+                'costo_material_unitario_sugerido' => $request->costoMaterialSugerido,
+                'costo_material_unitario' => $request->costoMaterialFinal,
+                'costo_material_subtotal' => $request->subTotalMaterial,
+                'costo_mano_obra_unitario_sugerido' => $request->costoManoObraSugerido,
+                'costo_mano_obra_unitario' => $request->costoManoObraFinal,
+                'costo_mano_obra_subtotal' => $request->subTotalManoObra,
+                'obra_material_subtotal' => $request->subTotalMateObraTotal,
+                'comentarios_extras' => $request->citaComentario,
+            ]);
+        }
+
+        // Actualizar los datos si hay algo que actualizar
+        if (!empty($dataToUpdate)) {
+            $detalleCotizacion->update($dataToUpdate);
+        }
+
+        return response()->json([
+            'message' => 'Detalle actualizado con éxito',
+            'detalle' => $detalleCotizacion
+        ], 200);
     }
 
     public function deleteTomoDetalle($id)
@@ -552,7 +593,7 @@ class CotizacionController extends Controller
             $tomoId = $detalle->tomo_pertenece;
 
             // Contar los elementos restantes del tomo
-            $total = DetalleCotizacion::where('tomo_pertenece', $tomoId)->count();
+            $total = DetalleCotizacion::where('git pull', $tomoId)->count();
 
             if ($total > 0) {
                 // Reasignar los valores de PDA si hay más elementos
@@ -585,42 +626,41 @@ class CotizacionController extends Controller
     }
 
     public function reasignarPDA($tomoId)
-{
-    // Obtener el PDA del tomo para tomar la parte entera (por ejemplo, 2 de 2.00)
-    $pdaTomo = DetalleCotizacion::where('id', $tomoId)->value('PDA');
+    {
+        // Obtener el PDA del tomo para tomar la parte entera (por ejemplo, 2 de 2.00)
+        $pdaTomo = DetalleCotizacion::where('id', $tomoId)->value('PDA');
 
-    if (!$pdaTomo) {
-        return response()->json(['error' => 'Tomo no encontrado'], 404);
+        if (!$pdaTomo) {
+            return response()->json(['error' => 'Tomo no encontrado'], 404);
+        }
+
+        // Extraer la parte entera del PDA del tomo
+        $parteEntera = explode('.', $pdaTomo)[0]; // Por ejemplo, "2" de "2.00"
+
+        // Obtener todos los registros del tomo ordenados por PDA
+        $detalles = DetalleCotizacion::where('tomo_pertenece', $tomoId)
+            ->orderBy('PDA', 'asc')
+            ->get();
+
+        // Inicializar el nuevo índice para los PDAs
+        $indice = 1;
+
+        foreach ($detalles as $detalle) {
+            // Generar el nuevo valor de PDA basado en la parte entera del tomo
+            $nuevaParteDecimal = str_pad($indice, 2, '0', STR_PAD_LEFT); // Ejemplo: 01, 02
+            $nuevoPDA = $parteEntera . '.' . $nuevaParteDecimal;
+
+            // Actualizar el registro con el nuevo PDA
+            $detalle->PDA = $nuevoPDA;
+            $detalle->save();
+
+            // Incrementar el índice
+            $indice++;
+        }
+
+        return response()->json([
+            'message' => 'Reasignación de PDA completada',
+            'detalles_actualizados' => $detalles
+        ]);
     }
-
-    // Extraer la parte entera del PDA del tomo
-    $parteEntera = explode('.', $pdaTomo)[0]; // Por ejemplo, "2" de "2.00"
-
-    // Obtener todos los registros del tomo ordenados por PDA
-    $detalles = DetalleCotizacion::where('tomo_pertenece', $tomoId)
-        ->orderBy('PDA', 'asc')
-        ->get();
-
-    // Inicializar el nuevo índice para los PDAs
-    $indice = 1;
-
-    foreach ($detalles as $detalle) {
-        // Generar el nuevo valor de PDA basado en la parte entera del tomo
-        $nuevaParteDecimal = str_pad($indice, 2, '0', STR_PAD_LEFT); // Ejemplo: 01, 02
-        $nuevoPDA = $parteEntera . '.' . $nuevaParteDecimal;
-
-        // Actualizar el registro con el nuevo PDA
-        $detalle->PDA = $nuevoPDA;
-        $detalle->save();
-
-        // Incrementar el índice
-        $indice++;
-    }
-
-    return response()->json([
-        'message' => 'Reasignación de PDA completada',
-        'detalles_actualizados' => $detalles
-    ]);
-}
-
 }
