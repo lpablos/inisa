@@ -4,8 +4,11 @@ import DetalleCotizacionTabla from './partials/DetalleCotizacionTabla';
 import MenuDetalle from './partials/MenuDetalle';
 import DialogDetalleCotizacion from './partials/DialogDetalleCotizacion';
 import { useState } from 'react';
+import { Button } from 'primereact/button';
+import { Tooltip } from 'primereact/tooltip';
+        
 
-const detalleCaptura =({cotizacion}) => {    
+const detalleCaptura =({cotizacion, detalle}) => {    
     const [reloadList, setReloadList] = useState(false)
     const recargarListado = () =>{
         setReloadList(true)
@@ -15,16 +18,17 @@ const detalleCaptura =({cotizacion}) => {
         <Layout>
             <div className="grid">
                 <div className="card col-12">
-                    <div class="grid m-1">
-                        <div class="col-10 text-center">
-                            <p>COMPAÑIA: INNOVACIÓN NACIONAL DE INGENIERÍA S.A. DE C.V.</p>
-                            <p>Título: INSTALACIÓN Y CANALIZACIÓN DE CCM BOMBAS DE CISTERNA DE AGUA.</p>
+                    <div className="grid m-1">
+                        <div className="col-10 text-center">
+                            <p>COMPAÑIA:{detalle?.cliente?.nombre}</p>
+                            <p>Título: {detalle?.titulo}</p>
                         </div>                      
-                        <div class="col-2 text-right">
-                            <DialogDetalleCotizacion cotizacion={cotizacion} modo={'Registrar'} recargarListado={recargarListado}/>
+                        <div className="col-2 text-right">
+                            <DialogDetalleCotizacion cotizacion={cotizacion} detalleItem={detalle} modo={'Registrar'} recargarListado={recargarListado}/>
+                            <Button icon="pi pi-images" rounded text severity="info" aria-label="Vista Previa"  tooltip="Vista Previa" tooltipOptions={{ position: 'left' }}/>
                         </div>
                     </div>
-                    <DetalleCotizacionTabla cotizacion={cotizacion} reloadList={reloadList}  onRecargaCompleta={() => setReloadList(false)}/>
+                    <DetalleCotizacionTabla cotizacion={cotizacion} detalle={detalle} reloadList={reloadList}  onRecargaCompleta={() => setReloadList(false)}/>
                 </div>
             </div>
         </Layout>
