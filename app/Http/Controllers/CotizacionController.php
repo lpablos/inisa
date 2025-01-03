@@ -593,7 +593,7 @@ class CotizacionController extends Controller
             $tomoId = $detalle->tomo_pertenece;
 
             // Contar los elementos restantes del tomo
-            $total = DetalleCotizacion::where('git pull', $tomoId)->count();
+            $total = DetalleCotizacion::where('tomo_pertenece', $tomoId)->count();
 
             if ($total > 0) {
                 // Reasignar los valores de PDA si hay más elementos
