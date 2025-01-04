@@ -192,7 +192,7 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
     // Manejar el guardado
     const handleGuardar = async () => {
         if (
-            !selectedProveedor ||
+
             !titulo ||
             !date ||
             !selectedStatus ||
@@ -212,7 +212,7 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
         }
 
         const datos = {
-            provedor_id: selectedProveedor.id,
+            // provedor_id: selectedProveedor.id,
             status_id: selectedStatus.id,
             moneda_id: selectedMoneda.id,
             cliente_id: selectedCliente.id,
@@ -303,7 +303,7 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
         >
             <Toast ref={toast} />
             <div className="grid my-5">
-                <div className="col-12">
+                {/* <div className="col-12">
                     <label htmlFor="proveedor">Campaña</label>
                     <DropdownFilter
                         className="mb-3 col-12"
@@ -316,7 +316,7 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                         filterBy="nombre abreviacion"
                         showClear
                     />
-                </div>
+                </div> */}
 
                 <div className="col-6 md:col-12 mb-3">
                     <FloatLabel>
@@ -438,8 +438,8 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                     />
                 </div>
 
-                <div className="grid my-5">
-                    <div className="col-2 md:col-4 mb-3">
+                <div className="grid my-5 col-6">
+                    <div className="col-6 md:col-6 mb-6">
                         <RadioButton
                             inputId="es_material"
                             name="tipo"
@@ -452,7 +452,7 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                         </label>
                     </div>
 
-                    <div className="col-2 md:col-3 mb-3">
+                    <div className="col-6 md:col-6 mb-6">
                         <RadioButton
                             inputId="es_mano_obra"
                             name="tipo"
@@ -465,9 +465,9 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                         </label>
                     </div>
 
-                    <div className="col-12">
+                    {/* <div className="col-12">
                         <p>Opción seleccionada: {tipo || "Ninguna"}</p>
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className="col-12">

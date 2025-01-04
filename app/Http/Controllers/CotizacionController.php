@@ -70,7 +70,7 @@ class CotizacionController extends Controller
         }
 
         $validatedData = $request->validate([
-            'provedor_id' => 'required|int|exists:cat_provedores,id',
+            // 'provedor_id' => 'required|int|exists:cat_provedores,id',
             'status_id' => 'required|int|exists:cat_estatus,id',
             'moneda_id' => 'required|int|exists:cat_moneda,id',
             'cliente_id' => 'required|int|exists:cat_clientes,id',
@@ -91,7 +91,7 @@ class CotizacionController extends Controller
 
         try {
             $cotizacion = Cotizacion::create([
-                'provedor_id' => $validatedData['provedor_id'],
+                // 'provedor_id' => $validatedData['provedor_id'],
                 'status_id' => $validatedData['status_id'],
                 'cat_moneda_id' => $validatedData['moneda_id'],
                 'cliente_id' => $validatedData['cliente_id'],
@@ -126,7 +126,7 @@ class CotizacionController extends Controller
 
 
         $validatedData = $request->validate([
-            'provedor_id' => 'required|int',
+            // 'provedor_id' => 'required|int',
             'status_id' => 'required|int',
             'moneda_id' => 'required|int',
             'cliente_id' => 'required|int',
@@ -147,7 +147,7 @@ class CotizacionController extends Controller
         try {
 
             $cotizacion =  Cotizacion::find($request->id);
-            $cotizacion->provedor_id = $validatedData['provedor_id'];
+            // $cotizacion->provedor_id = $validatedData['provedor_id'];
             $cotizacion->status_id = $validatedData['status_id'];
             $cotizacion->cat_moneda_id = $validatedData['moneda_id'];
             $cotizacion->cliente_id = $validatedData['cliente_id'];
@@ -185,7 +185,7 @@ class CotizacionController extends Controller
     public function datelleCaptura($identy)
     {
         $detalle = Cotizacion::with('cliente')->find($identy);
-        
+
         return Inertia::render('Cotizaciones/detalleCaptura', ['cotizacion' => $identy,'detalle'=>$detalle]);
     }
 
