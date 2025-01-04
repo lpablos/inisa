@@ -14,7 +14,9 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 
 
 
-const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListado}) => {
+const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListado, detalleItem}) => {
+    console.log("Esto es ---->", detalleItem);
+    
     const toast = useRef(null);
     const [progress, setProgress] = useState(false)
     const [disabledDefiniciónTomo, setDisabledDefiniciónTomo]=useState(false)
@@ -33,26 +35,7 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
         } 
     },[cotizacion])
 
-    // useEffect( async()=>{
-        
-    //     if(typeof detalle === "undefined"){
-    //         setSegmento('todo')
-    //         await getUnidadesMedida()
-    //     }
-    //     if(typeof detalle !== "undefined" && detalle.es_tomo == 1){
-    //         setSegmento('tomo')
-    //         getDetalleItem(detalle.id)
-    //         setIdentyDetallle(detalle.id)
-    //         setAccionBtn('Actualizar')
-    //     }
-    //     if(typeof detalle !== "undefined" && detalle.es_tomo == 0){
-    //         setSegmento('detalle')
-    //         await getUnidadesMedida()
-    //         await getDetalleItem(detalle.id)
-    //         setIdentyDetallle(detalle.id)
-    //         setAccionBtn('Actualizar')
-    //     }
-    // },[detalle])
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -173,8 +156,7 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
         await axios
         .get(`${route("cotizacion.captura.item.detalle", { id: id })}`)
         .then((response) => {
-            const {data, status } = response
-            console.log("Este es", data);
+            const {data, status } = response            
             
             if(status == 200){
                 if(data.es_tomo==1){
@@ -242,10 +224,10 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
             if (status == 201) {
                 toast.current.show({ severity: 'info', summary: 'Info', detail: `${data.success}`});
             }
+            // setLoader(false); 
         })
         .finally(() => {
-            setProgress(false)
-            
+            setProgress(false)            
             setTimeout(() => {
                 modalVisible()    
             }, 600);
@@ -278,23 +260,28 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
             citaComentario: citaComentario,
         }
         
-        
-        // setLoader(true); 
-        await axios
-        .post(`${route("cotizacion.captura.item.actualiza")}`, datos)
-        .then((response) => {
-            const { status, data } = response;
-            
-            if (status == 201) {
-                toast.current.show({ severity: 'info', summary: 'Info', detail: 'Message Content' });
-            }
-        })
-        .finally(() => {
-            setProgress(false)
-            setTimeout(() => {
-                modalVisible()    
-            }, 600);
-        });
+        try {
+            // setLoader(true); 
+            await axios
+            .post(`${route("cotizacion.captura.item.actualiza")}`, datos)
+            .then((response) => {
+                const { status, data } = response;                
+                if (status == 201) {
+                    toast.current.show({ severity: 'info', summary: 'Info', detail: 'Message Content' });
+                }
+                // setLoader(false); 
+            })
+            .finally(() => {
+                setProgress(false)
+                setTimeout(() => {
+                    modalVisible()    
+                }, 600);
+            });            
+        } catch (error) {
+            console.log("Esto pasa", error);
+            setLoader(false); 
+        }
+       
     }
 
     const handleSubmit = (e) => {
@@ -425,65 +412,69 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
                                         </div>
                                     </div>  
                                 </div>
-                                <Divider />
-                                <h5>Costo de Mano de Obra</h5>
-                                
-                                <div class="formgrid grid">
-                                    
-                                    <div class="field col-4">
-                                        <label htmlFor="costUnitSugeridoManoObra" className="font-bold block mb-2">Costo Unitario Sugerido</label>
-                                        <div className="p-inputgroup flex-1">
-                                            <span className="p-inputgroup-addon">$</span>
-                                            <InputNumber 
-                                                inputId="cantidad" 
-                                                value={costoManoObraSugerido} 
-                                                onValueChange={(e) => setCostoManoObraSugerido(e.value)} 
-                                                placeholder="Consto Unitario"/>
-                                        </div>
+                                {detalleItem.es_mano_obra ==1 && (
+                                    <>
+                                        <Divider />
+                                        <h5>Costo de Mano de Obra</h5>
                                         
-                                    </div>  
-                                    <div class="field col-4">
-                                        
-                                        <label htmlFor="percent" className="font-bold block mb-2">Costo Unitario</label>
-                                        <div className="p-inputgroup flex-1">
-                                            <span className="p-inputgroup-addon">$</span>
-                                            <InputNumber 
-                                                inputId="cantidad" 
-                                                value={costoManoObraFinal} 
-                                                onValueChange={(e) => setCostoManoObraFinal(e.value)} 
-                                                placeholder="Consto Unitario"/>
+                                        <div class="formgrid grid">
+                                            
+                                            <div class="field col-4">
+                                                <label htmlFor="costUnitSugeridoManoObra" className="font-bold block mb-2">Costo Unitario Sugerido</label>
+                                                <div className="p-inputgroup flex-1">
+                                                    <span className="p-inputgroup-addon">$</span>
+                                                    <InputNumber 
+                                                        inputId="cantidad" 
+                                                        value={costoManoObraSugerido} 
+                                                        onValueChange={(e) => setCostoManoObraSugerido(e.value)} 
+                                                        placeholder="Consto Unitario"/>
+                                                </div>
+                                                
+                                            </div>  
+                                            <div class="field col-4">
+                                                
+                                                <label htmlFor="percent" className="font-bold block mb-2">Costo Unitario</label>
+                                                <div className="p-inputgroup flex-1">
+                                                    <span className="p-inputgroup-addon">$</span>
+                                                    <InputNumber 
+                                                        inputId="cantidad" 
+                                                        value={costoManoObraFinal} 
+                                                        onValueChange={(e) => setCostoManoObraFinal(e.value)} 
+                                                        placeholder="Consto Unitario"/>
+                                                </div>
+                                            </div>  
+                                            <div class="field col-4">
+                                                <label htmlFor="percent" className="font-bold block mb-2">Subtotal</label>
+                                                <div className="p-inputgroup flex-1">
+                                                    <span className="p-inputgroup-addon">$</span>
+                                                    <InputNumber 
+                                                        disabled
+                                                        inputId="cantidad" 
+                                                        value={subTotalManoObra} 
+                                                        onValueChange={(e) => setSubTotalManoObra(e.value)} 
+                                                        placeholder="Consto Unitario"/>
+                                                </div>
+                                            </div>  
                                         </div>
-                                    </div>  
-                                    <div class="field col-4">
-                                        <label htmlFor="percent" className="font-bold block mb-2">Subtotal</label>
-                                        <div className="p-inputgroup flex-1">
-                                            <span className="p-inputgroup-addon">$</span>
-                                            <InputNumber 
-                                                disabled
-                                                inputId="cantidad" 
-                                                value={subTotalManoObra} 
-                                                onValueChange={(e) => setSubTotalManoObra(e.value)} 
-                                                placeholder="Consto Unitario"/>
+                                        <Divider />
+                                        <h5>M.O./MATER.</h5>
+                                        <div class="formgrid grid">
+                                            <div class="field col-4">
+                                                <label htmlFor="percent" className="font-bold block mb-2">Subtotal</label>
+                                                <div className="p-inputgroup flex-1">
+                                                    <span className="p-inputgroup-addon">$</span>
+                                                    <InputNumber 
+                                                        disabled
+                                                        inputId="cantidad" 
+                                                        value={subTotalMateObraTotal} 
+                                                        onValueChange={(e) => setSubTotalMateObraTotal(e.value)} 
+                                                        placeholder="Subtotal"/>
+                                                </div>
+                                                
+                                            </div>  
                                         </div>
-                                    </div>  
-                                </div>
-                                <Divider />
-                                <h5>M.O./MATER.</h5>
-                                <div class="formgrid grid">
-                                    <div class="field col-4">
-                                        <label htmlFor="percent" className="font-bold block mb-2">Subtotal</label>
-                                        <div className="p-inputgroup flex-1">
-                                            <span className="p-inputgroup-addon">$</span>
-                                            <InputNumber 
-                                                disabled
-                                                inputId="cantidad" 
-                                                value={subTotalMateObraTotal} 
-                                                onValueChange={(e) => setSubTotalMateObraTotal(e.value)} 
-                                                placeholder="Subtotal"/>
-                                        </div>
-                                        
-                                    </div>  
-                                </div>
+                                    </>
+                                )}
                                 <Divider />
                                 <h5>Agregar algun comentario</h5>
                                 <div class="formgrid grid">

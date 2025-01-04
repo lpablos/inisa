@@ -184,7 +184,9 @@ class CotizacionController extends Controller
 
     public function datelleCaptura($identy)
     {
-        return Inertia::render('Cotizaciones/detalleCaptura', ['cotizacion' => $identy]);
+        $detalle = Cotizacion::with('cliente')->find($identy);
+        
+        return Inertia::render('Cotizaciones/detalleCaptura', ['cotizacion' => $identy,'detalle'=>$detalle]);
     }
 
     public function listTomos($identy)
