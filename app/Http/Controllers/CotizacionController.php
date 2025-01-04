@@ -223,14 +223,14 @@ class CotizacionController extends Controller
             'cantidadMaterial' => 'required|integer|min:1', //costo_material_cantidad
             'costoMaterialSugerido' => 'required|numeric|min:1', //costo_mano_obra_unitario_sugerido
             'costoMaterialFinal' => 'required|numeric|min:1', // costo_material_unitario
-            'subTotalMaterial' => 'required|numeric|min:1', //costo_material_subtotal
+            // 'subTotalMaterial' => 'required|numeric|min:1', //costo_material_subtotal
             // -------
             'costoManoObraSugerido' => 'nullable|numeric|min:1', //costo_material_unitario_sugerido
             'costoManoObraFinal' => 'nullable|numeric|min:1', //costo_mano_obra_unitario
-            'subTotalManoObra' => 'nullable|numeric|min:1', //costo_mano_obra_subtotal
+            // 'subTotalManoObra' => 'nullable|numeric|min:1', //costo_mano_obra_subtotal
             // --------
-            'subTotalMateObraTotal' => 'nullable|numeric|min:1', //obra_material_subtotal
-            'citaComentario' => 'nullable|string', //comentarios_extras
+            // 'subTotalMateObraTotal' => 'nullable|numeric|min:1', //obra_material_subtotal
+            // 'citaComentario' => 'nullable|string', //comentarios_extras
         ]);
 
 
@@ -260,10 +260,12 @@ class CotizacionController extends Controller
                         'cotizaciones_id' => (int) $request->identyCotizacion
                     ]);
 
-                    // dd($detalleCotizacion);
+                    // dd($detalleCotizacion->id);
 
-                    $tomo = DetalleCotizacion::where('descripcion', $request->capturaTomo)
+                    $tomo = DetalleCotizacion::where('id', $detalleCotizacion->id)
                         ->where('es_tomo', 1)->first();
+
+                        // dd($tomo);
 
                     $detalleCotizacion = DetalleCotizacion::create([
                         'PDA' => $this->PdaDinamicoTomo($tomo->id, (int) $request->identyCotizacion),
@@ -277,7 +279,7 @@ class CotizacionController extends Controller
                         'costo_mano_obra_subtotal' => $request->subTotalManoObra,
                         'obra_material_subtotal' => $request->subTotalMateObraTotal,
                         'comentarios_extras' => $request->citaComentario,
-                        'cotizaciones_id' => 1,
+                        'cotizaciones_id' => (int) $request->identyCotizacion,
                         'tomo_pertenece' => $tomo->id,
                         'cat_unidad_medida_id' => $request->seleccionUnidadMedida
                     ]);
