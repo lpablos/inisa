@@ -169,7 +169,7 @@ const ConceptoTabla = () => {
     const accionesTemplate = (rowData) => (
         <div className="flex gap-2">
             <Button
-                icon="pi pi-pencil"
+                icon="pi pi-sync"
                 tooltip="Editar"
                 tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
                 className="p-button-rounded p-button-info p-button-sm"
@@ -219,12 +219,14 @@ const ConceptoTabla = () => {
 
             {/* Botón para crear cotización */}
             <div className="mb-3">
-                <Button
+                {/* <Button
                     label="Nueva Cotización"
                     icon="pi pi-plus"
                     className="p-button-success"
                     onClick={handleCrear}
-                />
+                /> */}
+                <Button icon="pi pi-plus" tooltip="Nueva Cotización" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded severity="info" aria-label="Nueva Cotización" onClick={handleCrear}/>
+                
             </div>
 
             {/* Tabla de cotizaciones */}

@@ -14,6 +14,10 @@ import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 
+import { ToggleButton } from 'primereact/togglebutton';
+import { SelectButton } from 'primereact/selectbutton';
+        
+
 const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
     const [visible, setVisible] = useState(true);
     const [selectedProveedor, setSelectedProveedor] = useState(null);
@@ -23,8 +27,30 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
     const [fecha_inicio_cotizacion, setFecha_inicio_cotizacion] =useState(null);
     const [fecha_final_cotizacion, setFecha_final_cotizacion] = useState(null);
     const toast = useRef(null);
-    const [tipo, setTipo] = useState(""); // 'material' o 'mano_obra'
+    const [tipo, setTipo] = useState('material'); // 'material' o 'mano_obra'
+    console.log("Este es el tipo", tipo);
+    
+    const options = ['Material', 'Material y Mano de Obra'];
+    const [value, setValue] = useState(options[0]);
+    useEffect(()=>{
+        if(value=='Material'){
+            setTipo('material')
+        }
+        if(value=='Material y Mano de Obra'){
+            setTipo('mano_obra')
+        }
+    },[value])
 
+    useEffect(()=>{
+        if(tipo == 'material'){
+            setValue(options[0]);
+        }else{
+            setValue(options[1]);
+        }
+    },[tipo])
+    
+    
+    
     const [selectedCliente, setSelectedCliente] = useState(null); // Status seleccionado
     const [cliente, setCliente] = useState([]); // Lista de statuses
     const [ingredient, setIngredient] = useState("");
@@ -438,8 +464,13 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                     />
                 </div>
 
-                <div className="grid my-5 col-6">
-                    <div className="col-6 md:col-6 mb-6">
+                <div className="grid m-5 col-6">
+                    <label htmlFor="selectPlantilla" className="m-2">Selecciona la plantilla</label>
+                    <SelectButton value={value} onChange={(e) => setValue(e.value)} options={options} />
+                </div>
+
+                {/* <div className="grid my-5 col-6"> */}
+                    {/* <div className="col-6 md:col-6 mb-6">
                         <RadioButton
                             inputId="es_material"
                             name="tipo"
@@ -450,9 +481,9 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                         <label htmlFor="es_material" className="ml-2">
                             Material
                         </label>
-                    </div>
+                    </div> */}
 
-                    <div className="col-6 md:col-6 mb-6">
+                    {/* <div className="col-6 md:col-6 mb-6">
                         <RadioButton
                             inputId="es_mano_obra"
                             name="tipo"
@@ -463,12 +494,12 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                         <label htmlFor="es_mano_obra" className="ml-2">
                             Mano de Obra
                         </label>
-                    </div>
+                    </div> */}
 
                     {/* <div className="col-12">
                         <p>Opción seleccionada: {tipo || "Ninguna"}</p>
                     </div> */}
-                </div>
+                {/* </div> */}
 
                 <div className="col-12">
                     <Button

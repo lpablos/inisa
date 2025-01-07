@@ -170,7 +170,7 @@ const  DetalleCotizacionTabla = ({cotizacion, detalle, reloadList, onRecargaComp
                             item.es_tomo ===1 ? (                            
                                 <tr key={item.id} style={yellowRowStyles}>
                                     <td style={cellStyles}>{item.PDA}</td>
-                                    <td colSpan={7} style={cellStyles}> <h6>{item.descripcion}</h6></td>
+                                    <td colSpan={4} style={cellStyles}> <h6>{item.descripcion} </h6></td>
                                     <td style={cellStyles}>
                                         <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" onClick={()=>{modalUpdate(item)}} />
                                         <Button icon="pi pi-times" tooltip="Eliminar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="danger" aria-label="Eliminar" onClick={()=>{preguntaEliminacion(item)}}/>
