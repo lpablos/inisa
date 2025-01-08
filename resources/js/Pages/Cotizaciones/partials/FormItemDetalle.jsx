@@ -213,25 +213,35 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
             subTotalMateObraTotal: subTotalMateObraTotal,
             citaComentario: citaComentario,
         }
-        
-        
-        // setLoader(true); 
+       
         await axios
         .post(`${route("cotizacion.guardad.captura")}`, datos)
         .then((response) => {
             const { status, data } = response;
+            console.log("Esto se optiene", data);
             
             if (status == 201) {
                 toast.current.show({ severity: 'info', summary: 'Info', detail: `${data.success}`});
             }
-            // setLoader(false); 
+            setLoader(false); 
         })
+        .catch((error) => {            
+            const {response, status} = error
+            if(status == 500){
+                const mensaje = response?.data?.error || ''
+                toast.current.show({
+                  severity: "error",
+                  summary: "Error",
+                  detail:`No se pudo guardar la cotización.${mensaje}`,
+                  life: 9000,
+                });
+            }
+          })
         .finally(() => {
             setProgress(false)            
             setTimeout(() => {
                 modalVisible()    
-            }, 600);
-            
+            }, 2000);
         });
     }
 
@@ -280,6 +290,7 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
         } catch (error) {
             console.log("Esto pasa", error);
             setLoader(false); 
+            toast.current.show
         }
        
     }
