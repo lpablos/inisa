@@ -1005,11 +1005,11 @@
 }
 
 .p-colorpicker-panel .p-colorpicker-color {
-    background: transparent url(/_next/static/media/color.dae87a04.png) no-repeat left top;
+    /* background: transparent url(/_next/static/media/color.dae87a04.png) no-repeat left top; */
 }
 
 .p-colorpicker-panel .p-colorpicker-hue {
-    background: transparent url(/_next/static/media/hue.8b181838.png) no-repeat left top;
+    /* background: transparent url(/_next/static/media/hue.8b181838.png) no-repeat left top; */
 }
 
 .p-confirm-popup {
@@ -26493,8 +26493,8 @@ input.p-dropdown-label  {
 @font-face {
     font-family: 'primeicons';
     font-display: block;
-    src: url(/_next/static/media/primeicons.ffecb254.eot);
-    src: url(/_next/static/media/primeicons.ffecb254.eot?#iefix) format('embedded-opentype'), url(/_next/static/media/primeicons.ba3f916d.woff2) format('woff2'), url(/_next/static/media/primeicons.f8b9e8a4.woff) format('woff'), url(/_next/static/media/primeicons.0112589c.ttf) format('truetype'), url(/_next/static/media/primeicons.943ab24c.svg?#primeicons) format('svg');
+    /* src: url(/_next/static/media/primeicons.ffecb254.eot);
+    src: url(/_next/static/media/primeicons.ffecb254.eot?#iefix) format('embedded-opentype'), url(/_next/static/media/primeicons.ba3f916d.woff2) format('woff2'), url(/_next/static/media/primeicons.f8b9e8a4.woff) format('woff'), url(/_next/static/media/primeicons.0112589c.ttf) format('truetype'), url(/_next/static/media/primeicons.943ab24c.svg?#primeicons) format('svg'); */
     font-weight: normal;
     font-style: normal;
 }
@@ -28148,7 +28148,7 @@ img.flag {
 }
 
 .flag {
-  background: url(/_next/static/media/flags_responsive.2aca9e17.png) no-repeat;
+  /* background: url(/_next/static/media/flags_responsive.2aca9e17.png) no-repeat; */
   background-size: 100%;
   vertical-align: middle;
 }
