@@ -374,25 +374,30 @@ class CotizacionController extends Controller
         $ultimoPDA = DetalleCotizacion::where('cotizaciones_id', $cotizacionId)
             ->where(function ($query) {
                 $query->whereNull('es_tomo')
-                    ->orWhere('es_tomo', 0);
+                    ->orWhere('es_tomo', 1);
             })
             ->whereNull('tomo_pertenece') // Asegura que tomo_pertenece sea NULL
-            ->orderBy('id', 'desc') // Ordenar por ID en orden descendente
+            ->orderBy('id', 'asc') // Ordenar por ID en orden descendente
             ->value('PDA'); // Obtener directamente el valor de PDA
 
 
+            // dd($ultimoPDA, $pdaRegistrosTomo);
 
         if ($ultimoPDA) {
 
             // Dividir el valor del tomo en la parte entera y decimal
             [$parteEntera,] = explode('.', $ultimoPDA);
 
+
+
             // Generar el valor reseteado con .00
             $valorReseteado = $parteEntera . '.00';
 
             $resultado = $valorDinamicoTomo = number_format($valorReseteado + 1, 2, '.', '');
+            // dd($parteEntera,$ultimoPDA, $pdaRegistrosTomo, $valorReseteado, $resultado);
         } else {
             $resultado = $valorDinamicoTomo = number_format($pdaRegistrosTomo + 1, 2, '.', '');
+            // dd($ultimoPDA, $pdaRegistrosTomo, $pdaRegistrosTomo, $resultado);
         }
 
 
