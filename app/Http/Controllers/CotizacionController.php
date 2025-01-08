@@ -248,8 +248,12 @@ class CotizacionController extends Controller
         switch ($request->perteneceTomo) {
             case 1:
                 // Registra un tomo nue
-                $tomoValidacion = DetalleCotizacion::where('descripcion', $request->capturaTomo)
+                $tomoValidacion = DetalleCotizacion::where('descripcion', $request->capturaTomo)->where('cotizaciones_id', $request->identyCotizacion)
                     ->count();
+
+
+
+
 
                 if ($tomoValidacion > 0) {
                     return response()->json(['error' => 'El tomo ya existe'], 500);
