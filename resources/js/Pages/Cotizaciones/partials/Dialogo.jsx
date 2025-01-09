@@ -14,6 +14,12 @@ import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 
+import { Divider } from 'primereact/divider';
+
+import { Fieldset } from 'primereact/fieldset';
+        
+        
+
 import { ToggleButton } from 'primereact/togglebutton';
 import { SelectButton } from 'primereact/selectbutton';
         
@@ -23,12 +29,12 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
     const [selectedProveedor, setSelectedProveedor] = useState(null);
     const [titulo, setTitulo] = useState("");
     const [proveedores, setProveedores] = useState([]);
-    const [date, setDate] = useState(null);
+    const [date, setDate] = useState(new Date());
     const [fecha_inicio_cotizacion, setFecha_inicio_cotizacion] =useState(null);
     const [fecha_final_cotizacion, setFecha_final_cotizacion] = useState(null);
     const toast = useRef(null);
     const [tipo, setTipo] = useState('material'); // 'material' o 'mano_obra'
-    console.log("Este es el tipo", tipo);
+    
     
     const options = ['Material', 'Material y Mano de Obra'];
     const [value, setValue] = useState(options[0]);
@@ -56,7 +62,6 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
     const [ingredient, setIngredient] = useState("");
 
     const handleChange = (e) => {
-        console.log("Seleccionado:", e.value); // Diagnóstico
         setTipo(e.value);
     };
 
@@ -66,7 +71,6 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                 const response = await axios.get(
                     route("catalogo.list.clientes")
                 );
-                console.log("clientes", response.data);
                 setCliente(response.data);
             } catch (error) {
                 toast.current.show({
@@ -80,7 +84,16 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
         obtenerClientes();
     }, []);
 
-    const [selectedMoneda, setSelectedMoneda] = useState(null); // Status seleccionado
+    const [selectedMoneda, setSelectedMoneda] = useState({
+        "id": 3,
+        "nombre": "Peso Mexicano",
+        "abreviacion": "MXN",
+        "created_at": "2025-01-08T07:50:51.000000Z",
+        "updated_at": "2025-01-08T07:50:51.000000Z"
+    }); // Status seleccionado
+    
+    
+    
     const [moneda, setMoneda] = useState([]); // Lista de statuses
 
     useEffect(() => {
@@ -89,7 +102,6 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                 const response = await axios.get(
                     route("catalogo.list.tiposmonedas")
                 );
-                console.log("monedas", response.data);
                 setMoneda(response.data);
             } catch (error) {
                 toast.current.show({
@@ -103,7 +115,13 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
         obtenerMonedas();
     }, []);
 
-    const [selectedPrioridad, setSelectedPrioridad] = useState(null); // Status seleccionado
+    const [selectedPrioridad, setSelectedPrioridad] = useState({
+        "id": 2,
+        "nombre": "Media",
+        "descripcion": "Prioridad Media",
+        "created_at": "2025-01-08T07:50:49.000000Z",
+        "updated_at": "2025-01-08T07:50:49.000000Z"
+    }); // Status seleccionado
     const [prioridad, setPrioridad] = useState([]); // Lista de statuses
 
     useEffect(() => {
@@ -112,7 +130,6 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                 const response = await axios.get(
                     route("catalogo.list.prioridades")
                 );
-                console.log("prioridad", response.data);
                 setPrioridad(response.data);
             } catch (error) {
                 toast.current.show({
@@ -126,13 +143,20 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
         obtenerPrioridad();
     }, []);
 
-    const [selectedStatus, setSelectedStatus] = useState(null); // Status seleccionado
+    const [selectedStatus, setSelectedStatus] = useState({
+        "id": 1,
+        "nombre": "Pendiente",
+        "abreviacion": null,
+        "descripcion": "Cotización pendiente",
+        "created_at": "2025-01-08T07:50:51.000000Z",
+        "updated_at": "2025-01-08T07:50:51.000000Z"
+    }); // Status seleccionado
+    
     const [statuses, setStatuses] = useState([]); // Lista de statuses
     useEffect(() => {
         const obtenerStatuses = async () => {
             try {
                 const response = await axios.get(route("catalogo.list.status"));
-                console.log("status", response.data);
                 setStatuses(response.data);
             } catch (error) {
                 toast.current.show({
@@ -169,8 +193,6 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
     // Cargar datos en caso de edición
     useEffect(() => {
         if (isEdit && dataToEdit) {
-
-            console.log("dataToEdit", dataToEdit);
             setTitulo(dataToEdit.titulo || "");
             setDate(new Date(dataToEdit.fecha) || null);
             setFecha_final_cotizacion(new Date(dataToEdit.fecha_cotiza_fin) || null);
@@ -329,20 +351,7 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
         >
             <Toast ref={toast} />
             <div className="grid my-5">
-                {/* <div className="col-12">
-                    <label htmlFor="proveedor">Campaña</label>
-                    <DropdownFilter
-                        className="mb-3 col-12"
-                        value={selectedProveedor}
-                        onChange={(e) => setSelectedProveedor(e.value)}
-                        options={proveedores}
-                        optionLabel="nombre"
-                        placeholder="Seleccione un proveedor"
-                        filter
-                        filterBy="nombre abreviacion"
-                        showClear
-                    />
-                </div> */}
+               
 
                 <div className="col-6 md:col-12 mb-3">
                     <FloatLabel>
@@ -355,54 +364,80 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                         <label htmlFor="titulo">Título</label>
                     </FloatLabel>
                 </div>
-
-                <div className="col-4 md:col-4 mb-3">
-                    <FloatLabel>
-                        <Calendar
-                            id="fecha"
-                            value={date}
-                            onChange={(e) => setDate(e.value)}
-                            className="w-full"
-                            showIcon
-                            dateFormat="dd/mm/yy"
-                        />
-                        <label htmlFor="fecha">Fecha</label>
-                    </FloatLabel>
+                <div className="col-6 md:col-12 mb-3">
+                    <label htmlFor="Cliente">Cliente</label>
+                    <DropdownFilter
+                        className="mb-3 col-12"
+                        value={selectedCliente}
+                        onChange={(e) => setSelectedCliente(e.value)}
+                        options={cliente}
+                        optionLabel="nombre" // Cambia a la propiedad adecuada de tu modelo de Status
+                        placeholder="Seleccione un Cliente"
+                        filter
+                        filterBy="nombre"
+                        showClear
+                    />
+                </div>
+                <div className="grid grid-cols-2 gap-4 items-start">
+                    <div className="col-span-1 m-4">
+                        <FloatLabel>
+                            <Calendar
+                                id="fecha"
+                                value={date}
+                                onChange={(e) => setDate(e.value)}
+                                className="w-full"
+                                showIcon
+                                dateFormat="dd/mm/yy"
+                            />
+                            <label htmlFor="fecha">Fecha</label>
+                        </FloatLabel>
+                    </div>
+                    <div className="col-span-1">
+                        <label htmlFor="selectPlantilla" className="m-3">Selecciona la plantilla</label>
+                        
+                        <SelectButton value={value} onChange={(e) => setValue(e.value)} options={options} />
+                    </div>
                 </div>
 
-                <div className="col-4 md:col-4 mb-3">
-                    <FloatLabel>
-                        <Calendar
-                            id="fecha_inicio_cotizacion"
-                            value={fecha_inicio_cotizacion}
-                            onChange={(e) =>
-                                setFecha_inicio_cotizacion(e.value)
-                            }
-                            className="w-full"
-                            showIcon
-                            dateFormat="dd/mm/yy"
-                        />
-                        <label htmlFor="fecha_inicio_cotizacion">
-                            Fecha inicio Cotizacion
-                        </label>
-                    </FloatLabel>
-                </div>
+             
+                <Divider />
 
-                <div className="col-4 md:col-4 mb-3">
-                    <FloatLabel>
-                        <Calendar
-                            id="fecha_fin_cotizacion"
-                            value={fecha_final_cotizacion}
-                            onChange={(e) => setFecha_final_cotizacion(e.value)}
-                            className="w-full"
-                            showIcon
-                            dateFormat="dd/mm/yy"
-                        />
-                        <label htmlFor="fecha_fin_cotizacion">
-                            Fecha fin Cotizacion
-                        </label>
-                    </FloatLabel>
-                </div>
+                <Fieldset legend="Periodo de Validez" className="col-12">
+                    <div className="flex flex-wrap gap-3">
+                        <div className="col-4 md:col-4">
+                            <FloatLabel>
+                                <Calendar
+                                    id="fecha_inicio_cotizacion"
+                                    value={fecha_inicio_cotizacion}
+                                    onChange={(e) => setFecha_inicio_cotizacion(e.value)}
+                                    className="w-full"
+                                    showIcon
+                                    dateFormat="dd/mm/yy"
+                                />
+                                <label htmlFor="fecha_inicio_cotizacion">
+                                    Fecha inicio Cotizacion
+                                </label>
+                            </FloatLabel>
+                        </div>
+                        <div className="col-4 md:col-4">
+                            <FloatLabel>
+                                <Calendar
+                                    id="fecha_fin_cotizacion"
+                                    value={fecha_final_cotizacion}
+                                    onChange={(e) => setFecha_final_cotizacion(e.value)}
+                                    className="w-full"
+                                    showIcon
+                                    dateFormat="dd/mm/yy"
+                                />
+                                <label htmlFor="fecha_fin_cotizacion">
+                                    Fecha fin Cotizacion
+                                </label>
+                            </FloatLabel>
+                        </div>
+                    </div>
+                </Fieldset>
+
+                
 
                 <div className="col-4">
                     <label htmlFor="proveedor">Status</label>
@@ -449,25 +484,9 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                     />
                 </div>
 
-                <div className="col-4">
-                    <label htmlFor="Cliente">Cliente</label>
-                    <DropdownFilter
-                        className="mb-3 col-12"
-                        value={selectedCliente}
-                        onChange={(e) => setSelectedCliente(e.value)}
-                        options={cliente}
-                        optionLabel="nombre" // Cambia a la propiedad adecuada de tu modelo de Status
-                        placeholder="Seleccione un Cliente"
-                        filter
-                        filterBy="nombre"
-                        showClear
-                    />
-                </div>
+               
 
-                <div className="grid m-5 col-6">
-                    <label htmlFor="selectPlantilla" className="m-2">Selecciona la plantilla</label>
-                    <SelectButton value={value} onChange={(e) => setValue(e.value)} options={options} />
-                </div>
+             
 
                 {/* <div className="grid my-5 col-6"> */}
                     {/* <div className="col-6 md:col-6 mb-6">

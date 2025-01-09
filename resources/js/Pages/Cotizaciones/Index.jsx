@@ -13,7 +13,7 @@ const Index = (props) => {
             <div className="card grid">
                 {/* <Menu/> */}
 
-
+                <h3>Cotizaciones</h3>
                 <div className="col-12">
                     <ConceptoTabla />
                 </div>
