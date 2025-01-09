@@ -259,7 +259,7 @@ class CotizacionController extends Controller
                     return response()->json(['error' => 'El tomo ya existe'], 500);
                 } else {
 
-                    // dd($request->all(),$this->pdaTomoCotizacion($request->identyCotizacion));
+                    // dd($request->all(), $this->pdaTomoCotizacion($request->identyCotizacion));
 
                     $detalleCotizacion = DetalleCotizacion::create([
                         'es_tomo' => 1,
@@ -365,51 +365,86 @@ class CotizacionController extends Controller
         return $valorDinamicoTomo;
     }
 
+
     public function pdaTomoCotizacion($cotizacionId = null)
     {
-        $pdaRegistrosTomo = DetalleCotizacion::where('cotizaciones_id', $cotizacionId)
-            ->where('es_tomo', 1)
-            ->orderBy('id', 'desc') // Ordenar por ID en orden descendente
-            ->value('PDA'); // Obtener directamente el valor de PDA
-
-
-
-
+        // Obtener el PDA más alto en la cotización donde es_tomo sea 1 o 0
         $ultimoPDA = DetalleCotizacion::where('cotizaciones_id', $cotizacionId)
             ->where(function ($query) {
-                $query->whereNull('es_tomo')
-                    ->orWhere('es_tomo', 1);
+                $query->where('es_tomo', 1) // Tomos
+                    ->orWhere('es_tomo', 0); // También considerar registros con es_tomo = 0
             })
-            ->whereNull('tomo_pertenece') // Asegura que tomo_pertenece sea NULL
-            ->orderBy('id', 'asc') // Ordenar por ID en orden descendente
-            ->value('PDA'); // Obtener directamente el valor de PDA
+            ->orderByRaw("CAST(SUBSTRING_INDEX(PDA, '.', 1) AS UNSIGNED) DESC") // Ordenar por parte entera como número
+            ->value('PDA'); // Obtener el valor más alto de PDA
 
-
-            // dd($ultimoPDA, $pdaRegistrosTomo);
-
-        if ($ultimoPDA) {
-
-            // Dividir el valor del tomo en la parte entera y decimal
-            [$parteEntera,] = explode('.', $ultimoPDA);
-
-
-
-            // Generar el valor reseteado con .00
-            $valorReseteado = $parteEntera . '.00';
-
-            $resultado = $valorDinamicoTomo = number_format($valorReseteado + 1, 2, '.', '');
-            // dd($parteEntera,$ultimoPDA, $pdaRegistrosTomo, $valorReseteado, $resultado);
-        } else {
-            $resultado = $valorDinamicoTomo = number_format($pdaRegistrosTomo + 1, 2, '.', '');
-            // dd($ultimoPDA, $pdaRegistrosTomo, $pdaRegistrosTomo, $resultado);
+        // Si no hay registros existentes, comenzamos con "1.00"
+        if (is_null($ultimoPDA)) {
+            return "1.00";
         }
 
+        // Dividir el último PDA en parte entera y decimal
+        [$parteEntera,] = explode('.', $ultimoPDA);
 
+        // Incrementar la parte entera del último PDA
+        $nuevoPDAEntero = (int)$parteEntera + 1;
 
-        // dd($resultado);
+        // Generar el nuevo PDA con formato "X.00"
+        $nuevoPDA = $nuevoPDAEntero . '.00';
 
-        return $resultado;
+        // Retornar el nuevo PDA generado
+        return $nuevoPDA;
     }
+
+
+    // public function pdaTomoCotizacion($cotizacionId = null)
+    // {
+    //     $pdaRegistrosTomo = DetalleCotizacion::where('cotizaciones_id', $cotizacionId)
+    //         ->where('es_tomo', 1)
+    //         ->orderBy('id', 'desc') // Ordenar por ID en orden descendente
+    //         ->value('PDA'); // Obtener directamente el valor de PDA
+
+
+
+    //     // dd($pdaRegistrosTomo);
+
+
+
+
+    //     $ultimoPDA = DetalleCotizacion::where('cotizaciones_id', $cotizacionId)
+    //         ->where(function ($query) {
+    //             $query->whereNull('es_tomo')
+    //                 ->orWhere('es_tomo', 0);
+    //         })
+    //         ->whereNull('tomo_pertenece') // Asegura que tomo_pertenece sea NULL
+    //         ->orderBy('id', 'asc') // Ordenar por ID en orden descendente
+    //         ->value('PDA'); // Obtener directamente el valor de PDA
+
+
+
+
+
+    //     if ($pdaRegistrosTomo == null) {
+
+    //         $resultado = $valorDinamicoTomo = number_format((int)$pdaRegistrosTomo + 2, 2, '.', '');
+    //     } else {
+
+    //          // Dividir el valor del tomo en la parte entera y decimal
+    //          [$parteEntera,] = explode('.', $ultimoPDA);
+    //          // Generar el valor reseteado con .00
+    //          $valorReseteado = $parteEntera . '.00';
+
+    //          $resultado = $valorDinamicoTomo = number_format($valorReseteado + 1, 2, '.', '');
+
+    //     }
+
+    //     dd($ultimoPDA, $pdaRegistrosTomo,$resultado);
+
+
+
+    //     // dd($resultado);
+
+    //     return $resultado;
+    // }
 
     public function PdaDinamicoSinTomo($cotizacionId = null)
     {
@@ -645,31 +680,38 @@ class CotizacionController extends Controller
             'error' => 'Tipo de detalle no reconocido',
         ], 400);
     }
+
+
     public function reasignarPDA($tomoId = null)
     {
-        // Verificar si $tomoId es null y manejar registros con tomo_pertenece como NULL
+        // Verificar si $tomoId es null para manejar registros con `tomo_pertenece = NULL`
         if (is_null($tomoId)) {
-            $indice = 0;
-            // Obtener el PDA base para los registros sin tomo
+            // Obtener el valor más bajo del PDA base de los registros sin tomo
             $pdaBase = DetalleCotizacion::whereNull('tomo_pertenece')
                 ->where('es_tomo', 0) // Excluir los tomos
+                ->orderBy('PDA', 'asc') // Ordenar por PDA ascendente
                 ->value('PDA'); // Obtener el primer PDA como base
 
             if (!$pdaBase) {
                 return response()->json(['error' => 'No hay registros con PDA base para reasignar.'], 404);
             }
 
-            // Extraer la parte entera del PDA base (por ejemplo, "2" de "2.00")
+            // Extraer la parte entera del PDA base (por ejemplo, "1" de "1.01")
             $parteEntera = explode('.', $pdaBase)[0];
 
-            // Obtener los registros con tomo_pertenece como NULL ordenados por PDA
+            // Obtener los registros con `tomo_pertenece = NULL` ordenados por PDA
             $detalles = DetalleCotizacion::whereNull('tomo_pertenece')
                 ->where('es_tomo', 0) // Excluir los tomos
                 ->orderBy('PDA', 'asc')
                 ->get();
+
+            // Iniciar el índice con el decimal del menor PDA (por ejemplo, 1 para "1.01")
+            $indice = (int) explode('.', $pdaBase)[1];
+
+            // dd($parteEntera, $detalles, $indice);
+
         } else {
-            // Si $tomoId no es null, manejar los registros que pertenecen al tomo
-            // Obtener el PDA base para el tomo específico
+            // Si $tomoId no es null, manejar registros asociados al tomo
             $pdaBase = DetalleCotizacion::where('id', $tomoId)->value('PDA');
 
             if (!$pdaBase) {
@@ -678,6 +720,7 @@ class CotizacionController extends Controller
 
             // Extraer la parte entera del PDA base (por ejemplo, "2" de "2.00")
             $parteEntera = explode('.', $pdaBase)[0];
+            // dd($parteEntera);
 
             // Obtener los registros que pertenecen al tomo ordenados por PDA
             $detalles = DetalleCotizacion::where('tomo_pertenece', $tomoId)
@@ -685,14 +728,13 @@ class CotizacionController extends Controller
                 ->orderBy('PDA', 'asc')
                 ->get();
 
-                $indice = 1;
+            // Iniciar el índice desde 1
+            $indice = 1;
         }
 
-        // Inicializar el nuevo índice para los PDAs
-
-
+        // Reasignar los PDAs
         foreach ($detalles as $detalle) {
-            // Generar el nuevo valor de PDA basado en la parte entera del PDA base
+            // Generar el nuevo valor de PDA
             $nuevaParteDecimal = str_pad($indice, 2, '0', STR_PAD_LEFT); // Ejemplo: 01, 02
             $nuevoPDA = $parteEntera . '.' . $nuevaParteDecimal;
 
@@ -709,6 +751,73 @@ class CotizacionController extends Controller
             'detalles_actualizados' => $detalles
         ]);
     }
+
+    // public function reasignarPDA($tomoId = null)
+    // {
+    //     // Verificar si $tomoId es null y manejar registros con tomo_pertenece como NULL
+    //     if (is_null($tomoId)) {
+    //         $indice = 0;
+    //         // Obtener el PDA base para los registros sin tomo
+    //         $pdaBase = DetalleCotizacion::whereNull('tomo_pertenece')
+    //             ->where('es_tomo', 0) // Excluir los tomos
+    //             ->value('PDA'); // Obtener el primer PDA como base
+
+    //         if (!$pdaBase) {
+    //             return response()->json(['error' => 'No hay registros con PDA base para reasignar.'], 404);
+    //         }
+
+    //         // Extraer la parte entera del PDA base (por ejemplo, "2" de "2.00")
+    //         $parteEntera = explode('.', $pdaBase)[0];
+
+    //         // Obtener los registros con tomo_pertenece como NULL ordenados por PDA
+    //         $detalles = DetalleCotizacion::whereNull('tomo_pertenece')
+    //             ->where('es_tomo', 0) // Excluir los tomos
+    //             ->orderBy('PDA', 'asc')
+    //             ->get();
+    //     } else {
+    //         // Si $tomoId no es null, manejar los registros que pertenecen al tomo
+    //         // Obtener el PDA base para el tomo específico
+    //         $pdaBase = DetalleCotizacion::where('id', $tomoId)->value('PDA');
+
+    //         if (!$pdaBase) {
+    //             return response()->json(['error' => 'Tomo no encontrado.'], 404);
+    //         }
+
+    //         // Extraer la parte entera del PDA base (por ejemplo, "2" de "2.00")
+    //         $parteEntera = explode('.', $pdaBase)[0];
+
+    //         // Obtener los registros que pertenecen al tomo ordenados por PDA
+    //         $detalles = DetalleCotizacion::where('tomo_pertenece', $tomoId)
+    //             ->where('es_tomo', 0) // Excluir los tomos
+    //             ->orderBy('PDA', 'asc')
+    //             ->get();
+
+    //         $indice = 1;
+    //     }
+
+    //     // Inicializar el nuevo índice para los PDAs
+
+
+    //     foreach ($detalles as $detalle) {
+    //         // Generar el nuevo valor de PDA basado en la parte entera del PDA base
+    //         $nuevaParteDecimal = str_pad($indice, 2, '0', STR_PAD_LEFT); // Ejemplo: 01, 02
+    //         $nuevoPDA = $parteEntera . '.' . $nuevaParteDecimal;
+
+    //         // Actualizar el registro con el nuevo PDA
+    //         $detalle->PDA = $nuevoPDA;
+    //         $detalle->save();
+
+    //         // Incrementar el índice
+    //         $indice++;
+    //     }
+
+    //     return response()->json([
+    //         'message' => 'Reasignación de PDA completada',
+    //         'detalles_actualizados' => $detalles
+    //     ]);
+    // }
+
+
 
 
 
