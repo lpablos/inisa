@@ -9,6 +9,11 @@ import ConfirmarDuplicacion from "./ConfirmarDuplicacion";
 import axios from "axios";
 import { Tooltip } from 'primereact/tooltip';
 import "../../../../css/style_cotizacion.css";
+import { Badge } from 'primereact/badge';
+import { Chip } from 'primereact/chip';
+import VistaPreviaCotizacion from "./VistaPreviaCotizacion";
+        
+        
 
 
 const ConceptoTabla = () => {
@@ -18,6 +23,9 @@ const ConceptoTabla = () => {
     const [isEdit, setIsEdit] = useState(false); // Modo edición o creación
     const [loader, setLoader] = useState(false); // Control de loader
     const toast = useRef(null); // Referencia de Toast
+
+
+    const [vistraPreviaPDF, setVistraPreviaPDF] = useState(false)
 
     // Cargar cotizaciones
     const obtenerCotizaciones = async () => {
@@ -74,6 +82,14 @@ const ConceptoTabla = () => {
             <span className={`status-label ${statusClass}`}>
                 {rowData.estatus.nombre}
             </span>
+        );
+    };
+
+    const renderValides = (rowData) => {
+        return (
+            <div style={{ display: 'flex', gap: '18px', width: '45 rem' }}>
+                <Chip label={rowData.fecha_cotiza_inicio+' '+rowData.fecha_cotiza_fin} /> 
+            </div>
         );
     };
 
@@ -169,6 +185,16 @@ const ConceptoTabla = () => {
     const accionesTemplate = (rowData) => (
         <div className="flex gap-2">
             <Button
+                severity="success" 
+                size="small"
+                icon="pi pi-file-pdf"
+                tooltip="Vista Previa"
+                tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
+                className="p-button-rounded p-button-info p-button-sm"
+                onClick={() => setVistraPreviaPDF(true)}
+            />
+            <Button
+                size="small"
                 icon="pi pi-sync"
                 tooltip="Editar"
                 tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
@@ -176,6 +202,7 @@ const ConceptoTabla = () => {
                 onClick={() => handleEditar(rowData)}
             />
             <Button
+                size="small"
                 icon="pi pi-trash"
                 className="p-button-rounded p-button-danger p-button-sm"
                 tooltip="Eliminar"
@@ -185,6 +212,7 @@ const ConceptoTabla = () => {
                 }
             />
             <Button
+                size="small"
                 icon="pi pi-copy"
                 className="p-button-rounded p-button-warning p-button-sm"
                 tooltip="Duplicar"
@@ -196,7 +224,7 @@ const ConceptoTabla = () => {
              <a
                 id="capture-link"
                 href={route("cotizacion.captura.detalle", { identy: rowData.id })}
-                // href={`${route("cotizacion.captura.detale", { identy: rowData.id })}`}
+                size="small"    
                 rel="noopener noreferrer"
                 className="p-button-rounded p-button"
             >
@@ -228,24 +256,20 @@ const ConceptoTabla = () => {
                 <Button icon="pi pi-plus" tooltip="Nueva Cotización" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded severity="info" aria-label="Nueva Cotización" onClick={handleCrear}/>
                 
             </div>
-
+                    
             {/* Tabla de cotizaciones */}
             <DataTable
                 value={cotizaciones}
                 paginator
                 rows={5}
+                size={'small'} 
                 responsiveLayout="scroll"
             >
                 <Column field="id" header="ID" />
-                <Column field="titulo" header="Título" />
-                <Column field="proveedor.nombre" header="Proveedor" />
-                <Column field="fecha" header="Fecha" />
-                <Column field="fecha_cotiza_inicio" header="Fecha inicio" />
-                <Column field="fecha_cotiza_fin" header="fecha fin" />
-                <Column field="subtotal" header="fecha Subtotal" />
-                <Column field="total" header="Total" />
-                <Column field="estatus.nombre" header="Status" body={(rowData) => renderStatus(rowData)}  />
-
+                <Column field="titulo" header="Título" style={{ width: '19em', textAlign:'justify'}}/>
+                <Column field="fecha" header="Fecha"  style={{ width: '9em' }}/>
+                <Column field="valides" header="Válido Intervalo" style={{ width: '9em' }} body={(rowData) => renderValides(rowData)}/>
+                <Column field="estatus.nombre" header="Status" body={(rowData) => renderStatus(rowData)}/>
                 <Column header="Acciones" body={accionesTemplate} />
             </DataTable>
 
@@ -265,6 +289,8 @@ const ConceptoTabla = () => {
                     onClose={handleCerrarDialogo}
                 />
             )}
+
+            <VistaPreviaCotizacion vistraPreviaPDF={vistraPreviaPDF} setVistraPreviaPDF={setVistraPreviaPDF}/>
         </div>
     );
 };
