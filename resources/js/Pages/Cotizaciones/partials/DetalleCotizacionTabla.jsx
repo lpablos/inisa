@@ -1,11 +1,10 @@
 import React, { Component, useEffect, useState, useRef } from 'react';
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
-import { ButtonGroup } from 'primereact/buttongroup';
 import { Button } from 'primereact/button';
 import DialogDetalleCotizacion from './DialogDetalleCotizacion';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
+import { Toolbar } from 'primereact/toolbar';
+import { SplitButton } from 'primereact/splitbutton';
 
 const tableStyles = {
     width: '100%',
@@ -30,7 +29,7 @@ const yellowRowStyles = {
 };
 
 const  DetalleCotizacionTabla = ({cotizacion, detalle, reloadList, onRecargaCompleta}) =>  {
-    console.log("Esto es", detalle);
+    
     
     const toast = useRef(null);
     const [detalleCotizacion, setDetalleCotizacion] = useState([]);
@@ -60,8 +59,7 @@ const  DetalleCotizacionTabla = ({cotizacion, detalle, reloadList, onRecargaComp
         .get(`${route("cotizacion.list.detalle.cotizacion", { identy: cotizacion })}`)
         .then((response) => {
             const {data, status } = response       
-            if(status == 200){
-                console.log("Aqui es", data);                
+            if(status == 200){               
                 setDetalleCotizacion(data)
             }
         });
@@ -130,7 +128,40 @@ const  DetalleCotizacionTabla = ({cotizacion, detalle, reloadList, onRecargaComp
     const reject = () => {
         toast.current.show({ severity: 'contrast', summary: 'Correcto', detail: 'Intenta con otro elemento de la lista', life: 3000 });
     }
-  
+
+    const [totalDetalle, setTotalDetalle] = useState(0);
+
+   
+    useEffect(()=>{
+        if (Array.isArray(detalleCotizacion) && detalle.es_material == 1) {
+            calcularTotalMaterial()
+        }
+
+        if (Array.isArray(detalleCotizacion) && detalle.es_mano_obra == 1) {
+            calcularTotalManoObra()
+        }        
+    },[detalleCotizacion])
+
+    const calcularTotalMaterial = () => {
+        const sumaMaterial = detalleCotizacion
+                .filter(item => item.es_tomo === 0)
+                .reduce((acc, item) => acc + (item.costo_material_subtotal || 0), 0);  
+        setTotalDetalle(sumaMaterial);        
+    };
+
+    const calcularTotalManoObra = () => {
+        const sumaMaterial = detalleCotizacion
+                .filter(item => item.es_tomo === 0)
+                .reduce((acc, item) => acc + (item.obra_material_subtotal || 0), 0);  
+        setTotalDetalle(sumaMaterial);        
+    };
+
+   
+    const endContent = (
+        <React.Fragment>
+            Total : {detalle?.moneda?.abreviacion && `${Number(totalDetalle).toLocaleString()} ${detalle.moneda.abreviacion} `}
+        </React.Fragment>
+    );
     
     return (
         
@@ -145,7 +176,7 @@ const  DetalleCotizacionTabla = ({cotizacion, detalle, reloadList, onRecargaComp
                             <th style={headerStyles}>Descripcion</th>
                             <th style={headerStyles}>Material Unidad</th>
                             <th style={headerStyles}>Materia Cantidad</th>
-                            <th style={headerStyles}>Material Subtotal</th>
+                            <th style={headerStyles}>Material Subtotal </th>
                             <th style={headerStyles}>Opciones</th>
                         </tr>
                     )}
@@ -181,8 +212,8 @@ const  DetalleCotizacionTabla = ({cotizacion, detalle, reloadList, onRecargaComp
                                     <td style={cellStyles}>{item.PDA}</td>
                                     <td style={cellStyles}>{item.descripcion}</td>
                                     <td style={cellStyles}>{item.costo_material_cantidad}</td>
-                                    <td style={cellStyles}>{item.costo_material_unitario}</td>
-                                    <td style={cellStyles}>{item.costo_material_subtotal}</td>
+                                    <td style={cellStyles}>{item.costo_material_unitario} {detalle?.moneda?.abreviacion || ""}</td>
+                                    <td style={cellStyles}>{item.costo_material_subtotal} {detalle?.moneda?.abreviacion || ""}</td>
                                     <td style={cellStyles}>                                    
                                         <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" onClick={()=>{modalUpdate(item)}} />
                                         <Button icon="pi pi-times" tooltip="Eliminar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="danger" aria-label="Eliminar" onClick={()=>{preguntaEliminacion(item)}}/>
@@ -209,11 +240,11 @@ const  DetalleCotizacionTabla = ({cotizacion, detalle, reloadList, onRecargaComp
                                     <td style={cellStyles}>{item.PDA}</td>
                                     <td style={cellStyles}>{item.descripcion}</td>
                                     <td style={cellStyles}>{item.costo_material_cantidad}</td>
-                                    <td style={cellStyles}>{item.costo_material_unitario}</td>
-                                    <td style={cellStyles}>{item.costo_material_subtotal}</td>
-                                    <td style={cellStyles}>{item.costo_mano_obra_unitario}</td>
-                                    <td style={cellStyles}>{item.costo_mano_obra_subtotal}</td>
-                                    <td style={cellStyles}>{item.obra_material_subtotal}</td>
+                                    <td style={cellStyles}>{item.costo_material_unitario} {detalle?.moneda?.abreviacion || ""}</td>
+                                    <td style={cellStyles}>{item.costo_material_subtotal} {detalle?.moneda?.abreviacion || ""}</td>
+                                    <td style={cellStyles}>{item.costo_mano_obra_unitario} {detalle?.moneda?.abreviacion || ""}</td>
+                                    <td style={cellStyles}>{item.costo_mano_obra_subtotal} {detalle?.moneda?.abreviacion || ""}</td>
+                                    <td style={cellStyles}>{item.obra_material_subtotal} {detalle?.moneda?.abreviacion || ""}</td>
                                     <td style={cellStyles}>
                                         
                                         <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" onClick={()=>{modalUpdate(item)}} />
@@ -225,6 +256,10 @@ const  DetalleCotizacionTabla = ({cotizacion, detalle, reloadList, onRecargaComp
                     </tbody>
                  )}
             </table>
+            {/* Total {totalDetalle} */}
+            
+            <Toolbar end={endContent} />
+            
             <DialogDetalleCotizacion 
                 cotizacion={cotizacion} 
                 detalleItem={detalle}
