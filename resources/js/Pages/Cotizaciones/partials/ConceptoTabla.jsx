@@ -93,6 +93,19 @@ const ConceptoTabla = () => {
         );
     };
 
+    const renderTipo = (rowData) => {
+        return (
+            <div style={{ display: 'flex', gap: '18px', width: '45 rem' }}>
+                {rowData.es_material == 1 && (
+                    "Material"
+                )}
+                {rowData.es_mano_obra == 1 && (
+                    "Material Con Mano de Obra"
+                )}
+            </div>
+        );
+    };
+
 
     // Eliminar una cotización
     const eliminarCotizacion = async (id) => {
@@ -187,16 +200,25 @@ const ConceptoTabla = () => {
             <Button
                 severity="success" 
                 size="small"
+                icon="pi pi-file-excel"
+                tooltip="Vista Previa Excel"
+                tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
+                className="p-button-rounded p-button-info p-button-sm"
+                onClick={() => alert("Descaga excel- pediente")}
+            />
+            <Button
+                severity="success" 
+                size="small"
                 icon="pi pi-file-pdf"
-                tooltip="Vista Previa"
+                tooltip="Vista Previa PDF"
                 tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
                 className="p-button-rounded p-button-info p-button-sm"
                 onClick={() => setVistraPreviaPDF(true)}
             />
             <Button
                 size="small"
-                icon="pi pi-sync"
-                tooltip="Editar"
+                icon="pi pi-folder-open"
+                tooltip="Detalle"
                 tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
                 className="p-button-rounded p-button-info p-button-sm"
                 onClick={() => handleEditar(rowData)}
@@ -268,6 +290,7 @@ const ConceptoTabla = () => {
                 <Column field="id" header="ID" />
                 <Column field="titulo" header="Título" style={{ width: '19em', textAlign:'justify'}}/>
                 <Column field="fecha" header="Fecha"  style={{ width: '9em' }}/>
+                <Column header="Plantilla"  style={{ width: '9em' }}  body={(rowData) => renderTipo(rowData)}/>
                 <Column field="valides" header="Válido Intervalo" style={{ width: '9em' }} body={(rowData) => renderValides(rowData)}/>
                 <Column field="estatus.nombre" header="Status" body={(rowData) => renderStatus(rowData)}/>
                 <Column header="Acciones" body={accionesTemplate} />

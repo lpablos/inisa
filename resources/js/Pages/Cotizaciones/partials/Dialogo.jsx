@@ -340,7 +340,7 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
         <>
         <ConfirmDialog />
         <Dialog
-            header={isEdit ? "Editar Cotización" : "Nueva Cotización"}
+            header={isEdit ? "Detalle Cotización" : "Nueva Cotización"}
             visible={visible}
             maximizable
             style={{ width: "50vw" }}
@@ -352,8 +352,22 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
             <Toast ref={toast} />
             <div className="grid my-5">
                
-
                 <div className="col-6 md:col-12 mb-3">
+                    <label htmlFor="proveedor">Compañia</label>
+                    <DropdownFilter
+                        className="mb-3 col-12"
+                        value={selectedProveedor}
+                        onChange={(e) => setSelectedProveedor(e.value)}
+                        options={proveedores}
+                        optionLabel="nombre"
+                        placeholder="Seleccione un proveedor"
+                        filter
+                        filterBy="nombre abreviacion"
+                        showClear
+                    />
+                </div>
+                <div className="col-6 md:col-12 mb-3">
+                    <label htmlFor="titulo">Título</label>
                     <FloatLabel>
                         <InputText
                             id="titulo"
@@ -361,7 +375,6 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                             onChange={(e) => setTitulo(e.target.value)}
                             className="w-full"
                         />
-                        <label htmlFor="titulo">Título</label>
                     </FloatLabel>
                 </div>
                 <div className="col-6 md:col-12 mb-3">
@@ -483,43 +496,6 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                         showClear
                     />
                 </div>
-
-               
-
-             
-
-                {/* <div className="grid my-5 col-6"> */}
-                    {/* <div className="col-6 md:col-6 mb-6">
-                        <RadioButton
-                            inputId="es_material"
-                            name="tipo"
-                            value="material"
-                            onChange={handleChange}
-                            checked={tipo === "material"}
-                        />
-                        <label htmlFor="es_material" className="ml-2">
-                            Material
-                        </label>
-                    </div> */}
-
-                    {/* <div className="col-6 md:col-6 mb-6">
-                        <RadioButton
-                            inputId="es_mano_obra"
-                            name="tipo"
-                            value="mano_obra"
-                            onChange={handleChange}
-                            checked={tipo === "mano_obra"}
-                        />
-                        <label htmlFor="es_mano_obra" className="ml-2">
-                            Mano de Obra
-                        </label>
-                    </div> */}
-
-                    {/* <div className="col-12">
-                        <p>Opción seleccionada: {tipo || "Ninguna"}</p>
-                    </div> */}
-                {/* </div> */}
-
                 <div className="col-12">
                     <Button
                         label={isEdit ? "Actualizar" : "Guardar"}

@@ -32,7 +32,7 @@ const detalleCaptura =({cotizacion, detalle}) => {
                         </div>                      
                         <div className="col-2 text-right">
                             <DialogDetalleCotizacion cotizacion={cotizacion} detalleItem={detalle} modo={'Registrar'} recargarListado={recargarListado}/>
-                            <Button icon="pi pi-images" rounded text severity="info" aria-label="Vista Previa"  tooltip="Vista Previa" tooltipOptions={{ position: 'left' }}/>
+                            <Button icon="pi pi-file-pdf" rounded text severity="info" aria-label="Vista Previa"  tooltip="Vista Previa PDF" tooltipOptions={{ position: 'left' }} onClick={()=>{alert('En desarrollo')}}/>
                         </div>
                     </div>
                     <DetalleCotizacionTabla cotizacion={cotizacion} detalle={detalle} reloadList={reloadList}  onRecargaCompleta={() => setReloadList(false)}/>
