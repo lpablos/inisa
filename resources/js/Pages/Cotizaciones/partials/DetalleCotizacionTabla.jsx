@@ -156,10 +156,14 @@ const  DetalleCotizacionTabla = ({cotizacion, detalle, reloadList, onRecargaComp
         setTotalDetalle(sumaMaterial);        
     };
 
+    const formatCurrency = (value) => {
+        return `$${parseFloat(value).toFixed(2)}`;
+    };
+
    
     const endContent = (
         <React.Fragment>
-            Total : {detalle?.moneda?.abreviacion && `${Number(totalDetalle).toLocaleString()} ${detalle.moneda.abreviacion} `}
+            Total : { `${formatCurrency(totalDetalle).toLocaleString()} ${detalle.moneda.abreviacion} `}
         </React.Fragment>
     );
     
@@ -212,8 +216,8 @@ const  DetalleCotizacionTabla = ({cotizacion, detalle, reloadList, onRecargaComp
                                     <td style={cellStyles}>{item.PDA}</td>
                                     <td style={cellStyles}>{item.descripcion}</td>
                                     <td style={cellStyles}>{item.costo_material_cantidad}</td>
-                                    <td style={cellStyles}>{item.costo_material_unitario} {detalle?.moneda?.abreviacion || ""}</td>
-                                    <td style={cellStyles}>{item.costo_material_subtotal} {detalle?.moneda?.abreviacion || ""}</td>
+                                    <td style={cellStyles}>{formatCurrency(item.costo_material_unitario)} {detalle?.moneda?.abreviacion || ""}</td>
+                                    <td style={cellStyles}>{formatCurrency(item.costo_material_subtotal)} {detalle?.moneda?.abreviacion || ""}</td>
                                     <td style={cellStyles}>                                    
                                         <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" onClick={()=>{modalUpdate(item)}} />
                                         <Button icon="pi pi-times" tooltip="Eliminar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="danger" aria-label="Eliminar" onClick={()=>{preguntaEliminacion(item)}}/>
@@ -240,11 +244,11 @@ const  DetalleCotizacionTabla = ({cotizacion, detalle, reloadList, onRecargaComp
                                     <td style={cellStyles}>{item.PDA}</td>
                                     <td style={cellStyles}>{item.descripcion}</td>
                                     <td style={cellStyles}>{item.costo_material_cantidad}</td>
-                                    <td style={cellStyles}>{item.costo_material_unitario} {detalle?.moneda?.abreviacion || ""}</td>
-                                    <td style={cellStyles}>{item.costo_material_subtotal} {detalle?.moneda?.abreviacion || ""}</td>
-                                    <td style={cellStyles}>{item.costo_mano_obra_unitario} {detalle?.moneda?.abreviacion || ""}</td>
-                                    <td style={cellStyles}>{item.costo_mano_obra_subtotal} {detalle?.moneda?.abreviacion || ""}</td>
-                                    <td style={cellStyles}>{item.obra_material_subtotal} {detalle?.moneda?.abreviacion || ""}</td>
+                                    <td style={cellStyles}>{formatCurrency(item.costo_material_unitario)} {detalle?.moneda?.abreviacion || ""}</td>
+                                    <td style={cellStyles}>{formatCurrency(item.costo_material_subtotal)} {detalle?.moneda?.abreviacion || ""}</td>
+                                    <td style={cellStyles}>{formatCurrency(item.costo_mano_obra_unitario)} {detalle?.moneda?.abreviacion || ""}</td>
+                                    <td style={cellStyles}>{formatCurrency(item.costo_mano_obra_subtotal)} {detalle?.moneda?.abreviacion || ""}</td>
+                                    <td style={cellStyles}>{formatCurrency(item.obra_material_subtotal)} {detalle?.moneda?.abreviacion || ""}</td>
                                     <td style={cellStyles}>
                                         
                                         <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" onClick={()=>{modalUpdate(item)}} />

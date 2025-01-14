@@ -352,7 +352,7 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
             <Toast ref={toast} />
             <div className="grid my-5">
                
-                <div className="col-6 md:col-12 mb-3">
+                {/* <div className="col-6 md:col-12 mb-3">
                     <label htmlFor="proveedor">Compañia</label>
                     <DropdownFilter
                         className="mb-3 col-12"
@@ -365,7 +365,7 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                         filterBy="nombre abreviacion"
                         showClear
                     />
-                </div>
+                </div> */}
                 <div className="col-6 md:col-12 mb-3">
                     <label htmlFor="titulo">Título</label>
                     <FloatLabel>
