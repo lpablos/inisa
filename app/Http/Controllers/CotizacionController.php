@@ -19,12 +19,7 @@ class CotizacionController extends Controller
 
     public function listCotizaciones()
     {
-        $cotizaciones = Cotizacion::with('proveedor', 'estatus')->where('baja_logica', 1)->get();
-
-
-
-
-        // dd($cotizaciones->toArray());
+        $cotizaciones = Cotizacion::with('proveedor', 'estatus')->get();
         return response()->json(['cotizaciones' => $cotizaciones], 200);
     }
 
@@ -176,8 +171,7 @@ class CotizacionController extends Controller
     {
 
         $cotizacion = Cotizacion::find($request->id);
-        $cotizacion->baja_logica = 0;
-        $cotizacion->save();
+        $cotizacion->delete();
         return response()->json(['success' => 'Cotizacion eliminada exitosamente'], 200);
     }
 

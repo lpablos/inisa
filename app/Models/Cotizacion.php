@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 
+
 class Cotizacion extends Model
 {
     use HasFactory, SoftDeletes;

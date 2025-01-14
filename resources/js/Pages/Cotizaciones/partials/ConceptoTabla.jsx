@@ -12,6 +12,8 @@ import "../../../../css/style_cotizacion.css";
 import { Badge } from 'primereact/badge';
 import { Chip } from 'primereact/chip';
 import VistaPreviaCotizacion from "./VistaPreviaCotizacion";
+import { ProgressSpinner } from 'primereact/progressspinner';
+import { preload } from "react-dom";
         
         
 
@@ -24,20 +26,25 @@ const ConceptoTabla = () => {
     const [loader, setLoader] = useState(false); // Control de loader
     const toast = useRef(null); // Referencia de Toast
 
+    const [preLoad, setPreLoad] = useState(false)
+
 
     const [vistraPreviaPDF, setVistraPreviaPDF] = useState(false)
 
     // Cargar cotizaciones
     const obtenerCotizaciones = async () => {
+        setPreLoad(true)
         try {
             const response = await axios.get(
                 route("cotizacion.list.cotizaciones")
             );
             setCotizaciones(response.data.cotizaciones || []);
+            setPreLoad(false)
             // console.log("cotizaciones", response.data.cotizaciones);
         } catch (error) {
             console.error("Error al obtener cotizaciones:", error);
             setCotizaciones([]);
+            setPreLoad(false)
         }
     };
 
@@ -280,21 +287,27 @@ const ConceptoTabla = () => {
             </div>
                     
             {/* Tabla de cotizaciones */}
-            <DataTable
-                value={cotizaciones}
-                paginator
-                rows={5}
-                size={'small'} 
-                responsiveLayout="scroll"
-            >
-                <Column field="id" header="ID" />
-                <Column field="titulo" header="Título" style={{ width: '19em', textAlign:'justify'}}/>
-                <Column field="fecha" header="Fecha"  style={{ width: '9em' }}/>
-                <Column header="Plantilla"  style={{ width: '9em' }}  body={(rowData) => renderTipo(rowData)}/>
-                <Column field="valides" header="Válido Intervalo" style={{ width: '9em' }} body={(rowData) => renderValides(rowData)}/>
-                <Column field="estatus.nombre" header="Status" body={(rowData) => renderStatus(rowData)}/>
-                <Column header="Acciones" body={accionesTemplate} />
-            </DataTable>
+            {preLoad === true && (
+                <div className="flex justify-content-center">
+                    <ProgressSpinner />
+                </div>
+            )}
+            {preLoad === false &&(
+                <DataTable
+                    value={cotizaciones}
+                    paginator                
+                    size={'small'} 
+                    rows={5} rowsPerPageOptions={[5, 10, 25, 50]}
+                >
+                    <Column field="id" header="ID" />
+                    <Column field="titulo" header="Título" style={{ width: '19em', textAlign:'justify'}}/>
+                    <Column field="fecha" header="Fecha"  style={{ width: '9em' }}/>
+                    <Column header="Plantilla"  style={{ width: '9em' }}  body={(rowData) => renderTipo(rowData)}/>
+                    <Column field="valides" header="Válido Intervalo" style={{ width: '9em' }} body={(rowData) => renderValides(rowData)}/>
+                    <Column field="estatus.nombre" header="Status" body={(rowData) => renderStatus(rowData)}/>
+                    <Column header="Acciones" body={accionesTemplate} />
+                </DataTable>
+            )}
 
             {/* Modal para crear/editar */}
             {isDialogVisible && (
