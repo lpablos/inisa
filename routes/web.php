@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\CatalogosController;
 use App\Http\Controllers\CotizacionController;
 use Illuminate\Routing\Router;
+use App\Http\Controllers\ExportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +47,10 @@ Route::middleware('auth')->group(function () {
 Route::get('/uikit/button', function () {
     return Inertia::render('main/uikit/button/page');
 })->name('button');
+
+
+ // ruta  la exportacion del excel
+ Route::get('/exportar-detalles/{id}', [ExportController::class, 'exportarDetalles'])->name('exportar.detalles');
 
 
 // Todo lo relacionado con la administracion
@@ -126,7 +131,7 @@ Route::prefix('admin')->group(function () {
             Route::put('actualiza-cotizacion', 'updateCotizacion')->name('cotizacion.actualiza.cotizacion');
             Route::delete('cotizacion/{id}', 'deleteCotizacion')->name('cotizacion.delete.cotizacion');
             Route::post('duplicar-cotizacion', 'duplicarCotizacion')->name('cotizacion.duplicar.cotizacion');
-            
+
 
 
 
@@ -138,6 +143,7 @@ Route::prefix('admin')->group(function () {
                 // Route::delete('item/detalleItem/actualizar', 'actualizarDetalleIdenty')->name('cotizacion.captura.item.actualiza');
                 Route::delete('tomo/detalle/{id}', 'deleteTomoDetalle')->name('tomo.detalle.elimina.identy');
             });
+
 
 
         });
