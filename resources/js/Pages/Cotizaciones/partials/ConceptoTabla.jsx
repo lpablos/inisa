@@ -12,8 +12,8 @@ import "../../../../css/style_cotizacion.css";
 import { Badge } from 'primereact/badge';
 import { Chip } from 'primereact/chip';
 import VistaPreviaCotizacion from "./VistaPreviaCotizacion";
-        
-        
+
+
 
 
 const ConceptoTabla = () => {
@@ -88,7 +88,7 @@ const ConceptoTabla = () => {
     const renderValides = (rowData) => {
         return (
             <div style={{ display: 'flex', gap: '18px', width: '45 rem' }}>
-                <Chip label={rowData.fecha_cotiza_inicio+' '+rowData.fecha_cotiza_fin} /> 
+                <Chip label={rowData.fecha_cotiza_inicio+' '+rowData.fecha_cotiza_fin} />
             </div>
         );
     };
@@ -198,7 +198,7 @@ const ConceptoTabla = () => {
     const accionesTemplate = (rowData) => (
         <div className="flex gap-2">
             <Button
-                severity="success" 
+                severity="success"
                 size="small"
                 icon="pi pi-file-excel"
                 tooltip="Vista Previa Excel"
@@ -207,7 +207,7 @@ const ConceptoTabla = () => {
                 onClick={() => alert("Descaga excel- pediente")}
             />
             <Button
-                severity="success" 
+                severity="success"
                 size="small"
                 icon="pi pi-file-pdf"
                 tooltip="Vista Previa PDF"
@@ -246,7 +246,7 @@ const ConceptoTabla = () => {
              <a
                 id="capture-link"
                 href={route("cotizacion.captura.detalle", { identy: rowData.id })}
-                size="small"    
+                size="small"
                 rel="noopener noreferrer"
                 className="p-button-rounded p-button"
             >
@@ -276,15 +276,15 @@ const ConceptoTabla = () => {
                     onClick={handleCrear}
                 /> */}
                 <Button icon="pi pi-plus" tooltip="Nueva Cotización" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded severity="info" aria-label="Nueva Cotización" onClick={handleCrear}/>
-                
+
             </div>
-                    
+
             {/* Tabla de cotizaciones */}
             <DataTable
                 value={cotizaciones}
                 paginator
                 rows={5}
-                size={'small'} 
+                size={'small'}
                 responsiveLayout="scroll"
             >
                 <Column field="id" header="ID" />

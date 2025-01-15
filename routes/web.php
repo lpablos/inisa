@@ -50,7 +50,7 @@ Route::get('/uikit/button', function () {
 
 
  // ruta  la exportacion del excel
- Route::get('/exportar-detalles/{id}', [ExportController::class, 'exportarDetalles'])->name('exportar.detalles');
+ Route::get('/exportar-excel-cotizacion/{id}', [ExportController::class, 'exportarDetalles'])->name('exportar.excel.cotizacion');
 
 
 // Todo lo relacionado con la administracion

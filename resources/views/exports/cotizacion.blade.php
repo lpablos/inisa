@@ -1,4 +1,23 @@
+
 <table>
+    <tr>
+        <td  style="text-align: center; height: 100px;">
+            <img class="text-align: center;" src="{{ public_path('images/EncabezadoExcel.jpg') }}" height="100" width="100">
+        </td>
+    </tr>
+</table>
+
+<table>
+    <tr rowspan="8" >
+        <td  style="text-align: center; font-weight: bold; font-size: 16px;">
+            INNOVACIÓN NACIONAL DE INGENIERÍA, S.A. DE C.V.
+        </td>
+    </tr>
+
+</table>
+
+
+{{-- <table>
     <!-- Encabezado del documento -->
     <tr>
         <td rowspan="4">
@@ -29,9 +48,7 @@
     </tr>
 
     <!-- Espacio entre encabezado y tabla -->
-    <tr>
-        <td colspan="6"></td>
-    </tr>
+    <tr><td colspan="6"></td></tr>
 
     <!-- Subencabezado -->
     <tr>
@@ -54,9 +71,7 @@
     </tr>
 
     <!-- Espacio entre encabezados y datos -->
-    <tr>
-        <td colspan="6"></td>
-    </tr>
+    <tr><td colspan="6"></td></tr>
 
     <!-- Encabezado de la tabla -->
     <tr style="background-color: #d9d9d9; font-weight: bold;">
@@ -79,4 +94,4 @@
             <td>{{ $detalle['subtotal'] }}</td>
         </tr>
     @endforeach
-</table>
+</table> --}}
