@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Inertia } from '@inertiajs/inertia';
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
@@ -194,6 +195,11 @@ const ConceptoTabla = () => {
         }
     };
 
+    const handleExportClick = (id) => {   
+        const url = route('exportar.excel.cotizacion', id); // Genera la URL dinámica.
+        Inertia.visit(url, { method: 'get' }); // Realiza la navegación.
+    };
+
     // Plantilla para las acciones
     const accionesTemplate = (rowData) => (
         <div className="flex gap-2">
@@ -204,7 +210,7 @@ const ConceptoTabla = () => {
                 tooltip="Vista Previa Excel"
                 tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
                 className="p-button-rounded p-button-info p-button-sm"
-                onClick={() => alert("Descaga excel- pediente")}
+                onClick={() => handleExportClick(rowData.id) }
             />
             <Button
                 severity="success"
