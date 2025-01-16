@@ -1,10 +1,11 @@
-{{-- <table >
+<table >
     <tr>
-        <td   style="text-align: center; height: 100px;">
-            <img class="text-align: center;" src="{{ public_path('images/EncabezadoExcel.jpg') }}" height="100" width="100">
+        <td colspan="10"   style="text-align: center; ">
+
+            <img  src="{{ public_path('images/EncabezadoExcel.jpg') }}" >
         </td>
     </tr>
-</table> --}}
+</table>
 
 <table>
     <tr>
@@ -102,7 +103,7 @@
 
     </thead>
 
-    <tbody style="text-align: center;">
+    <tbody >
         @foreach ($detalles as $detalle)
             <tr>
                 <td style="text-align: center;" >{{ $detalle['PDA'] }}</td>
