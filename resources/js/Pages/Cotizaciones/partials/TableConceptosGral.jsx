@@ -1,78 +1,52 @@
-import React, { Component, useState } from 'react';
-import { ToggleButton } from 'primereact/togglebutton';
+import React, { Component, useState, useEffect } from 'react';
 
-const tableStyles = {
-    width: '100%',
-    borderCollapse: 'collapse',
-};
-
-const cellStyles = {
-    border: '1px solid #ddd',
-    padding: '8px',
-    textAlign: 'center',
-    verticalAlign: 'middle',
-};
-
-const headerStyles = {
-    ...cellStyles,
-    backgroundColor: '#f2f2f2',
-    fontWeight: 'bold',
-};
-
-const yellowRowStyles = {
-    backgroundColor: '#fffbeb',
-};
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { SelectButton } from 'primereact/selectbutton';
+import { Button } from 'primereact/button';
 
 const TableConceptosGral = () => {
-    const [checked, setChecked] = useState(false);
     
+
+    const [checked, setChecked] = useState(false);
+    const [products, setProducts] = useState([]);
+    const [sizeOptions] = useState([
+        { label: 'Small', value: 'small' },
+        { label: 'Normal', value: 'normal' },
+        { label: 'Large', value: 'large' }
+    ]);
+    const [size, setSize] = useState(sizeOptions[1].value);
+    useEffect(() => {
+        console.log("Aqui");
+        
+    }, []);
+
+     const accionesTemplate = (rowData) => (
+            <div className="flex gap-2">
+                <Button
+                    severity="success"
+                    size="small"
+                    icon="pi pi-file-excel"
+                    tooltip="Vista Previa Excel"
+                    tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
+                    className="p-button-rounded p-button-info p-button-sm"
+                    onClick={() => handleExportClick(rowData.id) }
+                />
+            </div>
+        );
     return (
-        <>
-        <table style={tableStyles}>
-            <thead>
-                <th style={headerStyles}>check</th>
-                <th style={headerStyles}>Descripcion</th>
-                <th style={headerStyles}>Material Unidad</th>
-                <th style={headerStyles}>Materia Cantidad</th>
-                <th style={headerStyles}>Material Subtotal</th>
-                <th style={headerStyles}>Mano Obra Costo Unitario</th>
-                <th style={headerStyles}>Mano Obra Subtotal</th>
-                <th style={headerStyles}>Material/Mano Obra Subtotal</th>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <div className="flex justify-content-center">
-                            <ToggleButton checked={checked} onChange={(e) => setChecked(e.value)} className="w-8rem" />
-                        </div>
-                    </td>
-                    <td>demo</td>
-                    <td>demo</td>
-                    <td>demo</td>
-                    <td>demo</td>
-                    <td>demo</td>
-                    <td>demo</td>
-                    <td>demo</td>
-                </tr>
-                <tr>
-                    <td>
-                        <div className="flex justify-content-center">
-                            <ToggleButton checked={checked} onChange={(e) => setChecked(e.value)} className="w-8rem" />
-                        </div>
-                    </td>
-                    <td>demo</td>
-                    <td>demo</td>
-                    <td>demo</td>
-                    <td>demo</td>
-                    <td>demo</td>
-                    <td>demo</td>
-                    <td>demo</td>
-                </tr>
-            </tbody>
-        </table>
+        
+        <div className="card">
+            <DataTable value={products} size={size} tableStyle={{ minWidth: '50rem' }}>
+                <Column field="code" header="Descripción"></Column>
+                <Column field="name" header="Material"></Column>
+                <Column field="category" header="Mano de Obra"></Column>
+                <Column field="quantity" header="Quantity" body={accionesTemplate}></Column>
+            </DataTable>
+        </div>
         
             
-        </>
+        
     );
     
 }
