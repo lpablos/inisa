@@ -9,7 +9,9 @@ import { Tooltip } from 'primereact/tooltip';
 import BusquedaConceptos from './partials/BusquedaConceptos';
         
 
-const detalleCaptura =({cotizacion, detalle}) => {    
+const detalleCaptura =({cotizacion, detalle}) => {  
+    console.log("Este es", cotizacion);
+      
     const [reloadList, setReloadList] = useState(false)
     const recargarListado = () =>{
         setReloadList(true)
@@ -32,7 +34,7 @@ const detalleCaptura =({cotizacion, detalle}) => {
                             <p>Título: {detalle?.titulo}</p>
                         </div>                      
                         <div className="col-2 text-right">
-                            <BusquedaConceptos/>
+                            <BusquedaConceptos cotizacion={cotizacion}/>
                             <DialogDetalleCotizacion cotizacion={cotizacion} detalleItem={detalle} modo={'Registrar'} recargarListado={recargarListado}/>
                             <Button icon="pi pi-file-pdf" rounded text severity="info" aria-label="Vista Previa"  tooltip="Vista Previa PDF" tooltipOptions={{ position: 'left' }} onClick={()=>{alert('En desarrollo')}}/>
                         </div>
