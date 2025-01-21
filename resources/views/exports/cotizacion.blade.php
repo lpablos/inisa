@@ -66,10 +66,10 @@
 
 
 
-<table>
+<table style="border-collapse: collapse; width: 100%;">
     <thead>
         <tr style="border: 1px solid #000; text-align: center;">
-            <th rowspan="3" style="background-color: #D9FBD9; font-weight: bold; text-align: center;  width: 100px;" >PDA</th>
+            <th rowspan="3" style="background-color: #D9FBD9; font-weight: bold; text-align: center;  width: 100px; border: 1px solid #000;" >PDA</th>
             <th rowspan="3" style="background-color: #D9FBD9; font-weight: bold; text-align: center;  width: 200px;">
                 DESCRIPCIÓN
             </th>
