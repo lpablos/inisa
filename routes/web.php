@@ -8,7 +8,11 @@ use App\Http\Controllers\CatalogosController;
 use App\Http\Controllers\CotizacionController;
 use Illuminate\Routing\Router;
 use App\Http\Controllers\ExportController;
+<<<<<<< HEAD
 use App\Http\Controllers\PdfController;
+=======
+use App\Http\Controllers\BuscadorGeneralController;
+>>>>>>> bd29202ed1b300ea7b3f0317a0b36fab80887246
 
 /*
 |--------------------------------------------------------------------------
@@ -145,9 +149,12 @@ Route::prefix('admin')->group(function () {
                 // Route::delete('item/detalleItem/actualizar', 'actualizarDetalleIdenty')->name('cotizacion.captura.item.actualiza');
                 Route::delete('tomo/detalle/{id}', 'deleteTomoDetalle')->name('tomo.detalle.elimina.identy');
             });
+        });
 
-
-
+        Route::controller(BuscadorGeneralController::class)->group(function () {
+            Route::prefix('buscador-general')->group(function(){
+                Route::post('conceptos-generales', 'busquedaConcepto')->name('buscador.general.concepto');
+            });
         });
     });
 });
