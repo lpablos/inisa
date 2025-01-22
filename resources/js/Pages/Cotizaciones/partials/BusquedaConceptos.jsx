@@ -92,7 +92,7 @@ const BusquedaConceptos = ({cotizacion}) => {
 
     return (
         <>
-            <Button icon="pi pi-search" rounded text severity="success" aria-label="Search" tooltip="Busqueda Conceptos" tooltipOptions={{ position: 'left' }} onClick={() => setVisible(true)}/>
+            <Button icon="pi pi-search" rounded text severity="info" aria-label="Search" tooltip="Busqueda Conceptos" tooltipOptions={{ position: 'left' }} onClick={() => setVisible(true)}/>
             {/* <Button label="Show" icon="pi pi-external-link" onClick={() => setVisible(true)} /> */}
             <Dialog header="Busqueda de Conceptos" visible={visible} maximizable style={{ width: '80vw' }} onHide={() => {if (!visible) return; setVisible(false); }}>
 
@@ -126,7 +126,7 @@ const BusquedaConceptos = ({cotizacion}) => {
 
                 <div className="flex justify-content-center m-4">
                     <div className="p-inputgroup flex-1">
-                        <InputText placeholder="Concepto" className="p-inputtext-lg" value={concepto} onChange={((event)=>validacionCaracteres(event))}/>
+                        <InputText placeholder="Captura el concepto a buscar" className="p-inputtext-lg" value={concepto} onChange={((event)=>validacionCaracteres(event))}/>
                         <Button icon="pi pi-search" onClick={()=>busquedaGeneralConcepto()} disabled={concepto.length < 10} />
                     </div> 
                 </div>
@@ -144,8 +144,14 @@ const BusquedaConceptos = ({cotizacion}) => {
                         <ProgressSpinner style={{width: '50px', height: '50px'}} strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s" />
                     </div>
                 )}
-                {loader == false &&(
-                    <TableConceptosGral listadoConceptos={registros} totalesAsc={numeroRegistros} validacionConcepto={validacionConcepto}/>
+                {loader == false && registros.length > 0 &&(
+                    <TableConceptosGral 
+                        listadoConceptos={registros} 
+                        totalesAsc={numeroRegistros} 
+                        validacionConcepto={validacionConcepto}
+                        setVisibleModal={setVisible}
+                        setConceptoInput={setConcepto}
+                    />
                 )}
             </Dialog>
         </>
