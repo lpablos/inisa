@@ -8,11 +8,8 @@ use App\Http\Controllers\CatalogosController;
 use App\Http\Controllers\CotizacionController;
 use Illuminate\Routing\Router;
 use App\Http\Controllers\ExportController;
-<<<<<<< HEAD
 use App\Http\Controllers\PdfController;
-=======
 use App\Http\Controllers\BuscadorGeneralController;
->>>>>>> bd29202ed1b300ea7b3f0317a0b36fab80887246
 
 /*
 |--------------------------------------------------------------------------
