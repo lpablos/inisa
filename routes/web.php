@@ -8,8 +8,8 @@ use App\Http\Controllers\CatalogosController;
 use App\Http\Controllers\CotizacionController;
 use Illuminate\Routing\Router;
 use App\Http\Controllers\ExportController;
-use App\Http\Controllers\BuscadorGeneralController;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\BuscadorGeneralController;
 
 /*
 |--------------------------------------------------------------------------

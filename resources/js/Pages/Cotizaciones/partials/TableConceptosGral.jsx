@@ -3,12 +3,15 @@ import React, { Component, useState, useEffect, useRef } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { SelectButton } from 'primereact/selectbutton';
-import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { ConfirmPopup, confirmPopup } from 'primereact/confirmpopup';
-import { Toast } from 'primereact/toast';
 
-const TableConceptosGral = ({listadoConceptos = [], totalesAsc=0}) => {
+
+import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
+import { Toast } from 'primereact/toast';
+import { Button } from 'primereact/button';
+
+const TableConceptosGral = ({listadoConceptos = [], totalesAsc=0, setVisibleModal, setConceptoInput}) => {
     const [conceptos, setConceptos] = useState([]);
     const [totales, setTotales] = useState([]);
     const [visible, setVisible] = useState(false);
@@ -22,13 +25,19 @@ const TableConceptosGral = ({listadoConceptos = [], totalesAsc=0}) => {
     }, [listadoConceptos]);
 
     const validacionConcepto = (dato) =>{
-        // aqui falta enviarlos a la funcion nueva
         console.log("esto", dato);
         setVisible(true)
     }
 
     const accept = () => {
+        setConceptoInput('')
+        setConceptos([])
         toast.current.show({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 });
+        setTimeout(() => {
+            setVisibleModal(false);    
+                    
+        }, 3500);
+
     };
 
     const reject = () => {
@@ -78,11 +87,18 @@ const TableConceptosGral = ({listadoConceptos = [], totalesAsc=0}) => {
                     <Column field="category" header="Mano de Obra" body={detalleManoObra}></Column>
                     <Column field="opciones" header="Opción" body={accionesTemplate}></Column>
                 </DataTable>
-                <div className="flex justify-content-center">
-                    <Toast ref={toast} />
-                    <ConfirmPopup target={buttonEl.current} visible={visible} onHide={() => setVisible(false)} 
-                        message="¿Estas seguro de agregarlo ?" icon="pi pi-exclamation-triangle" accept={accept} reject={reject} />                    
-                </div>
+                <Toast ref={toast} />
+                <ConfirmDialog
+                    group="declarative"
+                    visible={visible}
+                    onHide={() => setVisible(false)}
+                    message="¿Estas seguro de agregar este concepto?"
+                    header="Confirmación"
+                    icon="pi pi-exclamation-triangle"
+                    accept={accept}
+                    reject={reject}
+                    breakpoints={{ '1100px': '75vw', '960px': '100vw' }}
+                />
             </div>
         </>
         
