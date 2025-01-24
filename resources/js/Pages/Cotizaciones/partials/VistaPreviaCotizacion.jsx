@@ -13,7 +13,7 @@ const VistaPreviaCotizacion = ({vistraPreviaPDF, setVistraPreviaPDF}) => {
 
     useEffect(()=>{
         if(visible){
-            const pdfUrl = 'https://www.soundczech.cz/temp/lorem-ipsum.pdf'; 
+            const pdfUrl = `${route("exportar.pdf.cotizacion")}`; 
             setTimeout(() => {
                 setPdfUrl(pdfUrl)
             }, 1000);

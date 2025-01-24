@@ -699,13 +699,13 @@ class CotizacionController extends Controller
     }
 
     public function asociarConceptoCotizacion(Request $request){
-        // dd("Aqui el detalle", $request->all());
-
-
-        switch ($request->perteneceTomo) {
+        
+        $clonarConcepto = DetalleCotizacion::find($request->identyConcepto);
+        // dd($request->all());
+        switch ($request->pertTomo) {
             case 1:
                 // Registra un tomo nue
-                $tomoValidacion = DetalleCotizacion::where('descripcion', $request->capturaTomo)->where('cotizaciones_id', $request->identyCotizacion)
+                $tomoValidacion = DetalleCotizacion::where('descripcion', $request->captTomo)->where('cotizaciones_id', $request->identyCotizacion)
                     ->count();
 
 
@@ -720,7 +720,7 @@ class CotizacionController extends Controller
 
                     $detalleCotizacion = DetalleCotizacion::create([
                         'es_tomo' => 1,
-                        'descripcion' =>  $request->capturaTomo,
+                        'descripcion' =>  $request->captTomo,
                         'PDA' => $this->pdaTomoCotizacion($request->identyCotizacion),
                         'cotizaciones_id' => (int) $request->identyCotizacion
                     ]);
@@ -734,20 +734,21 @@ class CotizacionController extends Controller
 
                     $detalleCotizacion = DetalleCotizacion::create([
                         'PDA' => $this->PdaDinamicoTomo($tomo->id, (int) $request->identyCotizacion),
-                        'descripcion' => $request->descripcionMaterial,
-                        'costo_material_cantidad' => $request->cantidadMaterial,
-                        'costo_material_unitario_sugerido' => $request->costoMaterialSugerido,
-                        'costo_material_unitario' => $request->costoMaterialFinal,
-                        'costo_material_subtotal' => $request->subTotalMaterial,
-                        'costo_mano_obra_unitario_sugerido' => $request->costoManoObraSugerido,
-                        'costo_mano_obra_unitario' => $request->costoManoObraFinal,
-                        'costo_mano_obra_subtotal' => $request->subTotalManoObra,
-                        'obra_material_subtotal' => $request->subTotalMateObraTotal,
-                        'comentarios_extras' => $request->citaComentario,
+                        'descripcion' => $clonarConcepto->descripcion,
+                        'costo_material_cantidad' => $clonarConcepto->costo_material_cantidad,
+                        'costo_material_unitario_sugerido' => $clonarConcepto->costo_material_unitario_sugerido,
+                        'costo_material_unitario' => $clonarConcepto->costo_material_unitario,
+                        'costo_material_subtotal' => $clonarConcepto->costo_material_subtotal,
+                        'costo_mano_obra_unitario_sugerido' => $clonarConcepto->costo_mano_obra_unitario_sugerido,
+                        'costo_mano_obra_unitario' => $clonarConcepto->costo_mano_obra_unitario,
+                        'costo_mano_obra_subtotal' => $clonarConcepto->costo_mano_obra_subtotal,
+                        'obra_material_subtotal' => $clonarConcepto->obra_material_subtotal,
+                        'comentarios_extras' => $clonarConcepto->comentarios_extras,
                         'cotizaciones_id' => (int) $request->identyCotizacion,
-                        'tomo_pertenece' => $tomo->id,
-                        'cat_unidad_medida_id' => $request->seleccionUnidadMedida
+                        'tomo_pertenece' => $clonarConcepto->tomo_pertenece,
+                        'cat_unidad_medida_id' => $clonarConcepto->cat_unidad_medida_id,
                     ]);
+                    
                 }
                 break;
             case 2:
@@ -756,28 +757,22 @@ class CotizacionController extends Controller
                 // dd($request->all(), $request->seleccionTomo['id'], $this->pdaSeleccionTomo($request->seleccionTomo['id'], (int) $request->identyCotizacion));
 
                 $detalleCotizacion = DetalleCotizacion::create([
-                    'PDA' => $this->pdaSeleccionTomo($request->seleccionTomo['id'], (int) $request->identyCotizacion),
-                    'descripcion' => $request->descripcionMaterial,
-                    'costo_material_cantidad' => $request->cantidadMaterial,
-                    'costo_material_unitario_sugerido' => $request->costoMaterialSugerido,
-                    'costo_material_unitario' => $request->costoMaterialFinal,
-                    'costo_material_subtotal' => $request->subTotalMaterial,
-                    'costo_mano_obra_unitario_sugerido' => $request->costoManoObraSugerido,
-                    'costo_mano_obra_unitario' => $request->costoManoObraFinal,
-                    'costo_mano_obra_subtotal' => $request->subTotalManoObra,
-                    'obra_material_subtotal' => $request->subTotalMateObraTotal,
-                    'comentarios_extras' => $request->citaComentario,
-                    'cotizaciones_id' => $request->identyCotizacion,
-                    'tomo_pertenece' => $request->seleccionTomo['id'],
+                    'PDA' => $this->pdaSeleccionTomo($request->selecTomo['id'], (int) $request->identyCotizacion),
+                    'descripcion' => $clonarConcepto->descripcion,
+                    'costo_material_cantidad' => $clonarConcepto->costo_material_cantidad,
+                    'costo_material_unitario_sugerido' => $clonarConcepto->costo_material_unitario_sugerido,
+                    'costo_material_unitario' => $clonarConcepto->costo_material_unitario,
+                    'costo_material_subtotal' => $clonarConcepto->costo_material_subtotal,
+                    'costo_mano_obra_unitario_sugerido' => $clonarConcepto->costo_mano_obra_unitario_sugerido,
+                    'costo_mano_obra_unitario' => $clonarConcepto->costo_mano_obra_unitario,
+                    'costo_mano_obra_subtotal' => $clonarConcepto->costo_mano_obra_subtotal,
+                    'obra_material_subtotal' => $clonarConcepto->obra_material_subtotal,
+                    'comentarios_extras' => $clonarConcepto->comentarios_extras,
+                    'cotizaciones_id' =>  $request->identyCotizacion,
+                    'tomo_pertenece' => $clonarConcepto->tomo_pertenece,
                     'es_tomo' => 0,
                     'cat_unidad_medida_id' => $request->seleccionUnidadMedida
                 ]);
-
-
-
-
-
-
                 break;
             default:
                 # 0 En caso de s
@@ -785,22 +780,26 @@ class CotizacionController extends Controller
                 // dd($request->all(), $this->PdaDinamicoSinTomo(1));
                 $detalleCotizacion = DetalleCotizacion::create([
                     'PDA' => $this->PdaDinamicoSinTomo((int) $request->identyCotizacion),
-                    'descripcion' => $request->descripcionMaterial,
-                    'costo_material_cantidad' => $request->cantidadMaterial,
-                    'costo_material_unitario_sugerido' => $request->costoMaterialSugerido,
-                    'costo_material_unitario' => $request->costoMaterialFinal,
-                    'costo_material_subtotal' => $request->subTotalMaterial,
-                    'costo_mano_obra_unitario_sugerido' => $request->costoManoObraSugerido,
-                    'costo_mano_obra_unitario' => $request->costoManoObraFinal,
-                    'costo_mano_obra_subtotal' => $request->subTotalManoObra,
-                    'obra_material_subtotal' => $request->subTotalMateObraTotal,
-                    'comentarios_extras' => $request->citaComentario,
+                    'descripcion' => $clonarConcepto->descripcion,
+                    'costo_material_cantidad' => $clonarConcepto->costo_material_cantidad,
+                    'costo_material_unitario_sugerido' => $clonarConcepto->costo_material_unitario_sugerido,
+                    'costo_material_unitario' => $clonarConcepto->costo_material_unitario,
+                    'costo_material_subtotal' => $clonarConcepto->costo_material_subtotal,
+                    'costo_mano_obra_unitario_sugerido' => $clonarConcepto->costo_mano_obra_unitario_sugerido,
+                    'costo_mano_obra_unitario' => $clonarConcepto->costo_mano_obra_unitario,
+                    'costo_mano_obra_subtotal' => $clonarConcepto->costo_mano_obra_subtotal,
+                    'obra_material_subtotal' => $clonarConcepto->obra_material_subtotal,
+                    'comentarios_extras' => $clonarConcepto->comentarios_extras,
                     'cotizaciones_id' => $request->identyCotizacion,
                     'es_tomo' => 0,
-                    'cat_unidad_medida_id' => $request->seleccionUnidadMedida
+                    'cat_unidad_medida_id' => $clonarConcepto->cat_unidad_medida_id
                 ]);
                 break;
         }
+        return response()->json([
+            'success' => 'detalle cotizacion creado exitosamente',
+            'data' => $detalleCotizacion
+        ], 201);
     }
 
 

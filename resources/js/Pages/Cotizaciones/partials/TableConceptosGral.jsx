@@ -10,7 +10,7 @@ import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 
-const TableConceptosGral = ({listadoConceptos = [], totalesAsc=0,seleccionTomo,perteneceTomo,capturaTomo, setVisibleModal, setConceptoInput}) => {
+const TableConceptosGral = ({listadoConceptos = [], totalesAsc=0,seleccionTomo,perteneceTomo,capturaTomo,identyCotizacion, setVisibleModal, setConceptoInput}) => {
     const [conceptos, setConceptos] = useState([]);
     const [totales, setTotales] = useState([]);
     const [visible, setVisible] = useState(false);
@@ -22,6 +22,7 @@ const TableConceptosGral = ({listadoConceptos = [], totalesAsc=0,seleccionTomo,p
     const [pertTomo, setPertTomo] = useState(null);
     const [captTomo, setCaptTomo] = useState(null);
     const [idConcepto, setIdConcepto] = useState(null)
+    const [idCotiza, setIdCotiza] = useState(null)
     // const []
     
    
@@ -34,7 +35,8 @@ const TableConceptosGral = ({listadoConceptos = [], totalesAsc=0,seleccionTomo,p
         setSelecTomo(seleccionTomo)
         setPertTomo(perteneceTomo)
         setCaptTomo(capturaTomo)
-    },[seleccionTomo,perteneceTomo,capturaTomo])
+        setIdCotiza(identyCotizacion)
+    },[seleccionTomo,perteneceTomo,capturaTomo, identyCotizacion])
 
     const validacionConcepto = (dato) =>{
         const{id}= dato;
@@ -50,12 +52,21 @@ const TableConceptosGral = ({listadoConceptos = [], totalesAsc=0,seleccionTomo,p
     const asociarConcepto = async () =>{
         try {
             const datos = {
+                'identyCotizacion' : idCotiza,
                 'identyConcepto' : idConcepto,
                 'selecTomo' : selecTomo,
                 'pertTomo' : pertTomo,
                 'captTomo' : captTomo,
             }
             const response = await axios.post(  `${route("asociar.concepto.generales")}`,datos)
+            const {data,success} = response.data
+            if(response.status == 201){
+                resetForm()
+                toast.current.show({ severity: 'info', summary: 'Confirmed', detail:  `${success}`, life: 3000 });
+                setTimeout(() => {
+                    setVisibleModal(false);    
+                }, 3500);
+            }
             console.log("Esta es la respues", response);
             
         } catch (error) {
@@ -66,11 +77,12 @@ const TableConceptosGral = ({listadoConceptos = [], totalesAsc=0,seleccionTomo,p
     }
 
     const accept = () => {
-        resetForm()
-        toast.current.show({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 });
-        setTimeout(() => {
-            setVisibleModal(false);    
-        }, 3500);
+        asociarConcepto()
+        // resetForm()
+        // toast.current.show({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 });
+        // setTimeout(() => {
+        //     setVisibleModal(false);    
+        // }, 3500);
 
     };
     const reject = () => {

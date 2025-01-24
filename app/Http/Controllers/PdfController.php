@@ -28,7 +28,8 @@ class PdfController extends Controller
         // $pdf = Pdf::loadView('pdf/cotizacion', $data);
 
         // Descargar el PDF
-        return $pdf->download('cotizacion.pdf');
+        // return $pdf->download('cotizacion.pdf');
+        return $pdf->stream('cotizacion.pdf');
 
         // O para mostrarlo en el navegador
         // return $pdf->stream('ejemplo.pdf');

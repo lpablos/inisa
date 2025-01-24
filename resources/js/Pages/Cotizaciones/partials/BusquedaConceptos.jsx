@@ -151,6 +151,7 @@ const BusquedaConceptos = ({cotizacion}) => {
                         seleccionTomo={seleccionTomo}
                         perteneceTomo={perteneceTomo}
                         capturaTomo={capturaTomo}
+                        identyCotizacion={identyCotizacion}
                         
                         validacionConcepto={validacionConcepto}
                         setVisibleModal={setVisible}

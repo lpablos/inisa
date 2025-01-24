@@ -9,9 +9,7 @@ import { Tooltip } from 'primereact/tooltip';
 import BusquedaConceptos from './partials/BusquedaConceptos';
         
 
-const detalleCaptura =({cotizacion, detalle}) => {  
-    console.log("Este es", cotizacion);
-      
+const detalleCaptura =({cotizacion, detalle}) => {    
     const [reloadList, setReloadList] = useState(false)
     const recargarListado = () =>{
         setReloadList(true)
