@@ -135,9 +135,6 @@ Route::prefix('admin')->group(function () {
             Route::delete('cotizacion/{id}', 'deleteCotizacion')->name('cotizacion.delete.cotizacion');
             Route::post('duplicar-cotizacion', 'duplicarCotizacion')->name('cotizacion.duplicar.cotizacion');
 
-
-
-
             Route::prefix('captura')->group(function(){
                 Route::get('{identy?}/detalle','datelleCaptura')->name('cotizacion.captura.detalle');
                 Route::post('guardarDetalle','saveCaptura')->name('cotizacion.guardad.captura');
@@ -145,6 +142,8 @@ Route::prefix('admin')->group(function () {
                 Route::post('item/detalleItem/actualizar', 'actualizarDetalleIdenty')->name('cotizacion.captura.item.actualiza');
                 // Route::delete('item/detalleItem/actualizar', 'actualizarDetalleIdenty')->name('cotizacion.captura.item.actualiza');
                 Route::delete('tomo/detalle/{id}', 'deleteTomoDetalle')->name('tomo.detalle.elimina.identy');
+
+                Route::post('asociar-concepto-generales', 'asociarConceptoCotizacion')->name('asociar.concepto.generales');
             });
         });
 

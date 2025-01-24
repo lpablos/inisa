@@ -12,23 +12,23 @@ import { useEffect } from 'react';
 const BusquedaConceptos = ({cotizacion}) => {
     const [visible, setVisible] = useState(false);
     const [concepto, setConcepto] = useState('');
-    const [perteneceTomo, setPerteneceTomo] = useState(0);
-
+    
     const [loader, setLoader] = useState(false);
     const [registros, setRegistros]= useState([])
     const [numeroRegistros, setNumeroRegistros]= useState(0)
     const [error, setError] = useState("");
     const [identyCotizacion, setIdentyCotizacion] = useState(null);  
-
+    
     const [tpAsoTomo, setTpAsoTomo] = useState([
         { name: 'Ninguno', value:0 },
         { name: 'Captura Tomo', value:1 },
         { name: 'Listar Tomos', value:2}
     ]);
-
+    const [listaTomos, setListaTomo] = useState([]);  
+    
+    const [perteneceTomo, setPerteneceTomo] = useState(0);
     const [capturaTomo, setCapturaTomo] = useState('');
     const [seleccionTomo, setSeleccionTomo] = useState(null);
-    const [listaTomos, setListaTomo] = useState([]);  
 
     const validacionCaracteres = (event) =>{
         const value = event.target.value;
@@ -148,6 +148,10 @@ const BusquedaConceptos = ({cotizacion}) => {
                     <TableConceptosGral 
                         listadoConceptos={registros} 
                         totalesAsc={numeroRegistros} 
+                        seleccionTomo={seleccionTomo}
+                        perteneceTomo={perteneceTomo}
+                        capturaTomo={capturaTomo}
+                        
                         validacionConcepto={validacionConcepto}
                         setVisibleModal={setVisible}
                         setConceptoInput={setConcepto}

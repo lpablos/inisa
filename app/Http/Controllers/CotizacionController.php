@@ -697,4 +697,111 @@ class CotizacionController extends Controller
             'detalles_actualizados' => $detalles
         ]);
     }
+
+    public function asociarConceptoCotizacion(Request $request){
+        // dd("Aqui el detalle", $request->all());
+
+
+        switch ($request->perteneceTomo) {
+            case 1:
+                // Registra un tomo nue
+                $tomoValidacion = DetalleCotizacion::where('descripcion', $request->capturaTomo)->where('cotizaciones_id', $request->identyCotizacion)
+                    ->count();
+
+
+
+
+
+                if ($tomoValidacion > 0) {
+                    return response()->json(['error' => 'El tomo ya existe'], 500);
+                } else {
+
+                    // dd($request->all(), $this->pdaTomoCotizacion($request->identyCotizacion));
+
+                    $detalleCotizacion = DetalleCotizacion::create([
+                        'es_tomo' => 1,
+                        'descripcion' =>  $request->capturaTomo,
+                        'PDA' => $this->pdaTomoCotizacion($request->identyCotizacion),
+                        'cotizaciones_id' => (int) $request->identyCotizacion
+                    ]);
+
+                    // dd($detalleCotizacion->id);
+
+                    $tomo = DetalleCotizacion::where('id', $detalleCotizacion->id)
+                        ->where('es_tomo', 1)->first();
+
+                    // dd($tomo);
+
+                    $detalleCotizacion = DetalleCotizacion::create([
+                        'PDA' => $this->PdaDinamicoTomo($tomo->id, (int) $request->identyCotizacion),
+                        'descripcion' => $request->descripcionMaterial,
+                        'costo_material_cantidad' => $request->cantidadMaterial,
+                        'costo_material_unitario_sugerido' => $request->costoMaterialSugerido,
+                        'costo_material_unitario' => $request->costoMaterialFinal,
+                        'costo_material_subtotal' => $request->subTotalMaterial,
+                        'costo_mano_obra_unitario_sugerido' => $request->costoManoObraSugerido,
+                        'costo_mano_obra_unitario' => $request->costoManoObraFinal,
+                        'costo_mano_obra_subtotal' => $request->subTotalManoObra,
+                        'obra_material_subtotal' => $request->subTotalMateObraTotal,
+                        'comentarios_extras' => $request->citaComentario,
+                        'cotizaciones_id' => (int) $request->identyCotizacion,
+                        'tomo_pertenece' => $tomo->id,
+                        'cat_unidad_medida_id' => $request->seleccionUnidadMedida
+                    ]);
+                }
+                break;
+            case 2:
+                // Es uno selecionado
+
+                // dd($request->all(), $request->seleccionTomo['id'], $this->pdaSeleccionTomo($request->seleccionTomo['id'], (int) $request->identyCotizacion));
+
+                $detalleCotizacion = DetalleCotizacion::create([
+                    'PDA' => $this->pdaSeleccionTomo($request->seleccionTomo['id'], (int) $request->identyCotizacion),
+                    'descripcion' => $request->descripcionMaterial,
+                    'costo_material_cantidad' => $request->cantidadMaterial,
+                    'costo_material_unitario_sugerido' => $request->costoMaterialSugerido,
+                    'costo_material_unitario' => $request->costoMaterialFinal,
+                    'costo_material_subtotal' => $request->subTotalMaterial,
+                    'costo_mano_obra_unitario_sugerido' => $request->costoManoObraSugerido,
+                    'costo_mano_obra_unitario' => $request->costoManoObraFinal,
+                    'costo_mano_obra_subtotal' => $request->subTotalManoObra,
+                    'obra_material_subtotal' => $request->subTotalMateObraTotal,
+                    'comentarios_extras' => $request->citaComentario,
+                    'cotizaciones_id' => $request->identyCotizacion,
+                    'tomo_pertenece' => $request->seleccionTomo['id'],
+                    'es_tomo' => 0,
+                    'cat_unidad_medida_id' => $request->seleccionUnidadMedida
+                ]);
+
+
+
+
+
+
+                break;
+            default:
+                # 0 En caso de s
+
+                // dd($request->all(), $this->PdaDinamicoSinTomo(1));
+                $detalleCotizacion = DetalleCotizacion::create([
+                    'PDA' => $this->PdaDinamicoSinTomo((int) $request->identyCotizacion),
+                    'descripcion' => $request->descripcionMaterial,
+                    'costo_material_cantidad' => $request->cantidadMaterial,
+                    'costo_material_unitario_sugerido' => $request->costoMaterialSugerido,
+                    'costo_material_unitario' => $request->costoMaterialFinal,
+                    'costo_material_subtotal' => $request->subTotalMaterial,
+                    'costo_mano_obra_unitario_sugerido' => $request->costoManoObraSugerido,
+                    'costo_mano_obra_unitario' => $request->costoManoObraFinal,
+                    'costo_mano_obra_subtotal' => $request->subTotalManoObra,
+                    'obra_material_subtotal' => $request->subTotalMateObraTotal,
+                    'comentarios_extras' => $request->citaComentario,
+                    'cotizaciones_id' => $request->identyCotizacion,
+                    'es_tomo' => 0,
+                    'cat_unidad_medida_id' => $request->seleccionUnidadMedida
+                ]);
+                break;
+        }
+    }
+
+
 }

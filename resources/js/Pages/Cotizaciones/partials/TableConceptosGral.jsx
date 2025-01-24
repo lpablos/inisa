@@ -5,41 +5,74 @@ import { Column } from 'primereact/column';
 import { SelectButton } from 'primereact/selectbutton';
 import { Dropdown } from 'primereact/dropdown';
 import { ConfirmPopup, confirmPopup } from 'primereact/confirmpopup';
-
-
+import axios from "axios";
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 
-const TableConceptosGral = ({listadoConceptos = [], totalesAsc=0, setVisibleModal, setConceptoInput}) => {
+const TableConceptosGral = ({listadoConceptos = [], totalesAsc=0,seleccionTomo,perteneceTomo,capturaTomo, setVisibleModal, setConceptoInput}) => {
     const [conceptos, setConceptos] = useState([]);
     const [totales, setTotales] = useState([]);
     const [visible, setVisible] = useState(false);
     const toast = useRef(null);
     const buttonEl = useRef(null);
+
+    
+    const [selecTomo, setSelecTomo] = useState(null);
+    const [pertTomo, setPertTomo] = useState(null);
+    const [captTomo, setCaptTomo] = useState(null);
+    const [idConcepto, setIdConcepto] = useState(null)
+    // const []
     
    
     useEffect(() => {
         setConceptos(listadoConceptos)
         setTotales(totalesAsc)
     }, [listadoConceptos]);
+    
+    useEffect(()=>{
+        setSelecTomo(seleccionTomo)
+        setPertTomo(perteneceTomo)
+        setCaptTomo(capturaTomo)
+    },[seleccionTomo,perteneceTomo,capturaTomo])
 
     const validacionConcepto = (dato) =>{
-        console.log("esto", dato);
+        const{id}= dato;
+        setIdConcepto(id);
         setVisible(true)
     }
 
-    const accept = () => {
+    const resetForm = () =>{
         setConceptoInput('')
         setConceptos([])
+    }
+
+    const asociarConcepto = async () =>{
+        try {
+            const datos = {
+                'identyConcepto' : idConcepto,
+                'selecTomo' : selecTomo,
+                'pertTomo' : pertTomo,
+                'captTomo' : captTomo,
+            }
+            const response = await axios.post(  `${route("asociar.concepto.generales")}`,datos)
+            console.log("Esta es la respues", response);
+            
+        } catch (error) {
+            console.log("Este es el errror", error);
+            
+            alert("Error")
+        }
+    }
+
+    const accept = () => {
+        resetForm()
         toast.current.show({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 });
         setTimeout(() => {
             setVisibleModal(false);    
-                    
         }, 3500);
 
     };
-
     const reject = () => {
         toast.current.show({ severity: 'warn', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
     };
