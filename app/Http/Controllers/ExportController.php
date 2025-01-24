@@ -8,8 +8,8 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ExportController extends Controller
 {
-    public function exportarDetalles()
+    public function exportarDetalles($id)
     {
-        return Excel::download(new CotizacionExportExcel, 'cotizacion.xlsx');
+        return Excel::download(new CotizacionExportExcel($id), 'cotizacion.xlsx');
     }
 }
