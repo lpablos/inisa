@@ -9,6 +9,7 @@ import { Button } from 'primereact/button';
 import axios from "axios";
 import { Toast } from 'primereact/toast';
 import { ProgressSpinner } from 'primereact/progressspinner';
+import { Editor } from 'primereact/editor';
 
 
 
@@ -359,11 +360,12 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
                                 <div class="formgrid grid">
                                     <div class="field col-12">
                                         <label htmlFor="percent" className="font-bold block mb-2">Descripción</label>
-                                        <InputTextarea 
+                                        <Editor value={descripcionMaterial} onTextChange={(e) => setDescripcionMaterial(e.htmlValue)} style={{ height: '160px' }} />
+                                        {/* <InputTextarea 
                                             className="w-full" 
                                             value={descripcionMaterial} 
                                             onChange={(e) => setDescripcionMaterial(e.target.value)} 
-                                            rows={2} cols={30}/>
+                                            rows={2} cols={30}/> */}
                                     </div>               
                                 </div>
                                 <div class="formgrid grid">

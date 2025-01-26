@@ -174,6 +174,12 @@ const  DetalleCotizacionTabla = ({cotizacion, detalle, reloadList, onRecargaComp
             Total : { `${formatCurrency(totalDetalle).toLocaleString()} ${detalle.moneda.abreviacion} `}
         </React.Fragment>
     );
+
+    function stripTags(html) {
+        const temporalElement = document.createElement("div");
+        temporalElement.innerHTML = html;
+        return temporalElement.textContent || temporalElement.innerText || "";
+    }
     
     return (
         
@@ -228,7 +234,7 @@ const  DetalleCotizacionTabla = ({cotizacion, detalle, reloadList, onRecargaComp
                                 ):(
                                     <tr key={item.id}>
                                         <td style={cellStyles}>{item.PDA}</td>
-                                        <td style={cellStyles}>{item.descripcion}</td>
+                                        <td style={cellStyles}>{stripTags(item.descripcion)}</td>
                                         <td style={cellStyles}>{item.costo_material_cantidad}</td>
                                         <td style={cellStyles}>{formatCurrency(item.costo_material_unitario)} {detalle?.moneda?.abreviacion || ""}</td>
                                         <td style={cellStyles}>{formatCurrency(item.costo_material_subtotal)} {detalle?.moneda?.abreviacion || ""}</td>
@@ -256,7 +262,7 @@ const  DetalleCotizacionTabla = ({cotizacion, detalle, reloadList, onRecargaComp
                                 ):(
                                     <tr key={item.id}>
                                         <td style={cellStyles}>{item.PDA}</td>
-                                        <td style={cellStyles}>{item.descripcion}</td>
+                                        <td style={cellStyles}>{stripTags(item.descripcion)}</td>
                                         <td style={cellStyles}>{item.costo_material_cantidad}</td>
                                         <td style={cellStyles}>{(item.costo_material_unitario)?`${formatCurrency(item.costo_material_unitario)} ${detalle?.moneda?.abreviacion || ""}`:'--'}</td>
                                         <td style={cellStyles}>{(item.costo_material_subtotal)? `${formatCurrency(item.costo_material_subtotal)} ${detalle?.moneda?.abreviacion || ""}`: '--'}</td>
