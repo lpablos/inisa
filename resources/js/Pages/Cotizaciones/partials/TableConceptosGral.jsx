@@ -10,13 +10,11 @@ import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 
-const TableConceptosGral = ({listadoConceptos = [], totalesAsc=0,seleccionTomo,perteneceTomo,capturaTomo,identyCotizacion, setVisibleModal, setConceptoInput}) => {
+const TableConceptosGral = ({listadoConceptos = [], totalesAsc=0,seleccionTomo,perteneceTomo,capturaTomo,identyCotizacion, setVisibleModal, setConceptoInput, setReloadList, setRegistros}) => {
     const [conceptos, setConceptos] = useState([]);
     const [totales, setTotales] = useState([]);
     const [visible, setVisible] = useState(false);
     const toast = useRef(null);
-    const buttonEl = useRef(null);
-
     
     const [selecTomo, setSelecTomo] = useState(null);
     const [pertTomo, setPertTomo] = useState(null);
@@ -47,6 +45,7 @@ const TableConceptosGral = ({listadoConceptos = [], totalesAsc=0,seleccionTomo,p
     const resetForm = () =>{
         setConceptoInput('')
         setConceptos([])
+        setRegistros([])
     }
 
     const asociarConcepto = async () =>{
@@ -62,6 +61,7 @@ const TableConceptosGral = ({listadoConceptos = [], totalesAsc=0,seleccionTomo,p
             const {data,success} = response.data
             if(response.status == 201){
                 resetForm()
+                setReloadList(true)
                 toast.current.show({ severity: 'info', summary: 'Confirmed', detail:  `${success}`, life: 3000 });
                 setTimeout(() => {
                     setVisibleModal(false);    
@@ -106,20 +106,52 @@ const TableConceptosGral = ({listadoConceptos = [], totalesAsc=0,seleccionTomo,p
     const detalleMaterial = (rowData)=>{
         return (
             <ul>
-                <li><strong>Cantidad :</strong>{rowData.costo_material_cantidad}</li>
-                <li><strong>Costo Sugerido :</strong>{rowData.costo_material_unitario_sugerido.toFixed(2)} {rowData.moneda}</li>
-                <li><strong>Costo :</strong>{rowData.costo_material_unitario.toFixed(2)} {rowData.moneda}</li>
-                <li><strong>Costo Subtotal :</strong>{rowData.costo_material_subtotal.toFixed(2)} {rowData.moneda}</li>
+                {rowData.costo_material_cantidad && (
+                    <li>
+                    <strong>Cantidad:</strong> {rowData.costo_material_cantidad}
+                    </li>
+                )}
+                {rowData.costo_material_unitario_sugerido && (
+                    <li>
+                    <strong>Costo Sugerido:</strong> {rowData.costo_material_unitario_sugerido.toFixed(2)} {rowData.moneda}
+                    </li>
+                )}
+                {rowData.costo_material_unitario && (
+                    <li>
+                    <strong>Costo:</strong> {rowData.costo_material_unitario.toFixed(2)} {rowData.moneda}
+                    </li>
+                )}
+                {rowData.costo_material_subtotal && (
+                    <li>
+                    <strong>Costo Subtotal:</strong> {rowData.costo_material_subtotal.toFixed(2)} {rowData.moneda}
+                    </li>
+                )}
             </ul>
         );
     }
     const detalleManoObra = (rowData)=>{
         return (
             <ul>
-                <li><strong>Costo Unitario Sugerido :</strong>{rowData.costo_mano_obra_unitario_sugerido.toFixed(2)} {rowData.moneda}</li>
-                <li><strong>Costo Unitario :</strong>{rowData.costo_mano_obra_unitario.toFixed(2)} {rowData.moneda}</li>
-                <li><strong>Subtotal :</strong>{rowData.costo_mano_obra_unitario_sugerido.toFixed(2)} {rowData.moneda}</li>
-                <li><strong>M.O./MATER. Subtotal:</strong>{rowData.obra_material_subtotal.toFixed(2)} {rowData.moneda}</li>
+                {rowData.costo_mano_obra_unitario_sugerido && (
+                    <li>
+                    <strong>Costo Unitario Sugerido:</strong> {rowData.costo_mano_obra_unitario_sugerido.toFixed(2)} {rowData.moneda}
+                    </li>
+                )}
+                {rowData.costo_mano_obra_unitario && (
+                    <li>
+                    <strong>Costo Unitario:</strong> {rowData.costo_mano_obra_unitario.toFixed(2)} {rowData.moneda}
+                    </li>
+                )}
+                {rowData.costo_mano_obra_unitario_sugerido && (
+                    <li>
+                    <strong>Subtotal:</strong> {rowData.costo_mano_obra_unitario_sugerido.toFixed(2)} {rowData.moneda}
+                    </li>
+                )}
+                {rowData.obra_material_subtotal && (
+                    <li>
+                    <strong>M.O./MATER. Subtotal:</strong> {rowData.obra_material_subtotal.toFixed(2)} {rowData.moneda}
+                    </li>
+                )}
             </ul>
         );
     }

@@ -16,7 +16,7 @@ return new class extends Migration
             // $table->double('PDA')->nullable();
             $table->decimal('PDA', 8, 2)->nullable();
             $table->boolean('es_tomo')->default(false)->nullable();
-            $table->string('descripcion', 345)->nullable();
+            $table->text('descripcion', 345)->nullable();
             $table->double('costo_material_cantidad')->nullable();
             $table->double('costo_material_unitario_sugerido')->nullable();
             $table->double('costo_material_unitario')->nullable();

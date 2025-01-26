@@ -6,6 +6,9 @@ import { Toast } from 'primereact/toast';
 import { Toolbar } from 'primereact/toolbar';
 import { SplitButton } from 'primereact/splitbutton';
 
+import { ProgressSpinner } from 'primereact/progressspinner';
+        
+
 const tableStyles = {
     width: '100%',
     borderCollapse: 'collapse',
@@ -33,6 +36,7 @@ const  DetalleCotizacionTabla = ({cotizacion, detalle, reloadList, onRecargaComp
     
     const toast = useRef(null);
     const [detalleCotizacion, setDetalleCotizacion] = useState([]);
+    const [loadingImg, setLoadingImg] = useState(false);
 
     useEffect(async()=>{
         async function fetchData() {
@@ -55,12 +59,16 @@ const  DetalleCotizacionTabla = ({cotizacion, detalle, reloadList, onRecargaComp
 
 
     const getListadoDetalleCotizacionFactura = async() =>{
+        setLoadingImg(true)
         await axios
         .get(`${route("cotizacion.list.detalle.cotizacion", { identy: cotizacion })}`)
         .then((response) => {
             const {data, status } = response       
-            if(status == 200){               
-                setDetalleCotizacion(data)
+            if(status == 200){   
+                setTimeout(() => {
+                    setDetalleCotizacion(data)
+                    setLoadingImg(false)    
+                }, 1000);     
             }
         });
     }
@@ -170,96 +178,102 @@ const  DetalleCotizacionTabla = ({cotizacion, detalle, reloadList, onRecargaComp
     return (
         
         <div className="card">
+            {loadingImg && (
+                <div className="card flex justify-content-center">
+                    <ProgressSpinner />
+                </div>
+            )}
              <Toast ref={toast} />
              <ConfirmDialog />
-            <table style={tableStyles}>
-                <thead>
-                    {detalle.es_material==1 && (
-                        <tr>
+             {loadingImg == false && (
+                <table style={tableStyles}>
+                    <thead>
+                        {detalle.es_material==1 && (
+                            <tr>
+                                <th style={headerStyles}>PDA</th>
+                                <th style={headerStyles}>Descripcion</th>
+                                <th style={headerStyles}>Material Unidad</th>
+                                <th style={headerStyles}>Materia Cantidad</th>
+                                <th style={headerStyles}>Material Subtotal </th>
+                                <th style={headerStyles}>Opciones</th>
+                            </tr>
+                        )}
+                        {detalle.es_mano_obra==1 &&(
+                            <tr>
                             <th style={headerStyles}>PDA</th>
                             <th style={headerStyles}>Descripcion</th>
                             <th style={headerStyles}>Material Unidad</th>
                             <th style={headerStyles}>Materia Cantidad</th>
-                            <th style={headerStyles}>Material Subtotal </th>
+                            <th style={headerStyles}>Material Subtotal</th>
+                            <th style={headerStyles}>Mano Obra Costo Unitario</th>
+                            <th style={headerStyles}>Mano Obra Subtotal</th>
+                            <th style={headerStyles}>Material/Mano Obra Subtotal</th>
                             <th style={headerStyles}>Opciones</th>
                         </tr>
+                        )}
+                    
+                    </thead>
+                    {detalle.es_material==1 && (
+                        <tbody>
+                            {detalleCotizacion.map((item)=>(
+                                item.es_tomo ===1 ? (                            
+                                    <tr key={item.id} style={yellowRowStyles}>
+                                        <td style={cellStyles}>{item.PDA}</td>
+                                        <td colSpan={4} style={cellStyles}> <h6>{item.descripcion} </h6></td>
+                                        <td style={cellStyles}>
+                                            <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" onClick={()=>{modalUpdate(item)}} />
+                                            <Button icon="pi pi-times" tooltip="Eliminar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="danger" aria-label="Eliminar" onClick={()=>{preguntaEliminacion(item)}}/>
+                                        </td>
+                                    </tr>
+                                ):(
+                                    <tr key={item.id}>
+                                        <td style={cellStyles}>{item.PDA}</td>
+                                        <td style={cellStyles}>{item.descripcion}</td>
+                                        <td style={cellStyles}>{item.costo_material_cantidad}</td>
+                                        <td style={cellStyles}>{formatCurrency(item.costo_material_unitario)} {detalle?.moneda?.abreviacion || ""}</td>
+                                        <td style={cellStyles}>{formatCurrency(item.costo_material_subtotal)} {detalle?.moneda?.abreviacion || ""}</td>
+                                        <td style={cellStyles}>                                    
+                                            <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" onClick={()=>{modalUpdate(item)}} />
+                                            <Button icon="pi pi-times" tooltip="Eliminar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="danger" aria-label="Eliminar" onClick={()=>{preguntaEliminacion(item)}}/>
+                                        </td>
+                                    </tr>
+                                )  
+                            ))}
+                        </tbody>      
                     )}
                     {detalle.es_mano_obra==1 &&(
-                        <tr>
-                        <th style={headerStyles}>PDA</th>
-                        <th style={headerStyles}>Descripcion</th>
-                        <th style={headerStyles}>Material Unidad</th>
-                        <th style={headerStyles}>Materia Cantidad</th>
-                        <th style={headerStyles}>Material Subtotal</th>
-                        <th style={headerStyles}>Mano Obra Costo Unitario</th>
-                        <th style={headerStyles}>Mano Obra Subtotal</th>
-                        <th style={headerStyles}>Material/Mano Obra Subtotal</th>
-                        <th style={headerStyles}>Opciones</th>
-                    </tr>
+                        <tbody>
+                            {detalleCotizacion.map((item)=>(
+                                item.es_tomo ===1 ? (                            
+                                    <tr key={item.id} style={yellowRowStyles}>
+                                        <td style={cellStyles}>{item.PDA}</td>
+                                        <td colSpan={7} style={cellStyles}> <h6>{item.descripcion}</h6></td>
+                                        <td style={cellStyles}>
+                                            <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" onClick={()=>{modalUpdate(item)}} />
+                                            <Button icon="pi pi-times" tooltip="Eliminar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="danger" aria-label="Eliminar" onClick={()=>{preguntaEliminacion(item)}}/>
+                                        </td>
+                                    </tr>
+                                ):(
+                                    <tr key={item.id}>
+                                        <td style={cellStyles}>{item.PDA}</td>
+                                        <td style={cellStyles}>{item.descripcion}</td>
+                                        <td style={cellStyles}>{item.costo_material_cantidad}</td>
+                                        <td style={cellStyles}>{(item.costo_material_unitario)?`${formatCurrency(item.costo_material_unitario)} ${detalle?.moneda?.abreviacion || ""}`:'--'}</td>
+                                        <td style={cellStyles}>{(item.costo_material_subtotal)? `${formatCurrency(item.costo_material_subtotal)} ${detalle?.moneda?.abreviacion || ""}`: '--'}</td>
+                                        <td style={cellStyles}>{(item.costo_mano_obra_unitario)? `${formatCurrency(item.costo_mano_obra_unitario)} ${detalle?.moneda?.abreviacion || ""}`: '--'}</td>
+                                        <td style={cellStyles}>{(item.costo_mano_obra_subtotal)?`${formatCurrency(item.costo_mano_obra_subtotal)} ${detalle?.moneda?.abreviacion || ""}`: '--'}</td>
+                                        <td style={cellStyles}>{(item.obra_material_subtotal)? `${formatCurrency(item.obra_material_subtotal)} ${detalle?.moneda?.abreviacion || ""}`: '--'}</td>
+                                        <td style={cellStyles}>                                            
+                                            <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" onClick={()=>{modalUpdate(item)}} />
+                                            <Button icon="pi pi-times" tooltip="Eliminar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="danger" aria-label="Eliminar" onClick={()=>{preguntaEliminacion(item)}}/>
+                                        </td>
+                                    </tr>
+                                )  
+                            ))}
+                        </tbody>
                     )}
-                   
-                </thead>
-                {detalle.es_material==1 && (
-                    <tbody>
-                        {detalleCotizacion.map((item)=>(
-                            item.es_tomo ===1 ? (                            
-                                <tr key={item.id} style={yellowRowStyles}>
-                                    <td style={cellStyles}>{item.PDA}</td>
-                                    <td colSpan={4} style={cellStyles}> <h6>{item.descripcion} </h6></td>
-                                    <td style={cellStyles}>
-                                        <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" onClick={()=>{modalUpdate(item)}} />
-                                        <Button icon="pi pi-times" tooltip="Eliminar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="danger" aria-label="Eliminar" onClick={()=>{preguntaEliminacion(item)}}/>
-                                    </td>
-                                </tr>
-                            ):(
-                                <tr key={item.id}>
-                                    <td style={cellStyles}>{item.PDA}</td>
-                                    <td style={cellStyles}>{item.descripcion}</td>
-                                    <td style={cellStyles}>{item.costo_material_cantidad}</td>
-                                    <td style={cellStyles}>{formatCurrency(item.costo_material_unitario)} {detalle?.moneda?.abreviacion || ""}</td>
-                                    <td style={cellStyles}>{formatCurrency(item.costo_material_subtotal)} {detalle?.moneda?.abreviacion || ""}</td>
-                                    <td style={cellStyles}>                                    
-                                        <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" onClick={()=>{modalUpdate(item)}} />
-                                        <Button icon="pi pi-times" tooltip="Eliminar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="danger" aria-label="Eliminar" onClick={()=>{preguntaEliminacion(item)}}/>
-                                    </td>
-                                </tr>
-                            )  
-                        ))}
-                    </tbody>      
-                )}
-                 {detalle.es_mano_obra==1 &&(
-                    <tbody>
-                        {detalleCotizacion.map((item)=>(
-                            item.es_tomo ===1 ? (                            
-                                <tr key={item.id} style={yellowRowStyles}>
-                                    <td style={cellStyles}>{item.PDA}</td>
-                                    <td colSpan={7} style={cellStyles}> <h6>{item.descripcion}</h6></td>
-                                    <td style={cellStyles}>
-                                        <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" onClick={()=>{modalUpdate(item)}} />
-                                        <Button icon="pi pi-times" tooltip="Eliminar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="danger" aria-label="Eliminar" onClick={()=>{preguntaEliminacion(item)}}/>
-                                    </td>
-                                </tr>
-                            ):(
-                                <tr key={item.id}>
-                                    <td style={cellStyles}>{item.PDA}</td>
-                                    <td style={cellStyles}>{item.descripcion}</td>
-                                    <td style={cellStyles}>{item.costo_material_cantidad}</td>
-                                    <td style={cellStyles}>{formatCurrency(item.costo_material_unitario)} {detalle?.moneda?.abreviacion || ""}</td>
-                                    <td style={cellStyles}>{formatCurrency(item.costo_material_subtotal)} {detalle?.moneda?.abreviacion || ""}</td>
-                                    <td style={cellStyles}>{formatCurrency(item.costo_mano_obra_unitario)} {detalle?.moneda?.abreviacion || ""}</td>
-                                    <td style={cellStyles}>{formatCurrency(item.costo_mano_obra_subtotal)} {detalle?.moneda?.abreviacion || ""}</td>
-                                    <td style={cellStyles}>{formatCurrency(item.obra_material_subtotal)} {detalle?.moneda?.abreviacion || ""}</td>
-                                    <td style={cellStyles}>
-                                        
-                                        <Button icon="pi pi-refresh" tooltip="Actualizar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="help" aria-label="Actualizar" onClick={()=>{modalUpdate(item)}} />
-                                        <Button icon="pi pi-times" tooltip="Eliminar" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded text severity="danger" aria-label="Eliminar" onClick={()=>{preguntaEliminacion(item)}}/>
-                                    </td>
-                                </tr>
-                            )  
-                        ))}
-                    </tbody>
-                 )}
-            </table>
+                </table>
+             )}
             {/* Total {totalDetalle} */}
             
             <Toolbar end={endContent} />

@@ -9,7 +9,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { useEffect } from 'react';
         
 
-const BusquedaConceptos = ({cotizacion}) => {
+const BusquedaConceptos = ({cotizacion, setReloadList}) => {
     const [visible, setVisible] = useState(false);
     const [concepto, setConcepto] = useState('');
     
@@ -152,6 +152,8 @@ const BusquedaConceptos = ({cotizacion}) => {
                         perteneceTomo={perteneceTomo}
                         capturaTomo={capturaTomo}
                         identyCotizacion={identyCotizacion}
+                        setReloadList={setReloadList}
+                        setRegistros={setRegistros}
                         
                         validacionConcepto={validacionConcepto}
                         setVisibleModal={setVisible}

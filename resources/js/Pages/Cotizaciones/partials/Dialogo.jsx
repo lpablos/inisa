@@ -343,7 +343,7 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
             header={isEdit ? "Detalle Cotización" : "Nueva Cotización"}
             visible={visible}
             maximizable
-            style={{ width: "50vw" }}
+            style={{ width: "80vw" }}
             onHide={() => {
                 setVisible(false);
                 onClose();

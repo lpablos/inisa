@@ -701,7 +701,8 @@ class CotizacionController extends Controller
     public function asociarConceptoCotizacion(Request $request){
         
         $clonarConcepto = DetalleCotizacion::find($request->identyConcepto);
-        // dd($request->all());
+        $cotizacionBase = Cotizacion::find($request->identyCotizacion);
+        
         switch ($request->pertTomo) {
             case 1:
                 // Registra un tomo nue
@@ -739,10 +740,10 @@ class CotizacionController extends Controller
                         'costo_material_unitario_sugerido' => $clonarConcepto->costo_material_unitario_sugerido,
                         'costo_material_unitario' => $clonarConcepto->costo_material_unitario,
                         'costo_material_subtotal' => $clonarConcepto->costo_material_subtotal,
-                        'costo_mano_obra_unitario_sugerido' => $clonarConcepto->costo_mano_obra_unitario_sugerido,
-                        'costo_mano_obra_unitario' => $clonarConcepto->costo_mano_obra_unitario,
-                        'costo_mano_obra_subtotal' => $clonarConcepto->costo_mano_obra_subtotal,
-                        'obra_material_subtotal' => $clonarConcepto->obra_material_subtotal,
+                        'costo_mano_obra_unitario_sugerido' => ($cotizacionBase->es_mano_obra >1)? $clonarConcepto->costo_mano_obra_unitario_sugerido: null,
+                        'costo_mano_obra_unitario' => ($cotizacionBase->es_mano_obra >1)? $clonarConcepto->costo_mano_obra_unitario: null,
+                        'costo_mano_obra_subtotal' => ($cotizacionBase->es_mano_obra >1)? $clonarConcepto->costo_mano_obra_subtotal: null,
+                        'obra_material_subtotal' => ($cotizacionBase->es_mano_obra >1)? $clonarConcepto->obra_material_subtotal: null,
                         'comentarios_extras' => $clonarConcepto->comentarios_extras,
                         'cotizaciones_id' => (int) $request->identyCotizacion,
                         'tomo_pertenece' => $clonarConcepto->tomo_pertenece,
@@ -763,10 +764,10 @@ class CotizacionController extends Controller
                     'costo_material_unitario_sugerido' => $clonarConcepto->costo_material_unitario_sugerido,
                     'costo_material_unitario' => $clonarConcepto->costo_material_unitario,
                     'costo_material_subtotal' => $clonarConcepto->costo_material_subtotal,
-                    'costo_mano_obra_unitario_sugerido' => $clonarConcepto->costo_mano_obra_unitario_sugerido,
-                    'costo_mano_obra_unitario' => $clonarConcepto->costo_mano_obra_unitario,
-                    'costo_mano_obra_subtotal' => $clonarConcepto->costo_mano_obra_subtotal,
-                    'obra_material_subtotal' => $clonarConcepto->obra_material_subtotal,
+                    'costo_mano_obra_unitario_sugerido' => ($cotizacionBase->es_mano_obra >1)? $clonarConcepto->costo_mano_obra_unitario_sugerido:null,
+                    'costo_mano_obra_unitario' => ($cotizacionBase->es_mano_obra >1)? $clonarConcepto->costo_mano_obra_unitario:null,
+                    'costo_mano_obra_subtotal' => ($cotizacionBase->es_mano_obra >1)? $clonarConcepto->costo_mano_obra_subtotal:null,
+                    'obra_material_subtotal' => ($cotizacionBase->es_mano_obra >1)? $clonarConcepto->obra_material_subtotal:null,
                     'comentarios_extras' => $clonarConcepto->comentarios_extras,
                     'cotizaciones_id' =>  $request->identyCotizacion,
                     'tomo_pertenece' => $clonarConcepto->tomo_pertenece,
@@ -785,10 +786,10 @@ class CotizacionController extends Controller
                     'costo_material_unitario_sugerido' => $clonarConcepto->costo_material_unitario_sugerido,
                     'costo_material_unitario' => $clonarConcepto->costo_material_unitario,
                     'costo_material_subtotal' => $clonarConcepto->costo_material_subtotal,
-                    'costo_mano_obra_unitario_sugerido' => $clonarConcepto->costo_mano_obra_unitario_sugerido,
-                    'costo_mano_obra_unitario' => $clonarConcepto->costo_mano_obra_unitario,
-                    'costo_mano_obra_subtotal' => $clonarConcepto->costo_mano_obra_subtotal,
-                    'obra_material_subtotal' => $clonarConcepto->obra_material_subtotal,
+                    'costo_mano_obra_unitario_sugerido' => ($cotizacionBase->es_mano_obra >1)? $clonarConcepto->costo_mano_obra_unitario_sugerido: null,
+                    'costo_mano_obra_unitario' => ($cotizacionBase->es_mano_obra >1)? $clonarConcepto->costo_mano_obra_unitario: null,
+                    'costo_mano_obra_subtotal' => ($cotizacionBase->es_mano_obra >1)? $clonarConcepto->costo_mano_obra_subtotal: null,
+                    'obra_material_subtotal' => ($cotizacionBase->es_mano_obra >1)? $clonarConcepto->obra_material_subtotal: null,
                     'comentarios_extras' => $clonarConcepto->comentarios_extras,
                     'cotizaciones_id' => $request->identyCotizacion,
                     'es_tomo' => 0,
