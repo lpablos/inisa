@@ -5,6 +5,7 @@ import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
 import { Toolbar } from 'primereact/toolbar';
 import { SplitButton } from 'primereact/splitbutton';
+import DOMPurify from "dompurify";
 
 import { ProgressSpinner } from 'primereact/progressspinner';
         
@@ -234,7 +235,10 @@ const  DetalleCotizacionTabla = ({cotizacion, detalle, reloadList, onRecargaComp
                                 ):(
                                     <tr key={item.id}>
                                         <td style={cellStyles}>{item.PDA}</td>
-                                        <td style={cellStyles}>{stripTags(item.descripcion)}</td>
+                                        <td
+                                            style={cellStyles}
+                                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.descripcion) }}
+                                        ></td>
                                         <td style={cellStyles}>{item.costo_material_cantidad}</td>
                                         <td style={cellStyles}>{formatCurrency(item.costo_material_unitario)} {detalle?.moneda?.abreviacion || ""}</td>
                                         <td style={cellStyles}>{formatCurrency(item.costo_material_subtotal)} {detalle?.moneda?.abreviacion || ""}</td>
@@ -262,7 +266,10 @@ const  DetalleCotizacionTabla = ({cotizacion, detalle, reloadList, onRecargaComp
                                 ):(
                                     <tr key={item.id}>
                                         <td style={cellStyles}>{item.PDA}</td>
-                                        <td style={cellStyles}>{stripTags(item.descripcion)}</td>
+                                        <td
+                                            style={cellStyles}
+                                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.descripcion) }}
+                                        ></td>
                                         <td style={cellStyles}>{item.costo_material_cantidad}</td>
                                         <td style={cellStyles}>{(item.costo_material_unitario)?`${formatCurrency(item.costo_material_unitario)} ${detalle?.moneda?.abreviacion || ""}`:'--'}</td>
                                         <td style={cellStyles}>{(item.costo_material_subtotal)? `${formatCurrency(item.costo_material_subtotal)} ${detalle?.moneda?.abreviacion || ""}`: '--'}</td>
