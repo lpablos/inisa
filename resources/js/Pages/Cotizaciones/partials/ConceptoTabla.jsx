@@ -13,6 +13,8 @@ import "../../../../css/style_cotizacion.css";
 import { Badge } from 'primereact/badge';
 import { Chip } from 'primereact/chip';
 import VistaPreviaCotizacion from "./VistaPreviaCotizacion";
+import { Tag } from 'primereact/tag';
+import CodigosDialog from "./CodigosDialog";
 
 
 
@@ -262,6 +264,20 @@ const ConceptoTabla = () => {
         </div>
     );
 
+    const codigosAsc = (rowData) => (
+        
+        <div className=" flex flex-wrap justify-content-center gap-1">               
+            <Tag icon="pi pi-flag" severity="secondary" value="PO: 4575219650 Fecha: 2025-01-26" rounded style={{ width: '250px', textAlign: 'center' }}></Tag>
+            {/* <Tag icon="pi pi-flag" severity="contrast" value="PO: 4575219650 Fecha: 2025-01-26" rounded style={{ width: '250px', textAlign: 'center' }}></Tag>
+            <Tag icon="pi pi-flag" severity="secondary" value="PO: 4575219650 Fecha: 2025-01-26" rounded style={{ width: '250px', textAlign: 'center' }}></Tag>
+            <Tag icon="pi pi-flag" severity="contrast" value="PO: 4575219650 Fecha: 2025-01-26" rounded style={{ width: '250px', textAlign: 'center' }}></Tag> */}
+            <CodigosDialog/>
+            
+        </div>
+            
+        
+    );
+
     // Cerrar el diálogo
     const handleCerrarDialogo = () => {
         setIsDialogVisible(false);
@@ -293,8 +309,9 @@ const ConceptoTabla = () => {
                 size={'small'}
                 responsiveLayout="scroll"
             >
-                <Column field="id" header="ID" />
-                <Column field="titulo" header="Título" style={{ width: '19em', textAlign:'justify'}}/>
+                <Column field="id" header="ID" headerStyle={{ textAlign: 'center' }}  />
+                <Column field="titulo" header="Título" headerStyle={{ textAlign: 'center' }} />
+                <Column field="codigos" header="Codigos" body={(rowData) => codigosAsc(rowData)}/>
                 <Column field="fecha" header="Fecha"  style={{ width: '9em' }}/>
                 <Column header="Plantilla"  style={{ width: '9em' }}  body={(rowData) => renderTipo(rowData)}/>
                 <Column field="valides" header="Válido Intervalo" style={{ width: '9em' }} body={(rowData) => renderValides(rowData)}/>
