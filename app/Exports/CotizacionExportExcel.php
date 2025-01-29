@@ -27,6 +27,10 @@ class CotizacionExportExcel implements FromView
         $cotizaciones = Cotizacion::with('cliente', 'estatus', 'detalles')->where('id', $this->id)->first();
         $cotizaciones->detalles = collect($cotizaciones->detalles)->sortBy('PDA')->values(); // Ordenar por PDA
 
+
+        $totalObraMaterial = collect($cotizaciones->detalles)->sum('obra_material_subtotal');
+
+        // dd($totalObraMaterial);
         $array_cotizaciones = $cotizaciones->toArray();
 
          // Formatear la fecha
@@ -44,7 +48,8 @@ class CotizacionExportExcel implements FromView
         return view('exports.cotizacion', [
             'detalles' => $cotizaciones,
             'textoFecha' => $textoFecha,
-            'diasTotales' => $diasTotales
+            'diasTotales' => $diasTotales,
+            'totalObraMaterial' => $totalObraMaterial
         ]);
     }
 }
