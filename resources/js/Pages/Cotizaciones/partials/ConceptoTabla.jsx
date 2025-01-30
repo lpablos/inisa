@@ -20,6 +20,8 @@ import CodigosDialog from "./CodigosDialog";
 
 
 const ConceptoTabla = () => {
+    const [seleccionCotizacion, setSeleccionCotizacion] = useState(null)
+    const [codigosShow, setCodigosShow] = useState(false)
     const [cotizaciones, setCotizaciones] = useState([]); // Lista de cotizaciones
     const [selectedCotizacion, setSelectedCotizacion] = useState(null); // Cotización seleccionada
     const [isDialogVisible, setIsDialogVisible] = useState(false); // Visibilidad del modal
@@ -268,11 +270,7 @@ const ConceptoTabla = () => {
         
         <div className=" flex flex-wrap justify-content-center gap-1">               
             <Tag icon="pi pi-flag" severity="secondary" value="PO: 4575219650 Fecha: 2025-01-26" rounded style={{ width: '250px', textAlign: 'center' }}></Tag>
-            {/* <Tag icon="pi pi-flag" severity="contrast" value="PO: 4575219650 Fecha: 2025-01-26" rounded style={{ width: '250px', textAlign: 'center' }}></Tag>
-            <Tag icon="pi pi-flag" severity="secondary" value="PO: 4575219650 Fecha: 2025-01-26" rounded style={{ width: '250px', textAlign: 'center' }}></Tag>
-            <Tag icon="pi pi-flag" severity="contrast" value="PO: 4575219650 Fecha: 2025-01-26" rounded style={{ width: '250px', textAlign: 'center' }}></Tag> */}
-            <CodigosDialog/>
-            
+            <Button label="Ampliar" size="small" icon="pi pi-paperclip"  onClick={() => { setCodigosShow(true); setSeleccionCotizacion(rowData.id);}} />
         </div>
             
         
@@ -290,15 +288,8 @@ const ConceptoTabla = () => {
             <Toast ref={toast} />
 
             {/* Botón para crear cotización */}
-            <div className="mb-3">
-                {/* <Button
-                    label="Nueva Cotización"
-                    icon="pi pi-plus"
-                    className="p-button-success"
-                    onClick={handleCrear}
-                /> */}
+            <div className="mb-3">               
                 <Button icon="pi pi-plus" tooltip="Nueva Cotización" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded severity="info" aria-label="Nueva Cotización" onClick={handleCrear}/>
-
             </div>
 
             {/* Tabla de cotizaciones */}
@@ -335,8 +326,8 @@ const ConceptoTabla = () => {
                     onClose={handleCerrarDialogo}
                 />
             )}
-
-            <VistaPreviaCotizacion vistraPreviaPDF={vistraPreviaPDF} setVistraPreviaPDF={setVistraPreviaPDF}/>
+            <CodigosDialog seleccionCotizacion={seleccionCotizacion} codigosShow={codigosShow} setCodigosShow={setCodigosShow}/>
+            <VistaPreviaCotizacion  vistraPreviaPDF={vistraPreviaPDF} setVistraPreviaPDF={setVistraPreviaPDF}/>
         </div>
     );
 };

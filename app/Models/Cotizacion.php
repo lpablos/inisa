@@ -15,6 +15,7 @@ use App\Models\CatPrioridad;
 use App\Models\CatMoneda;
 use App\Models\CatEstatu;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Codigo;
 
 
 
@@ -147,5 +148,10 @@ class Cotizacion extends Model
     public function responsables()
     {
         return $this->hasMany(CatResponsable::class, 'cliente_id');
+    }
+
+    public function codigos()
+    {
+        return $this->hasMany(Codigo::class, 'cotizacion_id', 'id'); // Referencia a la clave foránea y primaria
     }
 }

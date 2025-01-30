@@ -5,8 +5,10 @@ import Menu from "./partials/menu";
 import Dialogo from "./partials/Dialogo";
 
 const Index = (props) => {
-    const [catalogo, setCatalogo] = useState(null);
-    console.log("El catalogo selecionado", catalogo);
+
+    console.log("estos son los props", props);
+    
+    
 
     return (
         <Layout>

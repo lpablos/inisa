@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Models\Cotizacion as co;
 use App\Models\Cotizacion;
 use App\Models\DetalleCotizacion;
+use App\Models\Codigo;
 use Illuminate\Support\Facades\Auth;
 
 class CotizacionController extends Controller
@@ -801,6 +802,36 @@ class CotizacionController extends Controller
             'success' => 'detalle cotizacion creado exitosamente',
             'data' => $detalleCotizacion
         ], 201);
+    }
+
+    public function nuevoCodigo(Request $request)
+    {
+        $validatedData = $request->validate([
+            'fecha' => 'required|date',
+            'identyCotizacion'=>'int|required'
+        ]);
+
+        $codigo = new Codigo;
+        $codigo->codigo = $request->codigo;
+        $codigo->descripcion = $request->descripcion;
+        $codigo->fecha = date('Y-m-d', strtotime($request->fecha));
+        $codigo->cotizacion_id = $request->identyCotizacion;
+        $codigo->save();
+
+        return response()->json([
+            'success' => 'Codigo Creado Correctamente',
+            'data' => $codigo
+        ], 201);
+
+    }
+
+    public function codigosAsocCotizacion($identy){
+        $codigosAsc = Codigo::where('cotizacion_id',$identy)->get();
+        $totales = $codigosAsc->count();
+        return response()->json([
+            'success' => 'Codigos asociados: '.$totales,
+            'data' => $codigosAsc
+        ], 200);
     }
 
 

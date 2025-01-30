@@ -134,7 +134,10 @@ Route::prefix('admin')->group(function () {
             Route::put('actualiza-cotizacion', 'updateCotizacion')->name('cotizacion.actualiza.cotizacion');
             Route::delete('cotizacion/{id}', 'deleteCotizacion')->name('cotizacion.delete.cotizacion');
             Route::post('duplicar-cotizacion', 'duplicarCotizacion')->name('cotizacion.duplicar.cotizacion');
-
+            Route::prefix('codigos')->group(function(){
+                Route::post('nuevo-codigo','nuevoCodigo')->name('cotiacion.codigos.nuevo');
+                Route::get('codigos-asoc/{identy}', 'codigosAsocCotizacion')->name('codigos.asociados.cotizacion');
+            });
             Route::prefix('captura')->group(function(){
                 Route::get('{identy?}/detalle','datelleCaptura')->name('cotizacion.captura.detalle');
                 Route::post('guardarDetalle','saveCaptura')->name('cotizacion.guardad.captura');
