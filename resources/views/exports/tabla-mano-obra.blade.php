@@ -63,11 +63,12 @@
                         {{ $detalle->descripcion ?? '' }}</td>
                 @else
                     <td style="text-align: center; border: 1px solid #000">{{ $detalle->PDA ?? '' }}</td>
-                    <td style="text-align: center; border: 1px solid #000">{{ $detalle->descripcion ?? '' }}</td>
+                    <td style="text-align: justify; border: 1px solid #000;  white-space: pre-wrap;"> {!! $detalle->descripcion !!}</td>
+                    <td style="text-align: center; border: 1px solid #000">{{ $detalle->unidadMedida->abreviatura ?? '' }}
+                    </td>
                     <td style="text-align: center; border: 1px solid #000">{{ $detalle->costo_material_cantidad ?? '' }}
                     </td>
-                    <td style="text-align: center; border: 1px solid #000">{{ $detalle->cat_unidad_medida_id ?? '' }}
-                    </td>
+
                     <td style="text-align: center; border: 1px solid #000">$
                         {{ number_format($detalle->costo_mano_obra_unitario_sugerido ?? 0, 2, '.', '') }}</td>
                     <td style="text-align: center; border: 1px solid #000">$

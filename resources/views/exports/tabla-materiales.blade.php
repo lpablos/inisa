@@ -55,7 +55,7 @@
                 @else
                     <td style="text-align: center; border: 1px solid #000">{{ $detalle->PDA ?? '' }}</td>
                     <td style="text-align: center; border: 1px solid #000">{{ $detalle->descripcion ?? '' }}</td>
-                    <td style="text-align: center; border: 1px solid #000">{{ $detalle->cat_unidad_medida_id ?? '' }}
+                    <td style="text-align: center; border: 1px solid #000">{{ $detalle->unidadMedida->abreviatura ?? '' }}
                     </td>
                     <td style="text-align: center; border: 1px solid #000">{{ $detalle->costo_material_cantidad ?? '' }}
                     </td>
@@ -75,5 +75,5 @@
                 ${{ number_format($totalObraMaterial, 2, '.', '') }}
             </td>
         </tr>
-    </tfoot>F
+    </tfoot>
 </table>
