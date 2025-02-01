@@ -51,11 +51,37 @@
             line-height: 1.1;
             /* Ajusta el espaciado */
         }
+
+        @page: last {
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 10px;
+            color: #000;
+        }
+
+        .pagenum:before {
+            content: "Página " counter(page) " de " counter(pages);
+        }
     </style>
 
     <style>
+        thead {
+            display: table-header-group;
+        }
 
+        tfoot {
+            display: table-row-group;
+        }
     </style>
+
+
 </head>
 
 <body>
@@ -63,7 +89,10 @@
         <img src="{{ $imageBase64 }}" style="width: 100%; max-height: 150px;" alt="Encabezado">
 
 
+
+
     </header>
+
 
     <div class="container">
         <div class="row">
@@ -114,7 +143,11 @@
         <br>
         <br>
         {{-- Forzar salto de página si no cabe en la misma hoja --}}
+        {{-- <div style="page-break-before: always;"></div> --}}
+
+        @if (is_countable($detalles->detalles) && count($detalles->detalles) > 10)
         <div style="page-break-before: always;"></div>
+    @endif
 
 
         <div class="row">
@@ -154,3 +187,20 @@
 </body>
 
 </html>
+
+<script type="text/php">
+    if (isset($pdf)) {
+        $pdf->page_script('
+            $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
+            $text = "Página $PAGE_NUM de $PAGE_COUNT";
+
+            // Solo imprimir si PAGE_COUNT > 1 (Evitar números en páginas vacías)
+            if ($PAGE_COUNT > 1) {
+                $x = ($pdf->get_width() - $fontMetrics->getTextWidth($text, $font, 10)) / 2;
+                $y = $pdf->get_height() - 30;
+                $pdf->text($x, $y, $text, $font, 10);
+            }
+        ');
+    }
+</script>
+

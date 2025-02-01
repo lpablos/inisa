@@ -61,9 +61,6 @@ class PdfController extends Controller
         // dd($cotizaciones->toArray(), $textoFecha, $diasTotales, $totalObraMaterial);
 
 
-        // Crear instancia de DomPDF con las opciones
-        $dompdf = new Dompdf($options);
-
         $pdf = Pdf::loadView('pdf.cotizacion', [
             'detalles' => $cotizaciones,
             'textoFecha' => $textoFecha,
@@ -71,25 +68,23 @@ class PdfController extends Controller
             'totalObraMaterial' => $totalObraMaterial,
             'imageBase64' => $data['imageBase64']
         ])->setPaper('a4', 'portrait')
-            ->setOptions(['isHtml5ParserEnabled' => true, 'isPhpEnabled' => true])
-            ->setOption('dpi', 96);
+          ->setOptions(['isHtml5ParserEnabled' => true, 'isPhpEnabled' => true])
+          ->setOption('dpi', 96);
 
+        // Eliminar última página vacía manualmente
+        $dompdf = $pdf->getDomPDF();
+        $canvas = $dompdf->get_canvas();
+        $pages = $canvas->get_page_count();
 
-        // return view('pdf.cotizacion', [
-        //     'detalles' => $cotizaciones,
-        //     'textoFecha' => $textoFecha,
-        //     'diasTotales' => $diasTotales,
-        //     'totalObraMaterial' => $totalObraMaterial,
-        //     'imageBase64' => $data['imageBase64']
-        // ]);
+        // Si hay más de una página y la última está vacía, la eliminamos
+        if ($pages > 1) {
+            $lastPage = $canvas->open_object();
+            if (trim($lastPage) === "") { // Si la página está vacía
+                $canvas->delete_page($pages);
+            }
+        }
 
-        // $pdf = Pdf::loadView('pdf/cotizacion', $data);
-
-        // Descargar el PDF
-        // return $pdf->download('cotizacion.pdf');
         return $pdf->stream('cotizacion.pdf');
 
-        // O para mostrarlo en el navegador
-        // return $pdf->stream('ejemplo.pdf');
     }
 }
