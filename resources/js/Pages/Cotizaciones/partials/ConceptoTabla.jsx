@@ -199,9 +199,15 @@ const ConceptoTabla = () => {
         }
     };
 
-    const handleExportClick = (id) => {   
-        const url = route('exportar.excel.cotizacion', id); // Genera la URL dinámica.
-        Inertia.visit(url, { method: 'get' }); // Realiza la navegación.
+    const handleExportClick = (id) => {
+
+        const url = `${route("exportar.excel.cotizacion", { id: 1 })}`;
+        console.log("Este es la ruta", url);
+        setTimeout(() => {
+
+            Inertia.visit(url, { method: 'get' }); // Realiza la navegación.
+        }, 1000);
+        //const url = route('exportar.excel.cotizacion', id); // Genera la URL dinámica.
     };
 
     // Plantilla para las acciones
@@ -267,13 +273,13 @@ const ConceptoTabla = () => {
     );
 
     const codigosAsc = (rowData) => (
-        
-        <div className=" flex flex-wrap justify-content-center gap-1">               
+
+        <div className=" flex flex-wrap justify-content-center gap-1">
             <Tag icon="pi pi-flag" severity="secondary" value="PO: 4575219650 Fecha: 2025-01-26" rounded style={{ width: '250px', textAlign: 'center' }}></Tag>
             <Button label="Ampliar" size="small" icon="pi pi-paperclip"  onClick={() => { setCodigosShow(true); setSeleccionCotizacion(rowData.id);}} />
         </div>
-            
-        
+
+
     );
 
     // Cerrar el diálogo
@@ -288,7 +294,7 @@ const ConceptoTabla = () => {
             <Toast ref={toast} />
 
             {/* Botón para crear cotización */}
-            <div className="mb-3">               
+            <div className="mb-3">
                 <Button icon="pi pi-plus" tooltip="Nueva Cotización" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded severity="info" aria-label="Nueva Cotización" onClick={handleCrear}/>
             </div>
 

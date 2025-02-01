@@ -2,7 +2,7 @@ import React,{useEffect, useState} from 'react';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { ProgressSpinner } from 'primereact/progressspinner';
-        
+
 
 const VistaPreviaCotizacion = ({vistraPreviaPDF, setVistraPreviaPDF}) => {
     const [visible, setVisible] = useState(false);
@@ -13,7 +13,7 @@ const VistaPreviaCotizacion = ({vistraPreviaPDF, setVistraPreviaPDF}) => {
 
     useEffect(()=>{
         if(visible){
-            const pdfUrl = `${route("exportar.pdf.cotizacion")}`; 
+            const pdfUrl = `${route("exportar.pdf.cotizacion", { id: 1 })}`;
             setTimeout(() => {
                 setPdfUrl(pdfUrl)
             }, 1000);
@@ -21,14 +21,14 @@ const VistaPreviaCotizacion = ({vistraPreviaPDF, setVistraPreviaPDF}) => {
             setPdfUrl(null)
         }
     },[visible])
-    
-   
+
+
     return (
         <>
             {/* <Button label="Show" icon="pi pi-external-link" onClick={() => setVisible(true)} /> */}
             <Dialog header="Vista Previa Cotización" visible={visible} maximizable style={{ width: '50vw' }} onHide={() => {if (!visible) return; setVistraPreviaPDF(false); }}>
                 <p className="m-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                 </p>
                 {!pdfUrl && (
                      <div className="flex justify-content-center">
@@ -36,19 +36,19 @@ const VistaPreviaCotizacion = ({vistraPreviaPDF, setVistraPreviaPDF}) => {
                     </div>
                 )}
                 {pdfUrl && (
-                    <iframe 
-                        src={pdfUrl} 
-                        width="100%" 
-                        height="500px" 
-                        style={{ border: 'none' }} 
+                    <iframe
+                        src={pdfUrl}
+                        width="100%"
+                        height="500px"
+                        style={{ border: 'none' }}
                         title="Vista Previa Cotización"
                     />
                 )}
             </Dialog>
         </>
-        
+
     );
-    
+
 }
 
 export default VistaPreviaCotizacion;
