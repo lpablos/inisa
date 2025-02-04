@@ -834,5 +834,29 @@ class CotizacionController extends Controller
         ], 200);
     }
 
+    public function deleteCodigoAsc($identy){
+        try {
+            $codigosAsc = Codigo::find($identy);
+            $codigosAsc->delete();
+            return response()->json(['success' => 'Código eliminado exitosamente'], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error','message' => 'No se pudo eliminar... Intenta mas tarde'], 404);
+        }
+    }
+
+    public function editCodigoAsc($identy, Request $request){
+        
+        try {
+            $codigosAsc = Codigo::find($identy);
+            $codigosAsc->codigo =$request->codigo;
+            $codigosAsc->descripcion =$request->descripcion;
+            $codigosAsc->fecha =date('Y-m-d', strtotime($request->fecha));
+            $codigosAsc->save();
+            return response()->json(['success' => 'Código editado exitosamente'], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error','message' => 'No se pudo eliminar... Intenta mas tarde'], 404);
+        }
+    }
+
 
 }

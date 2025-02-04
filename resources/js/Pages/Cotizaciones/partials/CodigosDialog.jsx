@@ -15,6 +15,7 @@ const CodigosDialog = ({seleccionCotizacion,codigosShow, setCodigosShow}) => {
     const [isLoading, setIsLoading] = useState(false);
     const toast = useRef(null);
     const [visible, setVisible] = useState(false);
+    const [identyCodigo, setIdentyCodigo] = useState(null)
     const [codigo, setCodigo] = useState('');
     const [descripcion, setDescripcion] = useState('');
     const [fecha, setFecha] = useState(null);
@@ -22,8 +23,12 @@ const CodigosDialog = ({seleccionCotizacion,codigosShow, setCodigosShow}) => {
     const isConfirming = useRef(false);
     const [identyCotizacion, setIdentyCotizacion] = useState(null)
 
+    const [modoNuevoRegistro,setModoNuevoRegistro] = useState(true)
+    
     useEffect(()=>{
         setVisible(codigosShow)
+        resetFormulario()
+        setModoNuevoRegistro(true)
     },[codigosShow])
 
     useEffect(()=>{
@@ -65,6 +70,105 @@ const CodigosDialog = ({seleccionCotizacion,codigosShow, setCodigosShow}) => {
         });
     }; 
 
+    const confirmacionEdicion = () => {
+        if (isConfirming.current) return; // Evita ejecución doble
+        isConfirming.current = true;
+        confirmDialog({
+            message: '¿Estas seguro de editar el registro?',
+            header: 'Confirmación',
+            icon: 'pi pi-exclamation-triangle',
+            defaultFocus: 'accept',
+            accept: () => {
+                acceptEditar();
+                isConfirming.current = false; // Restablece el estado
+            },
+            reject: () => {
+                rejectEditar();
+                isConfirming.current = false; // Restablece el estado
+            }
+        });
+    }; 
+    const acceptEditar = () => {
+        editCodigo()
+    }
+
+    const rejectEditar = () => {
+        toast.current.show({ severity: 'warn', summary: 'Sin efecto', detail: 'Intenta con otros valores', life: 3000 });
+    }
+
+    const acceptDelete = (id) => {
+        deleteCodigo(id)
+    }
+
+    const rejectDelete = () => {
+        toast.current.show({ severity: 'warn', summary: 'Sin efecto', detail: 'Intenta con otros valores', life: 3000 });
+    }
+
+    const confirmacionDelete = (data) => {
+        const {id,codigo, descripcion, fecha} = data
+        console.log("Esto entra ", data.id);
+        
+        if (isConfirming.current) return; // Evita ejecución doble
+        isConfirming.current = true;
+        confirmDialog({
+            message: `¿Estas seguro de eliminar "${codigo}"?`,
+            header: 'Confirmación',
+            icon: 'pi pi-exclamation-triangle',
+            defaultFocus: 'accept',
+            accept: () => {
+                acceptDelete(id);
+                isConfirming.current = false; // Restablece el estado
+            },
+            reject: () => {
+                rejectDelete();
+                isConfirming.current = false; // Restablece el estado
+            }
+        });
+    }; 
+
+    const editCodigo = async () =>{
+        setIsLoading(true)
+        try {
+            const identy = identyCodigo
+            const  datos = {
+                identyCod: identyCodigo,
+                codigo:codigo,
+                descripcion:descripcion,
+                fecha:fecha,
+                identyCotizacion:identyCotizacion
+            }            
+            const response = await axios.put(`${route("codigo.actualiza.asociado.identy", { id: identy })}`,datos);
+            if (response.status === 200) {
+                toast.current.show({ severity: 'success', summary: 'Registro Actualizado', detail: 'Código Actualizado Correctamene', life: 3000 });
+                setIsLoading(false)
+                resetFormulario()
+                todosCodigosAsociados()
+                setModoNuevoRegistro(true)
+            }            
+        } catch (error) {
+            toast.current.show({severity:'error', summary: 'Error', detail:'Error al guarda, Intenta mas tarde', life: 3000});
+            setIsLoading(false)
+            setModoNuevoRegistro(true)
+        }
+    }
+
+    const deleteCodigo = async(identy) =>{
+        setIsLoading(true)
+        try {
+            const response = await axios.delete(`${route("codigo.delete.asociado.identy", { id: identy })}`);
+            if (response.status === 200) {
+                toast.current.show({ severity: 'success', summary: 'Código Eliminado', detail: 'Código Asociado Eliminado Correctamene', life: 3000 });
+                setIsLoading(false)
+                resetFormulario()
+                todosCodigosAsociados()
+                setModoNuevoRegistro(true)
+            }            
+        } catch (error) {
+            toast.current.show({severity:'error', summary: 'Error', detail:'Error al guarda, Intenta mas tarde', life: 3000});
+            setIsLoading(false)
+        }
+    }
+
 
     const newCodigo = async () =>{
         setIsLoading(true)
@@ -104,12 +208,25 @@ const CodigosDialog = ({seleccionCotizacion,codigosShow, setCodigosShow}) => {
         }
     }
 
-    
-
     const resetFormulario =()=>{
         setCodigo('')
         setDescripcion('')
+        setIdentyCodigo(null)
         setFecha(null)
+    }
+
+    const cargarDatoFormulario = (data) =>{
+        setIsLoading(true)
+        setModoNuevoRegistro(false)
+        setTimeout(() => {
+            setIsLoading(false)
+            const {codigo, descripcion, fecha, id} = data
+            setIdentyCodigo(id)
+            setCodigo(codigo)
+            setDescripcion(descripcion)
+            setFecha(new Date(fecha) || null)
+            toast.current.show({severity:'info', summary: 'Detalle', detail:'Se cargo el detalle en el formulario', life: 3000});
+        }, 1000);
     }
     
     const accionesTemplate = (rowData) => (
@@ -121,7 +238,7 @@ const CodigosDialog = ({seleccionCotizacion,codigosShow, setCodigosShow}) => {
                 tooltip="Eliminar"
                 tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
                 className="p-button-rounded p-button-info p-button-sm"
-                // onClick={() => validacionConcepto(rowData) }
+                onClick={() => confirmacionDelete(rowData) }
             />
             <Button
                 severity="success"
@@ -130,7 +247,7 @@ const CodigosDialog = ({seleccionCotizacion,codigosShow, setCodigosShow}) => {
                 tooltip="Actualizar"
                 tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
                 className="p-button-rounded p-button-info p-button-sm"
-                // onClick={() => validacionConcepto(rowData) }
+                onClick={() => cargarDatoFormulario(rowData) }
             />
         </div>
     );
@@ -154,9 +271,14 @@ const CodigosDialog = ({seleccionCotizacion,codigosShow, setCodigosShow}) => {
                             <label htmlFor="minmaxfraction" className="font-bold block mb-2">Fecha</label>
                             <Calendar value={fecha} onChange={(e) => setFecha(e.target.value)} />
                         </div>
-                        {isLoading===false && (
+                        {(isLoading===false) && (modoNuevoRegistro===true) && (
                             <div className="flex-auto">                            
-                                <Button onClick={confirmacion} icon="pi pi-check" label="Confirm" className="mt-4"></Button>
+                                <Button onClick={confirmacion} icon="pi pi-check" label="Registrar" className="mt-4"></Button>
+                            </div>
+                        )}
+                        {(isLoading===false) && (modoNuevoRegistro===false) && (
+                            <div className="flex-auto">                            
+                                <Button onClick={confirmacionEdicion} icon="pi pi-check" label="Editar" className="mt-4"></Button>
                             </div>
                         )}
                    

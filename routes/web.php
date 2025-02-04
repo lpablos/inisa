@@ -137,6 +137,8 @@ Route::prefix('admin')->group(function () {
             Route::prefix('codigos')->group(function(){
                 Route::post('nuevo-codigo','nuevoCodigo')->name('cotiacion.codigos.nuevo');
                 Route::get('codigos-asoc/{identy}', 'codigosAsocCotizacion')->name('codigos.asociados.cotizacion');
+                Route::delete('delete-codigo/{identy}', 'deleteCodigoAsc')->name('codigo.delete.asociado.identy');
+                Route::put('actualiza-codigo/{id}', 'editCodigoAsc')->name('codigo.actualiza.asociado.identy');
             });
             Route::prefix('captura')->group(function(){
                 Route::get('{identy?}/detalle','datelleCaptura')->name('cotizacion.captura.detalle');
