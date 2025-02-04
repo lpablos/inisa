@@ -34,15 +34,19 @@ const ConceptoTabla = () => {
 
     // Cargar cotizaciones
     const obtenerCotizaciones = async () => {
+        setLoader(true);
         try {
+            
             const response = await axios.get(
                 route("cotizacion.list.cotizaciones")
             );
             setCotizaciones(response.data.cotizaciones || []);
+            setLoader(false);
             // console.log("cotizaciones", response.data.cotizaciones);
         } catch (error) {
             console.error("Error al obtener cotizaciones:", error);
             setCotizaciones([]);
+            setLoader(false);
         }
     };
 
@@ -288,6 +292,11 @@ const ConceptoTabla = () => {
         setSelectedCotizacion(null);
     };
 
+    const reloadHideCodigos = (validacion) =>{
+        obtenerCotizaciones();
+        setCodigosShow(validacion)
+    }
+
     return (
         <div className="card">
             {/* Toast para notificaciones */}
@@ -332,7 +341,7 @@ const ConceptoTabla = () => {
                     onClose={handleCerrarDialogo}
                 />
             )}
-            <CodigosDialog seleccionCotizacion={seleccionCotizacion} codigosShow={codigosShow} setCodigosShow={setCodigosShow}/>
+            <CodigosDialog seleccionCotizacion={seleccionCotizacion} codigosShow={codigosShow} setCodigosShow={reloadHideCodigos}/>
             <VistaPreviaCotizacion  vistraPreviaPDF={vistraPreviaPDF} setVistraPreviaPDF={setVistraPreviaPDF}/>
         </div>
     );
