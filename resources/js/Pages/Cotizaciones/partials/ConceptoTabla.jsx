@@ -217,6 +217,23 @@ const ConceptoTabla = () => {
     // Plantilla para las acciones
     const accionesTemplate = (rowData) => (
         <div className="flex gap-2">
+            <a
+                id="capture-link"
+                href={route("cotizacion.captura.detalle", { identy: rowData.id })}
+                size="small"
+                rel="noopener noreferrer"
+                className="p-button-rounded p-button"
+            >
+                <i className="pi pi-pencil"></i>
+            </a>
+            <Button
+                size="small"
+                icon="pi pi-folder-open"
+                tooltip="Detalle"
+                tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
+                className="p-button-rounded p-button-info p-button-sm"
+                onClick={() => handleEditar(rowData)}
+            />
             <Button
                 severity="success"
                 size="small"
@@ -235,24 +252,16 @@ const ConceptoTabla = () => {
                 className="p-button-rounded p-button-info p-button-sm"
                 onClick={() => setVistraPreviaPDF(true)}
             />
-            <Button
-                size="small"
-                icon="pi pi-folder-open"
-                tooltip="Detalle"
+             <Button 
+                size="small" 
+                className="p-button-rounded p-button-secondary p-button-sm"
                 tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
-                className="p-button-rounded p-button-info p-button-sm"
-                onClick={() => handleEditar(rowData)}
+                tooltip="Agregar Codigo"
+                icon="pi pi-qrcode"  
+                onClick={() => { setCodigosShow(true); setSeleccionCotizacion(rowData.id);}} 
             />
-            <Button
-                size="small"
-                icon="pi pi-trash"
-                className="p-button-rounded p-button-danger p-button-sm"
-                tooltip="Eliminar"
-                tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
-                onClick={() =>
-                    confirmarEliminacionCotizacion(rowData.id, rowData.titulo)
-                }
-            />
+            
+          
             <Button
                 size="small"
                 icon="pi pi-copy"
@@ -263,23 +272,18 @@ const ConceptoTabla = () => {
                     confirmarDuplicacionCotizacion(rowData.id, rowData.titulo)
                 }
             />
-            <Button 
-                size="small" 
-                className="p-button-rounded p-button-secondary p-button-sm"
-                tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
-                tooltip="Agregar Codigo"
-                icon="pi pi-qrcode"  
-                onClick={() => { setCodigosShow(true); setSeleccionCotizacion(rowData.id);}} 
-            />
-             <a
-                id="capture-link"
-                href={route("cotizacion.captura.detalle", { identy: rowData.id })}
+           
+           
+            <Button
                 size="small"
-                rel="noopener noreferrer"
-                className="p-button-rounded p-button"
-            >
-                <i className="pi pi-pencil"></i>
-            </a>
+                icon="pi pi-trash"
+                className="p-button-rounded p-button-danger p-button-sm"
+                tooltip="Eliminar"
+                tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
+                onClick={() =>
+                    confirmarEliminacionCotizacion(rowData.id, rowData.titulo)
+                }
+            />
             <Tooltip target="#capture-link" content="Captura la cotizacion" position="bottom" />
         </div>
     );
