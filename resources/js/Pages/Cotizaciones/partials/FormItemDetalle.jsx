@@ -11,12 +11,14 @@ import { Toast } from 'primereact/toast';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Editor } from 'primereact/editor';
 
-
+import { Menubar } from 'primereact/menubar';
+import { Slider } from "primereact/slider";
 
 
 
 const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListado, detalleItem}) => {
-    console.log("Esto es ---->", detalleItem);
+    
+    const [porcentaje, setPorcentaje] = useState(0);
     
     const toast = useRef(null);
     const [progress, setProgress] = useState(false)
@@ -306,7 +308,15 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
         }
     };
 
-
+    const end = (
+        <div className="flex justify-content-end">
+            <div className="max-w-full">
+                <label htmlFor="percent" className="font-bold block mb-2">Aumento Costos %</label>
+                <InputText value={porcentaje} onChange={(e) => setPorcentaje(e.target.value)} className="w-full p-inputtext-sm"/>
+                <Slider value={porcentaje} onChange={(e) => setPorcentaje(e.value)} className="w-full" />
+            </div>
+        </div>
+    );
 
     
 
@@ -357,6 +367,11 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
                         {(segmento === 'todo' || segmento === 'detalle') && (
                             <>
                                 <h5>Costo de Materiales</h5>
+                                {identyDetallle !== null && (
+                                    <div class="col-12">
+                                        {end}
+                                    </div>
+                                )}
                                 <div class="formgrid grid">
                                     <div class="field col-12">
                                         <label htmlFor="percent" className="font-bold block mb-2">Descripción</label>
