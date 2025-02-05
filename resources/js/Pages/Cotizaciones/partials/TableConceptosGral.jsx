@@ -9,6 +9,7 @@ import axios from "axios";
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
+import DOMPurify from "dompurify";
 
 const TableConceptosGral = ({listadoConceptos = [], totalesAsc=0,seleccionTomo,perteneceTomo,capturaTomo,identyCotizacion, setVisibleModal, setConceptoInput, setReloadList, setRegistros}) => {
     const [conceptos, setConceptos] = useState([]);
@@ -155,11 +156,18 @@ const TableConceptosGral = ({listadoConceptos = [], totalesAsc=0,seleccionTomo,p
             </ul>
         );
     }
+
+    const detalleDescripcion = (rowData)=>{
+        return (
+            <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(rowData.descripcion) }} />
+        );
+    }
     return (
         <>
             <div className="card">
                 <DataTable value={conceptos} size={'small'} paginator rows={5}>
-                    <Column field="descripcion" header="Descripción"  style={{ width: '50%' }}></Column>
+                    {/* <Column field="descripcion" header="Descripción"  style={{ width: '50%' }}></Column> */}
+                    <Column field="descripcion" header="Descripción"  style={{ width: '50%' }} body={detalleDescripcion}></Column>
                     <Column field="name" header="Material" body={detalleMaterial}></Column>
                     <Column field="category" header="Mano de Obra" body={detalleManoObra}></Column>
                     <Column field="opciones" header="Opción" body={accionesTemplate}></Column>
