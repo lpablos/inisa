@@ -60,6 +60,7 @@ class PdfController extends Controller
 
         // dd($cotizaciones->toArray(), $textoFecha, $diasTotales, $totalObraMaterial);
 
+        // return view('pdf.cotizacion', compact('cotizaciones', 'textoFecha', 'diasTotales', 'totalObraMaterial', 'data'));
 
         $pdf = Pdf::loadView('pdf.cotizacion', [
             'detalles' => $cotizaciones,
