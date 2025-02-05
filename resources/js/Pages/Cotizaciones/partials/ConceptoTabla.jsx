@@ -263,6 +263,14 @@ const ConceptoTabla = () => {
                     confirmarDuplicacionCotizacion(rowData.id, rowData.titulo)
                 }
             />
+            <Button 
+                size="small" 
+                className="p-button-rounded p-button-secondary p-button-sm"
+                tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
+                tooltip="Agregar Codigo"
+                icon="pi pi-qrcode"  
+                onClick={() => { setCodigosShow(true); setSeleccionCotizacion(rowData.id);}} 
+            />
              <a
                 id="capture-link"
                 href={route("cotizacion.captura.detalle", { identy: rowData.id })}
@@ -277,14 +285,24 @@ const ConceptoTabla = () => {
     );
 
     const codigosAsc = (rowData) => (
-
-        <div className=" flex flex-wrap justify-content-center gap-1">
-            <Tag icon="pi pi-flag" severity="secondary" value="PO: 4575219650 Fecha: 2025-01-26" rounded style={{ width: '250px', textAlign: 'center' }}></Tag>
-            <Button label="Ampliar" size="small" icon="pi pi-paperclip"  onClick={() => { setCodigosShow(true); setSeleccionCotizacion(rowData.id);}} />
+        <div className="flex flex-wrap justify-content-center gap-1">
+            {Array.isArray(rowData.codigos) ? (
+                rowData.codigos.map((row, index) => (
+                    <Tag
+                        key={row.id ?? index}
+                        severity="info"
+                        value={`${row.codigo? `Código: ${row.codigo}`:''}  ${row.fecha ? `- Fecha: ${row.fecha}` : ''}`}
+                        rounded
+                        style={{ width: '250px', textAlign: 'center' }}
+                    />
+                ))
+            ) : (
+                <p>No hay datos disponibles</p>
+            )}
+              
         </div>
-
-
     );
+    
 
     // Cerrar el diálogo
     const handleCerrarDialogo = () => {
@@ -313,11 +331,11 @@ const ConceptoTabla = () => {
                 paginator
                 rows={5}
                 size={'small'}
-                responsiveLayout="scroll"
+                // responsiveLayout="scroll"
             >
                 <Column field="id" header="ID" headerStyle={{ textAlign: 'center' }}  />
                 <Column field="titulo" header="Título" headerStyle={{ textAlign: 'center' }} />
-                <Column field="codigos" header="Codigos" body={(rowData) => codigosAsc(rowData)}/>
+                <Column field="codigos" header="Codigos" headerStyle={{ textAlign: 'center' }} body={(rowData) => codigosAsc(rowData)}/>
                 <Column field="fecha" header="Fecha"  style={{ width: '9em' }}/>
                 <Column header="Plantilla"  style={{ width: '9em' }}  body={(rowData) => renderTipo(rowData)}/>
                 <Column field="valides" header="Válido Intervalo" style={{ width: '9em' }} body={(rowData) => renderValides(rowData)}/>

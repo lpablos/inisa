@@ -20,11 +20,7 @@ class CotizacionController extends Controller
 
     public function listCotizaciones()
     {
-        $cotizaciones = Cotizacion::with('proveedor', 'estatus')->where('baja_logica', 1)->get();
-
-
-
-
+        $cotizaciones = Cotizacion::with('proveedor', 'estatus','codigos')->where('baja_logica', 1)->get();
         // dd($cotizaciones->toArray());
         return response()->json(['cotizaciones' => $cotizaciones], 200);
     }
