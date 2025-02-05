@@ -69,21 +69,15 @@ class PdfController extends Controller
             'totalObraMaterial' => $totalObraMaterial,
             'imageBase64' => $data['imageBase64']
         ])->setPaper('a4', 'portrait')
-          ->setOptions(['isHtml5ParserEnabled' => true, 'isPhpEnabled' => true])
-          ->setOption('dpi', 96);
-
-        // Eliminar última página vacía manualmente
-        $dompdf = $pdf->getDomPDF();
-        $canvas = $dompdf->get_canvas();
-        $pages = $canvas->get_page_count();
-
-        // Si hay más de una página y la última está vacía, la eliminamos
-        if ($pages > 1) {
-            $lastPage = $canvas->open_object();
-            if (trim($lastPage) === "") { // Si la página está vacía
-                $canvas->delete_page($pages);
-            }
-        }
+          ->setOptions([
+              'isHtml5ParserEnabled' => true,
+              'isPhpEnabled' => true
+          ])
+          ->setOption('dpi', 96)
+          ->setOption('footer-font-size', '10')
+          ->setOption('footer-spacing', '5') // Ajustar espacio del footer
+          ->setOption('footer-left', "CORDIALMENTE - $textoFecha") // Texto en el footer
+          ->setOption('footer-right', "Página [page] de [topage]"); // Numeración
 
         return $pdf->stream('cotizacion.pdf');
 

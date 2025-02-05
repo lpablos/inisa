@@ -53,23 +53,32 @@
                     @endif
 
                     <tr>
-                        <td style="text-align: center; border: 1px solid #000;">{{ $detalle->PDA ?? 'N/A' }}</td>
-                        <td class="texto-formateado descripcion"
-                            style="text-align: left; padding: 5px; font-size: 10px; line-height: 1.3;">
-                            {!! $detalle->descripcion !!}
-                        </td>
-                        <td style="text-align: center; border: 1px solid #000;">
-                            {{ isset($detalle->unidadMedida) ? $detalle->unidadMedida->abreviatura : 'N/A' }}
-                        </td>
-                        <td class="texto-celda-precio" style="text-align: center; border: 1px solid #000;">
-                            {{ $detalle->cantidad ?? 0 }}
-                        </td>
-                        <td class="texto-celda-precio" style="text-align: center; border: 1px solid #000;">
-                            $ {{ number_format($detalle->costo_material_unitario_sugerido ?? 0, 2, '.', ',') }}
-                        </td>
-                        <td class="texto-celda-precio" style="text-align: center; border: 1px solid #000;">
-                            $ {{ number_format($detalle->costo_material_subtotal ?? 0, 2, '.', ',') }}
-                        </td>
+
+                        @if ($detalle->es_tomo == 1)
+                            <td style="text-align: center; background-color: #FFF2CB; border: 1px solid #000 ">
+                                {{ $detalle->PDA ?? '' }}</td>
+                            <td style="text-align: center; background-color: #FFF2CB; border: 1px solid #000 border: 1px solid #000"
+                                colspan="5">
+                                {{ $detalle->descripcion ?? '' }}</td>
+                        @else
+                            <td style="text-align: center; border: 1px solid #000;">{{ $detalle->PDA ?? 'N/A' }}</td>
+                            <td class="texto-formateado descripcion"
+                                style="text-align: left; padding: 5px; font-size: 10px; line-height: 1.3;">
+                                {!! $detalle->descripcion !!}
+                            </td>
+                            <td style="text-align: center; border: 1px solid #000;">
+                                {{ isset($detalle->unidadMedida) ? $detalle->unidadMedida->abreviatura : 'N/A' }}
+                            </td>
+                            <td class="texto-celda-precio" style="text-align: center; border: 1px solid #000;">
+                                {{ $detalle->cantidad ?? 0 }}
+                            </td>
+                            <td class="texto-celda-precio" style="text-align: center; border: 1px solid #000;">
+                                $ {{ number_format($detalle->costo_material_unitario_sugerido ?? 0, 2, '.', ',') }}
+                            </td>
+                            <td class="texto-celda-precio" style="text-align: center; border: 1px solid #000;">
+                                $ {{ number_format($detalle->costo_material_subtotal ?? 0, 2, '.', ',') }}
+                            </td>
+                        @endif
                     </tr>
                 @endforeach
             </tbody>

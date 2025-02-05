@@ -91,6 +91,15 @@
             content: "Página " counter(page) " de " counter(pages);
         }
 
+        .texto-final {
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+            color: black;
+            margin-top: 50px;
+            /* Agrega espacio arriba */
+        }
+
         /* 📌 Para que el encabezado de la tabla se repita en cada página */
         thead {
             display: table-header-group;
@@ -111,7 +120,7 @@
 
     <!-- 📌 ENCABEZADO QUE SE REPITE EN CADA PÁGINA -->
     <div class="header p-4">
-        <img src="{{ $imageBase64 }}"  alt="Encabezado">
+        <img src="{{ $imageBase64 }}" alt="Encabezado">
     </div>
 
     <div class="container " style="margin-top: 20px;">
@@ -165,13 +174,15 @@
             @include('pdf.tabla-mano-obra')
         @endif
 
-        <br><br><br>
+
+
 
         <!-- 📌 SALTO DE PÁGINA SI LA TABLA ES MUY LARGA -->
-        @if (is_countable($detalles->detalles) && count($detalles->detalles) > 10)
+        {{-- @if (is_countable($detalles->detalles) && count($detalles->detalles) > 10) --}}
             <div style="page-break-before: always;"></div>
-        @endif
+        {{-- @endif --}}
 
+        <br>
         <!-- 📌 NOTAS FINALES -->
         <div class="row">
             <div class="col-md-12 text-justify font-weight-bold" style="font-size: 14px; color:black;">
@@ -186,13 +197,22 @@
             <div class="col-md-12 text-justify font-weight-bold" style="font-size: 14px; color:black;">
                 Sin otro particular me despido de usted, esperando servirle a la brevedad posible.
             </div>
+        </div>
 
-            <br><br><br><br><br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
 
-            <div class="col-md-12 text-center font-weight-bold" style="font-size: 14px; color:black;">
+        <div class="row texto-final">
+            <div class="col-md-12">
                 CORDIALMENTE
             </div>
-            <div class="col-md-12 text-center font-weight-bold" style="font-size: 14px; color:black;">
+            <div class="col-md-12">
                 {{ $textoFecha }}
             </div>
         </div>
