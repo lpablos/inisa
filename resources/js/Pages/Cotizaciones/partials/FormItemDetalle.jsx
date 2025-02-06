@@ -13,6 +13,7 @@ import { Editor } from 'primereact/editor';
 
 import { Menubar } from 'primereact/menubar';
 import { Slider } from "primereact/slider";
+import { Badge } from 'primereact/badge';
 
 
 
@@ -66,6 +67,8 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
     
         fetchData();
     }, [detalle]);
+
+    
     
     const [unidadesDeMedida, setUnidadesDeMedida] = useState([]);
     // Todo lo relacionado con el tomo
@@ -98,6 +101,24 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
         const total = cantidadMaterial * costoMaterialFinal;
         setSubTotalMaterial(total)
     },[cantidadMaterial, costoMaterialFinal])
+
+
+    // -------------------
+    // Todo lo relacionado al aumento de porcentaje
+
+    const [costoMaterialSugeridoPorcentual, setCostoMaterialSugeridoPorcentual] = useState(null);
+    const [costoManoObraFinalPorcentual, setCostoManoObraFinalPorcentual] = useState(null);
+    useEffect(()=>{
+        const newCostoMaterialSugerido = costoMaterialFinal * (1 + porcentaje / 100);
+        setCostoMaterialSugeridoPorcentual(parseFloat(newCostoMaterialSugerido.toFixed(1)))
+        const newCostoManoObraFinalSugerido = costoManoObraFinal * (1 + porcentaje / 100);
+        setCostoManoObraFinalPorcentual(parseFloat(newCostoManoObraFinalSugerido.toFixed(1)))        
+    },[porcentaje])
+
+    useEffect(()=>{
+        setCostoMaterialSugeridoPorcentual(null)
+        setCostoManoObraFinalPorcentual(null)
+    },[])
 
     // ---------------------------------------------
 
@@ -318,7 +339,15 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
         </div>
     );
 
-    
+    const aplicarIvaConcepto = () =>{
+        setCostoMaterialFinal(costoMaterialSugeridoPorcentual)
+        setCostoManoObraFinal(costoManoObraFinalPorcentual)
+        setPorcentaje(0)
+        setTimeout(() => {
+            setCostoMaterialSugeridoPorcentual(null)
+            setCostoManoObraFinalPorcentual(null)            
+        }, 1000);
+    }
 
     return (
           <div className="card">
@@ -376,11 +405,6 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
                                     <div class="field col-12">
                                         <label htmlFor="percent" className="font-bold block mb-2">Descripción</label>
                                         <Editor value={descripcionMaterial} onTextChange={(e) => setDescripcionMaterial(e.htmlValue)} style={{ height: '160px' }} />
-                                        {/* <InputTextarea 
-                                            className="w-full" 
-                                            value={descripcionMaterial} 
-                                            onChange={(e) => setDescripcionMaterial(e.target.value)} 
-                                            rows={2} cols={30}/> */}
                                     </div>               
                                 </div>
                                 <div class="formgrid grid">
@@ -405,6 +429,7 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
                                     </div>  
                                     <div class="field col-4">
                                         <label htmlFor="CostoSugerido" className="font-bold block mb-2">Costo Unitario Sugerido</label>
+                                      
                                         <div className="p-inputgroup flex-1">
                                             <span className="p-inputgroup-addon">$</span>
                                             <InputNumber 
@@ -418,6 +443,11 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
                                     <div class="field col-4">
                                         
                                         <label htmlFor="percent" className="font-bold block mb-2">Costo Unitario</label>
+                                        {costoMaterialSugeridoPorcentual && (
+                                            <div className='flex justify-content-end'>
+                                                <Badge value={`$ ${costoMaterialSugeridoPorcentual}`}></Badge>
+                                            </div>
+                                        )}
                                         <div className="p-inputgroup flex-1">
                                             <span className="p-inputgroup-addon">$</span>
                                             <InputNumber 
@@ -462,6 +492,11 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
                                             <div class="field col-4">
                                                 
                                                 <label htmlFor="percent" className="font-bold block mb-2">Costo Unitario</label>
+                                                {costoManoObraFinalPorcentual &&(
+                                                    <div className="flex justify-content-center">                                                        
+                                                        <Badge value={`$ ${costoManoObraFinalPorcentual}`}></Badge>
+                                                    </div>
+                                                )}
                                                 <div className="p-inputgroup flex-1">
                                                     <span className="p-inputgroup-addon">$</span>
                                                     <InputNumber 
@@ -520,8 +555,11 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
                     {progress && (
                         <ProgressSpinner style={{width: '50px', height: '50px'}} strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s" />
                     )}
-                    {!progress && (
+                    {!progress && porcentaje===0 && (
                         <Button type="submit" label={accionBtn} />
+                    )}
+                    {!progress && porcentaje > 0 && (
+                        <Button label="Aplicar % Calculo" severity="info" onClick={(e)=>{e.preventDefault(); aplicarIvaConcepto()}}/>
                     )}
                 </div>
             </form>

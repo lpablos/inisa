@@ -295,7 +295,7 @@ const ConceptoTabla = () => {
                     <Tag
                         key={row.id ?? index}
                         severity="info"
-                        value={`${row.codigo? `Código: ${row.codigo}`:''}  ${row.fecha ? `- Fecha: ${row.fecha}` : ''}`}
+                        value={`${row.codigo? `Cód.: ${row.codigo}`:''}  ${row.fecha ? `- Fecha: ${row.fecha}` : ''}`}
                         rounded
                         style={{ width: '250px', textAlign: 'center' }}
                     />
