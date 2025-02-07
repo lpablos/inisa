@@ -15,6 +15,7 @@ import { Chip } from 'primereact/chip';
 import VistaPreviaCotizacion from "./VistaPreviaCotizacion";
 import { Tag } from 'primereact/tag';
 import CodigosDialog from "./CodigosDialog";
+import BusquedaCotizacion from "./BusquedaCotizacion";
 
 
 
@@ -325,8 +326,9 @@ const ConceptoTabla = () => {
             <Toast ref={toast} />
 
             {/* Botón para crear cotización */}
-            <div className="mb-3">
+            <div className="mb-7">
                 <Button icon="pi pi-plus" tooltip="Nueva Cotización" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded severity="info" aria-label="Nueva Cotización" onClick={handleCrear}/>
+                <BusquedaCotizacion />
             </div>
 
             {/* Tabla de cotizaciones */}
