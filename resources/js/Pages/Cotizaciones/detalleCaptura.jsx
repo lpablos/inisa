@@ -39,7 +39,7 @@ const detalleCaptura =({cotizacion, detalle}) => {
 
                         </div>  
                         <div className="col-2 text-right">
-                            <Button icon="pi pi-history" rounded text severity="info" aria-label="Regresar Cotizaciones"  tooltip="Regresar Cotizaciones" tooltipOptions={{ position: 'left' }} onClick={() => window.location.href = route('cotizacion.show.index')}/>
+                            <Button icon="pi pi-history" rounded severity="help" aria-label="Regresar Cotizaciones"  tooltip="Regresar Cotizaciones" tooltipOptions={{ position: 'left' }} onClick={() => window.location.href = route('cotizacion.show.index')}/>
                         </div>
                         <div className="col-9 text-center">
                             <p>COMPAÑIA:{detalle?.cliente?.nombre}</p>
