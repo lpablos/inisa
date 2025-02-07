@@ -4,7 +4,9 @@ import { Dialog } from 'primereact/dialog';
 import { ProgressSpinner } from 'primereact/progressspinner';
 
 
-const VistaPreviaCotizacion = ({vistraPreviaPDF, setVistraPreviaPDF}) => {
+const VistaPreviaCotizacion = ({identyCotizacion=1,vistraPreviaPDF, setVistraPreviaPDF}) => {
+    console.log("Cotizacion prueba", identyCotizacion);
+    
     const [visible, setVisible] = useState(false);
     const [pdfUrl, setPdfUrl] = useState(null)
     useEffect(() => {
@@ -13,9 +15,11 @@ const VistaPreviaCotizacion = ({vistraPreviaPDF, setVistraPreviaPDF}) => {
 
     useEffect(()=>{
         if(visible){
-            const pdfUrl = `${route("exportar.pdf.cotizacion", { id: 1 })}`;
             setTimeout(() => {
-                setPdfUrl(pdfUrl)
+                const pdfUrl = `${route("exportar.pdf.cotizacion", { id: identyCotizacion })}`;
+                setTimeout(() => {
+                    setPdfUrl(pdfUrl)
+                }, 1000);                
             }, 1000);
         }else{
             setPdfUrl(null)
