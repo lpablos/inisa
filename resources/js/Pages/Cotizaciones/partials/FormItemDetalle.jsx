@@ -242,12 +242,9 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
         .post(`${route("cotizacion.guardad.captura")}`, datos)
         .then((response) => {
             const { status, data } = response;
-            console.log("Esto se optiene", data);
-            
             if (status == 201) {
                 toast.current.show({ severity: 'info', summary: 'Info', detail: `${data.success}`});
             }
-            setLoader(false); 
         })
         .catch((error) => {            
             const {response, status} = error
@@ -261,10 +258,13 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
                 });
             }
           })
-        .finally(() => {
-            setProgress(false)            
-            setTimeout(() => {
+          .finally(() => {
+              setTimeout(() => {
                 modalVisible()    
+                setTimeout(() => {
+                    toast.current.show({ severity: 'info', summary: 'Info', detail: `Datos guardados correctamente`});
+                    setProgress(false)   
+                }, 1000);         
             }, 2000);
         });
     }
@@ -295,24 +295,26 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
         }
         
         try {
-            // setLoader(true); 
+            
             await axios
             .post(`${route("cotizacion.captura.item.actualiza")}`, datos)
             .then((response) => {
                 const { status, data } = response;                
                 if (status == 201) {
-                    toast.current.show({ severity: 'info', summary: 'Info', detail: 'Message Content' });
+                    toast.current.show({ severity: 'info', summary: 'Info', detail: 'Datos actualizados correctamente' });
                 }
                 // setLoader(false); 
             })
             .finally(() => {
-                setProgress(false)
                 setTimeout(() => {
                     modalVisible()    
+                    setTimeout(() => {
+                        toast.current.show({ severity: 'info', summary: 'Info', detail: `Datos guardados correctamente`});
+                        setProgress(false)
+                    }, 1000);
                 }, 600);
             });            
         } catch (error) {
-            console.log("Esto pasa", error);
             setLoader(false); 
             toast.current.show
         }
@@ -333,7 +335,7 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
         <div className="flex justify-content-end">
             <div className="max-w-full">
                 <label htmlFor="percent" className="font-bold block mb-2">Aumento Costos %</label>
-                <InputText value={porcentaje} onChange={(e) => setPorcentaje(e.target.value)} className="w-full p-inputtext-sm"/>
+                <InputText value={porcentaje} onChange={(e) => setPorcentaje(e.target.value)} className="w-full p-inputtext-sm" readOnly/>
                 <Slider value={porcentaje} onChange={(e) => setPorcentaje(e.value)} className="w-full" />
             </div>
         </div>
@@ -344,6 +346,7 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
         setCostoManoObraFinal(costoManoObraFinalPorcentual)
         setPorcentaje(0)
         setTimeout(() => {
+            toast.current.show({ severity: 'info', summary: 'Info', detail: `Se implemento el porentaje ${porcentaje}. Actualiza para guardar los cambios necesarios`});
             setCostoMaterialSugeridoPorcentual(null)
             setCostoManoObraFinalPorcentual(null)            
         }, 1000);
@@ -556,7 +559,7 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
                         <ProgressSpinner style={{width: '50px', height: '50px'}} strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s" />
                     )}
                     {!progress && porcentaje===0 && (
-                        <Button type="submit" label={accionBtn} />
+                        <Button type="submit" label={accionBtn}/>
                     )}
                     {!progress && porcentaje > 0 && (
                         <Button label="Aplicar % Calculo" severity="info" onClick={(e)=>{e.preventDefault(); aplicarIvaConcepto()}}/>
