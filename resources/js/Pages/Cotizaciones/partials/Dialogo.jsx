@@ -143,20 +143,15 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
         obtenerPrioridad();
     }, []);
 
-    const [selectedStatus, setSelectedStatus] = useState({
-        "id": 1,
-        "nombre": "Pendiente",
-        "abreviacion": null,
-        "descripcion": "Cotización pendiente",
-        "created_at": "2025-01-08T07:50:51.000000Z",
-        "updated_at": "2025-01-08T07:50:51.000000Z"
-    }); // Status seleccionado
+    const [selectedStatus, setSelectedStatus] = useState(null); // Status seleccionado
     
     const [statuses, setStatuses] = useState([]); // Lista de statuses
     useEffect(() => {
         const obtenerStatuses = async () => {
             try {
                 const response = await axios.get(route("catalogo.list.status"));
+                console.log("Esto que es", response);
+                
                 setStatuses(response.data);
             } catch (error) {
                 toast.current.show({
@@ -335,6 +330,33 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
         });
     };
 
+    useEffect(()=>{
+        setTimeout(() => {
+            setSelectedStatus({
+                "id": 3,
+                "nombre": "EnProcesoFaltaAlgo",
+                "abreviacion": "!",
+                "descripcion": "En Proceso O Falta Algo",
+            })
+        }, 1000);
+        setTimeout(() => {
+            setSelectedPrioridad({
+                "id": 4,
+                "nombre": "Baja",
+                "descripcion": "Puede atenderse después de las prioridades más altas",
+            })    
+        }, 1100);
+        setTimeout(() => {
+            setSelectedMoneda({
+                "id": 3,
+                "nombre": "Peso Mexicano",
+                "abreviacion": "MXN"
+            })    
+        }, 1200);
+        
+        
+    },[])
+
 
     return (
         <>
@@ -352,20 +374,6 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
             <Toast ref={toast} />
             <div className="grid my-5">
                
-                {/* <div className="col-6 md:col-12 mb-3">
-                    <label htmlFor="proveedor">Compañia</label>
-                    <DropdownFilter
-                        className="mb-3 col-12"
-                        value={selectedProveedor}
-                        onChange={(e) => setSelectedProveedor(e.value)}
-                        options={proveedores}
-                        optionLabel="nombre"
-                        placeholder="Seleccione un proveedor"
-                        filter
-                        filterBy="nombre abreviacion"
-                        showClear
-                    />
-                </div> */}
                 <div className="col-6 md:col-12 mb-3">
                     <label htmlFor="titulo">Título</label>
                     <FloatLabel>
@@ -457,9 +465,9 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                     <DropdownFilter
                         className="mb-3 col-12"
                         value={selectedStatus}
-                        onChange={(e) => setSelectedStatus(e.value)}
+                        onChange={(e) =>setSelectedStatus(e.value)}
                         options={statuses}
-                        optionLabel="nombre" // Cambia a la propiedad adecuada de tu modelo de Status
+                        optionLabel="descripcion" // Cambia a la propiedad adecuada de tu modelo de Status
                         placeholder="Seleccione un status"
                         filter
                         filterBy="nombre"
@@ -472,7 +480,7 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                     <DropdownFilter
                         className="mb-3 col-12"
                         value={selectedPrioridad}
-                        onChange={(e) => setSelectedPrioridad(e.value)}
+                        onChange={(e) =>setSelectedPrioridad(e.value)}
                         options={prioridad}
                         optionLabel="nombre" // Cambia a la propiedad adecuada de tu modelo de Status
                         placeholder="Seleccione un Prioridad"
@@ -487,7 +495,7 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                     <DropdownFilter
                         className="mb-3 col-12"
                         value={selectedMoneda}
-                        onChange={(e) => setSelectedMoneda(e.value)}
+                        onChange={(e) =>setSelectedMoneda(e.value)}
                         options={moneda}
                         optionLabel="nombre" // Cambia a la propiedad adecuada de tu modelo de Status
                         placeholder="Seleccione una Moneda"

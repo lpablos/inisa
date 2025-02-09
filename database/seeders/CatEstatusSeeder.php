@@ -13,13 +13,12 @@ class CatEstatusSeeder extends Seeder
      */
     public function run(): void
     {
-        CatEstatu::create(['nombre' => 'Pendiente', 'descripcion' => 'Cotización pendiente']);
-        CatEstatu::create(['nombre' => 'Aprobada', 'descripcion' => 'Cotización aprobada']);
-        CatEstatu::create(['nombre' => 'Rechazada', 'descripcion' => 'Cotización rechazada']);
-        CatEstatu::create(['nombre' => 'COTIZACIÓN ENVIADA', 'descripcion' => 'Cotización enviada']);
-        CatEstatu::create(['nombre' => 'TRABAJO ECHO Y SIN PEDIDO', 'descripcion' => 'Trabajo hecho y sin pedido']);
-        CatEstatu::create(['nombre' => 'EN PROCESO O FALTA ALGO', 'descripcion' => 'En proceso o falta algo']);
-        CatEstatu::create(['nombre' => 'TERMINADA Y CON GR', 'descripcion' => 'TERMINADA Y CON GR']);
-        CatEstatu::create(['nombre' => 'NO REALIZADO', 'descripcion' => 'NO REALIZADO']);
+        CatEstatu::create(['nombre' => 'CotizacionEnviada', 'abreviacion'=>'E' ,'descripcion' => 'Cotización Enviada']);
+        CatEstatu::create(['nombre' => 'TrabRealizadoySinPedido', 'abreviacion'=>'X' ,'descripcion' => 'Trabajo Realizado Y Sin Pedido']);
+        CatEstatu::create(['nombre' => 'EnProcesoFaltaAlgo', 'abreviacion'=>'!' ,'descripcion' => 'En Proceso O Falta Algo']);
+        CatEstatu::create(['nombre' => 'TerminadaConGR', 'abreviacion'=>'T/GR' ,'descripcion' => 'Terminada y Con GR']);
+        CatEstatu::create(['nombre' => 'NoRealizado','abreviacion' => 'N/R','descripcion' =>'No Realizado']);
+        CatEstatu::create(['nombre' => 'SinEnviar', 'abreviacion'=>'S/E' ,'descripcion' =>'Sin Enviar']);
+        CatEstatu::create(['nombre' => 'CotizacionTerminada', 'abreviacion'=>'C/T' ,'descripcion' => 'Cotizacion Terminadao']);
     }
 }

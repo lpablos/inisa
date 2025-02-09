@@ -255,7 +255,7 @@ const CodigosDialog = ({seleccionCotizacion,codigosShow, setCodigosShow}) => {
         <div className="flex justify-content-center">
             <Toast ref={toast} />
             <ConfirmDialog />
-            <Button label="Ampliar" size="small" icon="pi pi-paperclip" onClick={() => setVisible(true)} />
+            {/* <Button label="Ampliar" size="small" icon="pi pi-paperclip" onClick={() => setVisible(true)} /> */}
             <Dialog header="Códigos" visible={visible} maximizable style={{ width: '60vw' }} onHide={() => {if (!visible) return; setVisible(false); setCodigosShow(false); }}>
                 <>
                     <div className="card flex flex-wrap gap-4 p-fluid">

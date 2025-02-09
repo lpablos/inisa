@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Cotizacion;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CatEstatu extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'cat_estatus';
 
@@ -21,6 +22,8 @@ class CatEstatu extends Model
         'abreviacion',
         'descripcion',
     ];
+
+    protected $hidden = ['created_at','updated_at','deleted_at'];
 
     public function cotizaciones()
     {

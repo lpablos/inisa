@@ -322,13 +322,23 @@ const ConceptoTabla = () => {
 
     return (
         <div className="card">
-            {/* Toast para notificaciones */}
-            <Toast ref={toast} />
-
-            {/* Botón para crear cotización */}
-            <div className="mb-7">
+         
+            {/* <div className="mb-7">
                 <Button icon="pi pi-plus" tooltip="Nueva Cotización" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded severity="info" aria-label="Nueva Cotización" onClick={handleCrear}/>
                 <BusquedaCotizacion />
+            </div> */}
+            <div className="flex justify-between items-center gap-x-4 flex-wrap mb-7 ">
+                <BusquedaCotizacion className="mr-2"/>
+                <Button 
+                    icon="pi pi-plus" 
+                    tooltip="Nueva Cotización" 
+                    tooltipOptions={{ showDelay: 100, hideDelay: 300 }} 
+                    rounded 
+                    severity="info" 
+                    className="ml-2"
+                    aria-label="Nueva Cotización" 
+                    onClick={handleCrear} 
+                />
             </div>
 
             {/* Tabla de cotizaciones */}
@@ -348,7 +358,7 @@ const ConceptoTabla = () => {
                 <Column field="estatus.nombre" header="Status" body={(rowData) => renderStatus(rowData)}/>
                 <Column header="Acciones" body={accionesTemplate} />
             </DataTable>
-
+            <Toast ref={toast} />
             {/* Modal para crear/editar */}
             {isDialogVisible && (
                 <Dialogo

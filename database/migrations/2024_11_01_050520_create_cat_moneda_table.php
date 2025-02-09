@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre', 120)->nullable();
             $table->string('abreviacion', 45)->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

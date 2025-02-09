@@ -13,8 +13,11 @@ class CatPrioridadSeeder extends Seeder
      */
     public function run(): void
     {
-        CatPrioridad::create(['nombre' => 'Alta', 'descripcion' => 'Prioridad Alta']);
-        CatPrioridad::create(['nombre' => 'Media', 'descripcion' => 'Prioridad Media']);
-        CatPrioridad::create(['nombre' => 'Baja', 'descripcion' => 'Prioridad Baja']);
+        CatPrioridad::create(['nombre' => 'Crítica', 'descripcion' => 'Prioridad Crítica, requiere atención inmediata']);
+        CatPrioridad::create(['nombre' => 'Urgente', 'descripcion' => 'Debe resolverse lo antes posible']);
+        CatPrioridad::create(['nombre' => 'Normal', 'descripcion' => 'Prioridad estándar, sin urgencia específica']);
+        CatPrioridad::create(['nombre' => 'Baja', 'descripcion' => 'Puede atenderse después de las prioridades más altas']);
+        CatPrioridad::create(['nombre' => 'Muy Baja', 'descripcion' => 'No requiere atención inmediata, puede posponerse']);
+        CatPrioridad::create(['nombre' => 'Opcional', 'descripcion' => 'No es esencial, pero puede realizarse si hay tiempo']);
     }
 }

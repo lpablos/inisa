@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('cat_prioridad', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 45);
-            $table->string('descripcion', 45);
+            $table->string('descripcion');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
