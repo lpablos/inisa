@@ -27,8 +27,8 @@ return new class extends Migration
             $table->boolean('es_material')->nullable();
             $table->double('costo_material')->nullable();
             $table->double('costo_mano_obra')->nullable();
-            $table->boolean('baja_logica')->nullable();
-            $table->softDeletes();
+            // $table->boolean('baja_logica')->nullable();
+     
 
 
 
@@ -94,6 +94,7 @@ return new class extends Migration
             $table->foreign('responsable_id')->references('id')->on('cat_responsable');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

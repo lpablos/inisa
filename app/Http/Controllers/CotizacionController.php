@@ -18,10 +18,17 @@ class CotizacionController extends Controller
         return Inertia::render('Cotizaciones/Index');
     }
 
-    public function listCotizaciones()
+    public function listCotizaciones(Request $request)
     {
-        $cotizaciones = Cotizacion::with('proveedor', 'estatus','codigos')->where('baja_logica', 1)->get();
-        // dd($cotizaciones->toArray());
+        $status = $request->query('estatus');
+
+        $cotizaciones = Cotizacion::with('proveedor', 'estatus','codigos')
+                        ->where(function($query)use($status){
+                            if($status >0){
+                                $query->where('status_id', $status);
+                            }
+                        })
+                        ->get();
         return response()->json(['cotizaciones' => $cotizaciones], 200);
     }
 

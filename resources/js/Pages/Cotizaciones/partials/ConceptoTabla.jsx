@@ -16,12 +16,15 @@ import VistaPreviaCotizacion from "./VistaPreviaCotizacion";
 import { Tag } from 'primereact/tag';
 import CodigosDialog from "./CodigosDialog";
 import BusquedaCotizacion from "./BusquedaCotizacion";
+import { ProgressSpinner } from 'primereact/progressspinner';
+import { Message } from 'primereact/message';
+        
 
 
 
 
 const ConceptoTabla = () => {
-    const [seleccionCotizacion, setSeleccionCotizacion] = useState(null)
+    const [seleccionCotizacion, setSeleccionCotizacion] = useState(null)    
     const [codigosShow, setCodigosShow] = useState(false)
     const [cotizaciones, setCotizaciones] = useState([]); // Lista de cotizaciones
     const [selectedCotizacion, setSelectedCotizacion] = useState(null); // Cotización seleccionada
@@ -29,19 +32,19 @@ const ConceptoTabla = () => {
     const [isEdit, setIsEdit] = useState(false); // Modo edición o creación
     const [loader, setLoader] = useState(false); // Control de loader
     const toast = useRef(null); // Referencia de Toast
-
-
     const [vistraPreviaPDF, setVistraPreviaPDF] = useState(false)
+    const [buscadorEstatus, setBuscadorEstatus] = useState(3)
 
     // Cargar cotizaciones
     const obtenerCotizaciones = async () => {
+        setCotizaciones([]);
         setLoader(true);
-        try {
-            
-            const response = await axios.get(
-                route("cotizacion.list.cotizaciones")
-            );
-            setCotizaciones(response.data.cotizaciones || []);
+        try {     
+            const response = await axios.get(route("cotizacion.list.cotizaciones"), { params:{ estatus: buscadorEstatus }});     
+            const {cotizaciones} = response.data
+            if(cotizaciones.length > 0 ){
+                setCotizaciones(cotizaciones);
+            }
             setLoader(false);
             // console.log("cotizaciones", response.data.cotizaciones);
         } catch (error) {
@@ -67,31 +70,17 @@ const ConceptoTabla = () => {
         setSelectedCotizacion(rowData); // Establece la cotización seleccionada
         setIsEdit(true); // Cambia a modo edición
         setIsDialogVisible(true); // Abre el modal
-
         console.log(rowData);
     };
 
     const renderStatus = (rowData) => {
-        let statusClass = "";
-
-        switch (rowData.estatus.nombre.toLowerCase()) {
-            case "activo":
-                statusClass = "status-active";
-                break;
-            case "inactivo":
-                statusClass = "status-inactive";
-                break;
-            case "pendiente":
-                statusClass = "status-pending";
-                break;
-            default:
-                statusClass = "status-default";
-        }
-
         return (
-            <span className={`status-label ${statusClass}`}>
-                {rowData.estatus.nombre}
-            </span>
+            <div className="flex justify-content-center">
+                <span className="p-overlay-badge" data-pr-tooltip={rowData.estatus.descripcion} id={`tooltip-${rowData.id}`}>
+                    <Badge value={rowData.estatus.abreviacion} />
+                </span>
+                <Tooltip target={`#tooltip-${rowData.id}`} />
+            </div>
         );
     };
 
@@ -116,6 +105,13 @@ const ConceptoTabla = () => {
         );
     };
 
+    const renderFecha = (rowData) => {
+        const fechaObj = new Date(rowData.fecha);
+        const fechaFormateada = `${fechaObj.getDate()}-${fechaObj.getMonth() + 1}-${fechaObj.getFullYear()}`;
+        return (
+            <>{fechaFormateada}</>
+        );
+    };
 
     // Eliminar una cotización
     const eliminarCotizacion = async (id) => {
@@ -308,7 +304,6 @@ const ConceptoTabla = () => {
         </div>
     );
     
-
     // Cerrar el diálogo
     const handleCerrarDialogo = () => {
         setIsDialogVisible(false);
@@ -320,16 +315,32 @@ const ConceptoTabla = () => {
         setCodigosShow(validacion)
     }
 
+    const ActivarBusqueda = (dato) =>{
+        setLoader(true);
+        const {id} =dato
+        setBuscadorEstatus(id)
+        setTimeout(() => {
+            obtenerCotizaciones()
+        }, 1000);
+    }
+
     return (
         <div className="card">
          
-            {/* <div className="mb-7">
-                <Button icon="pi pi-plus" tooltip="Nueva Cotización" tooltipOptions={{ showDelay: 100, hideDelay: 300 }} rounded severity="info" aria-label="Nueva Cotización" onClick={handleCrear}/>
-                <BusquedaCotizacion />
-            </div> */}
+          
             <div className="flex justify-between items-center gap-x-4 flex-wrap mb-7 ">
-                <BusquedaCotizacion className="mr-2"/>
+                <BusquedaCotizacion className="mr-2" activarBusqueda={ActivarBusqueda}/>
                 <Button 
+                    icon="pi pi-plus" 
+                    tooltip="Nueva Cotización" 
+                    tooltipOptions={{ showDelay: 100, hideDelay: 300 }} 
+                    rounded 
+                    severity="info" 
+                    className="ml-2"
+                    aria-label="Nueva Cotización" 
+                    onClick={handleCrear} 
+                />
+                 <Button 
                     icon="pi pi-plus" 
                     tooltip="Nueva Cotización" 
                     tooltipOptions={{ showDelay: 100, hideDelay: 300 }} 
@@ -341,23 +352,39 @@ const ConceptoTabla = () => {
                 />
             </div>
 
-            {/* Tabla de cotizaciones */}
-            <DataTable
-                value={cotizaciones}
-                paginator
-                rows={5}
-                size={'small'}
-                // responsiveLayout="scroll"
-            >
-                <Column field="id" header="ID" headerStyle={{ textAlign: 'center' }}  />
-                <Column field="titulo" header="Título" headerStyle={{ textAlign: 'center' }} />
-                <Column field="codigos" header="Codigos" headerStyle={{ textAlign: 'center' }} body={(rowData) => codigosAsc(rowData)}/>
-                <Column field="fecha" header="Fecha"  style={{ width: '9em' }}/>
-                <Column header="Plantilla"  style={{ width: '9em' }}  body={(rowData) => renderTipo(rowData)}/>
-                <Column field="valides" header="Válido Intervalo" style={{ width: '9em' }} body={(rowData) => renderValides(rowData)}/>
-                <Column field="estatus.nombre" header="Status" body={(rowData) => renderStatus(rowData)}/>
-                <Column header="Acciones" body={accionesTemplate} />
-            </DataTable>
+            {loader && (
+                <div className="card flex justify-content-center">
+                    <ProgressSpinner />
+                </div>
+            )}
+            {loader === false && (
+                <>
+                    {cotizaciones.length > 0 && (
+                        <DataTable
+                            value={cotizaciones}
+                            paginator
+                            rows={5}
+                            size={'small'}
+                        >
+                            <Column field="id" header="ID" headerStyle={{ textAlign: 'center' }}  />
+                            <Column field="titulo" header="Título" headerStyle={{ textAlign: 'center' }} />
+                            <Column field="codigos" header="Códigos" headerStyle={{ textAlign: 'center' }} body={(rowData) => codigosAsc(rowData)}/>
+                            <Column field="fecha" header="Fecha"  style={{ width: '9em' }} body={(rowData) => renderFecha(rowData)}/>
+                            <Column header="Plantilla"  style={{ width: '9em' }}  body={(rowData) => renderTipo(rowData)}/>
+                            {/* <Column field="valides" header="Válido Intervalo" style={{ width: '9em' }} body={(rowData) => renderValides(rowData)}/> */}
+                            <Column field="estatus.nombre" header="Status" body={(rowData) => renderStatus(rowData)}/>
+                            <Column header="Acciones" body={accionesTemplate} />
+                        </DataTable>
+                    )}
+
+                    {cotizaciones.length === 0 && (
+                        <div className="card flex justify-content-center">
+                            <Message text="No se encontraron suficientes registros" />
+                        </div>
+                    )}
+                </>
+            )}
+            
             <Toast ref={toast} />
             {/* Modal para crear/editar */}
             {isDialogVisible && (
