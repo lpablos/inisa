@@ -46,15 +46,15 @@ const detalleCaptura =({cotizacion, detalle}) => {
                             <p>Título: {detalle?.titulo}</p>
                         </div>                      
                         <div className="col-3 text-right">
-                            <BusquedaConceptos cotizacion={cotizacion} setReloadList={setReloadList}/>
-                            <DialogDetalleCotizacion cotizacion={cotizacion} detalleItem={detalle} modo={'Registrar'} recargarListado={recargarListado}/>
-                             <Button
+                            <DialogDetalleCotizacion  cotizacion={cotizacion} detalleItem={detalle} modo={'Registrar'} recargarListado={recargarListado}/>
+                            <BusquedaConceptos  cotizacion={cotizacion} setReloadList={setReloadList}/>
+                            <Button
                                 severity="success"
                                 size="small"
                                 icon="pi pi-file-excel"
                                 tooltip="Vista Previa Excel"
                                 tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
-                                className="p-button-rounded p-button-info p-button-sm"
+                                className="p-button-rounded p-button-info p-button-sm mr-1"
                                 onClick={() => handleExportClick(cotizacion) }
                             />
                             <Button
@@ -63,7 +63,7 @@ const detalleCaptura =({cotizacion, detalle}) => {
                                 icon="pi pi-file-pdf"
                                 tooltip="Vista Previa PDF"
                                 tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
-                                className="p-button-rounded p-button-info p-button-sm"
+                                className="p-button-rounded p-button-info p-button-sm mr-1"
                                 onClick={() => setVistraPreviaPDF(true)}
                             />
                             {/* <Button icon="pi pi-file-pdf" rounded text severity="info" aria-label="Vista Previa"  tooltip="Vista Previa PDF" tooltipOptions={{ position: 'left' }} onClick={()=>{alert('En desarrollo')}}/> */}

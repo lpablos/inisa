@@ -18,6 +18,7 @@ import CodigosDialog from "./CodigosDialog";
 import BusquedaCotizacion from "./BusquedaCotizacion";
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Message } from 'primereact/message';
+import BusquedaAvanzadaCotizacion from "./BusquedaAvanzadaCotizacion";
         
 
 
@@ -340,16 +341,8 @@ const ConceptoTabla = () => {
                     aria-label="Nueva Cotización" 
                     onClick={handleCrear} 
                 />
-                 <Button 
-                    icon="pi pi-plus" 
-                    tooltip="Nueva Cotización" 
-                    tooltipOptions={{ showDelay: 100, hideDelay: 300 }} 
-                    rounded 
-                    severity="info" 
-                    className="ml-2"
-                    aria-label="Nueva Cotización" 
-                    onClick={handleCrear} 
-                />
+                <BusquedaAvanzadaCotizacion />
+
             </div>
 
             {loader && (

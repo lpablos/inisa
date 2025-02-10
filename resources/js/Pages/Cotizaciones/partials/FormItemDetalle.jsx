@@ -109,10 +109,12 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
     const [costoMaterialSugeridoPorcentual, setCostoMaterialSugeridoPorcentual] = useState(null);
     const [costoManoObraFinalPorcentual, setCostoManoObraFinalPorcentual] = useState(null);
     useEffect(()=>{
-        const newCostoMaterialSugerido = costoMaterialFinal * (1 + porcentaje / 100);
-        setCostoMaterialSugeridoPorcentual(parseFloat(newCostoMaterialSugerido.toFixed(1)))
-        const newCostoManoObraFinalSugerido = costoManoObraFinal * (1 + porcentaje / 100);
-        setCostoManoObraFinalPorcentual(parseFloat(newCostoManoObraFinalSugerido.toFixed(1)))        
+        // const newCostoMaterialSugerido = costoMaterialFinal * (1 + porcentaje / 100);
+        const newCostoMaterialSugerido = Math.round(costoMaterialFinal * (1 + porcentaje / 100));
+        setCostoMaterialSugeridoPorcentual(parseFloat(newCostoMaterialSugerido))
+
+        const newCostoManoObraFinalSugerido = Math.round(costoManoObraFinal * (1 + porcentaje / 100));
+        setCostoManoObraFinalPorcentual(parseFloat(newCostoManoObraFinalSugerido))        
     },[porcentaje])
 
     useEffect(()=>{
@@ -423,9 +425,12 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
                                     </div>  
                                     <div class="field col-4">
                                         <label htmlFor="cantidad" className="font-bold block mb-2">Catidad</label>
+                                        
                                         <InputNumber 
                                             inputId="cantidad" 
                                             value={cantidadMaterial} 
+                                            min={0}  
+                                            maxFractionDigits={0}
                                             onValueChange={(e) => setCantidadMaterial(e.value)} 
                                             placeholder="Cantidad"/>
                                         
@@ -438,6 +443,8 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
                                             <InputNumber 
                                                 inputId="cantidad" 
                                                 value={costoMaterialSugerido} 
+                                                min={0}  
+                                                maxFractionDigits={0}
                                                 onValueChange={(e) => setCostoMaterialSugerido(e.value)} 
                                                 placeholder="Consto Unitario Sugerido"/>
                                         </div>
@@ -456,6 +463,8 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
                                             <InputNumber 
                                                 inputId="cantidad" 
                                                 value={costoMaterialFinal} 
+                                                min={0}  
+                                                maxFractionDigits={0}
                                                 onValueChange={(e) => setCostoMaterialFinal(e.value)} 
                                                 placeholder="Consto Unitario"/>
                                         </div>
@@ -487,6 +496,8 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
                                                     <InputNumber 
                                                         inputId="cantidad" 
                                                         value={costoManoObraSugerido} 
+                                                        min={0}  
+                                                        maxFractionDigits={0}
                                                         onValueChange={(e) => setCostoManoObraSugerido(e.value)} 
                                                         placeholder="Consto Unitario"/>
                                                 </div>
@@ -505,6 +516,8 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
                                                     <InputNumber 
                                                         inputId="cantidad" 
                                                         value={costoManoObraFinal} 
+                                                        min={0}  
+                                                        maxFractionDigits={0}
                                                         onValueChange={(e) => setCostoManoObraFinal(e.value)} 
                                                         placeholder="Consto Unitario"/>
                                                 </div>

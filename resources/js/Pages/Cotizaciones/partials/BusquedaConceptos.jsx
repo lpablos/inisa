@@ -92,7 +92,7 @@ const BusquedaConceptos = ({cotizacion, setReloadList}) => {
 
     return (
         <>
-            <Button icon="pi pi-search" rounded aria-label="Search" tooltip="Busqueda Conceptos" tooltipOptions={{ position: 'left' }} onClick={() => setVisible(true)}/>
+            <Button className='mr-1' icon="pi pi-search" rounded aria-label="Search" tooltip="Busqueda Conceptos" tooltipOptions={{ position: 'left' }} onClick={() => setVisible(true)}/>
             {/* <Button label="Show" icon="pi pi-external-link" onClick={() => setVisible(true)} /> */}
             <Dialog header="Busqueda de Conceptos" visible={visible} maximizable style={{ width: '80vw' }} onHide={() => {if (!visible) return; setVisible(false); }}>
 
