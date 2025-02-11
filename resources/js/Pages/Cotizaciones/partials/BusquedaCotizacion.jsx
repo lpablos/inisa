@@ -8,7 +8,7 @@ const BusquedaCotizacion = ({activarBusqueda}) =>{
     const [estatus, setEstatus] = useState([]);
     const [selectedEstatus, setSelectedEstatus] = useState(null);
     const [disabled, setDisabled] = useState(false)
-    console.log("Este es ==>", selectedEstatus);
+    
     
     const toast = useRef(null);
 

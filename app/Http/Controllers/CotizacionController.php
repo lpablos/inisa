@@ -32,6 +32,43 @@ class CotizacionController extends Controller
         return response()->json(['cotizaciones' => $cotizaciones], 200);
     }
 
+    public function buscadorCotizaciones(Request $request)
+    {
+        
+        
+        $cotizacion = $request->cotizacion;
+        $titullo = $request->titulo;
+        $cliente = $request->cliente;
+        $estatus = $request->estatus;
+        $fechaInicial = $request->fechaInicial;
+        $fechaFinal = $request->fechaFinal;
+        $prioridad = $request->prioridad;
+
+        $cotizaciones = Cotizacion::with('proveedor', 'estatus','codigos')
+                        ->where(function($query)use($cotizacion,$titullo,$cliente,$estatus,$fechaInicial,$fechaFinal,$prioridad){
+                            // if(!empty($cotizacion)){
+                            //     $query->where('',$cotizacion);                                
+                            // }
+                            if(!empty($titullo)){
+                                $query->where('titulo','like',$titullo);                                
+                            }
+                            if(!empty($cliente)){
+                                $query->where('cliente_id',$cliente['id']);                                
+                            }
+                            if(!empty($estatus)){
+                                $query->where('status_id',$estatus['id']);                                
+                            }
+                            if(!empty($prioridad)){
+                                $query->where('cat_prioridad_id',$prioridad['id']);                                
+                            }
+                            if(!empty($fechaInicial)){
+                                $query->whereBetween('fecha', [$fechaInicial, $fechaFinal]);
+                            }
+                        })
+                        ->get();
+        return response()->json(['cotizaciones' => $cotizaciones], 200);
+    }
+
     public function duplicarCotizacion(Request $request)
     {
         // Obtener la cotización original con sus detalles

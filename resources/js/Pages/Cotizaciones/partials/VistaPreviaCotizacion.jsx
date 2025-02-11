@@ -5,7 +5,7 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 
 
 const VistaPreviaCotizacion = ({identyCotizacion=1,vistraPreviaPDF, setVistraPreviaPDF}) => {
-    console.log("Cotizacion prueba", identyCotizacion);
+    
     
     const [visible, setVisible] = useState(false);
     const [pdfUrl, setPdfUrl] = useState(null)

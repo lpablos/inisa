@@ -37,6 +37,31 @@ const ConceptoTabla = () => {
     const [buscadorEstatus, setBuscadorEstatus] = useState(3)
 
     // Cargar cotizaciones
+    const resultadosBusquedaCotizaciones = (data) =>{
+        const {cotizaciones} = data
+        setCotizaciones([]);
+        setLoader(true);
+        setTimeout(() => {
+            if(cotizaciones.length > 0){
+                toast.current.show({
+                    severity: "success",
+                    summary: "Cotizaciones",
+                    detail: "Se encontraron registros",
+                    life: 3000,
+                });
+            }else{
+                toast.current.show({
+                    severity: "info",
+                    summary: "Cotizaciones",
+                    detail: "No se encontraron suficientes registros.. Intenta con otros valores",
+                    life: 3000,
+                });
+            }
+            setCotizaciones(cotizaciones)
+            setLoader(false);
+        }, 2000);
+    }
+
     const obtenerCotizaciones = async () => {
         setCotizaciones([]);
         setLoader(true);
@@ -341,7 +366,7 @@ const ConceptoTabla = () => {
                     aria-label="Nueva Cotización" 
                     onClick={handleCrear} 
                 />
-                <BusquedaAvanzadaCotizacion />
+                <BusquedaAvanzadaCotizacion resultadosBusqueda={resultadosBusquedaCotizaciones}/>
 
             </div>
 
