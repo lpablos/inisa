@@ -34,8 +34,8 @@ class CotizacionController extends Controller
 
     public function buscadorCotizaciones(Request $request)
     {
-        
-        
+
+
         $cotizacion = $request->cotizacion;
         $titullo = $request->titulo;
         $cliente = $request->cliente;
@@ -47,19 +47,19 @@ class CotizacionController extends Controller
         $cotizaciones = Cotizacion::with('proveedor', 'estatus','codigos')
                         ->where(function($query)use($cotizacion,$titullo,$cliente,$estatus,$fechaInicial,$fechaFinal,$prioridad){
                             // if(!empty($cotizacion)){
-                            //     $query->where('',$cotizacion);                                
+                            //     $query->where('',$cotizacion);
                             // }
                             if(!empty($titullo)){
-                                $query->where('titulo','like',$titullo);                                
+                                $query->where('titulo','like',$titullo);
                             }
                             if(!empty($cliente)){
-                                $query->where('cliente_id',$cliente['id']);                                
+                                $query->where('cliente_id',$cliente['id']);
                             }
                             if(!empty($estatus)){
-                                $query->where('status_id',$estatus['id']);                                
+                                $query->where('status_id',$estatus['id']);
                             }
                             if(!empty($prioridad)){
-                                $query->where('cat_prioridad_id',$prioridad['id']);                                
+                                $query->where('cat_prioridad_id',$prioridad['id']);
                             }
                             if(!empty($fechaInicial)){
                                 $query->whereBetween('fecha', [$fechaInicial, $fechaFinal]);
@@ -145,7 +145,7 @@ class CotizacionController extends Controller
                 'es_material' => $esMaterial,
                 'user_crear' => $user->id,
                 'empresa_id' => $user->empresa_id,
-                'baja_logica' => 1
+                // 'baja_logica' => 1
             ]);
 
             return response()->json([
@@ -217,7 +217,7 @@ class CotizacionController extends Controller
     {
 
         $cotizacion = Cotizacion::find($request->id);
-        $cotizacion->baja_logica = 0;
+        // $cotizacion->baja_logica = 0;
         $cotizacion->save();
         return response()->json(['success' => 'Cotizacion eliminada exitosamente'], 200);
     }
@@ -740,10 +740,10 @@ class CotizacionController extends Controller
     }
 
     public function asociarConceptoCotizacion(Request $request){
-        
+
         $clonarConcepto = DetalleCotizacion::find($request->identyConcepto);
         $cotizacionBase = Cotizacion::find($request->identyCotizacion);
-        
+
         switch ($request->pertTomo) {
             case 1:
                 // Registra un tomo nue
@@ -790,7 +790,7 @@ class CotizacionController extends Controller
                         'tomo_pertenece' => $clonarConcepto->tomo_pertenece,
                         'cat_unidad_medida_id' => $clonarConcepto->cat_unidad_medida_id,
                     ]);
-                    
+
                 }
                 break;
             case 2:
@@ -885,7 +885,7 @@ class CotizacionController extends Controller
     }
 
     public function editCodigoAsc($identy, Request $request){
-        
+
         try {
             $codigosAsc = Codigo::find($identy);
             $codigosAsc->codigo =$request->codigo;

@@ -82,7 +82,7 @@
     <!-- Agregar la fila de Total -->
     <tfoot>
         <tr>
-            <td colspan="6" style="text-align: right; font-weight: bold; border: 1px solid #000;">Total:</td>
+            <td colspan="6" style="text-align: right; font-weight: bold; border: 1px solid #000;">SubTotal:</td>
             <td style="text-align: center; font-weight: bold; border: 1px solid #000;">
                 ${{ number_format($totalObraMaterial, 2, '.', '') }}
             </td>
