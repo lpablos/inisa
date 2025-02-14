@@ -2,6 +2,7 @@ import DashboardInfoCard from '@/Components/DashboardInfoCard';
 import Layout from '@/Layouts/layout/layout';
 import React, { Component, useState } from 'react';
 import DialogoCat from './Partials/DialogoCat';
+import InfoCardCliente from '@/Components/InfoCardCliente';
 
 
 
@@ -29,13 +30,16 @@ const Index = (props) =>{
                     icon="tags"
                     iconColor="purple"
                     clickOpt = {setCatalogo}/>
-                <DashboardInfoCard 
+                
+                <InfoCardCliente
                     title="Clientes" 
                     valueTitle='clientes'
                     value="28441"
                     icon="tags" 
                     iconColor="purple"
-                    clickOpt = {setCatalogo}/>
+                    clickOpt = {setCatalogo}
+                    link={route('catalogo.clientes.asociados.index')}
+                />
                 
                 <DashboardInfoCard 
                     title="Unidades de medida"                     

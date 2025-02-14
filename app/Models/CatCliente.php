@@ -18,11 +18,18 @@ class CatCliente extends Model
 
     protected $fillable = [
         'id',
-        'nombre',
-        'abreviacion',
+        'nombre', //nombre
+        'abreviacion', //nombreComercial
         'direccion',
         'telefono',
-        'ext',
+        'email',
+        // 'ext',
+        'numeroProvedor',
+        'destinatario',
+        'mensajeAfectivo',
+
+        'mensajeVigencia',
+        'comentarioObservacion',
         'empresa_id',
         'created_at',
         'updated_at',

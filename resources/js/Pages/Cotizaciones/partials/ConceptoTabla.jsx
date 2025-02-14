@@ -354,7 +354,7 @@ const ConceptoTabla = () => {
         <div className="card">
          
           
-            <div className="flex justify-between items-center gap-x-4 flex-wrap mb-7 ">
+            <div className="flex justify-end items-center gap-x-4 flex-wrap mb-7">
                 <BusquedaCotizacion className="mr-2" activarBusqueda={ActivarBusqueda}/>
                 <Button 
                     icon="pi pi-plus" 

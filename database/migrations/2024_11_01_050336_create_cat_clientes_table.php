@@ -17,11 +17,18 @@ return new class extends Migration
             $table->string('abreviacion')->nullable();
             $table->string('direccion')->nullable();
             $table->string('telefono')->nullable();
-            $table->string('ext')->nullable();
+            $table->string('email')->nullable();
+            $table->string('numeroProvedor')->nullable();
+            $table->string('destinatario')->nullable();
+            $table->text('mensajeAfectivo')->nullable();
+            $table->string('mensajeVigencia')->nullable();
+            $table->text('comentarioObservacion')->nullable();
+
             $table->unsignedBigInteger('empresa_id')->nullable();
             $table->foreign('empresa_id')->references('id')->on('cat_empresas');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -10,6 +10,7 @@ use Illuminate\Routing\Router;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\BuscadorGeneralController;
+use App\Http\Controllers\ClientesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,8 +61,18 @@ Route::get('/uikit/button', function () {
 Route::prefix('admin')->group(function () {
     // Sección de catálogos
     Route::prefix('catalogos')->group(function () {
+        Route::controller(ClientesController::class)->group(function () {
+            Route::get('clientes-asociados', 'index')->name('catalogo.clientes.asociados.index');  // Especifica el método 'index' en el controlador
+            Route::get('listado-clientes-empresa','listadoClientesEmpresa')->name('catalogos.listado.clientes.empresa');
+            Route::post('registrar-cliente', 'store')->name('catalogo.registrar.cliente.nuevo');
+            Route::delete('eliminar-cliente/{id}', 'destroy')->name('catalogo.eliminar.cliente');
+
+
+        });
         Route::controller(CatalogosController::class)->group(function () {
             Route::get('show', 'index')->name('catalogo.gral.index');  // Especifica el método 'index' en el controlador
+             // Especifica el método 'index' en el controlador
+            
 
             //CRUD para eliminar un provedor
             Route::get('list-proveedores', 'listaProvedores')->name('catalogo.list.provedores');

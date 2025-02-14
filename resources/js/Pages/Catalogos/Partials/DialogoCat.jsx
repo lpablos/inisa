@@ -45,11 +45,11 @@ export default function DialogoCat({ tpOperacion, setOperacion }) {
                 obtenerDepartamentos();
                 setTitulo("Catalogo de Departamentos");
                 break;
-            case "clientes":
-                setVisible(true);
-                obtenerClientes();
-                setTitulo("Catalogo de Clientes");
-                break;
+            // case "clientes":
+            //     setVisible(true);
+            //     obtenerClientes();
+            //     setTitulo("Catalogo de Clientes");
+            //     break;
             case "unidadesMedidas":
                 setTitulo("Catalogo de Unidades de Medida");
                 obtenerUnidadesMedidas();
