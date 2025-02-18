@@ -23,7 +23,6 @@ return new class extends Migration
             $table->text('mensajeAfectivo')->nullable();
             $table->string('mensajeVigencia')->nullable();
             $table->text('comentarioObservacion')->nullable();
-
             $table->unsignedBigInteger('empresa_id')->nullable();
             $table->foreign('empresa_id')->references('id')->on('cat_empresas');
 

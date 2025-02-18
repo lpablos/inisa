@@ -1,17 +1,20 @@
-import React, { useState, useRef} from 'react';
+import React, { useState, useRef, useEffect} from 'react';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { Fieldset } from 'primereact/fieldset';
 import { Editor } from "primereact/editor";
 import { Toast } from 'primereact/toast';
+import { ProgressSpinner } from 'primereact/progressspinner';
 import axios from 'axios';
 
-const NewClienteDialog = ({reloadRegistros}) => {
+const NewClienteDialog = ({reloadRegistros, mostrarModal, registro}) => {
     const toast = useRef(null);
     const [visible, setVisible] = useState(false);
     const [habilitaBtn, setHabilitaBtn] = useState(false)
+    const [cargando, setCargando] = useState(true)
 
+    const [identyRegistro, setIdentyRegistro] = useState(null); // Usado para actuaizar Registro
     const [razonSocial, setRazonSocial] = useState('');
     const [nombreComercial, setNombreComercial] = useState('');
     const [direccion, setDireccion] = useState('');
@@ -22,6 +25,7 @@ const NewClienteDialog = ({reloadRegistros}) => {
     const [destinatario, setDestinatario] = useState('');
     const [mensajeVigencia,setMensajeVigencia] = useState('');
     const [comentarioObservacion,setComentarioObservacion] = useState('');
+    
 
 
     const registrarCliente = async () =>{
@@ -67,6 +71,10 @@ const NewClienteDialog = ({reloadRegistros}) => {
             });
         }
     }
+
+    const acutalizarCliente = async() =>{
+        alert("Estas lsto par actualizar")
+    }
     
     const limpiarFormulario = () =>{
         setRazonSocial('');
@@ -80,6 +88,44 @@ const NewClienteDialog = ({reloadRegistros}) => {
         setMensajeVigencia('');
         setComentarioObservacion('');
     }
+
+    useEffect(()=>{
+        if(mostrarModal){
+            setVisible(true)
+            setCargando(true)
+            setTimeout(() => {
+                const {
+                    abreviacion,
+                    comentarioObservacion, 
+                    destinatario,
+                    direccion,
+                    email,
+                    id,
+                    mensajeAfectivo,
+                    mensajeVigencia,
+                    nombre,
+                    numeroProvedor,
+                    telefono,
+                } = registro
+                setIdentyRegistro(id)
+                setRazonSocial(nombre)
+                setNombreComercial(abreviacion)
+                setDireccion(direccion)
+                setTelefono(telefono)
+                setEmail(email)
+                setMensajeAfectivo(mensajeAfectivo)
+                setNumeroProvedor(numeroProvedor)
+                setDestinatario(destinatario)
+                setMensajeVigencia(mensajeVigencia)
+                setComentarioObservacion(comentarioObservacion)
+                
+            }, 1000);
+        }else{
+            setVisible(false)
+        }
+
+    },[mostrarModal]);
+    
 
     return (
         <>
@@ -149,9 +195,23 @@ const NewClienteDialog = ({reloadRegistros}) => {
                             </div>
                         </div>
                     </Fieldset>
+
+                    {cargando &&(
+                        <div className=" flex justify-content-center">
+                            <ProgressSpinner />
+                        </div>
+                    )}
+
                     <div className="card flex justify-content-center gap-2">
 
-                        <Button label="Guardar" icon="pi pi-check" disabled={habilitaBtn} onClick={()=>registrarCliente()}/>
+                        <Button label="Guardar" icon="pi pi-check" disabled={habilitaBtn} onClick={()=>{
+                            if(identyRegistro === null){
+                                registrarCliente()
+                            }else{
+                                acutalizarCliente()
+                            }
+                            
+                            }}/>
                         <Button label="Limpiar Formulario" icon="pi pi-refresh" disabled={habilitaBtn} onClick={()=>limpiarFormulario()} />
                         
                     </div>

@@ -66,7 +66,7 @@ const ConceptoTabla = () => {
         setCotizaciones([]);
         setLoader(true);
         try {     
-            const response = await axios.get(route("cotizacion.list.cotizaciones"), { params:{ estatus: buscadorEstatus }});     
+            const response = await axios.get(route("catalogos.detalle.cliente.asc"), { params:{ estatus: buscadorEstatus }});     
             const {cotizaciones} = response.data
             if(cotizaciones.length > 0 ){
                 setCotizaciones(cotizaciones);

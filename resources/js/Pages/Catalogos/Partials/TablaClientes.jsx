@@ -15,6 +15,8 @@ const TablaClientes = () => {
     
     const [catClientes, setCatClientes] = useState([]);
     const [loading, setLoading] = useState(false)
+    const [mostrarModal, setMostrarModal] = useState(false);
+    const [registroEdicion, setRegistroEdicion] = useState(null); // Detalle del registro
 
     const obtenerCatClientes = async () =>{
         setLoading(true)
@@ -42,6 +44,24 @@ const TablaClientes = () => {
                 severity: "error",
                 summary: "Error",
                 detail: "No se logro cargar el Catalogo de Clientes",
+                life: 3000,
+            });
+        }
+    }
+    const editarRegistro = async (registro) =>{
+        
+        try {            
+            const response = await axios.get(route("catalogos.detalle.cliente.asc", { id: registro }));  
+            const {status, data} = response
+            if(status === 200){
+                setRegistroEdicion(data);
+                setMostrarModal(true);
+            }
+        } catch (error) {
+            toast.current.show({
+                severity: "error",
+                summary: "Error",
+                detail: "No se pudo obtener la lista de clientes.",
                 life: 3000,
             });
         }
@@ -75,6 +95,7 @@ const TablaClientes = () => {
                         life: 3000,
                     });
                     setLoading(false);
+                    obtenerCatClientes()
                 }                
             }, 800);
             
@@ -100,16 +121,17 @@ const TablaClientes = () => {
     },[]);
 
     const opcionesAsc = (rowData) => {
+        
         return (
             <div className="flex flex-wrap justify-content-center gap-1 mb-4">
-                <Button icon="pi pi-eye" rounded severity="info" aria-label="User" tooltip="Detalle" tooltipOptions={{ position: 'left' }}/>
+                <Button icon="pi pi-eye" rounded severity="info" aria-label="User" onClick={() => editarRegistro(rowData.id)}  />
                 <Button icon="pi pi-times" rounded severity="danger" aria-label="Cancel" onClick={()=>confirmEliminar(rowData)} tooltip="Eliminar" tooltipOptions={{ position: 'left' }}/>
             </div>
         );
     };
     return (
         <div className="col-12">
-            <NewClienteDialog reloadRegistros={obtenerCatClientes}/>
+            <NewClienteDialog reloadRegistros={obtenerCatClientes} mostrarModal={mostrarModal} registro={registroEdicion} />
             <div className="card">
                 {loading && (
                     <div className="flex justify-content-center">

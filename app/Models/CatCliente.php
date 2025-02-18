@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\CatRepresentante;
 use App\Models\Cotizacion;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CatCliente extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'cat_clientes';
 
@@ -31,9 +32,9 @@ class CatCliente extends Model
         'mensajeVigencia',
         'comentarioObservacion',
         'empresa_id',
-        'created_at',
-        'updated_at',
     ];
+    
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 
     public function representantes()
     {
