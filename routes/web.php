@@ -65,6 +65,7 @@ Route::prefix('admin')->group(function () {
             Route::get('clientes-asociados', 'index')->name('catalogo.clientes.asociados.index');  // Especifica el método 'index' en el controlador
             Route::get('listado-clientes-empresa','listadoClientesEmpresa')->name('catalogos.listado.clientes.empresa');
             Route::post('registrar-cliente', 'store')->name('catalogo.registrar.cliente.nuevo');
+            Route::post('actualizar-cliente', 'update')->name('catalogo.actualizar.cliente.nuevo');
             Route::delete('eliminar-cliente/{id}', 'destroy')->name('catalogo.eliminar.cliente');
             Route::get('detalle-cliente-asc/{id}','show')->name('catalogos.detalle.cliente.asc');
 

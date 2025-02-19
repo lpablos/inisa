@@ -8,11 +8,11 @@ import { Toast } from 'primereact/toast';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import axios from 'axios';
 
-const NewClienteDialog = ({reloadRegistros, mostrarModal, registro}) => {
+const NewClienteDialog = ({reloadRegistros, mostrarModal, setMostrarModal, registro}) => {
     const toast = useRef(null);
     const [visible, setVisible] = useState(false);
     const [habilitaBtn, setHabilitaBtn] = useState(false)
-    const [cargando, setCargando] = useState(true)
+    const [cargando, setCargando] = useState(false)
 
     const [identyRegistro, setIdentyRegistro] = useState(null); // Usado para actuaizar Registro
     const [razonSocial, setRazonSocial] = useState('');
@@ -73,10 +73,52 @@ const NewClienteDialog = ({reloadRegistros, mostrarModal, registro}) => {
     }
 
     const acutalizarCliente = async() =>{
-        alert("Estas lsto par actualizar")
+        
+        const datos = {
+            identy: identyRegistro,
+            nombre: razonSocial,
+            abreviacion: nombreComercial,
+            direccion: direccion,
+            telefono: telefono,
+            email: email,
+            numeroProvedor: numeroProvedor,
+            destinatario: destinatario,
+            mensajeAfectivo: mensajeAfectivo,
+            mensajeVigencia: mensajeVigencia,
+            comentarioObservacion: comentarioObservacion,
+        }
+        try {
+            const response = await axios.post(route("catalogo.actualizar.cliente.nuevo"), datos);
+            
+            const { data, status} = response
+            if (status === 200) {
+                toast.current.show({
+                    severity: "success",
+                    summary: "Success",
+                    detail: `${data.success}`,
+                    life: 3000,
+                });
+                limpiarFormulario()
+                setVisible(false)
+                reloadRegistros()
+                setTimeout(() => {
+                    setHabilitaBtn(false)
+                }, 1000);
+            }
+        } catch (error) {
+            console.error(error);
+            setHabilitaBtn(false)
+            toast.current.show({
+                severity: "error",
+                summary: "Error",
+                detail: "No se puede almacenar el cliente.. Intenta de nuevo",
+                life: 3000,
+            });
+        }
     }
     
     const limpiarFormulario = () =>{
+        setIdentyRegistro(null)
         setRazonSocial('');
         setNombreComercial('');
         setDireccion('');
@@ -118,13 +160,22 @@ const NewClienteDialog = ({reloadRegistros, mostrarModal, registro}) => {
                 setDestinatario(destinatario)
                 setMensajeVigencia(mensajeVigencia)
                 setComentarioObservacion(comentarioObservacion)
-                
+                setCargando(false)
             }, 1000);
         }else{
             setVisible(false)
+            setCargando(false)
         }
 
     },[mostrarModal]);
+
+    useEffect(()=>{
+        if(visible){
+            limpiarFormulario()
+        }else{
+            setMostrarModal(false)
+        }
+    },[visible])
     
 
     return (
@@ -135,6 +186,11 @@ const NewClienteDialog = ({reloadRegistros, mostrarModal, registro}) => {
             <div className="flex justify-content-center">
             
                 <Dialog header="Cliente" visible={visible} maximizable style={{ width: '80vw' }} onHide={() => {if (!visible) return; setVisible(false); }}>
+                    {cargando &&(
+                        <div className=" flex justify-content-center">
+                            <ProgressSpinner />
+                        </div>
+                    )}
                     <Fieldset legend="Datos Generales">
                         <div className="flex flex-wrap gap-3 p-fluid">
                             <div className="flex-auto">
@@ -196,15 +252,11 @@ const NewClienteDialog = ({reloadRegistros, mostrarModal, registro}) => {
                         </div>
                     </Fieldset>
 
-                    {cargando &&(
-                        <div className=" flex justify-content-center">
-                            <ProgressSpinner />
-                        </div>
-                    )}
+                  
 
                     <div className="card flex justify-content-center gap-2">
 
-                        <Button label="Guardar" icon="pi pi-check" disabled={habilitaBtn} onClick={()=>{
+                        <Button label={identyRegistro===null ? 'Registrar':'Actualizar'} icon="pi pi-check" disabled={habilitaBtn} onClick={()=>{
                             if(identyRegistro === null){
                                 registrarCliente()
                             }else{

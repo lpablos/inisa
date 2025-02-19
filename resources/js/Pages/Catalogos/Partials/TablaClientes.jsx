@@ -131,7 +131,7 @@ const TablaClientes = () => {
     };
     return (
         <div className="col-12">
-            <NewClienteDialog reloadRegistros={obtenerCatClientes} mostrarModal={mostrarModal} registro={registroEdicion} />
+            <NewClienteDialog reloadRegistros={obtenerCatClientes} mostrarModal={mostrarModal} setMostrarModal={setMostrarModal} registro={registroEdicion} />
             <div className="card">
                 {loading && (
                     <div className="flex justify-content-center">

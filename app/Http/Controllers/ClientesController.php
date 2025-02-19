@@ -88,9 +88,31 @@ class ClientesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        
+        $validatedData = $request->validate([
+            'identy' => 'required',
+        ]);
+        $cliente = CatCliente::find($request->identy);        
+        $cliente->nombre = $request->nombre; 
+        $cliente->abreviacion = $request->abreviacion; 
+        $cliente->direccion = $request->direccion; 
+        $cliente->telefono = $request->telefono;
+        $cliente->email = $request->email; 
+        
+        $cliente->numeroProvedor = $request->numeroProvedor; 
+        $cliente->destinatario = $request->destinatario; 
+        $cliente->mensajeAfectivo = $request->mensajeAfectivo; 
+
+        $cliente->mensajeVigencia = $request->mensajeVigencia; 
+        $cliente->comentarioObservacion = $request->comentarioObservacion; 
+        
+        if($cliente->save()){
+            return response()->json(['success' => 'Cliente Actualizado Correctamente'], 200);
+        }else{
+            return response()->json(['error' => 'Error al actualizar el cliente'], 500);
+        }
     }
 
     /**
