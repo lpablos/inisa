@@ -36,7 +36,7 @@ const CodigosDialog = ({seleccionCotizacion,codigosShow, setCodigosShow}) => {
     },[seleccionCotizacion])
 
     useEffect(()=>{
-        console.log("Este es el visibe", visible);
+        // console.log("Este es el visibe", visible);
         
         if(visible){
             todosCodigosAsociados()

@@ -5,7 +5,7 @@ import { FloatLabel } from "primereact/floatlabel";
 import { Button } from "primereact/button";
 
 const FormularioEmpresa = ({ showTabla, dataDetalle }) => {
-    console.log("este es el detalle ", dataDetalle);
+    // console.log("este es el detalle ", dataDetalle);
 
     const [id, setId] = useState("");
     const [nombre, setNombre] = useState("");
@@ -23,7 +23,7 @@ const FormularioEmpresa = ({ showTabla, dataDetalle }) => {
     useEffect(() => {
         if (dataDetalle) {
             //Destrcutura el valor del data para solo almacenar el objecto
-            console.log("este es el detalle empresa ", dataDetalle.data);
+            // console.log("este es el detalle empresa ", dataDetalle.data);
 
             const {
                 id,

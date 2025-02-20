@@ -150,7 +150,7 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
         const obtenerStatuses = async () => {
             try {
                 const response = await axios.get(route("catalogo.list.status"));
-                console.log("Esto que es", response);
+                
                 
                 setStatuses(response.data);
             } catch (error) {

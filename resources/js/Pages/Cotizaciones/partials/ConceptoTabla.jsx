@@ -72,7 +72,7 @@ const ConceptoTabla = () => {
             const response = await axios.get(route("cotizacion.list.cotizaciones"), { 
                 params: { estatus: buscadorEstatus } 
               });
-            console.log("Esto es ==> ", response);
+            
                
             const {cotizaciones} = response.data
             if(cotizaciones.length > 0 ){
