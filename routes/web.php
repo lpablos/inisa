@@ -68,8 +68,6 @@ Route::prefix('admin')->group(function () {
             Route::post('actualizar-cliente', 'update')->name('catalogo.actualizar.cliente.nuevo');
             Route::delete('eliminar-cliente/{id}', 'destroy')->name('catalogo.eliminar.cliente');
             Route::get('detalle-cliente-asc/{id}','show')->name('catalogos.detalle.cliente.asc');
-
-
         });
         Route::controller(CatalogosController::class)->group(function () {
             Route::get('show', 'index')->name('catalogo.gral.index');  // Especifica el método 'index' en el controlador

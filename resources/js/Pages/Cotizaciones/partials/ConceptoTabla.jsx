@@ -19,6 +19,7 @@ import BusquedaCotizacion from "./BusquedaCotizacion";
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Message } from 'primereact/message';
 import BusquedaAvanzadaCotizacion from "./BusquedaAvanzadaCotizacion";
+import { useLocalStorage } from "primereact/hooks";
         
 
 
@@ -63,10 +64,16 @@ const ConceptoTabla = () => {
     }
 
     const obtenerCotizaciones = async () => {
+        
         setCotizaciones([]);
         setLoader(true);
         try {     
-            const response = await axios.get(route("catalogos.detalle.cliente.asc"), { params:{ estatus: buscadorEstatus }});     
+            // const response = await axios.get(route("catalogos.detalle.cliente.asc"), { estatus: buscadorEstatus });  
+            const response = await axios.get(route("cotizacion.list.cotizaciones"), { 
+                params: { estatus: buscadorEstatus } 
+              });
+            console.log("Esto es ==> ", response);
+               
             const {cotizaciones} = response.data
             if(cotizaciones.length > 0 ){
                 setCotizaciones(cotizaciones);
@@ -81,7 +88,9 @@ const ConceptoTabla = () => {
     };
 
     useEffect(() => {
-        obtenerCotizaciones(); // Cargar datos al montar el componente
+        setTimeout(() => {
+            obtenerCotizaciones(); // Cargar datos al montar el componente
+        }, 1000);
     }, []);
 
     // Crear una nueva cotización
