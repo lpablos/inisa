@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('cotizaciones', function (Blueprint $table) {
             $table->id();
+            $table->text('folio')->nullable();
             $table->text('titulo')->nullable();
             $table->string('consecutivo')->nullable();
             $table->text('descripcion')->nullable();

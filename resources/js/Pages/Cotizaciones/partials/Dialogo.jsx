@@ -298,13 +298,18 @@ const Dialogo = ({ isEdit, dataToEdit, onSave, onUpdate, onClose }) => {
                             route("cotizacion.registrar.cotizacion"),
                             datos
                         );
+
+                        console.log("Esto devuelve ---->=>",response);
+                        const {folio} = response.data.data
                         if (response.status === 201) {
+                            console.log("Este es el dato ", folio);
                             toast.current.show({
-                                severity: "success",
-                                summary: "Éxito",
-                                detail: "Cotización creada correctamente.",
-                                life: 3000,
+                                severity: "info",
+                                summary: "Cotizacion Registrada",
+                                detail: "Cotizacion con Folio '"+folio+'"',
+                                life: 5000,
                             });
+                        
                             onSave();
                         }
                     }

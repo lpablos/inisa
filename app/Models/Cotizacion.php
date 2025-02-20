@@ -31,6 +31,7 @@ class Cotizacion extends Model
 
     protected $fillable = [
         'id',
+        'folio',
         'titulo',
         'consecutivo',
         'descripcion',
@@ -62,6 +63,40 @@ class Cotizacion extends Model
 
 
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($cotizacion) {
+            $cotizacion->folio = self::generarFolio();
+        });
+    }
+
+    public static function generarFolio() {
+        // Obtener el mes y año actuales
+        $mes = date('m'); // MM
+        $año = date('Y'); // YYYY
+    
+        // Buscar el último código en la base de datos para el mismo mes y año
+        $ultimoRegistro = self::whereRaw("SUBSTRING_INDEX(folio, '/', 1) LIKE '{$mes}{$año}%'")
+            ->orderBy('folio', 'desc')
+            ->first();
+    
+        if ($ultimoRegistro) {
+            // Extraer el número secuencial del último folio
+            preg_match('/^(\d{2})(\d{4})\/(\d{3})$/', $ultimoRegistro->folio, $matches);
+            $numero = isset($matches[3]) ? (int)$matches[3] + 1 : 1; // Incrementar el número
+        } else {
+            // Si no hay registros para este año y mes, reiniciar la numeración
+            $numero = 1;
+        }
+    
+        // Generar el nuevo código con el formato correcto
+        $nuevoFolio = sprintf("%02d%04d/%03d", $mes, $año, $numero);
+    
+        return $nuevoFolio;
+    }
 
     /**
      * Relación con Cliente
