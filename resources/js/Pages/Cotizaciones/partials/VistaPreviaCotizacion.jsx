@@ -33,6 +33,7 @@ const VistaPreviaCotizacion = ({identyCotizacion=1,vistraPreviaPDF, setVistraPre
     }
 
     const generarPdf = () =>{
+        setPdfUrl(null)
         setLoad(true)
         setTimeout(() => {
             const pdfUrl = `${route("exportar.pdf.cotizacion")}?id=${identyCotizacion}&encabezado=${encabezado}&pie-pagina=${piePagina}&firma=${firma}`;
