@@ -35,6 +35,8 @@ class PdfController extends Controller
 
         $array_cotizaciones = $cotizaciones->toArray();
 
+        // dd($array_cotizaciones);
+
 
         // Formatear la fecha
         $fecha = Carbon::now();
