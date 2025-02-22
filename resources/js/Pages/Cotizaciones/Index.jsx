@@ -6,7 +6,7 @@ import Dialogo from "./partials/Dialogo";
 
 const Index = (props) => {
 
-    console.log("estos son los props", props);
+    // console.log("estos son los props", props);
     
     
 

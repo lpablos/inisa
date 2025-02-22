@@ -55,7 +55,7 @@ Route::get('/uikit/button', function () {
  // ruta  la exportacion del excel
  Route::get('/exportar-excel-cotizacion/{id}', [ExportController::class, 'exportarDetalles'])->name('exportar.excel.cotizacion');
 
- Route::get('/exportar-pdf-cotizacion/{id}', [PdfController::class, 'generatePdf'])->name('exportar.pdf.cotizacion');
+ Route::get('/exportar-pdf-cotizacion', [PdfController::class, 'generatePdf'])->name('exportar.pdf.cotizacion');
 
 // Todo lo relacionado con la administracion
 Route::prefix('admin')->group(function () {
@@ -65,10 +65,9 @@ Route::prefix('admin')->group(function () {
             Route::get('clientes-asociados', 'index')->name('catalogo.clientes.asociados.index');  // Especifica el método 'index' en el controlador
             Route::get('listado-clientes-empresa','listadoClientesEmpresa')->name('catalogos.listado.clientes.empresa');
             Route::post('registrar-cliente', 'store')->name('catalogo.registrar.cliente.nuevo');
+            Route::post('actualizar-cliente', 'update')->name('catalogo.actualizar.cliente.nuevo');
             Route::delete('eliminar-cliente/{id}', 'destroy')->name('catalogo.eliminar.cliente');
             Route::get('detalle-cliente-asc/{id}','show')->name('catalogos.detalle.cliente.asc');
-
-
         });
         Route::controller(CatalogosController::class)->group(function () {
             Route::get('show', 'index')->name('catalogo.gral.index');  // Especifica el método 'index' en el controlador

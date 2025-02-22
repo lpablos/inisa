@@ -14,8 +14,18 @@ use Illuminate\Support\Facades\File;
 class PdfController extends Controller
 {
 
-    public function generatePdf($id)
+    public function generatePdf(Request $request)
     {
+
+        
+        // Carlitos estas son los paramreos
+        $id= $request->get('id');
+        $encabezado= $request->get('encabezado');
+        $piePagina= $request->get('pie-pagina');
+        $firma= $request->get('firma');
+
+        
+        dd($request->all());
 
 
         $imagePath = public_path('images/EncabezadoExcel.jpg'); // Ruta de la imagen

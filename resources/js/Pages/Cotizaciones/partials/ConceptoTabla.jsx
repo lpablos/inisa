@@ -19,6 +19,7 @@ import BusquedaCotizacion from "./BusquedaCotizacion";
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Message } from 'primereact/message';
 import BusquedaAvanzadaCotizacion from "./BusquedaAvanzadaCotizacion";
+import { useLocalStorage } from "primereact/hooks";
         
 
 
@@ -63,10 +64,16 @@ const ConceptoTabla = () => {
     }
 
     const obtenerCotizaciones = async () => {
+        
         setCotizaciones([]);
         setLoader(true);
         try {     
-            const response = await axios.get(route("catalogos.detalle.cliente.asc"), { params:{ estatus: buscadorEstatus }});     
+            // const response = await axios.get(route("catalogos.detalle.cliente.asc"), { estatus: buscadorEstatus });  
+            const response = await axios.get(route("cotizacion.list.cotizaciones"), { 
+                params: { estatus: buscadorEstatus } 
+              });
+            
+               
             const {cotizaciones} = response.data
             if(cotizaciones.length > 0 ){
                 setCotizaciones(cotizaciones);
@@ -81,7 +88,9 @@ const ConceptoTabla = () => {
     };
 
     useEffect(() => {
-        obtenerCotizaciones(); // Cargar datos al montar el componente
+        setTimeout(() => {
+            obtenerCotizaciones(); // Cargar datos al montar el componente
+        }, 1000);
     }, []);
 
     // Crear una nueva cotización
@@ -229,7 +238,7 @@ const ConceptoTabla = () => {
     const handleExportClick = (id) => {
 
         const url = `${route("exportar.excel.cotizacion", { id: 1 })}`;
-        console.log("Este es la ruta", url);
+        // console.log("Este es la ruta", url);
         setTimeout(() => {
 
             Inertia.visit(url, { method: 'get' }); // Realiza la navegación.
@@ -311,24 +320,24 @@ const ConceptoTabla = () => {
         </div>
     );
 
-    const codigosAsc = (rowData) => (
-        <div className="flex flex-wrap justify-content-center gap-1">
-            {Array.isArray(rowData.codigos) ? (
-                rowData.codigos.map((row, index) => (
-                    <Tag
-                        key={row.id ?? index}
-                        severity="info"
-                        value={`${row.codigo? `Cód.: ${row.codigo}`:''}  ${row.fecha ? `- Fecha: ${row.fecha}` : ''}`}
-                        rounded
-                        style={{ width: '250px', textAlign: 'center' }}
-                    />
-                ))
-            ) : (
-                <p>No hay datos disponibles</p>
-            )}
+    // const codigosAsc = (rowData) => (
+    //     <div className="flex flex-wrap justify-content-center gap-1">
+    //         {Array.isArray(rowData.codigos) ? (
+    //             rowData.codigos.map((row, index) => (
+    //                 <Tag
+    //                     key={row.id ?? index}
+    //                     severity="info"
+    //                     value={`${row.codigo? `Cód.: ${row.codigo}`:''}  ${row.fecha ? `- Fecha: ${row.fecha}` : ''}`}
+    //                     rounded
+    //                     style={{ width: '250px', textAlign: 'center' }}
+    //                 />
+    //             ))
+    //         ) : (
+    //             <p>No hay datos disponibles</p>
+    //         )}
               
-        </div>
-    );
+    //     </div>
+    // );
     
     // Cerrar el diálogo
     const handleCerrarDialogo = () => {
@@ -385,8 +394,8 @@ const ConceptoTabla = () => {
                             size={'small'}
                         >
                             <Column field="id" header="ID" headerStyle={{ textAlign: 'center' }}  />
+                            <Column field="folio" header="Cotización Folio" headerStyle={{ textAlign: 'center', fontWeight: 'bold' }} />
                             <Column field="titulo" header="Título" headerStyle={{ textAlign: 'center' }} />
-                            <Column field="codigos" header="Códigos" headerStyle={{ textAlign: 'center' }} body={(rowData) => codigosAsc(rowData)}/>
                             <Column field="fecha" header="Fecha"  style={{ width: '9em' }} body={(rowData) => renderFecha(rowData)}/>
                             <Column header="Plantilla"  style={{ width: '9em' }}  body={(rowData) => renderTipo(rowData)}/>
                             {/* <Column field="valides" header="Válido Intervalo" style={{ width: '9em' }} body={(rowData) => renderValides(rowData)}/> */}

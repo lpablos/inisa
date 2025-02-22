@@ -35,7 +35,7 @@ class CotizacionController extends Controller
     public function buscadorCotizaciones(Request $request)
     {
 
-
+        
         $cotizacion = $request->cotizacion;
         $titullo = $request->titulo;
         $cliente = $request->cliente;
@@ -46,9 +46,9 @@ class CotizacionController extends Controller
 
         $cotizaciones = Cotizacion::with('proveedor', 'estatus','codigos')
                         ->where(function($query)use($cotizacion,$titullo,$cliente,$estatus,$fechaInicial,$fechaFinal,$prioridad){
-                            // if(!empty($cotizacion)){
-                            //     $query->where('',$cotizacion);
-                            // }
+                            if(!empty($cotizacion)){
+                                $query->where('folio','like','%'.$cotizacion.'%');
+                            }
                             if(!empty($titullo)){
                                 $query->where('titulo','like',$titullo);
                             }
@@ -102,7 +102,7 @@ class CotizacionController extends Controller
     public function RegistrarCotizacion(Request $request)
     {
 
-        // dd($request->all());
+        
         $user = Auth::user();
         if (!$user) {
             return response()->json([

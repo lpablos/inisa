@@ -71,7 +71,7 @@ const TableConceptosGral = ({listadoConceptos = [], totalesAsc=0,seleccionTomo,p
             console.log("Esta es la respues", response);
             
         } catch (error) {
-            console.log("Este es el errror", error);
+            // console.log("Este es el errror", error);
             
             alert("Error")
         }
