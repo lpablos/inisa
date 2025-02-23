@@ -3,6 +3,7 @@
         <table style="border-collapse: collapse; width: 100%; table-layout: fixed;"
             class="table_border_pdf tabla-con-texto-grande">
             <thead class="table_border_pdf">
+
                 <tr style="border: 1px solid #000; text-align: center;" class="table_border_pdf">
                     <th rowspan="3" class="table_border_pdf"
                         style="background-color: #D9FBD9; font-weight: bold; text-align: center;  word-wrap: break-word; white-space: normal; overflow-wrap: break-word; width: 5%;">

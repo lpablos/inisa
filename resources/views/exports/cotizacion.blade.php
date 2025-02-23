@@ -17,7 +17,7 @@
 
 
 
-@if ($detalles->es_mano_obra == 1 && $detalles->es_material == 1)
+{{-- @if ($detalles->es_mano_obra == 1 && $detalles->es_material == 1)
     @include('exports.tabla-mano-obra-y-material')
 @endif
 
@@ -65,4 +65,4 @@
 
 
     </tbody>
-</table>
+</table> --}}

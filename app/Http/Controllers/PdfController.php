@@ -17,23 +17,29 @@ class PdfController extends Controller
     public function generatePdf(Request $request)
     {
 
-        
+
         // Carlitos estas son los paramreos
         $id= $request->get('id');
         $encabezado= $request->get('encabezado');
         $piePagina= $request->get('pie-pagina');
         $firma= $request->get('firma');
 
-        
-        dd($request->all());
+
+        // dd($request->all());
 
 
         $imagePath = public_path('images/EncabezadoExcel.jpg'); // Ruta de la imagen
         $imageData = base64_encode(File::get($imagePath)); // Convertir a Base64
         $imageType = pathinfo($imagePath, PATHINFO_EXTENSION); // Obtener tipo de imagen
 
+
+        $imagenFirma = public_path('images/firma.png'); // Ruta de la imagen
+        $imagenFirmaData = base64_encode(File::get($imagenFirma)); // Convertir a Base64
+        $imagenFirmaType = pathinfo($imagenFirma, PATHINFO_EXTENSION);
+
         $data = [
-            'imageBase64' => "data:image/{$imageType};base64,{$imageData}"
+            'imageBase64' => "data:image/{$imageType};base64,{$imageData}",
+            'imagenFirmaBase64' => "data:image/{$imagenFirmaType};base64,{$imagenFirmaData}",
         ];
 
         $cotizaciones = Cotizacion::with('cliente', 'estatus', 'detalles.unidadMedida')->where('id', $id)->first();
@@ -45,7 +51,7 @@ class PdfController extends Controller
 
         $array_cotizaciones = $cotizaciones->toArray();
 
-        // dd($array_cotizaciones);
+        // dd($array_cotizaciones,$encabezado,$piePagina,$firma);
 
 
         // Formatear la fecha
@@ -79,7 +85,11 @@ class PdfController extends Controller
             'textoFecha' => $textoFecha,
             'diasTotales' => $diasTotales,
             'totalObraMaterial' => $totalObraMaterial,
-            'imageBase64' => $data['imageBase64']
+            'imageBase64' => $data['imageBase64'],
+            'imagenFirmaBase64' => $data['imagenFirmaBase64'],
+            'encabezado' => $encabezado,
+            'piePagina' => $piePagina,
+            'firma' => $firma
         ])->setPaper('a4', 'portrait')
           ->setOptions([
               'isHtml5ParserEnabled' => true,

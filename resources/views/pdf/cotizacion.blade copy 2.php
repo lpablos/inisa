@@ -96,7 +96,7 @@
             font-weight: bold;
             font-size: 14px;
             color: black;
-            margin-top: 25px;
+            margin-top: 50px;
             /* Agrega espacio arriba */
         }
 
@@ -118,22 +118,46 @@
 
 <body>
 
+    <!-- 📌 ENCABEZADO QUE SE REPITE EN CADA PÁGINA -->
+    <div class="header p-4">
+        <img src="{{ $imageBase64 }}" alt="Encabezado">
+    </div>
+
     <div class="container " style="margin-top: 20px;">
-        <!-- 📌 ENCABEZADO QUE SE REPITE EN CADA PÁGINA -->
-        <div class="header p-4">
-            <img src="{{ $imageBase64 }}" alt="Encabezado">
+        <!-- 📌 INFORMACIÓN DEL CLIENTE -->
+        <div class="row">
+            <div class="col-md-12 text-justify font-weight-bold" style="font-size: 16px;">
+                <strong> "{{ $detalles->cliente->nombre }}"</strong>
+            </div>
+            <div class="col-md-12">
+                <strong> P R E S E N T E .</strong>
+            </div>
         </div>
 
-        {{-- 📌 validamos si se quiere visualizar el encabezado --}}
-        {{-- {{ $encabezado }} --}}
-        @if ($encabezado === 'true')
-            {{-- {{ $detalles->cliente->nombre }} --}}
-            @if ($detalles->cliente->abreviacion === 'CMAS')
-                @include('pdf.encabezado_cmas')
-            @endif
-        @endif
+        <br><br>
 
-
+        <!-- 📌 DETALLES DE LA COTIZACIÓN -->
+        <table class="details">
+            <tr>
+                <td style="color: #008ae0; font-weight: bold;">
+                    COT: {{ $detalles->consecutivo ?? 'NEME 102024/237' }}
+                </td>
+                <td rowspan="2" style="width: 60%; text-align: center; font-weight: bold;">
+                    INNOVACION NACIONAL DE INGENIERIA S.A. DE C.V.
+                </td>
+            </tr>
+            <tr>
+                <td style="color: red; font-weight: bold;">
+                    No. PROVEEDOR: 100613254
+                </td>
+            </tr>
+            <tr>
+                <td>DESCRIPCIÓN DEL ALCANCE:</td>
+                <td style="text-align: center; font-weight: bold;">
+                    {{ $detalles->titulo ?? 'N/A' }}
+                </td>
+            </tr>
+        </table>
 
 
 
@@ -153,46 +177,50 @@
 
 
 
-        @if ($piePagina === 'true')
-            {{-- {{ $piePagina }} --}}
-            <br>
-            @include('pdf.pie-pagina')
-        @else
-        @endif
+        <!-- 📌 SALTO DE PÁGINA SI LA TABLA ES MUY LARGA -->
+        {{-- @if (is_countable($detalles->detalles) && count($detalles->detalles) > 10) --}}
+            <div style="page-break-before: always;"></div>
+        {{-- @endif --}}
 
+        <br>
+        <!-- 📌 NOTAS FINALES -->
+        <div class="row">
+            <div class="col-md-12 text-justify font-weight-bold" style="font-size: 14px; color:black;">
+                Vigencia: {{ $diasTotales }} días naturales
+            </div>
+            <div class="col-md-12 text-justify font-weight-bold" style="font-size: 14px; color:black;">
+                A estos presupuestos se les deberá aumentar el 16% del I.V.A.
+            </div>
+            <div class="col-md-12 text-justify font-weight-bold" style="font-size: 14px; color:black;">
+                Cotización en Moneda Nacional
+            </div>
+            <div class="col-md-12 text-justify font-weight-bold" style="font-size: 14px; color:black;">
+                Sin otro particular me despido de usted, esperando servirle a la brevedad posible.
+            </div>
+        </div>
 
-
-
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
 
         <div class="row texto-final">
             <div class="col-md-12">
                 CORDIALMENTE
             </div>
-
-
             <div class="col-md-12">
                 {{ $textoFecha }}
             </div>
-
-            <div class="col-12 p-1 m-2">
-                @if ($firma === 'true')
-                    <img src="{{ $imagenFirmaBase64 }}" width="100" height="50" alt="Encabezado">
-                @else
-                    <br>
-                    <br>
-                @endif
-
-            </div>
-            <div col-12> C. RAYMUNDO OLIVA MORENO</div>
         </div>
 
     </div>
+</body>
 
-
-    </div>
-
-
-    <!-- 📌 Paginador -->
+<!-- 📌 Paginador -->
 <script type="text/php">
     if (isset($pdf)) {
         $pdf->page_script('
@@ -207,6 +235,5 @@
         ');
     }
 </script>
-</body>
 
 </html>
