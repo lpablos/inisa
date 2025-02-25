@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\CatalogosController;
 use App\Http\Controllers\CotizacionController;
+use App\Http\Controllers\EstadisticosController;
 use Illuminate\Routing\Router;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\PdfController;
@@ -168,6 +169,12 @@ Route::prefix('admin')->group(function () {
             Route::prefix('buscador-general')->group(function(){
                 Route::post('conceptos-generales', 'busquedaConcepto')->name('buscador.general.concepto');
             });
+        });
+    });
+
+    Route::prefix('estadisticos')->group(function(){
+        Route::controller(EstadisticosController::class)->group(function () {
+            Route::get('resumen-cotizaciones','resumenCotizaciones')->name('estadisticos.resumen.cotizaciones');
         });
     });
 });
