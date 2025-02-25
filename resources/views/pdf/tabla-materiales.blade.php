@@ -6,17 +6,17 @@
         <table class="table_border_pdf" style="border-collapse: collapse; width: 100%;">
             <thead class="table_border_pdf">
 
-                @if ($detalles->cliente->abreviacion === 'CMAS')
+
                     <tr>
-                        <th colspan="6" style="font-size: 12px; text-align: center; background-color: #FFF2CC;">
+                        <th colspan="6"  style="font-size: 12px; text-align: center; background-color: #FFF2CC;">
                             TÍTULO: {{ $detalles->titulo }}
                         </th>
                     </tr>
-                @endif
 
 
 
-                <tr style="border: 1px solid #000; text-align: center;">
+
+                <tr style="border: 1px solid #000; text-align: center;" class="font-size-heder-table">
                     <th rowspan="3" class="table_border_pdf"
                         style="background-color: #D9FBD9; font-weight: bold; text-align: center; width: 5%;">
                         PDA
@@ -30,7 +30,7 @@
                         COSTO DE MATERIALES
                     </th>
                 </tr>
-                <tr>
+                <tr class="font-size-heder-table">
                     <th rowspan="2" class="table_border_pdf"
                         style="background-color: #FFF2CC; font-weight: bold; text-align: center; width: 5%;">
                         UNID
@@ -44,7 +44,7 @@
                         PESOS M.N.
                     </td>
                 </tr>
-                <tr>
+                <tr class="font-size-heder-table">
                     <td colspan="1" class="table_border_pdf"
                         style="background-color: #FFF2CC; font-weight: bold; text-align: center; width: 10%;">
                         COSTO UNITARIO
@@ -56,7 +56,7 @@
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody class="font-size-heder-table-body">
                 @foreach ($detalles->detalles as $detalle)
                     {{-- 📌 Agregar un salto de página cada 10 filas --}}
                     @if ($loop->iteration % 10 == 0)

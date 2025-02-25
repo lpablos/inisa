@@ -113,6 +113,14 @@
         tr {
             page-break-inside: avoid;
         }
+
+        .font-size-heder-table {
+            font-size: 10px;
+        }
+
+        .font-size-heder-table-body {
+            font-size: 10px;
+        }
     </style>
 </head>
 
@@ -125,12 +133,8 @@
         </div>
 
         {{-- 📌 validamos si se quiere visualizar el encabezado --}}
-        {{-- {{ $encabezado }} --}}
         @if ($encabezado === 'true')
-            {{-- {{ $detalles->cliente->nombre }} --}}
-            @if ($detalles->cliente->abreviacion === 'CMAS')
-                @include('pdf.encabezado_cmas')
-            @endif
+            @include('pdf.encabezado')
         @endif
 
 
@@ -150,30 +154,20 @@
             @include('pdf.tabla-mano-obra')
         @endif
 
-
-
-
+        <!-- 📌 Pie de Página con Numeración -->
         @if ($piePagina === 'true')
             {{-- {{ $piePagina }} --}}
             <br>
             @include('pdf.pie-pagina')
         @else
         @endif
-
-
-
-
-
         <div class="row texto-final">
             <div class="col-md-12">
                 CORDIALMENTE
             </div>
-
-
             <div class="col-md-12">
                 {{ $textoFecha }}
             </div>
-
             <div class="col-12 p-1 m-2">
                 @if ($firma === 'true')
                     <img src="{{ $imagenFirmaBase64 }}" width="100" height="50" alt="Encabezado">
@@ -181,7 +175,6 @@
                     <br>
                     <br>
                 @endif
-
             </div>
             <div col-12> C. RAYMUNDO OLIVA MORENO</div>
         </div>
@@ -193,7 +186,7 @@
 
 
     <!-- 📌 Paginador -->
-<script type="text/php">
+    <script type="text/php">
     if (isset($pdf)) {
         $pdf->page_script('
             $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
