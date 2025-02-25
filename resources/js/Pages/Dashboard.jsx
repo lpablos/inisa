@@ -165,33 +165,15 @@ const Dashboard = () => {
             <div className="grid">
                 {recuadroIem}
                
-                {/* <DashboardInfoCard title="Revenue"
-                                   value="GHS 2.100"
-                                   icon="map-marker"
-                                   iconColor="orange"
-                                   descriptionValue="%52+"
-                                   descriptionText="since last week">
-                </DashboardInfoCard>
-                <DashboardInfoCard title="Customers" value="28441"
-                                   descriptionValue="520"
-                                   icon="inbox"
-                                   iconColor="cyan"
-                                   descriptionText="since last week">
-                </DashboardInfoCard>
-                <DashboardInfoCard title="Comments" value="152 Unread"
-                                   descriptionValue="85"
-                                   icon="comment"
-                                   iconColor="purple"
-                                   descriptionText="responded">
-                </DashboardInfoCard> */}
+             
 
-                <div className="col-12 xl:col-6">
+                {/* <div className="col-12 xl:col-6">
                     <div className="card">
                         <h5>Sales Overview</h5>
                         <Chart type="line" data={lineData} options={lineOptions}/>
                     </div>
-                </div>
-
+                </div> */}
+{/* 
                 <div className="col-12 xl:col-6">
                     <div className="card">
                         <div className="flex justify-content-between align-items-center mb-5">
@@ -264,7 +246,7 @@ const Dashboard = () => {
                             </li>
                         </ul>
                     </div>
-                </div>
+                </div> */}
             </div>
         </Layout>
     );

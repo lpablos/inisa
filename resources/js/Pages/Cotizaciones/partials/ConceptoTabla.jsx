@@ -35,7 +35,7 @@ const ConceptoTabla = () => {
     const [loader, setLoader] = useState(false); // Control de loader
     const toast = useRef(null); // Referencia de Toast
     const [vistraPreviaPDF, setVistraPreviaPDF] = useState(false)
-    const [buscadorEstatus, setBuscadorEstatus] = useState(3)
+    const [buscadorEstatus, setBuscadorEstatus] = useState(null)
 
     // Cargar cotizaciones
     const resultadosBusquedaCotizaciones = (data) =>{
@@ -390,7 +390,7 @@ const ConceptoTabla = () => {
                         <DataTable
                             value={cotizaciones}
                             paginator
-                            rows={5}
+                            rows={40}
                             size={'small'}
                         >
                             <Column field="id" header="ID" headerStyle={{ textAlign: 'center' }}  />
