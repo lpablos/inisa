@@ -9,12 +9,12 @@ const AppMenu = () => {
 
     const model = [
         {
-            label: 'Home',
+            label: 'Menú',
             items: [
-                { label: 'Dashboard', icon: 'pi pi-fw pi-home', to: route('dashboard') },
-                { label: 'Button', icon: 'pi pi-fw pi-id-card', to: route('button') },
+                { label: 'Panel', icon: 'pi pi-fw pi-home', to: route('dashboard') },
+                // { label: 'Button', icon: 'pi pi-fw pi-id-card', to: route('button') },
+                { label: 'Cotizaciones', icon: 'pi pi-fw pi-folder-open', to: route('cotizacion.show.index') },
                 { label: 'Catalogos', icon: 'pi pi-fw pi-tags', to: route('catalogo.gral.index') },
-                { label: 'Cotizaciones', icon: 'pi pi-fw pi-inbox', to: route('cotizacion.show.index') },
                 
             ]
         },
