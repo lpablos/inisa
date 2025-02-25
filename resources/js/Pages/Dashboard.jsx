@@ -5,6 +5,8 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import {LayoutContext} from '@/Layouts/layout/context/layoutcontext';
 import Layout from "@/Layouts/layout/layout.jsx";
 import DashboardInfoCard from "@/Components/DashboardInfoCard.jsx";
+import { ProgressSpinner } from 'primereact/progressspinner';
+import { Toast } from 'primereact/toast';
 
 const lineData = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -29,11 +31,28 @@ const lineData = {
 };
 
 const Dashboard = () => {
+    const toast = useRef(null);
     const [products, setProducts] = useState([]);
     const menu1 = useRef(null);
     const menu2 = useRef(null);
     const [lineOptions, setLineOptions] = useState({});
     const {layoutConfig} = useContext(LayoutContext);
+
+
+
+    const [loading, setLoading] = useState(false)
+    const [estadisticoCotizaciones, setEstadisticoCotizaciones] = useState([]);
+
+    const recuadroIem = estadisticoCotizaciones.map(estadistica=>
+        <DashboardInfoCard title="Cotizaciones"
+                value={estadistica.total}
+                icon="chart-line"
+                iconColor="blue"
+                mostrarBoto="false"
+                descriptionText={estadistica.descripcion}>
+                    
+        </DashboardInfoCard>
+    )
 
     const applyLightTheme = () => {
         const lineOptions = {
@@ -107,43 +126,54 @@ const Dashboard = () => {
         }
     }, [layoutConfig.colorScheme]);
 
+    useEffect(()=>{
+        resumenCotizaciones()
+    },[])
+
+    const resumenCotizaciones = async () =>{
+        setLoading(true)
+        try {
+            setTimeout( async() => {
+                const response = await axios.get(route("estadisticos.resumen.cotizaciones"));        
+                const {data,status }= response
+                if(status === 200){
+                    setEstadisticoCotizaciones(data)
+                    setLoading(false)
+                }              
+            }, 800);            
+            
+        } catch (error) {
+            setLoading(false)
+            console.error(error);
+            toast.current.show({
+                severity: "error",
+                summary: "Error",
+                detail: "No se logro obtener el resumen de estadisticos",
+                life: 3000,
+            });
+        }
+    }
+
     return (
         <Layout>
+            <Toast ref={toast} />
+            {loading &&(
+                <div className="flex justify-content-center">
+                    <ProgressSpinner />
+                </div>
+            )}
             <div className="grid">
-                <DashboardInfoCard title="Orders"
-                                   value="152"
-                                   icon="map-marker"
-                                   iconColor="blue"
-                                   descriptionValue="24 new"
-                                   descriptionText="since last visit">
-                </DashboardInfoCard>
-                <DashboardInfoCard title="Revenue"
-                                   value="GHS 2.100"
-                                   icon="map-marker"
-                                   iconColor="orange"
-                                   descriptionValue="%52+"
-                                   descriptionText="since last week">
-                </DashboardInfoCard>
-                <DashboardInfoCard title="Customers" value="28441"
-                                   descriptionValue="520"
-                                   icon="inbox"
-                                   iconColor="cyan"
-                                   descriptionText="since last week">
-                </DashboardInfoCard>
-                <DashboardInfoCard title="Comments" value="152 Unread"
-                                   descriptionValue="85"
-                                   icon="comment"
-                                   iconColor="purple"
-                                   descriptionText="responded">
-                </DashboardInfoCard>
+                {recuadroIem}
+               
+             
 
-                <div className="col-12 xl:col-6">
+                {/* <div className="col-12 xl:col-6">
                     <div className="card">
                         <h5>Sales Overview</h5>
                         <Chart type="line" data={lineData} options={lineOptions}/>
                     </div>
-                </div>
-
+                </div> */}
+{/* 
                 <div className="col-12 xl:col-6">
                     <div className="card">
                         <div className="flex justify-content-between align-items-center mb-5">
@@ -216,7 +246,7 @@ const Dashboard = () => {
                             </li>
                         </ul>
                     </div>
-                </div>
+                </div> */}
             </div>
         </Layout>
     );

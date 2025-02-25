@@ -5,8 +5,13 @@ import axios from "axios";
 import { elements } from 'chart.js';
 
 const BusquedaCotizacion = ({activarBusqueda}) =>{
-    const [estatus, setEstatus] = useState([]);
-    const [selectedEstatus, setSelectedEstatus] = useState(null);
+    const [estatus, setEstatus] = useState([ {
+        id: 0, // O undefined si prefieres
+        nombre: "Todos",
+        abreviacion: "*",
+        descripcion: "Todos"
+    }]);
+    const [selectedEstatus, setSelectedEstatus] = useState(0);
     const [disabled, setDisabled] = useState(false)
     
     
@@ -16,28 +21,29 @@ const BusquedaCotizacion = ({activarBusqueda}) =>{
         obtenerStatuses();
         setTimeout(() => {
             setSelectedEstatus({
-                "id": 3,
-                "nombre": "EnProcesoFaltaAlgo",
-                "abreviacion": "!",
-                "descripcion": "! - En Proceso O Falta Algo"
+                "id": 0,
+                "nombre": "Todos",
+                "abreviacion": "*",
+                "descripcion": "* - Todos"
             })
         }, 800);
     }, []);
+
+
 
     const obtenerStatuses = async () => {
         try {
             const response = await axios.get(route("catalogo.list.status"));
             const {data} = response;
-            console.log("Este es", data);
-            
             const todosEstatus = data.map(element => ({
                 id: element.id,
                 nombre: element.nombre,
                 abreviacion: element.abreviacion,
                 descripcion: element.abreviacion+' - '+element.descripcion,
             }))
-                        
-            setEstatus(todosEstatus);
+
+            setEstatus([...estatus, ...todosEstatus]);
+            
         } catch (error) {
             toast.current.show({
                 severity: "error",
@@ -55,6 +61,9 @@ const BusquedaCotizacion = ({activarBusqueda}) =>{
             setDisabled(false)
         }, 1000);
     }
+    useEffect(()=>{
+        realizarBusqueda()
+    },[selectedEstatus])
 
     return (
         <div className="p-inputgroup md:w-23rem ">
