@@ -20,12 +20,11 @@ const detalleCaptura =({cotizacion, detalle}) => {
     }
 
     const handleExportClick = (id) => {
-    
-        const url = `${route("exportar.excel.cotizacion", { id: 1 })}`;
-        console.log("Este es la ruta", url);
-        setTimeout(() => {
-            Inertia.visit(url, { method: 'get' }); // Realiza la navegación.
-        }, 1000);
+        
+        // const url = `${route("exportar.excel.cotizacion", { id: 1 })}`;
+        // setTimeout(() => {
+        //     Inertia.visit(url, { method: 'get' }); // Realiza la navegación.
+        // }, 1000);
         
     };
 

@@ -20,6 +20,7 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import { Message } from 'primereact/message';
 import BusquedaAvanzadaCotizacion from "./BusquedaAvanzadaCotizacion";
 import { useLocalStorage } from "primereact/hooks";
+import ExcelPersonalizador from "./ExcelPersonalizador";
         
 
 
@@ -35,7 +36,11 @@ const ConceptoTabla = () => {
     const [loader, setLoader] = useState(false); // Control de loader
     const toast = useRef(null); // Referencia de Toast
     const [vistraPreviaPDF, setVistraPreviaPDF] = useState(false)
+    const [identyPDFDetalle, setIdentyPDFDetalle] = useState(null);
     const [buscadorEstatus, setBuscadorEstatus] = useState(null)
+    const [vistaPreviaExcel, setVistaPreviaExcel] = useState(false);
+    const [identyExcelDetalle, setIdentyExcelDetalle] = useState(null);
+
 
     // Cargar cotizaciones
     const resultadosBusquedaCotizaciones = (data) =>{
@@ -235,17 +240,32 @@ const ConceptoTabla = () => {
         }
     };
 
-    const handleExportClick = (id) => {
+    // const handleExportClick = (id) => {
+        
+        // const url = `${route("exportar.excel.cotizacion", { id: 1 })}`;
+        // // console.log("Este es la ruta", url);
+        // setTimeout(() => {
 
-        const url = `${route("exportar.excel.cotizacion", { id: 1 })}`;
-        // console.log("Este es la ruta", url);
-        setTimeout(() => {
-
-            Inertia.visit(url, { method: 'get' }); // Realiza la navegación.
-        }, 1000);
+        //     Inertia.visit(url, { method: 'get' }); // Realiza la navegación.
+        // }, 1000);
         //const url = route('exportar.excel.cotizacion', id); // Genera la URL dinámica.
-    };
+    // };
 
+    const mostrarExcelDetalle = (id) =>{
+        setIdentyExcelDetalle(id)
+        setTimeout(() => {
+            setVistaPreviaExcel(true)
+        }, 500);
+    }
+
+    const mostrarPDFDetalle = (id) =>{
+        setIdentyPDFDetalle(id)
+        setTimeout(() => {
+            setVistraPreviaPDF(true)
+        }, 500);
+    }
+
+    
     // Plantilla para las acciones
     const accionesTemplate = (rowData) => (
         <div className="flex gap-2">
@@ -273,7 +293,7 @@ const ConceptoTabla = () => {
                 tooltip="Vista Previa Excel"
                 tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
                 className="p-button-rounded p-button-info p-button-sm"
-                onClick={() => handleExportClick(rowData.id) }
+                onClick={() => mostrarExcelDetalle(rowData.id) }
             />
             <Button
                 severity="success"
@@ -282,7 +302,7 @@ const ConceptoTabla = () => {
                 tooltip="Vista Previa PDF"
                 tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
                 className="p-button-rounded p-button-info p-button-sm"
-                onClick={() => setVistraPreviaPDF(true)}
+                onClick={() => mostrarPDFDetalle(rowData.id)}
             />
              <Button 
                 size="small" 
@@ -430,7 +450,8 @@ const ConceptoTabla = () => {
                 />
             )}
             <CodigosDialog seleccionCotizacion={seleccionCotizacion} codigosShow={codigosShow} setCodigosShow={reloadHideCodigos}/>
-            <VistaPreviaCotizacion  vistraPreviaPDF={vistraPreviaPDF} setVistraPreviaPDF={setVistraPreviaPDF}/>
+            <VistaPreviaCotizacion  identyCotizacion={identyPDFDetalle} vistraPreviaPDF={vistraPreviaPDF} setVistraPreviaPDF={setVistraPreviaPDF}/>
+            <ExcelPersonalizador  identyCotizacion={identyExcelDetalle} vistaPreviaExcel={vistaPreviaExcel} setVistaPreviaExcel={setVistaPreviaExcel}/>
         </div>
     );
 };

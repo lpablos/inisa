@@ -54,7 +54,7 @@ Route::get('/uikit/button', function () {
 
 
  // ruta  la exportacion del excel
- Route::get('/exportar-excel-cotizacion/{id}', [ExportController::class, 'exportarDetalles'])->name('exportar.excel.cotizacion');
+ Route::get('/exportar-excel-cotizacion', [ExportController::class, 'exportarDetalles'])->name('exportar.excel.cotizacion');
 
  Route::get('/exportar-pdf-cotizacion', [PdfController::class, 'generatePdf'])->name('exportar.pdf.cotizacion');
 

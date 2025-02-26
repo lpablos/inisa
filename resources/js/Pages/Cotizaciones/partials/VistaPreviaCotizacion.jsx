@@ -2,8 +2,6 @@ import React,{useEffect, useState} from 'react';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import { InputText } from 'primereact/inputtext';
-import { InputNumber } from 'primereact/inputnumber';
 import { InputSwitch } from "primereact/inputswitch";
 
 
@@ -41,8 +39,8 @@ const VistaPreviaCotizacion = ({identyCotizacion=1,vistraPreviaPDF, setVistraPre
             
             setTimeout(() => {
                 // Se comenta para posterior llamar al correcto
-                // setPdfUrl(pdfUrl)
-                setPdfUrl('https://www.soundczech.cz/temp/lorem-ipsum.pdf')
+                setPdfUrl(pdfUrl)
+                // setPdfUrl('https://www.soundczech.cz/temp/lorem-ipsum.pdf')
                 setLoad(false);
             }, 1000);                
         }, 1000);
