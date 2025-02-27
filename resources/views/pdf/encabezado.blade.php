@@ -29,7 +29,7 @@
     </div>
 
     <div class="col-12 font_text_1 grid_right_relative_titulo_2_cmas"  style="font-size: 12px;" >
-        AT´N: {{ $detalles->cliente->numeroProvedor }}
+         {{ $detalles->cliente->numeroProvedor }}
     </div>
 
     <div class="col-12 font_text_1 grid_right_relative_titulo_2_cmas"  style="font-size: 12px;">

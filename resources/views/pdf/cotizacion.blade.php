@@ -151,7 +151,7 @@
         @endif
 
         @if ($detalles->es_mano_obra == 1 && $detalles->es_material == 0)
-            @include('pdf.tabla-mano-obra')
+        @include('pdf.tabla-mano-obra-y-material')
         @endif
 
         <!-- 📌 Pie de Página con Numeración -->
