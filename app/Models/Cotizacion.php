@@ -139,6 +139,9 @@ class Cotizacion extends Model
     }
 
 
+ 
+
+
 
     /**
      * Relación con Tomo
@@ -188,5 +191,16 @@ class Cotizacion extends Model
     public function codigos()
     {
         return $this->hasMany(Codigo::class, 'cotizacion_id', 'id'); // Referencia a la clave foránea y primaria
+    }
+
+    public function actualizarTotal()
+    {
+        if($this->es_material == 1){
+            $this->total = $this->detalles()->sum('costo_material_subtotal');
+        }
+        if($this->es_mano_obra ==1){    
+            $this->total = $this->detalles()->sum('obra_material_subtotal');
+        }
+        $this->save();
     }
 }
