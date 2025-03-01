@@ -31,6 +31,18 @@ class DetalleCotizacion extends Model
         'tomo_pertenece',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+        // Funciones para actualizar el total de los conceptos
+        static::saved(function ($concepto) {            
+            $concepto->cotizacion?->actualizarTotal();
+        });
+        static::deleted(function ($concepto) {            
+            $concepto->cotizacion?->actualizarTotal();
+        });
+    }
+
     public function setPdaAttribute($value)
     {
         $this->attributes['PDA'] = number_format($value, 2, '.', '');
