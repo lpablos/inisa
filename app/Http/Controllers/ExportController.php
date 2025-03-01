@@ -16,8 +16,8 @@ class ExportController extends Controller
         $piePagina= $request->get('pie-pagina');
         $firma= $request->get('firma');
         // Aqui se muestra todo
-        dd($request->all());
+        // dd($request->all());
 
-        return Excel::download(new CotizacionExportExcel($id), 'cotizacion.xlsx');
+        return Excel::download(new CotizacionExportExcel($id, $encabezado, $piePagina,$firma), 'cotizacion.xlsx');
     }
 }

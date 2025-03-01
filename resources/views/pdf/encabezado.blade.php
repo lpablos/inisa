@@ -19,6 +19,7 @@
     }
 </style>
 <!-- 📌 INFORMACIÓN DEL CLIENTE -->
+
 <div class="row">
     <div class="col-12 text-right cot_estilo_1" style="font-size: 12px;"> COT: {{ $detalles->folio ?? 'NEME 102024/237' }} </div>
     <div class="col-10 text-justify font-weight-bold" style="font-size: 12px;">

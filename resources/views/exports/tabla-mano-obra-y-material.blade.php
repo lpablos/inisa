@@ -75,7 +75,7 @@
                         {{ $detalle->descripcion ?? '' }}</td>
                 @else
                     <td style="text-align: center; border: 1px solid #000">{{ $detalle->PDA ?? '' }}</td>
-                    <td style="text-align: justify; border: 1px solid #000;  white-space: pre-wrap;"> {!! $detalle->descripcion !!}</td>
+                    <td style="text-align: justify; border: 1px solid #000;  white-space: pre-wrap;"> {!! $detalle->descripcion ?? '' !!}</td>
                     <td style="text-align: center; border: 1px solid #000">{{ $detalle->unidadMedida->abreviatura ?? '' }}
                     </td>
                     <td style="text-align: center; border: 1px solid #000">{{ $detalle->costo_material_cantidad ?? '' }}

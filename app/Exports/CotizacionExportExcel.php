@@ -23,14 +23,23 @@ class CotizacionExportExcel implements FromView
     /**
      * @return \Illuminate\Support\Collection
      */
-    public function __construct($id)
+    public function __construct($id, $encabezado,$piePagina, $firma)
     {
         $this->id = $id;
+        $this->encabezado = $encabezado;
+        $this->piePagina = $piePagina;
+        $this->firma = $firma;
+
+
     }
     public function view(): View
     {
 
+
+        // dd($this->id);
         $cotizaciones = Cotizacion::with('cliente', 'estatus', 'detalles.unidadMedida')->where('id', $this->id)->first();
+        // dd($cotizaciones);
+
         $cotizaciones->detalles = collect($cotizaciones->detalles)->sortBy('PDA')->values(); // Ordenar por PDA
 
 
@@ -40,6 +49,8 @@ class CotizacionExportExcel implements FromView
 
         // dd($totalObraMaterial);
         $array_cotizaciones = $cotizaciones->toArray();
+
+        // dd($array_cotizaciones);
 
         // Formatear la fecha
         $fecha = Carbon::now();
@@ -51,13 +62,17 @@ class CotizacionExportExcel implements FromView
         $fechaFin = Carbon::parse($cotizaciones->fecha_cotiza_fin);
         $diasTotales = $fechaInicio->diffInDays($fechaFin);
 
-        // dd($cotizaciones->toArray(), $diasTotales);
+        // dd($cotizaciones->toArray(), $diasTotales,$this->encabezado, $this->piePagina, $this->firma);
 
         return view('exports.cotizacion', [
             'detalles' => $cotizaciones,
             'textoFecha' => $textoFecha,
             'diasTotales' => $diasTotales,
-            'totalObraMaterial' => $totalObraMaterial
+            'totalObraMaterial' => $totalObraMaterial,
+            'encabezado' => $this->encabezado,
+            'piePagina' => $this->piePagina,
+            'firma' => $this->firma
+
         ]);
     }
 

@@ -4,7 +4,7 @@
             <th rowspan="3"
                 style="background-color: #D9FBD9; font-weight: bold; text-align: center;  width: 100px; border: 1px solid #000;">
                 PDA</th>
-            <th rowspan="3"
+            <th rowspan="3" colspan="5"
                 style="background-color: #D9FBD9; font-weight: bold; text-align: center;  width: 200px; border: 1px solid #000">
                 DESCRIPCIÓN
             </th>
@@ -50,11 +50,11 @@
                     <td style="text-align: center; background-color: #FFF2CB; border: 1px solid #000 ">
                         {{ $detalle->PDA ?? '' }}</td>
                     <td style="text-align: center; background-color: #FFF2CB; border: 1px solid #000 border: 1px solid #000"
-                        colspan="5">
+                        colspan="9">
                         {{ $detalle->descripcion ?? '' }}</td>
                 @else
                     <td style="text-align: center; border: 1px solid #000">{{ $detalle->PDA ?? '' }}</td>
-                    <td style="text-align: center; border: 1px solid #000">{{ $detalle->descripcion ?? '' }}</td>
+                    <td colspan="5" style="text-align: center; border: 1px solid #000">{!! $detalle->descripcion ?? '' !!}</td>
                     <td style="text-align: center; border: 1px solid #000">{{ $detalle->unidadMedida->abreviatura ?? '' }}
                     </td>
                     <td style="text-align: center; border: 1px solid #000">{{ $detalle->costo_material_cantidad ?? '' }}
@@ -70,7 +70,7 @@
     <!-- Agregar la fila de Total -->
     <tfoot>
         <tr>
-            <td colspan="5" style="text-align: right; font-weight: bold; border: 1px solid #000;">SubTotal:</td>
+            <td colspan="9" style="text-align: right; font-weight: bold; border: 1px solid #000;">SubTotal:</td>
             <td style="text-align: center; font-weight: bold; border: 1px solid #000;">
                 ${{ number_format($totalObraMaterial, 2, '.', '') }}
             </td>
