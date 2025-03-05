@@ -783,6 +783,34 @@ class CatalogosController extends Controller
         return response()->json($data);
     }
 
+    public function detalleCatalogos(){
+        $Cotizacion = Cotizacion::count();
+        $CatCliente = CatCliente::count();
+        $CatDepartamento = CatDepartamento::count();
+        $CatEmpresa = CatEmpresa::count();
+        $CatEstatu = CatEstatu::count();
+        $CatProvedor = CatProvedor::count();
+        $CatUnidadMedida = CatUnidadMedida::count();
+        $CatTipoServicio = CatTipoServicio::count();
+        $User = User::count();
+        $CatMoneda = CatMoneda::count();
+        $CatPrioridad = CatPrioridad::count();
+        $resumen = array(
+            'Cotizacion' =>$Cotizacion,
+            'CatCliente' =>$CatCliente,
+            'CatDepartamento' =>$CatDepartamento,
+            'CatEmpresa' =>$CatEmpresa,
+            'CatEstatu' =>$CatEstatu,
+            'CatProvedor' =>$CatProvedor,
+            'CatUnidadMedida' =>$CatUnidadMedida,
+            'CatTipoServicio' =>$CatTipoServicio,
+            'User' =>$User,
+            'CatMoneda' =>$CatMoneda,
+            'CatPrioridad' =>$CatPrioridad,
+        );
+        return response()->json($resumen, 200);
+    }
+
   
 
 }

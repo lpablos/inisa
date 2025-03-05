@@ -72,9 +72,9 @@ Route::prefix('admin')->group(function () {
         });
         Route::controller(CatalogosController::class)->group(function () {
             Route::get('show', 'index')->name('catalogo.gral.index');  // Especifica el método 'index' en el controlador
-             // Especifica el método 'index' en el controlador
+            Route::get('resumen-catalogos', 'detalleCatalogos')->name('catalogo.resumen.catalogos.asc');
             
-
+             // Especifica el método 'index' en el controlador
             //CRUD para eliminar un provedor
             Route::get('list-proveedores', 'listaProvedores')->name('catalogo.list.provedores');
             Route::post('registrar-proveedor', 'registrarProvedor')->name('catalogo.nuevo.provedor');
@@ -116,8 +116,6 @@ Route::prefix('admin')->group(function () {
              Route::post('actualiza-statu', 'actualizaStatu')->name('catalogo.actualiza.statu');
              Route::delete('statu/{id}', 'deleteStatu')->name('catalogo.delete.statu');
              Route::get('detalle-statu/{id}', 'detalleStatu')->name('catalogo.detalle.statu');
-
-
 
             //CRUD Usuarios
             Route::get('list-usuarios', 'listaUsuarios')->name('catalogo.list.usuarios');
