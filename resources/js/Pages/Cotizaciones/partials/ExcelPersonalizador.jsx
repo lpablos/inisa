@@ -40,7 +40,7 @@ const ExcelPersonalizador = ({identyCotizacion =1, vistaPreviaExcel=false, setVi
         setLoad(true)
         const url = `${route("exportar.excel.cotizacion")}?id=${identyCotizacion}&encabezado=${encabezado}&pie-pagina=${piePagina}&firma=${firma}`;
         setTimeout(() => {
-            toast.current.show({ severity: 'info', summary: 'Info', detail: 'Excel Descargado Correctamente' });
+            toast.current.show({ severity:'success', summary: 'Exito', detail: 'Excel Descargado Correctamente' });
             Inertia.visit(url, { method: 'get' }); // Realiza la navegación.
             setLoad(false)
         }, 1000);
@@ -73,7 +73,7 @@ const ExcelPersonalizador = ({identyCotizacion =1, vistaPreviaExcel=false, setVi
             )}
 
             <div className=" flex justify-content-center">
-                <Toast ref={toast} />
+                <Toast ref={toast} position="top-left"/>
             </div>
          
         </Dialog>
