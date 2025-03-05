@@ -16,13 +16,14 @@ class EstadisticosController extends Controller
         
         $resumen = [];
         foreach ($estatus as $item) {  // Corrección aquí
-            $cotizacion = Cotizacion::where('status_id',$item->id)->get();
-            $totales = $cotizacion->count();
+            $costo = Cotizacion::where('status_id', $item->id)->sum('total');
+            $totales = Cotizacion::where('status_id', $item->id)->count();
             $objecto = array(
                 "id" => $item->id,
                 "nombre" => $item->nombre,
                 "descripcion" => $item->descripcion,
-                "total" => $totales
+                "total" => $totales,
+                "costo" => '$' . number_format($costo, 2, '.', ',') 
             );
             array_push($resumen, $objecto);
         }

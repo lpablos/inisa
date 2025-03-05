@@ -42,10 +42,12 @@ const Dashboard = () => {
 
     const [loading, setLoading] = useState(false)
     const [estadisticoCotizaciones, setEstadisticoCotizaciones] = useState([]);
+    console.log("Estoes -->",estadisticoCotizaciones);
+    
 
     const recuadroIem = estadisticoCotizaciones.map(estadistica=>
         <DashboardInfoCard title="Cotizaciones"
-                value={estadistica.total}
+                value={'Registros'+estadistica.total+' = '+estadistica.costo}
                 icon="chart-line"
                 iconColor="blue"
                 mostrarBoto="false"
