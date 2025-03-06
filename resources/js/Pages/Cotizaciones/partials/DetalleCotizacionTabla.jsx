@@ -87,12 +87,13 @@ const  DetalleCotizacionTabla = ({cotizacion, detalle, reloadList, onRecargaComp
     }
 
     const preguntaEliminacion = (item) => {
-        
+        let valor= item.PDA.replace(/<[^>]*>/g, '');
+        let sinEtiquetasDesc = item.descripcion.replace(/<[^>]*>/g, '');
         let mensaje
         if(item.es_tomo == 1){
-            mensaje = `Al eliminar el tomo con el PDA "${item.PDA}", ten en cuenta que se se eliminarán automáticamente todos los elementos internos relacionados (por ejemplo, 1.01, 1.02, entre otros).`
+            mensaje = `Al eliminar el tomo con el PDA "${valor}", ten en cuenta que se se eliminarán automáticamente todos los elementos internos relacionados (por ejemplo, 1.01, 1.02, entre otros).`
         }else{
-            mensaje = `Se eliminar el PDA "${item.PDA}", con la descripción: ${item.descripcion}.`
+            mensaje = `Se eliminar el PDA "${valor}", con la descripción: ${sinEtiquetasDesc}.`
         }
         confirmDialog({
             message: `${mensaje}`,
