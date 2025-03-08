@@ -9,24 +9,18 @@ import { Tooltip } from 'primereact/tooltip';
 import BusquedaConceptos from './partials/BusquedaConceptos';
 import { Inertia } from '@inertiajs/inertia';
 import VistaPreviaCotizacion from './partials/VistaPreviaCotizacion';
+import ExcelPersonalizador from './partials/ExcelPersonalizador';
         
 
 const detalleCaptura =({cotizacion, detalle}) => {   
     
     const [vistraPreviaPDF, setVistraPreviaPDF] = useState(false)
+    const [vistraPreviaExcel, setVistraPreviaExcel] = useState(false)
     const [reloadList, setReloadList] = useState(false)
     const recargarListado = () =>{
         setReloadList(true)
     }
 
-    const handleExportClick = (id) => {
-        
-        // const url = `${route("exportar.excel.cotizacion", { id: 1 })}`;
-        // setTimeout(() => {
-        //     Inertia.visit(url, { method: 'get' }); // Realiza la navegación.
-        // }, 1000);
-        
-    };
 
     return (
         <Layout>
@@ -54,7 +48,7 @@ const detalleCaptura =({cotizacion, detalle}) => {
                                 tooltip="Vista Previa Excel"
                                 tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
                                 className="p-button-rounded p-button-info p-button-sm mr-1"
-                                onClick={() => handleExportClick(cotizacion) }
+                                onClick={() => setVistraPreviaExcel(true) }
                             />
                             <Button
                                 severity="success"
@@ -65,11 +59,12 @@ const detalleCaptura =({cotizacion, detalle}) => {
                                 className="p-button-rounded p-button-info p-button-sm mr-1"
                                 onClick={() => setVistraPreviaPDF(true)}
                             />
-                            {/* <Button icon="pi pi-file-pdf" rounded text severity="info" aria-label="Vista Previa"  tooltip="Vista Previa PDF" tooltipOptions={{ position: 'left' }} onClick={()=>{alert('En desarrollo')}}/> */}
+                            
                         </div>
                     </div>
                     <DetalleCotizacionTabla cotizacion={cotizacion} detalle={detalle} reloadList={reloadList}  onRecargaCompleta={() => setReloadList(false)}/>
                     <VistaPreviaCotizacion identyCotizacion={cotizacion} vistraPreviaPDF={vistraPreviaPDF} setVistraPreviaPDF={setVistraPreviaPDF}/>
+                    <ExcelPersonalizador identyCotizacion={cotizacion} vistaPreviaExcel={vistraPreviaExcel} setVistaPreviaExcel={setVistraPreviaExcel}/>
                 </div>
             </div>
         </Layout>

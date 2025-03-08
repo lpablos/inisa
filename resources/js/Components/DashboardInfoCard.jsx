@@ -11,7 +11,7 @@ export default function DashboardInfoCard({ title, value, icon = '', iconColor =
                 <div className="flex justify-content-between mb-3">
                     <div>
                         <span className="block text-500 font-medium mb-3">{title}</span>
-                        <div className="text-900 font-medium text-xl">{value}</div>
+                        <div className="text-900 font-medium text-xl text-center">{value}</div>
                     </div>
                     <div className={iconBackgroundClass}
                          style={{width: '2.5rem', height: '2.5rem'}}>
