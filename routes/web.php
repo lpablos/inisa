@@ -52,11 +52,11 @@ Route::get('/uikit/button', function () {
     return Inertia::render('main/uikit/button/page');
 })->name('button');
 
+// ruta  la exportacion del excel
+Route::get('/exportar-excel-cotizacion', [ExportController::class, 'exportarDetalles'])->name('exportar.excel.cotizacion');
 
- // ruta  la exportacion del excel
- Route::get('/exportar-excel-cotizacion', [ExportController::class, 'exportarDetalles'])->name('exportar.excel.cotizacion');
+Route::get('/exportar-pdf-cotizacion', [PdfController::class, 'generatePdf'])->name('exportar.pdf.cotizacion');
 
- Route::get('/exportar-pdf-cotizacion', [PdfController::class, 'generatePdf'])->name('exportar.pdf.cotizacion');
 
 // Todo lo relacionado con la administracion
 Route::prefix('admin')->group(function () {
@@ -64,16 +64,16 @@ Route::prefix('admin')->group(function () {
     Route::prefix('catalogos')->group(function () {
         Route::controller(ClientesController::class)->group(function () {
             Route::get('clientes-asociados', 'index')->name('catalogo.clientes.asociados.index');  // Especifica el método 'index' en el controlador
-            Route::get('listado-clientes-empresa','listadoClientesEmpresa')->name('catalogos.listado.clientes.empresa');
+            Route::get('listado-clientes-empresa', 'listadoClientesEmpresa')->name('catalogos.listado.clientes.empresa');
             Route::post('registrar-cliente', 'store')->name('catalogo.registrar.cliente.nuevo');
             Route::post('actualizar-cliente', 'update')->name('catalogo.actualizar.cliente.nuevo');
             Route::delete('eliminar-cliente/{id}', 'destroy')->name('catalogo.eliminar.cliente');
-            Route::get('detalle-cliente-asc/{id}','show')->name('catalogos.detalle.cliente.asc');
+            Route::get('detalle-cliente-asc/{id}', 'show')->name('catalogos.detalle.cliente.asc');
         });
         Route::controller(CatalogosController::class)->group(function () {
             Route::get('show', 'index')->name('catalogo.gral.index');  // Especifica el método 'index' en el controlador
-             // Especifica el método 'index' en el controlador
-            
+            // Especifica el método 'index' en el controlador
+
 
             //CRUD para eliminar un provedor
             Route::get('list-proveedores', 'listaProvedores')->name('catalogo.list.provedores');
@@ -110,12 +110,12 @@ Route::prefix('admin')->group(function () {
             Route::delete('tipomoneda/{id}', 'deleteTipoMoneda')->name('catalogo.delete.tipomoneda');
             Route::get('detalle-tipomoneda/{id}', 'detalleTipoMoneda')->name('catalogo.detalle.tipomoneda');
 
-             //CRUD  Tipos de Status
-             Route::get('list-status', 'listaStatus')->name('catalogo.list.status');
-             Route::post('registrar-statu', 'registrarStatu')->name('catalogo.nuevo.statu');
-             Route::post('actualiza-statu', 'actualizaStatu')->name('catalogo.actualiza.statu');
-             Route::delete('statu/{id}', 'deleteStatu')->name('catalogo.delete.statu');
-             Route::get('detalle-statu/{id}', 'detalleStatu')->name('catalogo.detalle.statu');
+            //CRUD  Tipos de Status
+            Route::get('list-status', 'listaStatus')->name('catalogo.list.status');
+            Route::post('registrar-statu', 'registrarStatu')->name('catalogo.nuevo.statu');
+            Route::post('actualiza-statu', 'actualizaStatu')->name('catalogo.actualiza.statu');
+            Route::delete('statu/{id}', 'deleteStatu')->name('catalogo.delete.statu');
+            Route::get('detalle-statu/{id}', 'detalleStatu')->name('catalogo.detalle.statu');
 
 
 
@@ -147,16 +147,16 @@ Route::prefix('admin')->group(function () {
             Route::put('actualiza-cotizacion', 'updateCotizacion')->name('cotizacion.actualiza.cotizacion');
             Route::delete('cotizacion/{id}', 'deleteCotizacion')->name('cotizacion.delete.cotizacion');
             Route::post('duplicar-cotizacion', 'duplicarCotizacion')->name('cotizacion.duplicar.cotizacion');
-            Route::prefix('codigos')->group(function(){
-                Route::post('nuevo-codigo','nuevoCodigo')->name('cotiacion.codigos.nuevo');
+            Route::prefix('codigos')->group(function () {
+                Route::post('nuevo-codigo', 'nuevoCodigo')->name('cotiacion.codigos.nuevo');
                 Route::get('codigos-asoc/{identy}', 'codigosAsocCotizacion')->name('codigos.asociados.cotizacion');
                 Route::delete('delete-codigo/{identy}', 'deleteCodigoAsc')->name('codigo.delete.asociado.identy');
                 Route::put('actualiza-codigo/{id}', 'editCodigoAsc')->name('codigo.actualiza.asociado.identy');
             });
-            Route::prefix('captura')->group(function(){
-                Route::get('{identy?}/detalle','datelleCaptura')->name('cotizacion.captura.detalle');
-                Route::post('guardarDetalle','saveCaptura')->name('cotizacion.guardad.captura');
-                Route::get('item/{identy}/detalle','detalleItem')->name('cotizacion.captura.item.detalle');
+            Route::prefix('captura')->group(function () {
+                Route::get('{identy?}/detalle', 'datelleCaptura')->name('cotizacion.captura.detalle');
+                Route::post('guardarDetalle', 'saveCaptura')->name('cotizacion.guardad.captura');
+                Route::get('item/{identy}/detalle', 'detalleItem')->name('cotizacion.captura.item.detalle');
                 Route::post('item/detalleItem/actualizar', 'actualizarDetalleIdenty')->name('cotizacion.captura.item.actualiza');
                 // Route::delete('item/detalleItem/actualizar', 'actualizarDetalleIdenty')->name('cotizacion.captura.item.actualiza');
                 Route::delete('tomo/detalle/{id}', 'deleteTomoDetalle')->name('tomo.detalle.elimina.identy');
@@ -166,17 +166,25 @@ Route::prefix('admin')->group(function () {
         });
 
         Route::controller(BuscadorGeneralController::class)->group(function () {
-            Route::prefix('buscador-general')->group(function(){
+            Route::prefix('buscador-general')->group(function () {
                 Route::post('conceptos-generales', 'busquedaConcepto')->name('buscador.general.concepto');
             });
         });
     });
 
-    Route::prefix('estadisticos')->group(function(){
+    Route::prefix('estadisticos')->group(function () {
         Route::controller(EstadisticosController::class)->group(function () {
-            Route::get('resumen-cotizaciones','resumenCotizaciones')->name('estadisticos.resumen.cotizaciones');
+            Route::get('resumen-cotizaciones', 'resumenCotizaciones')->name('estadisticos.resumen.cotizaciones');
         });
     });
+
+
+    // 📌 Rutas de exportación dentro del grupo 'admin'
+    Route::get('/exportar-excel-cotizacion', [ExportController::class, 'exportarDetalles'])
+        ->name('admin.exportar.excel.cotizacion');
+
+    Route::get('/exportar-pdf-cotizacion', [PdfController::class, 'generatePdf'])
+        ->name('admin.exportar.pdf.cotizacion');
 });
 
 

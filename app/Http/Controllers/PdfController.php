@@ -19,10 +19,10 @@ class PdfController extends Controller
 
 
         // Carlitos estas son los paramreos
-        $id= $request->get('id');
-        $encabezado= $request->get('encabezado');
-        $piePagina= $request->get('pie-pagina');
-        $firma= $request->get('firma');
+        $id = $request->get('id');
+        $encabezado = $request->get('encabezado');
+        $piePagina = $request->get('pie-pagina');
+        $firma = $request->get('firma');
 
 
         // dd($request->all());
@@ -33,8 +33,12 @@ class PdfController extends Controller
         $imageType = pathinfo($imagePath, PATHINFO_EXTENSION); // Obtener tipo de imagen
 
 
-        $imagenFirma = public_path('images/firma.png'); // Ruta de la imagen
-        $imagenFirmaData = base64_encode(File::get($imagenFirma)); // Convertir a Base64
+        // $imagenFirma = public_path('images/firma.png'); // Ruta de la imagen
+        // $imagenFirmaData = base64_encode(File::get($imagenFirma)); // Convertir a Base64
+        // $imagenFirmaType = pathinfo($imagenFirma, PATHINFO_EXTENSION);
+
+        $imagenFirma = storage_path('img/firma.png'); // Ruta en storage
+        $imagenFirmaData = base64_encode(file_get_contents($imagenFirma)); // Convertir a Base64
         $imagenFirmaType = pathinfo($imagenFirma, PATHINFO_EXTENSION);
 
         $data = [
@@ -91,17 +95,16 @@ class PdfController extends Controller
             'piePagina' => $piePagina,
             'firma' => $firma
         ])->setPaper('a4', 'portrait')
-          ->setOptions([
-              'isHtml5ParserEnabled' => true,
-              'isPhpEnabled' => true
-          ])
-          ->setOption('dpi', 96)
-          ->setOption('footer-font-size', '10')
-          ->setOption('footer-spacing', '5') // Ajustar espacio del footer
-          ->setOption('footer-left', "CORDIALMENTE - $textoFecha") // Texto en el footer
-          ->setOption('footer-right', "Página [page] de [topage]"); // Numeración
+            ->setOptions([
+                'isHtml5ParserEnabled' => true,
+                'isPhpEnabled' => true
+            ])
+            ->setOption('dpi', 96)
+            ->setOption('footer-font-size', '10')
+            ->setOption('footer-spacing', '5') // Ajustar espacio del footer
+            ->setOption('footer-left', "CORDIALMENTE - $textoFecha") // Texto en el footer
+            ->setOption('footer-right', "Página [page] de [topage]"); // Numeración
 
         return $pdf->stream('cotizacion.pdf');
-
     }
 }
