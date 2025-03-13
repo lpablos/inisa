@@ -12,6 +12,9 @@ use App\Http\Controllers\ExportController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\BuscadorGeneralController;
 use App\Http\Controllers\ClientesController;
+use App\Http\Controllers\UserController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -130,6 +133,14 @@ Route::prefix('admin')->group(function () {
 
             //CRUD  prioridad
             Route::get('list-prioridades', 'listaPrioridades')->name('catalogo.list.prioridades');
+            Route::get('cat-roles','getCatRoles')->name('catalogo.list.roles.sis');
+        });
+
+        Route::controller(UserController::class)->group(function () {
+            Route::get('usuarios-sistema','index')->name('catalogos.detalle.usuarios');
+            Route::post('guardar-usuario', 'store')->name('almacenar.usuario.nuevo');
+            Route::get('listado-usuarios-sistema','getAllUserSys')->name('listado.catalogos.detalle.usuarios');
+            Route::delete('eliminar-usuario/{id}','destroy')->name('eliminar.usuario.registro');
         });
     });
     // Agrega otros grupos según el nombre de la sección con su controlador y funciones

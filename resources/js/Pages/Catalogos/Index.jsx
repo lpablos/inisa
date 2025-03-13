@@ -5,6 +5,7 @@ import DialogoCat from './Partials/DialogoCat';
 import InfoCardCliente from '@/Components/InfoCardCliente';
 import axios from "axios";
 import { Toast } from 'primereact/toast';
+import { InputText } from 'primereact/inputtext';
 
 import { ProgressSpinner } from 'primereact/progressspinner';
         
@@ -132,13 +133,23 @@ const Index = (props) =>{
                         iconColor="purple"
                         clickOpt = {setCatalogo}/>
     
-                    <DashboardInfoCard 
+                    {/* <DashboardInfoCard 
                         title="Usuarios" 
                         valueTitle='usuarios'
                         value={totalUser+' Registros'}
                         icon="tags"
                         iconColor="purple"
-                        clickOpt = {setCatalogo}/>                                    
+                        clickOpt = {setCatalogo}/>    */}
+
+                    <InfoCardCliente
+                        title="Usuarios" 
+                        valueTitle='usuarios'
+                        value={totalUser+' Registros'}
+                        icon="tags" 
+                        iconColor="purple"
+                        clickOpt = {setCatalogo}
+                        link={route('catalogos.detalle.usuarios')}
+                    />                                 
                     
                     <DashboardInfoCard 
                         title="Datos de la empresa" 

@@ -24,12 +24,13 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             CatEmpresaSeeder::class,
+            RolesSeeder::class,
             CatProveedorSeeder::class,
             CatPrioridadSeeder::class,
             CatDepartamentoSeeder::class,
             CatClienteSeeder::class,
             CatUnidadMedidaSeeder::class,
-            UserSeeder::class,
+            // UserSeeder::class,
             // CatPrioridadSeeder::class,
             CatEstatusSeeder::class,
             CatMonedaSeeder::class,

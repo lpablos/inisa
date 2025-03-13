@@ -19,6 +19,7 @@ use App\Models\CatMoneda;
 use App\Models\CatPrioridad;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\CatRoles;
 
 class CatalogosController extends Controller
 {
@@ -811,6 +812,9 @@ class CatalogosController extends Controller
         return response()->json($resumen, 200);
     }
 
-  
+    public function getCatRoles(){
+        $data = CatRoles::all();
+        return response()->json($data);
+    }
 
 }
