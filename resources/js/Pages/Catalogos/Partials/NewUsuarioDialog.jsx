@@ -10,16 +10,19 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import { Toast } from 'primereact/toast';
 
 
-const NewUsuarioDialog = ({reloadRegistros}) => {
+const NewUsuarioDialog = ({reloadRegistros, mostrarModal, setMostrarModal, registro}) => {
     const toast = useRef(null);
     const [cargando, setCargando] = useState(false)
     const [visible, setVisible] = useState(false);
     const [catRoles, setCatRoles]= useState([])
-     const [habilitaBtn, setHabilitaBtn] = useState(false)
+    const [habilitaBtn, setHabilitaBtn] = useState(false)
 
+    const [identyRegistro, setIdentyRegistro] = useState(null);
     const [nombre, setNombre] = useState('')
     const [email,setEmail] = useState('');
     const [rolAsc, setRolAsc] = useState(null)
+    
+    
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
     const [error, setError] = useState("");
@@ -61,7 +64,11 @@ const NewUsuarioDialog = ({reloadRegistros}) => {
         e.preventDefault(); // Evita que la página se recargue
         // console.log("Datos enviados:", formData);
         if(error === ''){
-            almacenarRegistro()
+            if(identyRegistro === null){
+                almacenarRegistro()
+            }else{
+                actualizarRegistro()
+            }
         }
         
     };
@@ -105,6 +112,49 @@ const NewUsuarioDialog = ({reloadRegistros}) => {
         }
     }
 
+    const actualizarRegistro = async () =>{
+        
+        setCargando(true)
+        const datos = {
+            id:identyRegistro,
+            nombre: nombre,
+            email: email,
+            rolAsc: rolAsc,
+            password: password,
+            passwordConfirm: passwordConfirm,
+        }
+        try {
+            const response = await axios.post(route("actualizar.usuario.registrado"), datos);            
+            const { data, status} = response
+            if (status === 200) {
+                toast.current.show({
+                    severity: "success",
+                    summary: "Success",
+                    detail: `${data.success}`,
+                    life: 3000,
+                });
+                limpiarFormulario()
+                setVisible(false)
+                reloadRegistros()
+                setTimeout(() => {
+                    setCargando(false)
+                }, 1000);
+            }
+        } catch (error) {
+            console.error(error);
+            setCargando(false)
+            toast.current.show({
+                severity: "error",
+                summary: "Error",
+                detail: "No se puede almacenar el Usuario. Intenta de nuevo",
+                life: 3000,
+            });
+        }
+    }
+
+
+    
+
     const limpiarFormulario = () =>{
         setCatRoles([])
         setNombre('');
@@ -115,6 +165,36 @@ const NewUsuarioDialog = ({reloadRegistros}) => {
         setError("");
     }
 
+
+    useEffect(()=>{
+        if(mostrarModal){
+            setVisible(true)
+            setCargando(true)
+            const {email,id,name, roles} = registro
+            console.log("Este lo seleciono", roles[0].id);
+            
+            const rolAsc = {
+                code: roles[0].id,
+                name: roles[0].name
+            }
+            setTimeout(() => {
+                
+                
+                setIdentyRegistro(id)
+                setNombre(name);
+                setEmail(email);
+                setRolAsc(rolAsc);
+                setPassword('')
+                setPasswordConfirm('')
+                setError('')
+                setCargando(false)
+            }, 1000);
+        }else{
+            setVisible(false)
+            setCargando(false)
+        }
+
+    },[mostrarModal]);
     return (
         <>
         

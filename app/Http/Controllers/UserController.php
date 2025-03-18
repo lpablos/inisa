@@ -77,7 +77,8 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $detalleUsuario = User::with('roles')->find($id);
+        return response()->json($detalleUsuario, 200);
     }
 
     /**
@@ -91,9 +92,44 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        
+        $validatedData = $request->validate([
+            'id'=>'required',
+            'nombre' => 'required|string|max:255',
+            'email' => 'required|email',
+        ]);
+        try {
+            $role = Role::find($request->rolAsc['code']);
+            if (!$role) {
+                return response()->json([
+                    'error' => 'Rol no encontrado',
+                ], 400);
+            }
+            $user = User::find($request->id);
+            $user->name = $request->nombre;
+            $user->email = $request->email;
+            if($request->password!==''){
+                $user->password = Hash::make($request->password);
+            }
+            $user->save();
+            $user->roles()->detach();
+            $user->assignRole($role);
+            return response()->json([
+                'success' => 'Usuario actualizado correctamente',
+                'data' => $user
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => 'Error de Guardado',
+                'details' => $th->getMessage()
+            ], 500);
+            
+        }
+    
+        
+        
     }
 
     /**

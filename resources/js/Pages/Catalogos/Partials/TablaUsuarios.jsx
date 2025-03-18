@@ -15,9 +15,13 @@ const TablaUsuarios = () => {
     const [loading, setLoading] = useState(false)
     const [catUsuarios, setCatUsuarios] = useState([]);
 
+    const [mostrarModal, setMostrarModal] = useState(false);
+    const [registroEdicion, setRegistroEdicion] = useState(null); // Detalle del registro
+
     useEffect(()=>{
         obtenerCatUsuarios()
     },[])
+
     const obtenerCatUsuarios = async () =>{
         setLoading(true)
         try {
@@ -48,6 +52,7 @@ const TablaUsuarios = () => {
             });
         }
     }
+
     const opcionesAsc = (rowData) => {
         
         return (
@@ -61,7 +66,7 @@ const TablaUsuarios = () => {
     const editarRegistro = async (registro) =>{
         
         try {            
-            const response = await axios.get(route("catalogos.detalle.cliente.asc", { id: registro }));  
+            const response = await axios.get(route("catalogos.detalle.usuario.asc", { id: registro }));  
             const {status, data} = response
             if(status === 200){
                 setRegistroEdicion(data);
@@ -71,7 +76,7 @@ const TablaUsuarios = () => {
             toast.current.show({
                 severity: "error",
                 summary: "Error",
-                detail: "No se pudo obtener la lista de clientes.",
+                detail: "No se pudo obtener la lista de Usuarios.",
                 life: 3000,
             });
         }
@@ -135,9 +140,10 @@ const TablaUsuarios = () => {
 
 
 
+
     return (
         <div className="col-12">
-            <NewUsuarioDialog reloadRegistros={recargarListado}/>
+            <NewUsuarioDialog reloadRegistros={recargarListado} mostrarModal={mostrarModal} setMostrarModal={setMostrarModal} registro={registroEdicion}/>
             <div className="card">
                 {loading && (
                     <div className="flex justify-content-center">

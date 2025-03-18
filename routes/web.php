@@ -139,8 +139,10 @@ Route::prefix('admin')->group(function () {
         Route::controller(UserController::class)->group(function () {
             Route::get('usuarios-sistema','index')->name('catalogos.detalle.usuarios');
             Route::post('guardar-usuario', 'store')->name('almacenar.usuario.nuevo');
+            Route::post('actualizar-usuario', 'update')->name('actualizar.usuario.registrado');
             Route::get('listado-usuarios-sistema','getAllUserSys')->name('listado.catalogos.detalle.usuarios');
             Route::delete('eliminar-usuario/{id}','destroy')->name('eliminar.usuario.registro');
+            Route::get('detalle-usuario-asc/{id}', 'show')->name('catalogos.detalle.usuario.asc');
         });
     });
     // Agrega otros grupos según el nombre de la sección con su controlador y funciones
