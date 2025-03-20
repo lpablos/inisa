@@ -1,9 +1,21 @@
+<style>
+    .header-img {
+        display: block;
+        margin: auto;
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+    }
+</style>
+
 <table>
     <tr>
-        <td colspan="10" style="text-align: center; ">
-
-            <img src="{{ public_path('images/EncabezadoExcel.jpg') }}">
+        {{-- <td colspan="2" ></td> --}}
+        <td colspan="10" style="text-align: center;">
+            <img src="{{ public_path('images/EncabezadoExcel.jpg') }}" class="header-img">
         </td>
+
+        {{-- <td colspan="2" ></td> --}}
     </tr>
 </table>
 
@@ -127,11 +139,18 @@
         </tr>
 
         <tr>
-            <td colspan="10" style="text-align: center; ">
+
+
+            <td colspan="4" ></td>
+
+            <td colspan="2" style="text-align: center; ">
                 @if ($firma === 'true')
-                    <img src="{{ public_path('images/firma.png') }}">
+                    <img src="{{ $firmaPath }}" alt="Firma" style="width: 150px; height: auto; display: block; margin: auto;">
                 @endif
             </td>
+            <td colspan="4" ></td>
+
+
         </tr>
 
         <tr>

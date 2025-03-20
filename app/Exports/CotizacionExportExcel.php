@@ -23,7 +23,7 @@ class CotizacionExportExcel implements FromView
     /**
      * @return \Illuminate\Support\Collection
      */
-    public function __construct($id, $encabezado,$piePagina, $firma)
+    public function __construct($id, $encabezado, $piePagina, $firma)
     {
         $this->id = $id;
         $this->encabezado = $encabezado;
@@ -31,6 +31,15 @@ class CotizacionExportExcel implements FromView
         $this->firma = $firma;
 
 
+        // ✅ Ruta correcta de la firma en `storage/app/public/img/`
+        //   $this->firmaPath = storage_path('app/public/img/firma.png');
+
+        $this->firmaPath = public_path('storage/img/firma.png');
+
+
+        if (!file_exists($this->firmaPath)) {
+            $this->firmaPath = null; // Evita errores si la imagen no existe
+        }
     }
     public function view(): View
     {
@@ -62,7 +71,9 @@ class CotizacionExportExcel implements FromView
         $fechaFin = Carbon::parse($cotizaciones->fecha_cotiza_fin);
         $diasTotales = $fechaInicio->diffInDays($fechaFin);
 
-        // dd($cotizaciones->toArray(), $diasTotales,$this->encabezado, $this->piePagina, $this->firma);
+        // dd($cotizaciones->toArray(), $diasTotales,$this->encabezado, $this->piePagina,$this->firmaPath);
+
+
 
         return view('exports.cotizacion', [
             'detalles' => $cotizaciones,
@@ -71,7 +82,8 @@ class CotizacionExportExcel implements FromView
             'totalObraMaterial' => $totalObraMaterial,
             'encabezado' => $this->encabezado,
             'piePagina' => $this->piePagina,
-            'firma' => $this->firma
+            'firma' => $this->firma,
+            'firmaPath' => $this->firmaPath,
 
         ]);
     }
@@ -88,5 +100,24 @@ class CotizacionExportExcel implements FromView
                 'alignment' => ['horizontal' => Alignment::HORIZONTAL_CENTER], // ✅ Centrar encabezado
             ]
         ];
+    }
+
+
+    public function drawings()
+    {
+        if (!$this->firmaPath || !file_exists($this->firmaPath)) {
+            return []; // No agregar la imagen si no existe
+        }
+
+        $drawing = new Drawing();
+        $drawing->setName('Firma');
+        $drawing->setDescription('Firma del documento');
+        $drawing->setPath($this->firmaPath);
+        $drawing->setHeight(50);
+        $drawing->setCoordinates('E23'); // ✅ Coloca la firma en la columna "E", fila 20
+        $drawing->setOffsetX(60); // ✅ Ajusta la imagen más al centro horizontalmente
+        $drawing->setOffsetY(10); // ✅ Ajusta la imagen en la celda
+
+        return [$drawing];
     }
 }
