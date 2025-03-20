@@ -10,12 +10,12 @@
 
 <table>
     <tr>
-        {{-- <td colspan="2" ></td> --}}
-        <td colspan="10" style="text-align: center;">
+        <td  ></td>
+        <td colspan="8" style="text-align: center;">
             <img src="{{ public_path('images/EncabezadoExcel.jpg') }}" class="header-img">
         </td>
 
-        {{-- <td colspan="2" ></td> --}}
+        <td ></td>
     </tr>
 </table>
 
