@@ -150,7 +150,6 @@ const TablaUsuarios = () => {
                         <ProgressSpinner />
                     </div>
                 )}
-                {catUsuarios.length}
                 {loading === false && catUsuarios.length > 0 && (
                     <DataTable value={catUsuarios} tableStyle={{ minWidth: '50rem' }}>
                         <Column field="nombre" header="Nombre"></Column>

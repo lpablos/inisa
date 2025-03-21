@@ -150,13 +150,21 @@ const Index = (props) =>{
                         clickOpt = {setCatalogo}
                         link={route('catalogos.detalle.usuarios')}
                     />                                 
-                    
-                    <DashboardInfoCard 
+                     <InfoCardCliente
+                        title="Dato Empresa" 
+                        valueTitle='Empresa'
+                        value={'1 Registros'}
+                        icon="tags" 
+                        iconColor="purple"
+                        clickOpt = {setCatalogo}
+                        link={route('catalogos.empresa.detalle.base')}
+                    />  
+                    {/* <DashboardInfoCard 
                         title="Datos de la empresa" 
                         valueTitle='datosEmpresa'
                         icon="tags"
                         iconColor="purple"
-                        clickOpt = {setCatalogo}/>
+                        clickOpt = {setCatalogo}/> */}
                     </>
                 <DialogoCat tpOperacion={catalogo} setOperacion={setCatalogo}/>
                 

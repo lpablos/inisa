@@ -13,6 +13,7 @@ use App\Http\Controllers\PdfController;
 use App\Http\Controllers\BuscadorGeneralController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DetalleEmpresaController;
 
 
 
@@ -144,6 +145,13 @@ Route::prefix('admin')->group(function () {
             Route::delete('eliminar-usuario/{id}','destroy')->name('eliminar.usuario.registro');
             Route::get('detalle-usuario-asc/{id}', 'show')->name('catalogos.detalle.usuario.asc');
         });
+        Route::controller(DetalleEmpresaController::class)->group(function () {
+            Route::get('empresa-detalles','index')->name('catalogos.empresa.detalle.base');
+            Route::get('informacion-empresa','show')->name('catalogos.informacion.empresa.detalle');
+            Route::post('actualizar-datos-empresa', 'update')->name('actualizar.datos.empresa');
+            
+
+        });
     });
     // Agrega otros grupos según el nombre de la sección con su controlador y funciones
 
@@ -171,7 +179,6 @@ Route::prefix('admin')->group(function () {
                 Route::post('item/detalleItem/actualizar', 'actualizarDetalleIdenty')->name('cotizacion.captura.item.actualiza');
                 // Route::delete('item/detalleItem/actualizar', 'actualizarDetalleIdenty')->name('cotizacion.captura.item.actualiza');
                 Route::delete('tomo/detalle/{id}', 'deleteTomoDetalle')->name('tomo.detalle.elimina.identy');
-
                 Route::post('asociar-concepto-generales', 'asociarConceptoCotizacion')->name('asociar.concepto.generales');
             });
         });

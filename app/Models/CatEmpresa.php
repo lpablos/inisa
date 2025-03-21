@@ -13,6 +13,7 @@ class CatEmpresa extends Model
 
     // Especificar la clave primaria personalizada
     protected $primaryKey = 'id_empresa';
+    
 
     protected $fillable = [
         'id_empresa',
