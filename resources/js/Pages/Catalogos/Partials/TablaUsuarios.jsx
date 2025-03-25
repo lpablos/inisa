@@ -142,7 +142,10 @@ const TablaUsuarios = () => {
 
 
     return (
-        <div className="col-12">
+        <div className="row">
+            <div className="col-12 text-right">
+                <Button icon="pi pi-history" rounded severity="help" aria-label="Regresar Cotizaciones"  tooltip="Regresar Cotizaciones" tooltipOptions={{ position: 'left' }} onClick={() => window.location.href = route('catalogo.gral.index')}/>
+            </div>
             <NewUsuarioDialog reloadRegistros={recargarListado} mostrarModal={mostrarModal} setMostrarModal={setMostrarModal} registro={registroEdicion}/>
             <div className="card">
                 {loading && (
