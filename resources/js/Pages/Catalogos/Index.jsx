@@ -34,7 +34,7 @@ const Index = (props) =>{
         try {
             setTimeout( async() => {
                 const response = await axios.get(route("catalogo.resumen.catalogos.asc"));        
-                console.log("Este es el detalle", response);
+                // console.log("Este es el detalle", response);
                 
                 const {data,status }= response
                 if(status === 200){
@@ -83,21 +83,21 @@ const Index = (props) =>{
             {loading=== false &&(
             <div className="grid">
                     <>
-                    <DashboardInfoCard 
+                    {/* <DashboardInfoCard 
                         title="Provedores"
                         valueTitle='provedores'
                         value={totalCatProvedor+' Registros'}
                         icon="tags"
                         iconColor="purple"    
                         clickOpt = {setCatalogo}               
-                    />
-                    <DashboardInfoCard 
+                    /> */}
+                    {/* <DashboardInfoCard 
                         title="Departamentos"
                         valueTitle='departamentos'
                         value={totalCatDepartamento+' Registros'}
                         icon="tags"
                         iconColor="purple"
-                        clickOpt = {setCatalogo}/>
+                        clickOpt = {setCatalogo}/> */}
                     
                     <InfoCardCliente
                         title="Clientes" 

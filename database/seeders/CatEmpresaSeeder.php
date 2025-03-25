@@ -18,11 +18,11 @@ class CatEmpresaSeeder extends Seeder
         $empresa->nombre = 'Inisa';
         $empresa->descripcion = 'Inisa';
         $empresa->logotipo = 'Inisa';
-        $empresa->direccion = 'Inisa';
-        $empresa->colonia = 'Inisa';
-        $empresa->codigo_postal = 'Inisa';
-        $empresa->correo = '123';
-        $empresa->telefono1 = '123';
+        $empresa->direccion = 'C. Río Bravo 1006, 91158 Xalapa-Enríquez, Ver.';
+        $empresa->colonia = 'Carolino Anaya';
+        $empresa->codigo_postal = '91158';
+        $empresa->correo = 'inisa_2005@yahoo.com.mx';
+        $empresa->telefono1 = '91158';
         $empresa->telefono2 = '';
         $empresa->telefono_urgencias1 = '';
         $empresa->telefono_urgencias2 = '';

@@ -218,7 +218,7 @@ class CotizacionController extends Controller
 
         $cotizacion = Cotizacion::find($request->id);
         // $cotizacion->baja_logica = 0;
-        $cotizacion->save();
+        $cotizacion->delete();
         return response()->json(['success' => 'Cotizacion eliminada exitosamente'], 200);
     }
 
