@@ -150,7 +150,7 @@ class CatalogosController extends Controller
 
     public function registrarDepartamento(Request $request)
     {
-        // Validación de los datos del formulario
+            // Validación de los datos del formulario
         ;
         $validatedData = $request->validate([
             'nombre' => 'required|string|max:255',
@@ -186,7 +186,11 @@ class CatalogosController extends Controller
     public function listaClientes()
     {
 
-        $data = CatCliente::with('empresa')->get();
+        $empresaId = Auth::user()->empresa_id;
+
+        $data = CatCliente::with('empresa')
+            ->where('empresa_id', $empresaId)
+            ->get();
 
         return response()->json($data);
     }
@@ -236,11 +240,11 @@ class CatalogosController extends Controller
                 'errors' => $e->errors(),
             ], 422); // Código HTTP 422 para errores de validación
         } catch (\Exception $e) {
-             // Capturar cualquier otro error
-        return response()->json([
-            'error' => 'Ocurrió un error al actualizar el cliente',
-            'message' => $e->getMessage(),
-        ], 500);
+            // Capturar cualquier otro error
+            return response()->json([
+                'error' => 'Ocurrió un error al actualizar el cliente',
+                'message' => $e->getMessage(),
+            ], 500);
         }
     }
 
@@ -249,11 +253,11 @@ class CatalogosController extends Controller
 
 
         $validatedData = $request->validate([
-            'nombre' =>'required|string',
-            'abreviacion' =>'nullable|string',
-            'direccion' =>'nullable|string',
-            'telefono' =>'nullable|string',
-            'ext'=>'nullable|string',
+            'nombre' => 'required|string',
+            'abreviacion' => 'nullable|string',
+            'direccion' => 'nullable|string',
+            'telefono' => 'nullable|string',
+            'ext' => 'nullable|string',
         ]);
 
         $user = Auth::user();
@@ -316,8 +320,8 @@ class CatalogosController extends Controller
             $validatedData = $request->validate([
                 'id' => 'required',
                 'nombre' => 'required|string|max:255',
-                'abreviatura'=> 'nullable|string|max:100',
-                'descripcion'=> 'nullable|string|max:100',
+                'abreviatura' => 'nullable|string|max:100',
+                'descripcion' => 'nullable|string|max:100',
             ]);
             // dd($departamento);
             $data = CatUnidadMedida::where('id', $request->id)->first();
@@ -337,11 +341,11 @@ class CatalogosController extends Controller
                 'errors' => $e->errors(),
             ], 422); // Código HTTP 422 para errores de validación
         } catch (\Exception $e) {
-             // Capturar cualquier otro error
-        return response()->json([
-            'error' => 'Ocurrió un error al actualizar el cliente',
-            'message' => $e->getMessage(),
-        ], 500);
+            // Capturar cualquier otro error
+            return response()->json([
+                'error' => 'Ocurrió un error al actualizar el cliente',
+                'message' => $e->getMessage(),
+            ], 500);
         }
     }
 
@@ -350,8 +354,8 @@ class CatalogosController extends Controller
 
         $validatedData = $request->validate([
             'nombre' => 'required|string|max:255',
-            'abreviatura'=> 'nullable|string|max:100',
-            'descripcion'=> 'nullable|string|max:100',
+            'abreviatura' => 'nullable|string|max:100',
+            'descripcion' => 'nullable|string|max:100',
         ]);
 
         $data = new CatUnidadMedida;
@@ -407,7 +411,7 @@ class CatalogosController extends Controller
             $validatedData = $request->validate([
                 'id' => 'required',
                 'nombre' => 'required|string|max:255',
-                'abreviacion'=> 'required|string|max:100',
+                'abreviacion' => 'required|string|max:100',
 
             ]);
             // dd($departamento);
@@ -427,11 +431,11 @@ class CatalogosController extends Controller
                 'errors' => $e->errors(),
             ], 422); // Código HTTP 422 para errores de validación
         } catch (\Exception $e) {
-             // Capturar cualquier otro error
-        return response()->json([
-            'error' => 'Ocurrió un error al actualizar el cliente',
-            'message' => $e->getMessage(),
-        ], 500);
+            // Capturar cualquier otro error
+            return response()->json([
+                'error' => 'Ocurrió un error al actualizar el cliente',
+                'message' => $e->getMessage(),
+            ], 500);
         }
     }
 
@@ -440,7 +444,7 @@ class CatalogosController extends Controller
 
         $validatedData = $request->validate([
             'nombre' => 'required|string|max:255',
-            'abreviacion'=> 'required|string|max:100',
+            'abreviacion' => 'required|string|max:100',
         ]);
 
         $data = new CatMoneda;
@@ -494,9 +498,9 @@ class CatalogosController extends Controller
 
             $validatedData = $request->validate([
                 'id' => 'required',
-                'nombre'=> 'required|string|max:255',
-                'abreviacion'=> 'required|string|max:255',
-                'descripcion'=> 'nullable|string|max:255',
+                'nombre' => 'required|string|max:255',
+                'abreviacion' => 'required|string|max:255',
+                'descripcion' => 'nullable|string|max:255',
 
             ]);
             // dd($departamento);
@@ -517,11 +521,11 @@ class CatalogosController extends Controller
                 'errors' => $e->errors(),
             ], 422); // Código HTTP 422 para errores de validación
         } catch (\Exception $e) {
-                // Capturar cualquier otro error
-        return response()->json([
-            'error' => 'Ocurrió un error al actualizar el status',
-            'message' => $e->getMessage(),
-        ], 500);
+            // Capturar cualquier otro error
+            return response()->json([
+                'error' => 'Ocurrió un error al actualizar el status',
+                'message' => $e->getMessage(),
+            ], 500);
         }
     }
 
@@ -529,9 +533,9 @@ class CatalogosController extends Controller
     {
 
         $validatedData = $request->validate([
-            'nombre'=> 'required|string|max:255',
-            'abreviacion'=> 'required|string|max:255',
-            'descripcion'=> 'nullable|string|max:255',
+            'nombre' => 'required|string|max:255',
+            'abreviacion' => 'required|string|max:255',
+            'descripcion' => 'nullable|string|max:255',
         ]);
 
         $data = new CatEstatu;
@@ -564,7 +568,7 @@ class CatalogosController extends Controller
     }
 
 
-      // Unidades de Medida
+    // Unidades de Medida
     //   public function listaTiposServicios()
     //   {
     //       $data = CatTipoServicio::all();
@@ -692,14 +696,14 @@ class CatalogosController extends Controller
 
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'email'=> 'required|string|max:100',
-            'password'=> 'nullable|string|max:100',
+            'email' => 'required|string|max:100',
+            'password' => 'nullable|string|max:100',
         ]);
 
         $data = new User;
         $data->name = $validatedData['name'];
         $data->email = $validatedData['email'];
-        if($request->password!=='' && $request->password!==null){
+        if ($request->password !== '' && $request->password !== null) {
             $data->password = $validatedData['password'];
         }
         $data->save();
@@ -715,8 +719,8 @@ class CatalogosController extends Controller
             $validatedData = $request->validate([
                 'id' => 'required',
                 'name' => 'required|string|max:255',
-                'email'=> 'required|string|max:100',
-                'password'=> 'nullable|string|max:100',
+                'email' => 'required|string|max:100',
+                'password' => 'nullable|string|max:100',
             ]);
 
             // Validar si el departamento existe
@@ -726,7 +730,7 @@ class CatalogosController extends Controller
             // Crear el nuevo proveedor con los datos validados
             $data->name = $request->name;
             $data->email = $request->email;
-            if($request->password!=='' && $request->password!==null){
+            if ($request->password !== '' && $request->password !== null) {
                 $data->password = Hash::make($request->password);
             }
             $data->save();
@@ -737,11 +741,11 @@ class CatalogosController extends Controller
                 'errors' => $e->errors(),
             ], 422); // Código HTTP 422 para errores de validación
         } catch (\Exception $e) {
-             // Capturar cualquier otro error
-        return response()->json([
-            'error' => 'Ocurrió un error al actualizar el cliente',
-            'message' => $e->getMessage(),
-        ], 500);
+            // Capturar cualquier otro error
+            return response()->json([
+                'error' => 'Ocurrió un error al actualizar el cliente',
+                'message' => $e->getMessage(),
+            ], 500);
         }
     }
 
@@ -784,9 +788,14 @@ class CatalogosController extends Controller
         return response()->json($data);
     }
 
-    public function detalleCatalogos(){
+    public function detalleCatalogos()
+    {
+
+
+        $empresaId = Auth::user()->empresa_id;
+
         $Cotizacion = Cotizacion::count();
-        $CatCliente = CatCliente::count();
+        $CatCliente = CatCliente::where('empresa_id', $empresaId)->count();
         $CatDepartamento = CatDepartamento::count();
         $CatEmpresa = CatEmpresa::count();
         $CatEstatu = CatEstatu::count();
@@ -797,24 +806,26 @@ class CatalogosController extends Controller
         $CatMoneda = CatMoneda::count();
         $CatPrioridad = CatPrioridad::count();
         $resumen = array(
-            'Cotizacion' =>$Cotizacion,
-            'CatCliente' =>$CatCliente,
-            'CatDepartamento' =>$CatDepartamento,
-            'CatEmpresa' =>$CatEmpresa,
-            'CatEstatu' =>$CatEstatu,
-            'CatProvedor' =>$CatProvedor,
-            'CatUnidadMedida' =>$CatUnidadMedida,
-            'CatTipoServicio' =>$CatTipoServicio,
-            'User' =>$User,
-            'CatMoneda' =>$CatMoneda,
-            'CatPrioridad' =>$CatPrioridad,
+            'Cotizacion' => $Cotizacion,
+            'CatCliente' => $CatCliente,
+            'CatDepartamento' => $CatDepartamento,
+            'CatEmpresa' => $CatEmpresa,
+            'CatEstatu' => $CatEstatu,
+            'CatProvedor' => $CatProvedor,
+            'CatUnidadMedida' => $CatUnidadMedida,
+            'CatTipoServicio' => $CatTipoServicio,
+            'User' => $User,
+            'CatMoneda' => $CatMoneda,
+            'CatPrioridad' => $CatPrioridad,
         );
+
+
         return response()->json($resumen, 200);
     }
 
-    public function getCatRoles(){
+    public function getCatRoles()
+    {
         $data = CatRoles::all();
         return response()->json($data);
     }
-
 }

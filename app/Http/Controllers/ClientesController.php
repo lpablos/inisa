@@ -14,7 +14,8 @@ class ClientesController extends Controller
      */
     public function index()
     {
-        //
+
+
         return Inertia::render('Catalogos/Clientes');
     }
 
@@ -32,18 +33,18 @@ class ClientesController extends Controller
     public function store(Request $request)
     {
         //
-        
-        
+
+
         $validatedData = $request->validate([
             'nombre' => 'required|string|max:255',
             'abreviacion' => 'required|string',
         ]);
-        
-        $usuario = Auth::user(); 
+
+        $usuario = Auth::user();
 
         $newCliente = new CatCliente;
-        $newCliente->nombre = $request->nombre; 
-        $newCliente->abreviacion = $request->abreviacion; 
+        $newCliente->nombre = $request->nombre;
+        $newCliente->abreviacion = $request->abreviacion;
         $newCliente->direccion = $request->direccion;
         $newCliente->telefono = $request->telefono;
         $newCliente->email = $request->email;
@@ -72,7 +73,7 @@ class ClientesController extends Controller
      */
     public function show($id)
     {
-        
+
         $detalleCliente = CatCliente::find($id);
         return response()->json($detalleCliente, 200);
     }
@@ -90,24 +91,24 @@ class ClientesController extends Controller
      */
     public function update(Request $request)
     {
-        
+
         $validatedData = $request->validate([
             'identy' => 'required',
         ]);
-        $cliente = CatCliente::find($request->identy);        
-        $cliente->nombre = $request->nombre; 
-        $cliente->abreviacion = $request->abreviacion; 
-        $cliente->direccion = $request->direccion; 
+        $cliente = CatCliente::find($request->identy);
+        $cliente->nombre = $request->nombre;
+        $cliente->abreviacion = $request->abreviacion;
+        $cliente->direccion = $request->direccion;
         $cliente->telefono = $request->telefono;
-        $cliente->email = $request->email; 
-        
-        $cliente->numeroProvedor = $request->numeroProvedor; 
-        $cliente->destinatario = $request->destinatario; 
-        $cliente->mensajeAfectivo = $request->mensajeAfectivo; 
+        $cliente->email = $request->email;
 
-        $cliente->mensajeVigencia = $request->mensajeVigencia; 
-        $cliente->comentarioObservacion = $request->comentarioObservacion; 
-        
+        $cliente->numeroProvedor = $request->numeroProvedor;
+        $cliente->destinatario = $request->destinatario;
+        $cliente->mensajeAfectivo = $request->mensajeAfectivo;
+
+        $cliente->mensajeVigencia = $request->mensajeVigencia;
+        $cliente->comentarioObservacion = $request->comentarioObservacion;
+
         if($cliente->save()){
             return response()->json(['success' => 'Cliente Actualizado Correctamente'], 200);
         }else{
@@ -128,10 +129,10 @@ class ClientesController extends Controller
     }
 
     public function listadoClientesEmpresa(){
-        $usuario = Auth::user(); 
+        $usuario = Auth::user();
         $empresa = $usuario->empresa_id;
-        
-        
+
+
         $listadoClientes = CatCliente::where(function($query)use($empresa){
                                 if(!isset($usuario)){
                                     $query->where('empresa_id',$empresa);
