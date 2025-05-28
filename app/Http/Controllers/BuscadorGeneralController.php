@@ -9,13 +9,26 @@ class BuscadorGeneralController extends Controller
 {
     //
 
-    public function busquedaConcepto(Request $request){
+    public function busquedaConcepto(Request $request)
+    {
 
         $validatedData = $request->validate([
             'concepto' => ['required', 'string'], // Requerido, string y exactamente 15 caracteres
         ]);
 
-        $detalleAsc = DetalleCotizacion::with('cotizacion.moneda')->where('descripcion','LIKE','%'.$request->concepto.'%')->get();
+        $detalleAsc = DetalleCotizacion::with('cotizacion.moneda')->where('descripcion', 'LIKE', '%' . $request->concepto . '%')->get();
+
+        // 📝 Log de búsqueda
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Cotizaciones',
+                'busqueda_concepto' => $request->concepto,
+                'resultados_encontrados' => $detalleAsc->count()
+            ])
+            ->log('El usuario realizó una búsqueda de conceptos');
+
+        // 📝 Log de resultados
         $detalleArray = $detalleAsc->map(function ($detalleAsc) {
             return [
                 "id" => $detalleAsc->id,
@@ -37,12 +50,11 @@ class BuscadorGeneralController extends Controller
                 "moneda" => $detalleAsc->cotizacion->moneda->abreviacion
             ];
         });
-        
+
         return response()->json([
-            'mensaje' => 'Todos los datos encontrados', 
-            'registros'=>$detalleAsc->count(), 
+            'mensaje' => 'Todos los datos encontrados',
+            'registros' => $detalleAsc->count(),
             'data' => $detalleArray
         ], 200);
-        
     }
 }

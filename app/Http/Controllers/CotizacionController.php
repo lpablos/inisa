@@ -9,12 +9,21 @@ use App\Models\Cotizacion;
 use App\Models\DetalleCotizacion;
 use App\Models\Codigo;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Activity;
 
 class CotizacionController extends Controller
 {
     //
     public function index()
     {
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Cotizaciones',
+                'accion' => 'vista_listado'
+            ])
+            ->log('El usuario accedió al listado de cotizaciones');
+
         return Inertia::render('Cotizaciones/Index');
     }
 
@@ -29,6 +38,16 @@ class CotizacionController extends Controller
                             }
                         })
                         ->get();
+
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Cotizaciones',
+                'lista_cotizaciones' => $cotizaciones->count(),
+                'filtro_status' => $status
+            ])
+            ->log('El usuario consultó la lista de cotizaciones');
+
         return response()->json(['cotizaciones' => $cotizaciones], 200);
     }
 
@@ -66,6 +85,24 @@ class CotizacionController extends Controller
                             }
                         })
                         ->get();
+
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Cotizaciones',
+                'busqueda_cotizaciones' => $cotizaciones->count(),
+                'filtros' => [
+                    'cotizacion' => $cotizacion,
+                    'titulo' => $titullo,
+                    'cliente' => $cliente,
+                    'estatus' => $estatus,
+                    'fecha_inicial' => $fechaInicial,
+                    'fecha_final' => $fechaFinal,
+                    'prioridad' => $prioridad
+                ]
+            ])
+            ->log('El usuario realizó una búsqueda de cotizaciones');
+
         return response()->json(['cotizaciones' => $cotizaciones], 200);
     }
 
@@ -91,6 +128,15 @@ class CotizacionController extends Controller
             $nuevoDetalle->cotizaciones_id = $nuevaCotizacion->id; // Asignar al nuevo ID de cotización
             $nuevoDetalle->save();
         }
+
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Cotizaciones',
+                'duplicacion_cotizacion' => $cotizacionOriginal->folio,
+                'nueva_cotizacion' => $nuevaCotizacion->id
+            ])
+            ->log('El usuario duplicó una cotización');
 
         return response()->json([
             'message' => 'Cotización duplicada con éxito',
@@ -148,6 +194,15 @@ class CotizacionController extends Controller
                 // 'baja_logica' => 1
             ]);
 
+            activity()
+                ->causedBy(auth()->user())
+                ->withProperties([
+                    'modulo' => 'Cotizaciones',
+                    'registro_cotizacion' => $cotizacion->id,
+                    'titulo' => $cotizacion->titulo
+                ])
+                ->log('El usuario registró una nueva cotización');
+
             return response()->json([
                 'success' => 'Cotizacion creada exitosamente',
                 'data' => $cotizacion
@@ -204,7 +259,16 @@ class CotizacionController extends Controller
 
             $cotizacion->save();
 
-            return response()->json(['success' => 'Cotizacion creado exitosamente', 'data' => $cotizacion], 200);
+            activity()
+                ->causedBy(auth()->user())
+                ->withProperties([
+                    'modulo' => 'Cotizaciones',
+                    'actualizacion_cotizacion' => $cotizacion->id,
+                    'titulo' => $cotizacion->titulo
+                ])
+                ->log('El usuario actualizó una cotización');
+
+            return response()->json(['success' => 'Cotizacion actualizada exitosamente', 'data' => $cotizacion], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'error' => 'Error de validación',
@@ -217,15 +281,32 @@ class CotizacionController extends Controller
     {
 
         $cotizacion = Cotizacion::find($request->id);
-        // $cotizacion->baja_logica = 0;
+
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Cotizaciones',
+                'eliminacion_cotizacion' => $cotizacion->id,
+                'titulo' => $cotizacion->titulo
+            ])
+            ->log('El usuario eliminó una cotización');
+
         $cotizacion->delete();
         return response()->json(['success' => 'Cotizacion eliminada exitosamente'], 200);
     }
 
-
     public function datelleCaptura($identy)
     {
         $detalle = Cotizacion::with('cliente', 'moneda')->find($identy);
+
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Cotizaciones',
+                'detalle_captura' => $identy
+            ])
+            ->log('El usuario accedió al detalle de captura de una cotización');
+
         return Inertia::render('Cotizaciones/detalleCaptura', ['cotizacion' => $identy, 'detalle' => $detalle]);
     }
 
@@ -237,6 +318,15 @@ class CotizacionController extends Controller
             ->select('id', 'PDA', 'descripcion')
             ->get();
 
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Cotizaciones',
+                'lista_tomos' => $listTomos->count(),
+                'cotizacion_id' => $identy
+            ])
+            ->log('El usuario consultó la lista de tomos de una cotización');
+
         return response()->json($listTomos, 200);
     }
 
@@ -246,6 +336,16 @@ class CotizacionController extends Controller
             ->with('unidadMedida')
             ->orderBy('PDA')
             ->get();
+
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Cotizaciones',
+                'lista_detalles' => $listDetalle->count(),
+                'cotizacion_id' => $identy
+            ])
+            ->log('El usuario consultó el detalle de una cotización');
+
         return response()->json($listDetalle, 200);
     }
 
@@ -662,6 +762,14 @@ class CotizacionController extends Controller
             // Eliminar el tomo en sí
             $detalle->delete();
 
+            activity()
+                ->causedBy(auth()->user())
+                ->withProperties([
+                    'modulo' => 'Cotizaciones',
+                    'eliminacion_tomo' => $detalle->id
+                ])
+                ->log('El usuario eliminó un tomo');            
+
             return response()->json([
                 'message' => 'Tomo y todos sus detalles eliminados con éxito',
                 'tomo_id' => $detalle->id,
@@ -733,6 +841,14 @@ class CotizacionController extends Controller
             $indice++;
         }
 
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Cotizaciones',
+                'reasignacion_pda' => $detalles->count()
+            ])
+            ->log('El usuario reasignó PDAs');
+
         return response()->json([
             'message' => 'Reasignación de PDA completada',
             'detalles_actualizados' => $detalles
@@ -767,6 +883,15 @@ class CotizacionController extends Controller
                         'cotizaciones_id' => (int) $request->identyCotizacion
                     ]);
 
+                    activity()
+                        ->causedBy(auth()->user())
+                        ->withProperties([
+                            'modulo' => 'Cotizaciones',
+                            'registro_detalle_cotizacion' => $detalleCotizacion->id,
+                            'descripcion' => $detalleCotizacion->descripcion
+                        ])
+                        ->log('El usuario registró un detalle de cotización');
+
                     // dd($detalleCotizacion->id);
 
                     $tomo = DetalleCotizacion::where('id', $detalleCotizacion->id)
@@ -791,6 +916,14 @@ class CotizacionController extends Controller
                         'cat_unidad_medida_id' => $clonarConcepto->cat_unidad_medida_id,
                     ]);
 
+                    activity()  
+                        ->causedBy(auth()->user())
+                        ->withProperties([
+                            'modulo' => 'Cotizaciones',
+                            'registro_detalle_cotizacion' => $detalleCotizacion->id,
+                            'descripcion' => $detalleCotizacion->descripcion
+                        ])
+                        ->log('El usuario registró un detalle de cotización');
                 }
                 break;
             case 2:
@@ -815,6 +948,15 @@ class CotizacionController extends Controller
                     'es_tomo' => 0,
                     'cat_unidad_medida_id' => $request->seleccionUnidadMedida
                 ]);
+
+                activity()
+                    ->causedBy(auth()->user())
+                    ->withProperties([
+                        'modulo' => 'Cotizaciones',
+                        'registro_detalle_cotizacion' => $detalleCotizacion->id,
+                        'descripcion' => $detalleCotizacion->descripcion
+                    ])
+                    ->log('El usuario registró un detalle de cotización');
                 break;
             default:
                 # 0 En caso de s
@@ -836,6 +978,15 @@ class CotizacionController extends Controller
                     'es_tomo' => 0,
                     'cat_unidad_medida_id' => $clonarConcepto->cat_unidad_medida_id
                 ]);
+
+                activity()
+                    ->causedBy(auth()->user())
+                    ->withProperties([
+                        'modulo' => 'Cotizaciones',
+                        'registro_detalle_cotizacion' => $detalleCotizacion->id,
+                        'descripcion' => $detalleCotizacion->descripcion
+                    ])
+                    ->log('El usuario registró un detalle de cotización');
                 break;
         }
         return response()->json([
@@ -858,6 +1009,15 @@ class CotizacionController extends Controller
         $codigo->cotizacion_id = $request->identyCotizacion;
         $codigo->save();
 
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Cotizaciones',
+                'registro_codigo' => $codigo->id,
+                'codigo' => $codigo->codigo
+            ])
+            ->log('El usuario registró un código de cotización');
+
         return response()->json([
             'success' => 'Codigo Creado Correctamente',
             'data' => $codigo
@@ -878,6 +1038,15 @@ class CotizacionController extends Controller
         try {
             $codigosAsc = Codigo::find($identy);
             $codigosAsc->delete();
+            activity()
+                ->causedBy(auth()->user())
+                ->withProperties([
+                    'modulo' => 'Cotizaciones',
+                    'eliminacion_codigo' => $codigosAsc->id,
+                    'codigo' => $codigosAsc->codigo
+                ])
+                ->log('El usuario eliminó un código de cotización');
+
             return response()->json(['success' => 'Código eliminado exitosamente'], 200);
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error','message' => 'No se pudo eliminar... Intenta mas tarde'], 404);
@@ -892,6 +1061,16 @@ class CotizacionController extends Controller
             $codigosAsc->descripcion =$request->descripcion;
             $codigosAsc->fecha =date('Y-m-d', strtotime($request->fecha));
             $codigosAsc->save();
+
+            activity()
+                ->causedBy(auth()->user())
+                ->withProperties([
+                    'modulo' => 'Cotizaciones',
+                    'actualizacion_codigo' => $codigosAsc->id,
+                    'codigo' => $codigosAsc->codigo
+                ])
+                ->log('El usuario actualizó un código de cotización');
+
             return response()->json(['success' => 'Código editado exitosamente'], 200);
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error','message' => 'No se pudo eliminar... Intenta mas tarde'], 404);

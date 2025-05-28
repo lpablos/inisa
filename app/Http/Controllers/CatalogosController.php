@@ -41,6 +41,17 @@ class CatalogosController extends Controller
 
         try {
             $data = CatProvedor::find($id);
+
+           
+            activity()
+                ->causedBy(auth()->user())
+                ->withProperties([
+                    'modulo' => 'Catalogos',
+                    'eliminacion_provedor' => $data->nombre
+                ])
+                ->log('El usuario eliminó un provedor');
+
+            
             // dd($data);
             if (!$data) {
                 return response()->json(['error' => 'Proveedor no encontrado'], 404);
@@ -59,6 +70,18 @@ class CatalogosController extends Controller
     public function detalleProvedor($id)
     {
         $data = CatProvedor::find($id);
+
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Catalogos',
+                'detalle_proveedor' => $data ? $data->nombre : null,
+                'proveedor_id' => $id
+            ])
+            ->log('El usuario consultó el detalle de un proveedor');
+
+
+
         if (!$data) {
             return response()->json(['error' => 'Proveedor no encontrado'], 404);
         }
@@ -78,6 +101,15 @@ class CatalogosController extends Controller
         ]);
 
         $proveedor = CatProvedor::create($validatedData);
+
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Catalogos',
+                'registro_provedor' => $proveedor->nombre
+            ])
+            ->log('El usuario registró un provedor');
+
         return response()->json(['success' => 'Proveedor creado exitosamente', 'data' => $proveedor], 201);
     }
 
@@ -101,6 +133,14 @@ class CatalogosController extends Controller
         $proveedor->telefono = $request->telefono;
         $proveedor->colonia = $request->colonia;
         $proveedor->save();
+
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Catalogos',
+                'actualizacion_provedor' => $proveedor->nombre
+            ])
+            ->log('El usuario actualizó un provedor');
         return response()->json(['success' => 'Actualizado correctamente', $proveedor], 201);
     }
 
@@ -108,6 +148,13 @@ class CatalogosController extends Controller
     public function listaDepartamentos()
     {
         $data = CatDepartamento::all();
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Catalogos',
+                'lista_departamentos' => $data->count()
+            ])
+            ->log('El usuario consultó la lista de departamentos');
         return response()->json($data);
     }
 
@@ -119,6 +166,14 @@ class CatalogosController extends Controller
         if (!$data) {
             return response()->json(['error' => 'Departamento no encontrado'], 404);
         }
+
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Catalogos',
+                'detalle_departamento' => $data->nombre
+            ])
+            ->log('El usuario consultó el detalle de un departamento');
         return response()->json($data, 200);
     }
 
@@ -136,6 +191,15 @@ class CatalogosController extends Controller
 
         // dd($departamento);
         $departamento = CatDepartamento::where('id', $request->id)->first();
+
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Catalogos',
+                'actualizacion_departamento' => $departamento->nombre
+            ])
+            ->log('El usuario actualizó un departamento');
+            
         // Validar si el departamento existe
         if (!$departamento) {
             return response()->json(['error' => 'Departamento no encontrado'], 404);
@@ -158,6 +222,15 @@ class CatalogosController extends Controller
         ]);
 
         $proveedor = CatDepartamento::create($validatedData);
+
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Catalogos',
+                'registro_departamento' => $proveedor->nombre
+            ])
+            ->log('El usuario registró un departamento');
+
         return response()->json(['success' => 'Proveedor creado exitosamente', 'data' => $proveedor], 201);
     }
 
@@ -172,6 +245,15 @@ class CatalogosController extends Controller
             }
             // Eliminar el proveedor
             $data->delete();
+
+            activity()
+                ->causedBy(auth()->user())
+                ->withProperties([
+                    'modulo' => 'Catalogos',
+                    'eliminacion_departamento' => $data->nombre
+                ])
+                ->log('El usuario eliminó un departamento');
+
             return response()->json(['success' => 'Departamento eliminado exitosamente'], 200);
         } catch (\Throwable $th) {
             return response()->json([
@@ -192,6 +274,14 @@ class CatalogosController extends Controller
             ->where('empresa_id', $empresaId)
             ->get();
 
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Catalogos',
+                'lista_clientes' => $data->count()
+            ])
+            ->log('El usuario consultó la lista de clientes');
+
         return response()->json($data);
     }
 
@@ -199,6 +289,15 @@ class CatalogosController extends Controller
     {
         //Recuerda el id esta mal en el model se maneja como id__departamento
         $data = CatCliente::where('id', $id)->first();
+
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Catalogos',
+                'detalle_cliente' => $data->nombre
+            ])
+            ->log('El usuario consultó el detalle de un cliente');
+
         //  $data = $id;
         if (!$data) {
             return response()->json(['error' => 'Cliente no encontrado'], 404);
@@ -233,6 +332,15 @@ class CatalogosController extends Controller
             $cliente->telefono = $request->telefono;
             $cliente->ext = $request->ext;
             $cliente->save();
+
+            activity()
+                ->causedBy(auth()->user())
+                ->withProperties([
+                    'modulo' => 'Catalogos',
+                    'actualizacion_cliente' => $cliente->nombre
+                ])
+                ->log('El usuario actualizó un cliente');
+
             return response()->json(['success' => 'Actualizado correctamente', $cliente], 201);
         } catch (\Illuminate\Validation\ValidationException $e) {
             // Capturar y retornar errores de validación
@@ -269,6 +377,15 @@ class CatalogosController extends Controller
         $cliente->ext = $validatedData['ext'];
         $cliente->empresa_id = $user->empresa_id;
         $cliente->save();
+
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Catalogos',
+                'registro_cliente' => $cliente->nombre
+            ])
+            ->log('El usuario registró un cliente');
+
         // $proveedor = CatCliente::create($validatedData);
         return response()->json(['success' => 'Cliente creado exitosamente', 'data' => $cliente], 201);
     }
@@ -286,6 +403,14 @@ class CatalogosController extends Controller
             // Eliminar el proveedor
             CatCliente::where('id', $id)->delete();
 
+            activity()
+                ->causedBy(auth()->user())
+                ->withProperties([
+                    'modulo' => 'Catalogos',
+                    'eliminacion_cliente' => $data->nombre
+                ])
+                ->log('El usuario eliminó un cliente');
+
             // dd($data);
             return response()->json(['success' => 'Cliente eliminado exitosamente'], 200);
         } catch (\Throwable $th) {
@@ -300,12 +425,28 @@ class CatalogosController extends Controller
     public function listaUnidadMedidas()
     {
         $data = CatUnidadMedida::all();
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Catalogos',
+                'lista_unidades_medida' => $data->count()
+            ])
+            ->log('El usuario consultó la lista de unidades de medida');
+
         return response()->json($data);
     }
 
     public function detalleUnidadMedida($id)
     {
         $data = CatUnidadMedida::where('id', $id)->first();
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Catalogos',
+                'detalle_unidad_medida' => $data->nombre
+            ])
+            ->log('El usuario consultó el detalle de una unidad de medida');
+
         if (!$data) {
             return response()->json(['error' => 'Unidad de medida no encontrado'], 404);
         }
@@ -325,6 +466,15 @@ class CatalogosController extends Controller
             ]);
             // dd($departamento);
             $data = CatUnidadMedida::where('id', $request->id)->first();
+
+            activity()
+                ->causedBy(auth()->user())
+                ->withProperties([
+                    'modulo' => 'Catalogos',
+                    'actualizacion_unidad_medida' => $data->nombre
+                ])
+                ->log('El usuario actualizó una unidad de medida');
+
             // Validar si el departamento existe
             if (!$data) {
                 return response()->json(['error' => 'Unidad de Medida no encontrado'], 404);
@@ -363,6 +513,15 @@ class CatalogosController extends Controller
         $data->abreviatura = $validatedData['abreviatura'];
         $data->descripcion = $validatedData['descripcion'];
         $data->save();
+
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Catalogos',
+                'registro_unidad_medida' => $data->nombre
+            ])
+            ->log('El usuario registró una unidad de medida');
+
         // $proveedor = CatCliente::create($validatedData);
         return response()->json(['success' => 'Unidad de Medida creado exitosamente', 'data' => $data], 201);
     }
@@ -378,6 +537,15 @@ class CatalogosController extends Controller
             }
             // Eliminar
             $data->delete();
+
+            activity()
+                ->causedBy(auth()->user())
+                ->withProperties([
+                    'modulo' => 'Catalogos',
+                    'eliminacion_unidad_medida' => $data->nombre
+                ])
+                ->log('El usuario eliminó una unidad de medida');
+
             return response()->json(['success' => 'Unidad de Medida eliminado exitosamente'], 200);
         } catch (\Throwable $th) {
             return response()->json([
@@ -391,6 +559,15 @@ class CatalogosController extends Controller
     public function listaTiposMonedas()
     {
         $data = CatMoneda::all();
+        
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Catalogos',
+                'lista_monedas' => $data->count()
+            ])
+            ->log('El usuario consultó la lista de monedas');
+            
         return response()->json($data);
     }
 
@@ -400,23 +577,28 @@ class CatalogosController extends Controller
         if (!$data) {
             return response()->json(['error' => 'Unidad de medida no encontrado'], 404);
         }
+
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Catalogos',
+                'detalle_moneda' => $data->nombre
+            ])
+            ->log('El usuario consultó el detalle de una moneda');
+
         return response()->json($data, 200);
     }
 
     public function actualizaTipoMoneda(Request $request)
     {
-
         try {
-
             $validatedData = $request->validate([
                 'id' => 'required',
                 'nombre' => 'required|string|max:255',
                 'abreviacion' => 'required|string|max:100',
-
             ]);
             // dd($departamento);
             $data = CatMoneda::where('id', $request->id)->first();
-            // Validar si el departamento existe
             if (!$data) {
                 return response()->json(['error' => 'Moneda no encontrado'], 404);
             }
@@ -424,6 +606,15 @@ class CatalogosController extends Controller
             $data->nombre = $request->nombre;
             $data->abreviacion = $request->abreviacion;
             $data->save();
+
+            activity()
+                ->causedBy(auth()->user())
+                ->withProperties([
+                    'modulo' => 'Catalogos',
+                    'actualizacion_moneda' => $data->nombre
+                ])
+                ->log('El usuario actualizó una moneda');
+
             return response()->json(['success' => 'Actualizado correctamente', $data], 201);
         } catch (\Illuminate\Validation\ValidationException $e) {
             // Capturar y retornar errores de validación
@@ -433,7 +624,7 @@ class CatalogosController extends Controller
         } catch (\Exception $e) {
             // Capturar cualquier otro error
             return response()->json([
-                'error' => 'Ocurrió un error al actualizar el cliente',
+                'error' => 'Ocurrió un error al actualizar la moneda',
                 'message' => $e->getMessage(),
             ], 500);
         }
@@ -451,13 +642,20 @@ class CatalogosController extends Controller
         $data->nombre = $validatedData['nombre'];
         $data->abreviacion = $validatedData['abreviacion'];
         $data->save();
-        // $proveedor = CatCliente::create($validatedData);
+
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Catalogos',
+                'registro_moneda' => $data->nombre
+            ])
+            ->log('El usuario registró una moneda');
+
         return response()->json(['success' => 'Moneda creado exitosamente', 'data' => $data], 201);
     }
 
     public function deleteTipoMoneda($id)
     {
-
         try {
             $data = CatMoneda::where('id', $id)->first();
 
@@ -688,12 +886,20 @@ class CatalogosController extends Controller
     public function listaUsuarios()
     {
         $data = User::all();
+        
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Catalogos',
+                'lista_usuarios' => $data->count()
+            ])
+            ->log('El usuario consultó la lista de usuarios');
+            
         return response()->json($data);
     }
 
     public function registrarUsuario(Request $request)
     {
-
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|max:100',
@@ -707,13 +913,20 @@ class CatalogosController extends Controller
             $data->password = $validatedData['password'];
         }
         $data->save();
-        // $proveedor = CatCliente::create($validatedData);
+
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Catalogos',
+                'registro_usuario' => $data->name
+            ])
+            ->log('El usuario registró un nuevo usuario');
+
         return response()->json(['success' => 'Usuario creado exitosamente', 'data' => $data], 201);
     }
 
     public function actualizaUsuario(Request $request)
     {
-
         try {
 
             $validatedData = $request->validate([
@@ -723,7 +936,8 @@ class CatalogosController extends Controller
                 'password' => 'nullable|string|max:100',
             ]);
 
-            // Validar si el departamento existe
+            // Validar si el usuario existe
+            $data = User::where('id', $request->id)->first();
             if (!$data) {
                 return response()->json(['error' => 'Usuario no encontrado'], 404);
             }
@@ -734,6 +948,15 @@ class CatalogosController extends Controller
                 $data->password = Hash::make($request->password);
             }
             $data->save();
+
+            activity()
+                ->causedBy(auth()->user())
+                ->withProperties([
+                    'modulo' => 'Catalogos',
+                    'actualizacion_usuario' => $data->name
+                ])
+                ->log('El usuario actualizó un usuario');
+
             return response()->json(['success' => 'Actualizado correctamente', $data], 201);
         } catch (\Illuminate\Validation\ValidationException $e) {
             // Capturar y retornar errores de validación
@@ -758,7 +981,15 @@ class CatalogosController extends Controller
             if (!$data) {
                 return response()->json(['error' => 'Usuario no encontrado'], 404);
             }
-            // Eliminar
+
+            activity()
+                ->causedBy(auth()->user())
+                ->withProperties([
+                    'modulo' => 'Catalogos',
+                    'eliminacion_usuario' => $data->name
+                ])
+                ->log('El usuario eliminó un usuario');
+
             $data->delete();
             return response()->json(['success' => 'Usuario eliminado exitosamente'], 200);
         } catch (\Throwable $th) {
@@ -776,6 +1007,15 @@ class CatalogosController extends Controller
         if (!$data) {
             return response()->json(['error' => 'Usuario no encontrado'], 404);
         }
+
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Catalogos',
+                'detalle_usuario' => $data->name
+            ])
+            ->log('El usuario consultó el detalle de un usuario');
+
         return response()->json($data, 200);
     }
 

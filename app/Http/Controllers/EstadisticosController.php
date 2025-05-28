@@ -27,6 +27,15 @@ class EstadisticosController extends Controller
             );
             array_push($resumen, $objecto);
         }
+
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Estadísticas',
+                'resumen_cotizaciones' => count($resumen)
+            ])
+            ->log('El usuario consultó el resumen de cotizaciones');
+
         return response()->json($resumen, 200);
     }
 }

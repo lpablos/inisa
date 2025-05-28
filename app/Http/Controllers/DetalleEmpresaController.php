@@ -13,7 +13,13 @@ class DetalleEmpresaController extends Controller
      */
     public function index()
     {
-        //
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Empresa',
+                'accion' => 'vista_detalle'
+            ])
+            ->log('El usuario accedió a los detalles de la empresa');
         
         return Inertia::render('Catalogos/Empresa');
     }
@@ -39,11 +45,17 @@ class DetalleEmpresaController extends Controller
      */
     public function show()
     {
-        
         $empresa = CatEmpresa::first();
         
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Empresa',
+                'detalle_empresa' => $empresa->nombre
+            ])
+            ->log('El usuario consultó los detalles de la empresa');
+        
         return response()->json($empresa, 200);
-
     }
 
     /**
@@ -59,7 +71,6 @@ class DetalleEmpresaController extends Controller
      */
     public function update(Request $request)
     {
-        
         try {
             $empresa = CatEmpresa::first();
             $empresa->nombre = $request->nombre;
@@ -79,6 +90,14 @@ class DetalleEmpresaController extends Controller
                     'error' => 'Error de Guardado'
                 ], 500);
             }
+
+            activity()
+                ->causedBy(auth()->user())
+                ->withProperties([
+                    'modulo' => 'Empresa',
+                    'actualizacion_empresa' => $empresa->nombre
+                ])
+                ->log('El usuario actualizó los datos de la empresa');
         
             return response()->json([
                 'success' => 'Datos de la empresa han sido actualizados',
@@ -90,8 +109,6 @@ class DetalleEmpresaController extends Controller
                 'details' => $e->getMessage()
             ], 500);
         }
-        
-        
     }
 
     /**

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Activity;
 
 class UserController extends Controller
 {
@@ -16,7 +17,14 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Usuarios',
+                'accion' => 'vista_listado'
+            ])
+            ->log('El usuario accedió al listado de usuarios del sistema');
+
         return Inertia::render('Catalogos/UsuariosSys');
     }
 
@@ -58,6 +66,15 @@ class UserController extends Controller
                 'empresa_id' => 1,
             ]);
             $user->assignRole($role);
+
+            activity()
+                ->causedBy(auth()->user())
+                ->withProperties([
+                    'modulo' => 'Usuarios',
+                    'registro_usuario' => $user->name,
+                    'rol_asignado' => $role->name
+                ])
+                ->log('El usuario registró un nuevo usuario del sistema');
     
             return response()->json([
                 'success' => 'Usuario registrado correctamente',
@@ -78,6 +95,15 @@ class UserController extends Controller
     public function show(string $id)
     {
         $detalleUsuario = User::with('roles')->find($id);
+
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Usuarios',
+                'detalle_usuario' => $detalleUsuario->name
+            ])
+            ->log('El usuario consultó el detalle de un usuario del sistema');
+
         return response()->json($detalleUsuario, 200);
     }
 
@@ -116,6 +142,16 @@ class UserController extends Controller
             $user->save();
             $user->roles()->detach();
             $user->assignRole($role);
+
+            activity()
+                ->causedBy(auth()->user())
+                ->withProperties([
+                    'modulo' => 'Usuarios',
+                    'actualizacion_usuario' => $user->name,
+                    'rol_asignado' => $role->name
+                ])
+                ->log('El usuario actualizó un usuario del sistema');
+
             return response()->json([
                 'success' => 'Usuario actualizado correctamente',
                 'data' => $user
@@ -138,6 +174,15 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $user = User::find($id);
+
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Usuarios',
+                'eliminacion_usuario' => $user->name
+            ])
+            ->log('El usuario eliminó un usuario del sistema');
+
         $user->delete();
         return response()->json([
             'success' => 'Usuario Eliminado Correctamente',
@@ -146,6 +191,15 @@ class UserController extends Controller
 
     public function getAllUserSys(){
         $usuarios = User::with('roles')->get();
+
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Usuarios',
+                'lista_usuarios' => $usuarios->count()
+            ])
+            ->log('El usuario consultó la lista de usuarios del sistema');
+
         return response()->json($usuarios, 200);
     }
 }

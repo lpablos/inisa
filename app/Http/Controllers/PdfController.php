@@ -10,6 +10,7 @@ use App\Models\DetalleCotizacion;
 use Dompdf\Options;
 use Dompdf\Dompdf;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Activity;
 
 class PdfController extends Controller
 {
@@ -104,6 +105,15 @@ class PdfController extends Controller
             ->setOption('footer-spacing', '5') // Ajustar espacio del footer
             ->setOption('footer-left', "CORDIALMENTE - $textoFecha") // Texto en el footer
             ->setOption('footer-right', "Página [page] de [topage]"); // Numeración
+
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'PDF',
+                'generacion_pdf' => 'Cotización #' . $id,
+                'cliente' => $cotizaciones->cliente->nombre
+            ])
+            ->log('El usuario generó un PDF de cotización');
 
         return $pdf->stream('cotizacion.pdf');
     }
