@@ -90,6 +90,9 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                         que tomes la mejor decisión para tu
                                         proyecto.
                                     </p>
+                                    <p className="text-gray-600 text-lg text-center">
+                                        <a href="/login" severity="warning" rel="noopener noreferrer" className="p-button font-bold">Acceder al sistema</a>
+                                    </p>
                                 </section>
                             </div>
                             <div className="col-12 md:col-6 overflow-hidden">
