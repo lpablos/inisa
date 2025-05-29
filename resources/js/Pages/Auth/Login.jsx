@@ -40,12 +40,12 @@ export default function Login({status, canResetPassword}) {
 
 
             <div className="flex align-items-center justify-content-center flex-column">
-                <img src="/images/logo/-dark.svg" alt="hyper" height={50} className="mb-3"/>
+                <img src="/images/logo.jpeg" alt="hyper" height={200} className="mb-3"/>
                 <div className="surface-card p-6 sm:p-4 shadow-2 border-round w-full lg:w-4">
                     <div className="text-center mb-5">
-                        <div className="text-900 text-3xl font-medium mb-3">Welcome Back</div>
-                        <span className="text-600 font-medium line-height-3">Don't have an account?</span>
-                        <Link  href={route('register')} className="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Create today!</Link>
+                        <div className="text-900 text-3xl font-medium mb-3">Bienvenido</div>
+                        {/* <span className="text-600 font-medium line-height-3">Don't have an account?</span> */}
+                        {/* <Link  href={route('register')} className="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Create today!</Link> */}
                     </div>
                     <form onSubmit={submit}>
                         <div>
@@ -79,7 +79,7 @@ export default function Login({status, canResetPassword}) {
                                     <Checkbox inputId="rememberme-login"
                                               onChange={(e) => setData('remember', e.target.checked)}
                                               checked={data.remember} className="mr-2"/>
-                                    <label htmlFor="rememberme-login">Remember me</label>
+                                    <label htmlFor="rememberme-login">Recordar usuario</label>
                                 </div>
 
                                 {canResetPassword && (
@@ -87,12 +87,12 @@ export default function Login({status, canResetPassword}) {
                                         href={route('password.request')}
                                         className="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer"
                                     >
-                                        Forgot your password?
+                                        {/* Forgot your password? */}
                                     </Link>
                                 )}
                             </div>
 
-                            <PrimaryButton label="Sign In" className="w-full" disabled={processing}/>
+                            <PrimaryButton label="Iniciar sesión" className="w-full" disabled={processing}/>
                         </div>
                     </form>
                 </div>
