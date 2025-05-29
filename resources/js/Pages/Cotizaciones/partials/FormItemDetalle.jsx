@@ -89,9 +89,9 @@ const FormItemDetalle = ({cotizacion, detalle=null, modalVisible, recargarListad
     // Todo lo relacionado con el costo de materiales
     const [descripcionMaterial, setDescripcionMaterial]= useState('');
     const [seleccionUnidadMedida, setSeleccionUnidadMedida] = useState(null);
-    const [cantidadMaterial, setCantidadMaterial] = useState(null);
-    const [costoMaterialSugerido, setCostoMaterialSugerido] = useState(null);
-    const [costoMaterialFinal,setCostoMaterialFinal] = useState(null);  
+    const [cantidadMaterial, setCantidadMaterial] = useState(1);
+    const [costoMaterialSugerido, setCostoMaterialSugerido] = useState(0);
+    const [costoMaterialFinal,setCostoMaterialFinal] = useState(0);  
     const [subTotalMaterial, setSubTotalMaterial] = useState(0);
     // Efecto Espejo Costo Sugerido
     useEffect(()=>{        
