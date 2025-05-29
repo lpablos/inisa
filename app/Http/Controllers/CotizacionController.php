@@ -54,7 +54,7 @@ class CotizacionController extends Controller
     public function buscadorCotizaciones(Request $request)
     {
 
-        
+
         $cotizacion = $request->cotizacion;
         $titullo = $request->titulo;
         $cliente = $request->cliente;
@@ -148,7 +148,7 @@ class CotizacionController extends Controller
     public function RegistrarCotizacion(Request $request)
     {
 
-        
+
         $user = Auth::user();
         if (!$user) {
             return response()->json([
@@ -362,13 +362,13 @@ class CotizacionController extends Controller
             // ------
             "descripcionMaterial" => "string|nullable", //descripcion
             'seleccionUnidadMedida' => 'integer|required', //cat_unidad_medida_id
-            'cantidadMaterial' => 'required|integer|min:1', //costo_material_cantidad
-            'costoMaterialSugerido' => 'required|numeric|min:1', //costo_mano_obra_unitario_sugerido
-            'costoMaterialFinal' => 'required|numeric|min:1', // costo_material_unitario
+            'cantidadMaterial' => 'required|integer|min:0', //costo_material_cantidad
+            'costoMaterialSugerido' => 'required|numeric|min:0', //costo_mano_obra_unitario_sugerido
+            'costoMaterialFinal' => 'required|numeric|min:0', // costo_material_unitario
             // 'subTotalMaterial' => 'required|numeric|min:1', //costo_material_subtotal
             // -------
-            'costoManoObraSugerido' => 'nullable|numeric|min:1', //costo_material_unitario_sugerido
-            'costoManoObraFinal' => 'nullable|numeric|min:1', //costo_mano_obra_unitario
+            'costoManoObraSugerido' => 'nullable|numeric|min:0', //costo_material_unitario_sugerido
+            'costoManoObraFinal' => 'nullable|numeric|min:0', //costo_mano_obra_unitario
             // 'subTotalManoObra' => 'nullable|numeric|min:1', //costo_mano_obra_subtotal
             // --------
             // 'subTotalMateObraTotal' => 'nullable|numeric|min:1', //obra_material_subtotal
@@ -768,7 +768,7 @@ class CotizacionController extends Controller
                     'modulo' => 'Cotizaciones',
                     'eliminacion_tomo' => $detalle->id
                 ])
-                ->log('El usuario eliminó un tomo');            
+                ->log('El usuario eliminó un tomo');
 
             return response()->json([
                 'message' => 'Tomo y todos sus detalles eliminados con éxito',
@@ -916,7 +916,7 @@ class CotizacionController extends Controller
                         'cat_unidad_medida_id' => $clonarConcepto->cat_unidad_medida_id,
                     ]);
 
-                    activity()  
+                    activity()
                         ->causedBy(auth()->user())
                         ->withProperties([
                             'modulo' => 'Cotizaciones',
