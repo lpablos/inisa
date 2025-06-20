@@ -14,6 +14,7 @@ use App\Http\Controllers\BuscadorGeneralController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DetalleEmpresaController;
+use App\Http\Controllers\ActividadesController;
 
 
 
@@ -338,6 +339,8 @@ Route::middleware('auth')->prefix('admin')->group(function () {
             Route::get('resumen-cotizaciones', 'resumenCotizaciones')->name('estadisticos.resumen.cotizaciones');
         });
     });
+
+    Route::resource('activiades', ActividadesController::class);
 
     // 📌 Rutas de exportación dentro del grupo 'admin'
     Route::get('/exportar-excel-cotizacion', [ExportController::class, 'exportarDetalles'])

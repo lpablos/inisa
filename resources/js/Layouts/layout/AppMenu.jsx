@@ -14,6 +14,7 @@ const AppMenu = () => {
                 { label: 'Panel', icon: 'pi pi-fw pi-home', to: route('dashboard') },
                 // { label: 'Button', icon: 'pi pi-fw pi-id-card', to: route('button') },
                 { label: 'Cotizaciones', icon: 'pi pi-fw pi-folder-open', to: route('cotizacion.show.index') },
+                { label: 'Actividades', icon: 'pi pi-fw pi-calendar-times', to: route('activiades.index') },
                 { label: 'Catalogos', icon: 'pi pi-fw pi-tags', to: route('catalogo.gral.index') },
                 
             ]
