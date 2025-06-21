@@ -42,7 +42,7 @@ class CatalogosController extends Controller
         try {
             $data = CatProvedor::find($id);
 
-           
+
             activity()
                 ->causedBy(auth()->user())
                 ->withProperties([
@@ -51,7 +51,7 @@ class CatalogosController extends Controller
                 ])
                 ->log('El usuario eliminó un provedor');
 
-            
+
             // dd($data);
             if (!$data) {
                 return response()->json(['error' => 'Proveedor no encontrado'], 404);
@@ -199,7 +199,7 @@ class CatalogosController extends Controller
                 'actualizacion_departamento' => $departamento->nombre
             ])
             ->log('El usuario actualizó un departamento');
-            
+
         // Validar si el departamento existe
         if (!$departamento) {
             return response()->json(['error' => 'Departamento no encontrado'], 404);
@@ -208,6 +208,7 @@ class CatalogosController extends Controller
         $departamento->nombre = $request->nombre;
         $departamento->descripcion = $request->descripcion;
         $departamento->save();
+
 
         return response()->json(['success' => 'Actualizado correctamente', $departamento], 201);
     }
@@ -559,7 +560,7 @@ class CatalogosController extends Controller
     public function listaTiposMonedas()
     {
         $data = CatMoneda::all();
-        
+
         activity()
             ->causedBy(auth()->user())
             ->withProperties([
@@ -567,7 +568,7 @@ class CatalogosController extends Controller
                 'lista_monedas' => $data->count()
             ])
             ->log('El usuario consultó la lista de monedas');
-            
+
         return response()->json($data);
     }
 
@@ -886,7 +887,7 @@ class CatalogosController extends Controller
     public function listaUsuarios()
     {
         $data = User::all();
-        
+
         activity()
             ->causedBy(auth()->user())
             ->withProperties([
@@ -894,7 +895,7 @@ class CatalogosController extends Controller
                 'lista_usuarios' => $data->count()
             ])
             ->log('El usuario consultó la lista de usuarios');
-            
+
         return response()->json($data);
     }
 

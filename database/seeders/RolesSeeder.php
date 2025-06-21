@@ -15,25 +15,44 @@ class RolesSeeder extends Seeder
      */
     public function run(): void
     {
-        // Crear el rol de admin si no existe
-        $administradorSis = Role::firstOrCreate(['name' => 'AdministradorSis']);
-        $direccion = Role::firstOrCreate(['name' => 'Direccion']);
-        $aucDireccion = Role::firstOrCreate(['name' => 'Aux Dirección']);
-        $administrativo = Role::firstOrCreate(['name' => 'Administrativo']);
-        $auxAdministrativo = Role::firstOrCreate(['name' => 'Aux Administrativo']);
+         // Crear roles
+        $roles = [
+            'AdministradorSis',
+            'Direccion',
+            'Aux Dirección',
+            'Administrativo',
+            'Aux Administrativo',
+        ];
+
+        foreach ($roles as $rol) {
+            Role::firstOrCreate(['name' => $rol]);
+        }
 
 
-
-        // Crear el usuario admin o buscarlo si ya existe
+           // Crear usuario admin
         $user = User::firstOrCreate(
+            ['email' => 'lpablo@inisa.com'],
             [
-                'name' => 'Luis Jorge Pablo Sartillo',        // Nombre del usuario administrador
-                'email' => 'lpablo@inisa.com',
-                'password' => Hash::make('inisa123_'), // Cambia la contraseña a una segura
+                'name' => 'Luis Jorge Pablo Sartillo',
+                'password' => Hash::make('inisa123_'),
                 'empresa_id' => 1,
             ]
         );
-        $user->assignRole($administradorSis);
+
+        // Asignar o sincronizar rol
+        $user->syncRoles(['AdministradorSis']);
+
+
+        // // Crear el usuario admin o buscarlo si ya existe
+        // $user = User::firstOrCreate(
+        //     [
+        //         'name' => 'Luis Jorge Pablo Sartillo',        // Nombre del usuario administrador
+        //         'email' => 'lpablo@inisa.com',
+        //         'password' => Hash::make('inisa123_'), // Cambia la contraseña a una segura
+        //         'empresa_id' => 1,
+        //     ]
+        // );
+        // $user->assignRole($administradorSis);
 
 
         // Crear usuario jefe administrativo o buscarlo si ya existe
