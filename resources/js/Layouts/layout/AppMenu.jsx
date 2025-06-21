@@ -20,6 +20,7 @@ const AppMenu = () => {
                     to: route("dashboard"),
                 },
                 // { label: 'Button', icon: 'pi pi-fw pi-id-card', to: route('button') },
+<<<<<<< HEAD
                 {
                     label: "Cotizaciones",
                     icon: "pi pi-fw pi-folder-open",
@@ -40,6 +41,13 @@ const AppMenu = () => {
                     ),
                 },
             ],
+=======
+                { label: 'Cotizaciones', icon: 'pi pi-fw pi-folder-open', to: route('cotizacion.show.index') },
+                { label: 'Actividades', icon: 'pi pi-fw pi-calendar-times', to: route('activiades.index') },
+                { label: 'Catalogos', icon: 'pi pi-fw pi-tags', to: route('catalogo.gral.index') },
+                
+            ]
+>>>>>>> 52c059853619695da261950edfe6dab5127e7ad9
         },
     ];
 
