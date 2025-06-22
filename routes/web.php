@@ -14,11 +14,8 @@ use App\Http\Controllers\BuscadorGeneralController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DetalleEmpresaController;
-<<<<<<< HEAD
 use App\Http\Controllers\LogsActividadesController;
-=======
 use App\Http\Controllers\ActividadesController;
->>>>>>> 52c059853619695da261950edfe6dab5127e7ad9
 
 
 
@@ -344,7 +341,6 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         });
     });
 
-<<<<<<< HEAD
 
     // use App\Http\Controllers\LogsActividadesController;
 
@@ -355,9 +351,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
 
 
-=======
     Route::resource('activiades', ActividadesController::class);
->>>>>>> 52c059853619695da261950edfe6dab5127e7ad9
 
     // 📌 Rutas de exportación dentro del grupo 'admin'
     Route::get('/exportar-excel-cotizacion', [ExportController::class, 'exportarDetalles'])
