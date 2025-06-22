@@ -344,9 +344,9 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
     // use App\Http\Controllers\LogsActividadesController;
 
-    Route::prefix('logs-actividades')->group(function () {
-        Route::get('index', [LogsActividadesController::class, 'index'])->name('logs.actividades.index');
-        Route::get('logs-actividades-data', [LogsActividadesController::class, 'listLocgsActividades'])->name('logs.actividades.list');
+    Route::prefix('historico')->group(function () {
+        Route::get('index', [LogsActividadesController::class, 'index'])->name('logs.historico.index');
+        Route::get('logs-actividades-data', [LogsActividadesController::class, 'listLocgsActividades'])->name('logs.historico.list');
     });
 
 

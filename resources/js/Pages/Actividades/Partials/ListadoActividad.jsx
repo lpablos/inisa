@@ -32,6 +32,7 @@ const ListadoActividad = () => {
         );
     };
     return (
+        
         <VirtualScroller
             items={items}
             itemSize={50}

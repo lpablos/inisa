@@ -10,7 +10,7 @@ const ConceptoTabla = () => {
         const obtenerlogsActividades = async () => {
             try {
                 const response = await axios.get(
-                    route("logs.actividades.list")
+                    route("logs.historico.list")
                 );
                 const { logsActividades } = response.data;
                 // console.log(logsActividades, response.data); // <-- Esto te muestra los campos

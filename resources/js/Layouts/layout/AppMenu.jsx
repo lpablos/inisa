@@ -6,7 +6,8 @@ import { Link } from "@inertiajs/react";
 
 const AppMenu = () => {
     const { layoutConfig } = useContext(LayoutContext);
-
+    console.log("Este es el rol",window?.user?.roles);
+    
     // window.user = @json(auth()->user());
     // console.log(window.user);
 
@@ -30,15 +31,25 @@ const AppMenu = () => {
                     icon: "pi pi-fw pi-tags",
                     to: route("catalogo.gral.index"),
                 },
-                // Solo mostrar "Actividades" si el usuario es auxiliar de jefe o jefe
                 {
+                    label: "Historico",
+                    icon: "pi pi-fw pi-eye-slash",
+                    to: route("logs.historico.index"),
+                },
+                 {
                     label: "Actividades",
                     icon: "pi pi-fw pi-tags",
-                    to: route("logs.actividades.index"),
-                    visible: window?.user?.roles?.some((r) =>
-                        ["AdministradorSis", "Aux Dirección"].includes(r.name)
-                    ),
+                    to: route("activiades.index"),
                 },
+                // Solo mostrar "Actividades" si el usuario es auxiliar de jefe o jefe
+                // {
+                //     label: "Actividades",
+                //     icon: "pi pi-fw pi-tags",
+                //     to: route("logs.actividades.index"),
+                //     visible: window?.user?.roles?.some((r) =>
+                //         ["AdministradorSis", "Aux Dirección"].includes(r.name)
+                //     ),
+                // },
             ],
         },
     ];

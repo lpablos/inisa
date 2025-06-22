@@ -1,306 +1,430 @@
 {
-  "_DashboardInfoCard-d0b169e4.js": {
-    "file": "assets/DashboardInfoCard-d0b169e4.js",
+  "_DashboardInfoCard-074f3a4a.js": {
+    "file": "assets/DashboardInfoCard-074f3a4a.js",
     "imports": [
       "resources/js/app.jsx",
-      "_button.esm-9fdd79ba.js"
+      "_button.esm-46e694e9.js"
     ]
   },
-  "_GuestLayout-060f310f.js": {
-    "file": "assets/GuestLayout-060f310f.js",
+  "_GuestLayout-522cca27.js": {
+    "file": "assets/GuestLayout-522cca27.js",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
-  "_InputError-5a6c15f8.js": {
-    "file": "assets/InputError-5a6c15f8.js",
+  "_InputError-45e2f5e0.js": {
+    "file": "assets/InputError-45e2f5e0.js",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
-  "_InputLabel-7effa553.js": {
-    "file": "assets/InputLabel-7effa553.js",
+  "_InputLabel-10dd3bd5.js": {
+    "file": "assets/InputLabel-10dd3bd5.js",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
-  "_PrimaryButton-7bae8caf.js": {
-    "file": "assets/PrimaryButton-7bae8caf.js",
+  "_PrimaryButton-5709b939.js": {
+    "file": "assets/PrimaryButton-5709b939.js",
     "imports": [
       "resources/js/app.jsx",
-      "_button.esm-9fdd79ba.js"
+      "_button.esm-46e694e9.js"
     ]
   },
-  "_TextInput-10250c23.js": {
-    "file": "assets/TextInput-10250c23.js",
+  "_TextInput-1b43b077.js": {
+    "file": "assets/TextInput-1b43b077.js",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
-  "_avatar.esm-6382ab9d.js": {
-    "file": "assets/avatar.esm-6382ab9d.js",
+  "_avatar.esm-61520b2c.js": {
+    "file": "assets/avatar.esm-61520b2c.js",
     "imports": [
       "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js"
+      "_componentbase.esm-1becf919.js"
     ]
   },
-  "_badge.esm-1a7a725f.js": {
-    "file": "assets/badge.esm-1a7a725f.js",
+  "_badge.esm-a1474c6d.js": {
+    "file": "assets/badge.esm-a1474c6d.js",
     "imports": [
       "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js"
+      "_componentbase.esm-1becf919.js"
     ]
   },
-  "_button.esm-9fdd79ba.js": {
-    "file": "assets/button.esm-9fdd79ba.js",
+  "_button.esm-46e694e9.js": {
+    "file": "assets/button.esm-46e694e9.js",
     "imports": [
       "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js"
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js"
     ]
   },
-  "_calendar.esm-0c370d01.js": {
-    "file": "assets/calendar.esm-0c370d01.js",
+  "_calendar.esm-e19123ec.js": {
+    "file": "assets/calendar.esm-e19123ec.js",
     "imports": [
       "resources/js/app.jsx",
-      "_button.esm-9fdd79ba.js",
-      "_ripple.esm-80139cd0.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_index.esm-d29e245c.js",
-      "_dropdown.esm-4239ca6c.js",
-      "_inputtext.esm-0428364e.js",
-      "_index.esm-d0f281b3.js",
-      "_tooltip.esm-705f6f13.js"
+      "_button.esm-46e694e9.js",
+      "_componentbase.esm-1becf919.js",
+      "_iconbase.esm-565044fd.js",
+      "_index.esm-727a66c6.js",
+      "_index.esm-d80e96df.js",
+      "_dropdown.esm-e750cd64.js",
+      "_inputtext.esm-21a8a940.js",
+      "_ripple.esm-bef0a74b.js",
+      "_csstransition.esm-4d025c04.js",
+      "_tooltip.esm-3383bdb1.js"
     ]
   },
-  "_column.esm-c6806a2f.js": {
-    "file": "assets/column.esm-c6806a2f.js",
+  "_card.esm-256fdd22.js": {
+    "file": "assets/card.esm-256fdd22.js",
     "imports": [
       "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js",
-      "_inputnumber.esm-4baffdac.js",
-      "_index.esm-efa2cd0d.js",
-      "_dropdown.esm-4239ca6c.js",
-      "_index.esm-0f0b731f.js",
-      "_index.esm-8e62f4d7.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_index.esm-d29e245c.js",
-      "_index.esm-d0f281b3.js",
-      "_button.esm-9fdd79ba.js",
-      "_index.esm-e45aff0a.js",
-      "_inputtext.esm-0428364e.js"
+      "_componentbase.esm-1becf919.js"
     ]
   },
-  "_confirmdialog.esm-dc3e748a.js": {
-    "file": "assets/confirmdialog.esm-dc3e748a.js",
+  "_column.esm-212fd85e.js": {
+    "file": "assets/column.esm-212fd85e.js",
     "imports": [
       "resources/js/app.jsx",
-      "_button.esm-9fdd79ba.js",
-      "_ripple.esm-80139cd0.js",
-      "_dialog.esm-9ecdf0e6.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_tooltip.esm-705f6f13.js"
+      "_componentbase.esm-1becf919.js",
+      "_iconbase.esm-565044fd.js",
+      "_index.esm-caaa0bd1.js",
+      "_ripple.esm-bef0a74b.js",
+      "_inputnumber.esm-b35cac15.js",
+      "_index.esm-e233148e.js",
+      "_dropdown.esm-e750cd64.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-26c769ed.js",
+      "_index.esm-bc560454.js",
+      "_index.esm-727a66c6.js",
+      "_index.esm-d80e96df.js",
+      "_index.esm-c88ad067.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_button.esm-46e694e9.js",
+      "_csstransition.esm-4d025c04.js",
+      "_index.esm-4dd38ef7.js",
+      "_inputtext.esm-21a8a940.js"
     ]
   },
-  "_dialog.esm-9ecdf0e6.js": {
-    "file": "assets/dialog.esm-9ecdf0e6.js",
+  "_componentbase.esm-1becf919.js": {
+    "file": "assets/componentbase.esm-1becf919.js",
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  },
+  "_confirmdialog.esm-7f1ebc12.js": {
+    "file": "assets/confirmdialog.esm-7f1ebc12.js",
     "imports": [
       "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js",
-      "_index.esm-d0f281b3.js",
-      "_tooltip.esm-705f6f13.js"
+      "_button.esm-46e694e9.js",
+      "_componentbase.esm-1becf919.js",
+      "_dialog.esm-84a5e061.js",
+      "_index.esm-727a66c6.js",
+      "_tooltip.esm-3383bdb1.js"
     ]
   },
-  "_divider.esm-c5d6b65f.js": {
-    "file": "assets/divider.esm-c5d6b65f.js",
+  "_csstransition.esm-4d025c04.js": {
+    "file": "assets/csstransition.esm-4d025c04.js",
     "imports": [
       "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js"
+      "_componentbase.esm-1becf919.js"
     ]
   },
-  "_dropdown.esm-4239ca6c.js": {
-    "file": "assets/dropdown.esm-4239ca6c.js",
+  "_dialog.esm-84a5e061.js": {
+    "file": "assets/dialog.esm-84a5e061.js",
     "imports": [
       "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_tooltip.esm-705f6f13.js",
-      "_index.esm-d0f281b3.js",
-      "_index.esm-8e62f4d7.js"
+      "_componentbase.esm-1becf919.js",
+      "_csstransition.esm-4d025c04.js",
+      "_index.esm-c88ad067.js",
+      "_iconbase.esm-565044fd.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_ripple.esm-bef0a74b.js"
     ]
   },
-  "_editor.esm-c48e70ce.js": {
+  "_divider.esm-f47843a3.js": {
+    "file": "assets/divider.esm-f47843a3.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_componentbase.esm-1becf919.js"
+    ]
+  },
+  "_dropdown.esm-e750cd64.js": {
+    "file": "assets/dropdown.esm-e750cd64.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-727a66c6.js",
+      "_iconbase.esm-565044fd.js",
+      "_index.esm-caaa0bd1.js",
+      "_index.esm-c88ad067.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_csstransition.esm-4d025c04.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_ripple.esm-bef0a74b.js",
+      "_index.esm-bc560454.js"
+    ]
+  },
+  "_editor.esm-330fbb63.js": {
     "dynamicImports": [
       "node_modules/quill/quill.js"
     ],
-    "file": "assets/editor.esm-c48e70ce.js",
+    "file": "assets/editor.esm-330fbb63.js",
     "imports": [
       "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js"
+      "_componentbase.esm-1becf919.js"
     ]
   },
-  "_fieldset.esm-06a343b0.js": {
-    "file": "assets/fieldset.esm-06a343b0.js",
+  "_fieldset.esm-1a01d11e.js": {
+    "file": "assets/fieldset.esm-1a01d11e.js",
     "imports": [
       "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js",
-      "_index.esm-d0f281b3.js",
-      "_index.esm-e45aff0a.js"
+      "_componentbase.esm-1becf919.js",
+      "_csstransition.esm-4d025c04.js",
+      "_iconbase.esm-565044fd.js",
+      "_index.esm-4dd38ef7.js",
+      "_ripple.esm-bef0a74b.js"
     ]
   },
-  "_floatlabel.esm-7b908c2b.js": {
-    "file": "assets/floatlabel.esm-7b908c2b.js",
+  "_floatlabel.esm-9aa8bf0c.js": {
+    "file": "assets/floatlabel.esm-9aa8bf0c.js",
     "imports": [
       "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js"
+      "_componentbase.esm-1becf919.js"
     ]
   },
-  "_index.esm-08b88e95.js": {
-    "file": "assets/index.esm-08b88e95.js",
-    "imports": [
-      "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js"
-    ]
-  },
-  "_index.esm-0f0b731f.js": {
-    "file": "assets/index.esm-0f0b731f.js",
-    "imports": [
-      "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js"
-    ]
-  },
-  "_index.esm-71f5dc50.js": {
-    "file": "assets/index.esm-71f5dc50.js",
+  "_iconbase.esm-565044fd.js": {
+    "file": "assets/iconbase.esm-565044fd.js",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
-  "_index.esm-8e62f4d7.js": {
-    "file": "assets/index.esm-8e62f4d7.js",
+  "_index-f3d9d141.js": {
+    "file": "assets/index-f3d9d141.js",
     "imports": [
-      "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js"
+      "resources/js/app.jsx"
     ]
   },
-  "_index.esm-d0f281b3.js": {
-    "file": "assets/index.esm-d0f281b3.js",
+  "_index.esm-26c769ed.js": {
+    "file": "assets/index.esm-26c769ed.js",
     "imports": [
       "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js"
+      "_iconbase.esm-565044fd.js"
     ]
   },
-  "_index.esm-d29e245c.js": {
-    "file": "assets/index.esm-d29e245c.js",
+  "_index.esm-4dd38ef7.js": {
+    "file": "assets/index.esm-4dd38ef7.js",
     "imports": [
       "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js"
+      "_iconbase.esm-565044fd.js"
     ]
   },
-  "_index.esm-e45aff0a.js": {
-    "file": "assets/index.esm-e45aff0a.js",
+  "_index.esm-727a66c6.js": {
+    "file": "assets/index.esm-727a66c6.js",
     "imports": [
       "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js"
+      "_iconbase.esm-565044fd.js"
     ]
   },
-  "_index.esm-efa2cd0d.js": {
-    "file": "assets/index.esm-efa2cd0d.js",
+  "_index.esm-a09854cd.js": {
+    "file": "assets/index.esm-a09854cd.js",
     "imports": [
       "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js"
+      "_iconbase.esm-565044fd.js"
     ]
   },
-  "_inputnumber.esm-4baffdac.js": {
-    "file": "assets/inputnumber.esm-4baffdac.js",
+  "_index.esm-ac617616.js": {
+    "file": "assets/index.esm-ac617616.js",
     "imports": [
-      "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js",
-      "_index.esm-08b88e95.js",
-      "_inputtext.esm-0428364e.js",
-      "_tooltip.esm-705f6f13.js"
+      "resources/js/app.jsx"
     ]
   },
-  "_inputswitch.esm-40083b6a.js": {
-    "file": "assets/inputswitch.esm-40083b6a.js",
+  "_index.esm-bc560454.js": {
+    "file": "assets/index.esm-bc560454.js",
     "imports": [
       "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js"
+      "_iconbase.esm-565044fd.js"
     ]
   },
-  "_inputtext.esm-0428364e.js": {
-    "file": "assets/inputtext.esm-0428364e.js",
+  "_index.esm-c88ad067.js": {
+    "file": "assets/index.esm-c88ad067.js",
     "imports": [
       "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js"
+      "_iconbase.esm-565044fd.js"
     ]
   },
-  "_layout-8f92791d.js": {
-    "file": "assets/layout-8f92791d.js",
+  "_index.esm-caaa0bd1.js": {
+    "file": "assets/index.esm-caaa0bd1.js",
     "imports": [
       "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js",
-      "_index.esm-d0f281b3.js",
-      "_button.esm-9fdd79ba.js",
-      "_inputswitch.esm-40083b6a.js",
-      "_tooltip.esm-705f6f13.js"
+      "_iconbase.esm-565044fd.js"
     ]
   },
-  "_message.esm-1a1e6f10.js": {
-    "file": "assets/message.esm-1a1e6f10.js",
+  "_index.esm-d80e96df.js": {
+    "file": "assets/index.esm-d80e96df.js",
     "imports": [
       "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js",
-      "_index.esm-8e62f4d7.js",
-      "_toast.esm-6e989c17.js"
+      "_iconbase.esm-565044fd.js"
     ]
   },
-  "_overlayservice.esm-2156cf47.js": {
-    "file": "assets/overlayservice.esm-2156cf47.js",
+  "_index.esm-e233148e.js": {
+    "file": "assets/index.esm-e233148e.js",
     "imports": [
       "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js"
+      "_iconbase.esm-565044fd.js"
     ]
   },
-  "_progressspinner.esm-cdabcb6e.js": {
-    "file": "assets/progressspinner.esm-cdabcb6e.js",
+  "_inputnumber.esm-b35cac15.js": {
+    "file": "assets/inputnumber.esm-b35cac15.js",
     "imports": [
       "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js"
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-a09854cd.js",
+      "_iconbase.esm-565044fd.js",
+      "_inputtext.esm-21a8a940.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js"
+    ]
+  },
+  "_inputswitch.esm-370bc1bb.js": {
+    "file": "assets/inputswitch.esm-370bc1bb.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_componentbase.esm-1becf919.js",
+      "_tooltip.esm-3383bdb1.js"
+    ]
+  },
+  "_inputtext.esm-21a8a940.js": {
+    "file": "assets/inputtext.esm-21a8a940.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_componentbase.esm-1becf919.js",
+      "_tooltip.esm-3383bdb1.js"
+    ]
+  },
+  "_layout-87baac1f.js": {
+    "file": "assets/layout-87baac1f.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_componentbase.esm-1becf919.js",
+      "_ripple.esm-bef0a74b.js",
+      "_csstransition.esm-4d025c04.js",
+      "_button.esm-46e694e9.js",
+      "_inputswitch.esm-370bc1bb.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_index.esm-c88ad067.js"
+    ]
+  },
+  "_megamenu.esm-db294cf3.js": {
+    "file": "assets/megamenu.esm-db294cf3.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-a09854cd.js",
+      "_index.esm-e233148e.js",
+      "_index.esm-26c769ed.js",
+      "_ripple.esm-bef0a74b.js"
+    ]
+  },
+  "_menubar.esm-8a4a686b.js": {
+    "file": "assets/menubar.esm-8a4a686b.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-26c769ed.js",
+      "_index.esm-a09854cd.js",
+      "_index.esm-e233148e.js",
+      "_ripple.esm-bef0a74b.js"
+    ]
+  },
+  "_message.esm-2c2b0b53.js": {
+    "file": "assets/message.esm-2c2b0b53.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-bc560454.js",
+      "_toast.esm-b4d4ac55.js"
+    ]
+  },
+  "_progressspinner.esm-67f32af2.js": {
+    "file": "assets/progressspinner.esm-67f32af2.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_componentbase.esm-1becf919.js"
     ]
   },
   "_purify.es-851ec8c9.js": {
     "file": "assets/purify.es-851ec8c9.js"
   },
-  "_ripple.esm-80139cd0.js": {
-    "file": "assets/ripple.esm-80139cd0.js",
+  "_ripple.esm-bef0a74b.js": {
+    "file": "assets/ripple.esm-bef0a74b.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_componentbase.esm-1becf919.js"
+    ]
+  },
+  "_selectbutton.esm-bc587bba.js": {
+    "css": [
+      "assets/selectbutton-3ba77e69.css"
+    ],
+    "file": "assets/selectbutton.esm-bc587bba.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_componentbase.esm-1becf919.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_ripple.esm-bef0a74b.js"
+    ]
+  },
+  "_slider.esm-1d1c7285.js": {
+    "file": "assets/slider.esm-1d1c7285.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_componentbase.esm-1becf919.js",
+      "_inputtext.esm-21a8a940.js",
+      "_tooltip.esm-3383bdb1.js"
+    ]
+  },
+  "_toast.esm-b4d4ac55.js": {
+    "file": "assets/toast.esm-b4d4ac55.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_componentbase.esm-1becf919.js",
+      "_csstransition.esm-4d025c04.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_index.esm-bc560454.js",
+      "_iconbase.esm-565044fd.js",
+      "_index.esm-c88ad067.js",
+      "_ripple.esm-bef0a74b.js"
+    ]
+  },
+  "_toolbar.esm-4deb11a8.js": {
+    "file": "assets/toolbar.esm-4deb11a8.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_componentbase.esm-1becf919.js"
+    ]
+  },
+  "_tooltip.esm-3383bdb1.js": {
+    "file": "assets/tooltip.esm-3383bdb1.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_componentbase.esm-1becf919.js"
+    ]
+  },
+  "_transition-be919f73.js": {
+    "file": "assets/transition-be919f73.js",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
-  "_toast.esm-6e989c17.js": {
-    "file": "assets/toast.esm-6e989c17.js",
+  "_virtualscroller.esm-572a5462.js": {
+    "file": "assets/virtualscroller.esm-572a5462.js",
     "imports": [
       "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js",
-      "_index.esm-d0f281b3.js",
-      "_tooltip.esm-705f6f13.js",
-      "_index.esm-8e62f4d7.js"
-    ]
-  },
-  "_tooltip.esm-705f6f13.js": {
-    "file": "assets/tooltip.esm-705f6f13.js",
-    "imports": [
-      "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js"
-    ]
-  },
-  "_transition-2b934df4.js": {
-    "file": "assets/transition-2b934df4.js",
-    "imports": [
-      "resources/js/app.jsx"
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js"
     ]
   },
   "node_modules/primeicons/fonts/primeicons.eot": {
@@ -332,197 +456,323 @@
     "src": "node_modules/primereact/resources/themes/lara-light-indigo/fonts/InterVariable.woff2"
   },
   "node_modules/quill/quill.js": {
-    "file": "assets/quill-8655d5cd.js",
+    "file": "assets/quill-c3b4e1e8.js",
     "imports": [
       "resources/js/app.jsx"
     ],
     "isDynamicEntry": true,
     "src": "node_modules/quill/quill.js"
   },
-  "resources/js/Pages/Auth/ConfirmPassword.jsx": {
-    "file": "assets/ConfirmPassword-ffe779b5.js",
+  "resources/js/Pages/Actividades/Index.jsx": {
+    "file": "assets/Index-3d5a78ce.js",
     "imports": [
       "resources/js/app.jsx",
-      "_GuestLayout-060f310f.js",
-      "_InputError-5a6c15f8.js",
-      "_InputLabel-7effa553.js",
-      "_PrimaryButton-7bae8caf.js",
-      "_TextInput-10250c23.js",
-      "_button.esm-9fdd79ba.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js"
+      "_layout-87baac1f.js",
+      "_componentbase.esm-1becf919.js",
+      "resources/js/Pages/Actividades/Partials/DetalleActividad.jsx",
+      "resources/js/Pages/Actividades/Partials/ListadoActividad.jsx",
+      "resources/js/Pages/Actividades/Partials/BusquedaActividad.jsx",
+      "_ripple.esm-bef0a74b.js",
+      "_csstransition.esm-4d025c04.js",
+      "_button.esm-46e694e9.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_inputswitch.esm-370bc1bb.js",
+      "_index.esm-c88ad067.js",
+      "_fieldset.esm-1a01d11e.js",
+      "_index.esm-4dd38ef7.js",
+      "resources/js/Pages/Actividades/Partials/Comentario.jsx",
+      "_card.esm-256fdd22.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_dropdown.esm-e750cd64.js",
+      "_index.esm-727a66c6.js",
+      "_index.esm-bc560454.js",
+      "_calendar.esm-e19123ec.js",
+      "_index.esm-d80e96df.js",
+      "_inputtext.esm-21a8a940.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Actividades/Index.jsx"
+  },
+  "resources/js/Pages/Actividades/Partials/BusquedaActividad.jsx": {
+    "file": "assets/BusquedaActividad-835ed97f.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_button.esm-46e694e9.js",
+      "_dropdown.esm-e750cd64.js",
+      "_calendar.esm-e19123ec.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_index.esm-727a66c6.js",
+      "_index.esm-c88ad067.js",
+      "_csstransition.esm-4d025c04.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js",
+      "_index.esm-d80e96df.js",
+      "_inputtext.esm-21a8a940.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Actividades/Partials/BusquedaActividad.jsx"
+  },
+  "resources/js/Pages/Actividades/Partials/Comentario.jsx": {
+    "file": "assets/Comentario-f14789fe.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_card.esm-256fdd22.js",
+      "_componentbase.esm-1becf919.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Actividades/Partials/Comentario.jsx"
+  },
+  "resources/js/Pages/Actividades/Partials/DetalleActividad.jsx": {
+    "file": "assets/DetalleActividad-86dfb5af.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_fieldset.esm-1a01d11e.js",
+      "resources/js/Pages/Actividades/Partials/Comentario.jsx",
+      "_componentbase.esm-1becf919.js",
+      "_csstransition.esm-4d025c04.js",
+      "_iconbase.esm-565044fd.js",
+      "_index.esm-4dd38ef7.js",
+      "_ripple.esm-bef0a74b.js",
+      "_card.esm-256fdd22.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Actividades/Partials/DetalleActividad.jsx"
+  },
+  "resources/js/Pages/Actividades/Partials/ListadoActividad.jsx": {
+    "file": "assets/ListadoActividad-bde2f463.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_virtualscroller.esm-572a5462.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Actividades/Partials/ListadoActividad.jsx"
+  },
+  "resources/js/Pages/Auth/ConfirmPassword.jsx": {
+    "file": "assets/ConfirmPassword-fb79e512.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_GuestLayout-522cca27.js",
+      "_InputError-45e2f5e0.js",
+      "_InputLabel-10dd3bd5.js",
+      "_PrimaryButton-5709b939.js",
+      "_TextInput-1b43b077.js",
+      "_button.esm-46e694e9.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/ConfirmPassword.jsx"
   },
   "resources/js/Pages/Auth/ForgotPassword.jsx": {
-    "file": "assets/ForgotPassword-2493ea89.js",
+    "file": "assets/ForgotPassword-aa9c0428.js",
     "imports": [
       "resources/js/app.jsx",
-      "_GuestLayout-060f310f.js",
-      "_InputError-5a6c15f8.js",
-      "_PrimaryButton-7bae8caf.js",
-      "_TextInput-10250c23.js",
-      "_button.esm-9fdd79ba.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js"
+      "_GuestLayout-522cca27.js",
+      "_InputError-45e2f5e0.js",
+      "_PrimaryButton-5709b939.js",
+      "_TextInput-1b43b077.js",
+      "_button.esm-46e694e9.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/ForgotPassword.jsx"
   },
   "resources/js/Pages/Auth/Login.jsx": {
-    "file": "assets/Login-3f2db592.js",
+    "file": "assets/Login-814f94dc.js",
     "imports": [
       "resources/js/app.jsx",
-      "_GuestLayout-060f310f.js",
-      "_InputError-5a6c15f8.js",
-      "_PrimaryButton-7bae8caf.js",
-      "_TextInput-10250c23.js",
-      "_inputtext.esm-0428364e.js",
-      "_ripple.esm-80139cd0.js",
-      "_index.esm-8e62f4d7.js",
-      "_tooltip.esm-705f6f13.js",
-      "_button.esm-9fdd79ba.js"
+      "_GuestLayout-522cca27.js",
+      "_InputError-45e2f5e0.js",
+      "_PrimaryButton-5709b939.js",
+      "_TextInput-1b43b077.js",
+      "_inputtext.esm-21a8a940.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-bc560454.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_button.esm-46e694e9.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/Login.jsx"
   },
   "resources/js/Pages/Auth/Register.jsx": {
-    "file": "assets/Register-2525c356.js",
+    "file": "assets/Register-41c3074b.js",
     "imports": [
       "resources/js/app.jsx",
-      "_GuestLayout-060f310f.js",
-      "_InputError-5a6c15f8.js",
-      "_PrimaryButton-7bae8caf.js",
-      "_TextInput-10250c23.js",
-      "_inputtext.esm-0428364e.js",
-      "_button.esm-9fdd79ba.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js"
+      "_GuestLayout-522cca27.js",
+      "_InputError-45e2f5e0.js",
+      "_PrimaryButton-5709b939.js",
+      "_TextInput-1b43b077.js",
+      "_inputtext.esm-21a8a940.js",
+      "_button.esm-46e694e9.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/Register.jsx"
   },
   "resources/js/Pages/Auth/ResetPassword.jsx": {
-    "file": "assets/ResetPassword-267275cc.js",
+    "file": "assets/ResetPassword-adb70812.js",
     "imports": [
       "resources/js/app.jsx",
-      "_GuestLayout-060f310f.js",
-      "_InputError-5a6c15f8.js",
-      "_InputLabel-7effa553.js",
-      "_PrimaryButton-7bae8caf.js",
-      "_TextInput-10250c23.js",
-      "_button.esm-9fdd79ba.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js"
+      "_GuestLayout-522cca27.js",
+      "_InputError-45e2f5e0.js",
+      "_InputLabel-10dd3bd5.js",
+      "_PrimaryButton-5709b939.js",
+      "_TextInput-1b43b077.js",
+      "_button.esm-46e694e9.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/ResetPassword.jsx"
   },
   "resources/js/Pages/Auth/VerifyEmail.jsx": {
-    "file": "assets/VerifyEmail-7d1a2993.js",
+    "file": "assets/VerifyEmail-3af58e5d.js",
     "imports": [
       "resources/js/app.jsx",
-      "_GuestLayout-060f310f.js",
-      "_PrimaryButton-7bae8caf.js",
-      "_button.esm-9fdd79ba.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js"
+      "_GuestLayout-522cca27.js",
+      "_PrimaryButton-5709b939.js",
+      "_button.esm-46e694e9.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/VerifyEmail.jsx"
   },
   "resources/js/Pages/Catalogos/Clientes.jsx": {
-    "file": "assets/Clientes-5e7d529f.js",
+    "file": "assets/Clientes-2e226948.js",
     "imports": [
       "resources/js/app.jsx",
-      "_layout-8f92791d.js",
+      "_layout-87baac1f.js",
       "resources/js/Pages/Catalogos/Partials/TablaClientes.jsx",
-      "_ripple.esm-80139cd0.js",
-      "_index.esm-d0f281b3.js",
-      "_button.esm-9fdd79ba.js",
-      "_tooltip.esm-705f6f13.js",
-      "_inputswitch.esm-40083b6a.js",
-      "_column.esm-c6806a2f.js",
-      "_inputnumber.esm-4baffdac.js",
-      "_index.esm-08b88e95.js",
-      "_inputtext.esm-0428364e.js",
-      "_index.esm-efa2cd0d.js",
-      "_dropdown.esm-4239ca6c.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_index.esm-8e62f4d7.js",
-      "_index.esm-0f0b731f.js",
-      "_index.esm-d29e245c.js",
-      "_index.esm-e45aff0a.js",
+      "_componentbase.esm-1becf919.js",
+      "_ripple.esm-bef0a74b.js",
+      "_csstransition.esm-4d025c04.js",
+      "_button.esm-46e694e9.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_inputswitch.esm-370bc1bb.js",
+      "_index.esm-c88ad067.js",
+      "_column.esm-212fd85e.js",
+      "_inputnumber.esm-b35cac15.js",
+      "_index.esm-a09854cd.js",
+      "_inputtext.esm-21a8a940.js",
+      "_index.esm-e233148e.js",
+      "_dropdown.esm-e750cd64.js",
+      "_index.esm-727a66c6.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js",
+      "_index.esm-26c769ed.js",
+      "_index.esm-d80e96df.js",
+      "_index.esm-4dd38ef7.js",
       "resources/js/Pages/Catalogos/Partials/NewClienteDialog.jsx",
-      "_dialog.esm-9ecdf0e6.js",
-      "_fieldset.esm-06a343b0.js",
-      "_editor.esm-c48e70ce.js",
-      "_toast.esm-6e989c17.js",
-      "_progressspinner.esm-cdabcb6e.js",
-      "_message.esm-1a1e6f10.js",
-      "_confirmdialog.esm-dc3e748a.js"
+      "_dialog.esm-84a5e061.js",
+      "_fieldset.esm-1a01d11e.js",
+      "_editor.esm-330fbb63.js",
+      "_toast.esm-b4d4ac55.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_message.esm-2c2b0b53.js",
+      "_confirmdialog.esm-7f1ebc12.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Catalogos/Clientes.jsx"
   },
   "resources/js/Pages/Catalogos/Empresa.jsx": {
-    "file": "assets/Empresa-2ff5445a.js",
+    "file": "assets/Empresa-3cbc27b5.js",
     "imports": [
       "resources/js/app.jsx",
-      "_layout-8f92791d.js",
-      "_fieldset.esm-06a343b0.js",
-      "_inputtext.esm-0428364e.js",
-      "_button.esm-9fdd79ba.js",
-      "_progressspinner.esm-cdabcb6e.js",
-      "_toast.esm-6e989c17.js",
-      "_ripple.esm-80139cd0.js",
-      "_index.esm-d0f281b3.js",
-      "_inputswitch.esm-40083b6a.js",
-      "_tooltip.esm-705f6f13.js",
-      "_index.esm-e45aff0a.js",
-      "_index.esm-8e62f4d7.js"
+      "_layout-87baac1f.js",
+      "_fieldset.esm-1a01d11e.js",
+      "_inputtext.esm-21a8a940.js",
+      "_button.esm-46e694e9.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_toast.esm-b4d4ac55.js",
+      "_componentbase.esm-1becf919.js",
+      "_ripple.esm-bef0a74b.js",
+      "_csstransition.esm-4d025c04.js",
+      "_inputswitch.esm-370bc1bb.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_index.esm-c88ad067.js",
+      "_iconbase.esm-565044fd.js",
+      "_index.esm-4dd38ef7.js",
+      "_index.esm-caaa0bd1.js",
+      "_index.esm-bc560454.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Catalogos/Empresa.jsx"
   },
   "resources/js/Pages/Catalogos/Index.jsx": {
-    "file": "assets/Index-bff5ad08.js",
+    "file": "assets/Index-168d371a.js",
     "imports": [
       "resources/js/app.jsx",
-      "_DashboardInfoCard-d0b169e4.js",
-      "_layout-8f92791d.js",
+      "_DashboardInfoCard-074f3a4a.js",
+      "_layout-87baac1f.js",
       "resources/js/Pages/Catalogos/Partials/DialogoCat.jsx",
-      "_toast.esm-6e989c17.js",
-      "_progressspinner.esm-cdabcb6e.js",
-      "_button.esm-9fdd79ba.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js",
-      "_index.esm-d0f281b3.js",
-      "_inputswitch.esm-40083b6a.js",
-      "_dialog.esm-9ecdf0e6.js",
+      "_toast.esm-b4d4ac55.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_button.esm-46e694e9.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_csstransition.esm-4d025c04.js",
+      "_inputswitch.esm-370bc1bb.js",
+      "_index.esm-c88ad067.js",
+      "_dialog.esm-84a5e061.js",
+      "_card.esm-256fdd22.js",
       "resources/js/Pages/Catalogos/Partials/TablasCatalogos.jsx",
-      "_column.esm-c6806a2f.js",
-      "_inputnumber.esm-4baffdac.js",
-      "_index.esm-08b88e95.js",
-      "_inputtext.esm-0428364e.js",
-      "_index.esm-efa2cd0d.js",
-      "_dropdown.esm-4239ca6c.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_index.esm-8e62f4d7.js",
-      "_index.esm-0f0b731f.js",
-      "_index.esm-d29e245c.js",
-      "_index.esm-e45aff0a.js",
+      "_column.esm-212fd85e.js",
+      "_inputnumber.esm-b35cac15.js",
+      "_index.esm-a09854cd.js",
+      "_inputtext.esm-21a8a940.js",
+      "_index.esm-e233148e.js",
+      "_dropdown.esm-e750cd64.js",
+      "_index.esm-727a66c6.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js",
+      "_index.esm-26c769ed.js",
+      "_index.esm-d80e96df.js",
+      "_index.esm-4dd38ef7.js",
       "resources/js/Pages/Catalogos/Partials/FormularioProvedor.jsx",
-      "_index.esm-71f5dc50.js",
+      "_index.esm-ac617616.js",
       "resources/js/Pages/Catalogos/Partials/FormularioDepartamento.jsx",
       "resources/js/Pages/Catalogos/Partials/FormularioClientes.jsx",
       "resources/js/Pages/Catalogos/Partials/FormularioUnidadMedida.jsx",
       "resources/js/Pages/Catalogos/Partials/FormularioUsuario.jsx",
-      "_floatlabel.esm-7b908c2b.js",
+      "_floatlabel.esm-9aa8bf0c.js",
       "resources/js/Pages/Catalogos/Partials/FormularioEmpresa.jsx",
       "resources/js/Pages/Catalogos/Partials/ConfirmarEliminacion.jsx",
-      "_avatar.esm-6382ab9d.js",
+      "_avatar.esm-61520b2c.js",
       "resources/js/Pages/Catalogos/Partials/FormularioMoneda.jsx",
       "resources/js/Pages/Catalogos/Partials/FormularioStatus.jsx"
     ],
@@ -530,23 +780,26 @@
     "src": "resources/js/Pages/Catalogos/Index.jsx"
   },
   "resources/js/Pages/Catalogos/Partials/ConfirmarEliminacion.jsx": {
-    "file": "assets/ConfirmarEliminacion-bcc93d04.js",
+    "file": "assets/ConfirmarEliminacion-9c1c4acc.js",
     "imports": [
       "resources/js/app.jsx",
-      "_button.esm-9fdd79ba.js",
-      "_avatar.esm-6382ab9d.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js"
+      "_button.esm-46e694e9.js",
+      "_avatar.esm-61520b2c.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Catalogos/Partials/ConfirmarEliminacion.jsx"
   },
   "resources/js/Pages/Catalogos/Partials/DialogoCat.jsx": {
-    "file": "assets/DialogoCat-b3e17857.js",
+    "file": "assets/DialogoCat-2f1429ce.js",
     "imports": [
       "resources/js/app.jsx",
-      "_dialog.esm-9ecdf0e6.js",
-      "_ripple.esm-80139cd0.js",
+      "_dialog.esm-84a5e061.js",
+      "_card.esm-256fdd22.js",
       "resources/js/Pages/Catalogos/Partials/TablasCatalogos.jsx",
       "resources/js/Pages/Catalogos/Partials/FormularioProvedor.jsx",
       "resources/js/Pages/Catalogos/Partials/FormularioDepartamento.jsx",
@@ -555,467 +808,561 @@
       "resources/js/Pages/Catalogos/Partials/FormularioUsuario.jsx",
       "resources/js/Pages/Catalogos/Partials/FormularioEmpresa.jsx",
       "resources/js/Pages/Catalogos/Partials/ConfirmarEliminacion.jsx",
-      "_toast.esm-6e989c17.js",
-      "_progressspinner.esm-cdabcb6e.js",
+      "_toast.esm-b4d4ac55.js",
+      "_progressspinner.esm-67f32af2.js",
       "resources/js/Pages/Catalogos/Partials/FormularioMoneda.jsx",
       "resources/js/Pages/Catalogos/Partials/FormularioStatus.jsx",
-      "_index.esm-d0f281b3.js",
-      "_tooltip.esm-705f6f13.js",
-      "_column.esm-c6806a2f.js",
-      "_inputnumber.esm-4baffdac.js",
-      "_index.esm-08b88e95.js",
-      "_inputtext.esm-0428364e.js",
-      "_index.esm-efa2cd0d.js",
-      "_dropdown.esm-4239ca6c.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_index.esm-8e62f4d7.js",
-      "_index.esm-0f0b731f.js",
-      "_index.esm-d29e245c.js",
-      "_button.esm-9fdd79ba.js",
-      "_index.esm-e45aff0a.js",
-      "_index.esm-71f5dc50.js",
-      "_floatlabel.esm-7b908c2b.js",
-      "_avatar.esm-6382ab9d.js"
+      "_componentbase.esm-1becf919.js",
+      "_csstransition.esm-4d025c04.js",
+      "_index.esm-c88ad067.js",
+      "_iconbase.esm-565044fd.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_ripple.esm-bef0a74b.js",
+      "_column.esm-212fd85e.js",
+      "_index.esm-caaa0bd1.js",
+      "_inputnumber.esm-b35cac15.js",
+      "_index.esm-a09854cd.js",
+      "_inputtext.esm-21a8a940.js",
+      "_index.esm-e233148e.js",
+      "_dropdown.esm-e750cd64.js",
+      "_index.esm-727a66c6.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js",
+      "_index.esm-26c769ed.js",
+      "_index.esm-d80e96df.js",
+      "_button.esm-46e694e9.js",
+      "_index.esm-4dd38ef7.js",
+      "_index.esm-ac617616.js",
+      "_floatlabel.esm-9aa8bf0c.js",
+      "_avatar.esm-61520b2c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Catalogos/Partials/DialogoCat.jsx"
   },
   "resources/js/Pages/Catalogos/Partials/FormularioClientes.jsx": {
-    "file": "assets/FormularioClientes-314ae763.js",
+    "file": "assets/FormularioClientes-aa1b5729.js",
     "imports": [
       "resources/js/app.jsx",
-      "_inputtext.esm-0428364e.js",
-      "_button.esm-9fdd79ba.js",
-      "_index.esm-71f5dc50.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js"
+      "_inputtext.esm-21a8a940.js",
+      "_button.esm-46e694e9.js",
+      "_index.esm-ac617616.js",
+      "_componentbase.esm-1becf919.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Catalogos/Partials/FormularioClientes.jsx"
   },
   "resources/js/Pages/Catalogos/Partials/FormularioDepartamento.jsx": {
-    "file": "assets/FormularioDepartamento-0e27ffa9.js",
+    "file": "assets/FormularioDepartamento-d847ea1a.js",
     "imports": [
       "resources/js/app.jsx",
-      "_inputtext.esm-0428364e.js",
-      "_index.esm-71f5dc50.js",
-      "_button.esm-9fdd79ba.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js"
+      "_inputtext.esm-21a8a940.js",
+      "_index.esm-ac617616.js",
+      "_button.esm-46e694e9.js",
+      "_componentbase.esm-1becf919.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Catalogos/Partials/FormularioDepartamento.jsx"
   },
   "resources/js/Pages/Catalogos/Partials/FormularioEmpresa.jsx": {
-    "file": "assets/FormularioEmpresa-9019a27d.js",
+    "file": "assets/FormularioEmpresa-52902f34.js",
     "imports": [
       "resources/js/app.jsx",
-      "_inputtext.esm-0428364e.js",
-      "_floatlabel.esm-7b908c2b.js",
-      "_button.esm-9fdd79ba.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js"
+      "_inputtext.esm-21a8a940.js",
+      "_floatlabel.esm-9aa8bf0c.js",
+      "_button.esm-46e694e9.js",
+      "_componentbase.esm-1becf919.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Catalogos/Partials/FormularioEmpresa.jsx"
   },
   "resources/js/Pages/Catalogos/Partials/FormularioMoneda.jsx": {
-    "file": "assets/FormularioMoneda-3ad75457.js",
+    "file": "assets/FormularioMoneda-2537a43f.js",
     "imports": [
       "resources/js/app.jsx",
-      "_inputtext.esm-0428364e.js",
-      "_button.esm-9fdd79ba.js",
-      "_index.esm-71f5dc50.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js"
+      "_inputtext.esm-21a8a940.js",
+      "_button.esm-46e694e9.js",
+      "_index.esm-ac617616.js",
+      "_componentbase.esm-1becf919.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Catalogos/Partials/FormularioMoneda.jsx"
   },
   "resources/js/Pages/Catalogos/Partials/FormularioProvedor.jsx": {
-    "file": "assets/FormularioProvedor-3b9966f7.js",
+    "file": "assets/FormularioProvedor-a8320353.js",
     "imports": [
       "resources/js/app.jsx",
-      "_inputtext.esm-0428364e.js",
-      "_button.esm-9fdd79ba.js",
-      "_index.esm-71f5dc50.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js"
+      "_inputtext.esm-21a8a940.js",
+      "_button.esm-46e694e9.js",
+      "_index.esm-ac617616.js",
+      "_componentbase.esm-1becf919.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Catalogos/Partials/FormularioProvedor.jsx"
   },
   "resources/js/Pages/Catalogos/Partials/FormularioStatus.jsx": {
-    "file": "assets/FormularioStatus-734786da.js",
+    "file": "assets/FormularioStatus-4f69158e.js",
     "imports": [
       "resources/js/app.jsx",
-      "_inputtext.esm-0428364e.js",
-      "_button.esm-9fdd79ba.js",
-      "_index.esm-71f5dc50.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js"
+      "_inputtext.esm-21a8a940.js",
+      "_button.esm-46e694e9.js",
+      "_index.esm-ac617616.js",
+      "_componentbase.esm-1becf919.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Catalogos/Partials/FormularioStatus.jsx"
   },
   "resources/js/Pages/Catalogos/Partials/FormularioUnidadMedida.jsx": {
-    "file": "assets/FormularioUnidadMedida-b16296dd.js",
+    "file": "assets/FormularioUnidadMedida-9273f756.js",
     "imports": [
       "resources/js/app.jsx",
-      "_inputtext.esm-0428364e.js",
-      "_button.esm-9fdd79ba.js",
-      "_index.esm-71f5dc50.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js"
+      "_inputtext.esm-21a8a940.js",
+      "_button.esm-46e694e9.js",
+      "_index.esm-ac617616.js",
+      "_componentbase.esm-1becf919.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Catalogos/Partials/FormularioUnidadMedida.jsx"
   },
   "resources/js/Pages/Catalogos/Partials/FormularioUsuario.jsx": {
-    "file": "assets/FormularioUsuario-0e354c03.js",
+    "file": "assets/FormularioUsuario-d43721ab.js",
     "imports": [
       "resources/js/app.jsx",
-      "_inputtext.esm-0428364e.js",
-      "_floatlabel.esm-7b908c2b.js",
-      "_button.esm-9fdd79ba.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js"
+      "_inputtext.esm-21a8a940.js",
+      "_floatlabel.esm-9aa8bf0c.js",
+      "_button.esm-46e694e9.js",
+      "_componentbase.esm-1becf919.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Catalogos/Partials/FormularioUsuario.jsx"
   },
   "resources/js/Pages/Catalogos/Partials/NewClienteDialog.jsx": {
-    "file": "assets/NewClienteDialog-189f6d2e.js",
+    "file": "assets/NewClienteDialog-bc67e901.js",
     "imports": [
       "resources/js/app.jsx",
-      "_button.esm-9fdd79ba.js",
-      "_dialog.esm-9ecdf0e6.js",
-      "_inputtext.esm-0428364e.js",
-      "_fieldset.esm-06a343b0.js",
-      "_editor.esm-c48e70ce.js",
-      "_toast.esm-6e989c17.js",
-      "_progressspinner.esm-cdabcb6e.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js",
-      "_index.esm-d0f281b3.js",
-      "_index.esm-e45aff0a.js",
-      "_index.esm-8e62f4d7.js"
+      "_button.esm-46e694e9.js",
+      "_dialog.esm-84a5e061.js",
+      "_inputtext.esm-21a8a940.js",
+      "_fieldset.esm-1a01d11e.js",
+      "_editor.esm-330fbb63.js",
+      "_toast.esm-b4d4ac55.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_csstransition.esm-4d025c04.js",
+      "_index.esm-c88ad067.js",
+      "_index.esm-4dd38ef7.js",
+      "_index.esm-bc560454.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Catalogos/Partials/NewClienteDialog.jsx"
   },
   "resources/js/Pages/Catalogos/Partials/NewUsuarioDialog.jsx": {
-    "file": "assets/NewUsuarioDialog-146dc03a.js",
+    "file": "assets/NewUsuarioDialog-a06e93e8.js",
     "imports": [
       "resources/js/app.jsx",
-      "_inputtext.esm-0428364e.js",
-      "_fieldset.esm-06a343b0.js",
-      "_button.esm-9fdd79ba.js",
-      "_dialog.esm-9ecdf0e6.js",
-      "_dropdown.esm-4239ca6c.js",
-      "_ripple.esm-80139cd0.js",
-      "_index.esm-d0f281b3.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_tooltip.esm-705f6f13.js",
-      "_progressspinner.esm-cdabcb6e.js",
-      "_toast.esm-6e989c17.js",
-      "_index.esm-e45aff0a.js",
-      "_index.esm-8e62f4d7.js"
+      "_inputtext.esm-21a8a940.js",
+      "_fieldset.esm-1a01d11e.js",
+      "_button.esm-46e694e9.js",
+      "_dialog.esm-84a5e061.js",
+      "_dropdown.esm-e750cd64.js",
+      "_componentbase.esm-1becf919.js",
+      "_csstransition.esm-4d025c04.js",
+      "_iconbase.esm-565044fd.js",
+      "_index.esm-727a66c6.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_toast.esm-b4d4ac55.js",
+      "_index.esm-4dd38ef7.js",
+      "_ripple.esm-bef0a74b.js",
+      "_index.esm-caaa0bd1.js",
+      "_index.esm-c88ad067.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Catalogos/Partials/NewUsuarioDialog.jsx"
   },
   "resources/js/Pages/Catalogos/Partials/TablaClientes.jsx": {
-    "file": "assets/TablaClientes-ee7231b5.js",
+    "file": "assets/TablaClientes-e9080251.js",
     "imports": [
       "resources/js/app.jsx",
-      "_column.esm-c6806a2f.js",
-      "_button.esm-9fdd79ba.js",
+      "_column.esm-212fd85e.js",
+      "_button.esm-46e694e9.js",
       "resources/js/Pages/Catalogos/Partials/NewClienteDialog.jsx",
-      "_toast.esm-6e989c17.js",
-      "_progressspinner.esm-cdabcb6e.js",
-      "_message.esm-1a1e6f10.js",
-      "_confirmdialog.esm-dc3e748a.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js",
-      "_inputnumber.esm-4baffdac.js",
-      "_index.esm-08b88e95.js",
-      "_inputtext.esm-0428364e.js",
-      "_index.esm-efa2cd0d.js",
-      "_dropdown.esm-4239ca6c.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_index.esm-d0f281b3.js",
-      "_index.esm-8e62f4d7.js",
-      "_index.esm-0f0b731f.js",
-      "_index.esm-d29e245c.js",
-      "_index.esm-e45aff0a.js",
-      "_dialog.esm-9ecdf0e6.js",
-      "_fieldset.esm-06a343b0.js",
-      "_editor.esm-c48e70ce.js"
+      "_toast.esm-b4d4ac55.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_message.esm-2c2b0b53.js",
+      "_confirmdialog.esm-7f1ebc12.js",
+      "_componentbase.esm-1becf919.js",
+      "_iconbase.esm-565044fd.js",
+      "_index.esm-caaa0bd1.js",
+      "_ripple.esm-bef0a74b.js",
+      "_inputnumber.esm-b35cac15.js",
+      "_index.esm-a09854cd.js",
+      "_inputtext.esm-21a8a940.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_index.esm-e233148e.js",
+      "_dropdown.esm-e750cd64.js",
+      "_index.esm-727a66c6.js",
+      "_index.esm-c88ad067.js",
+      "_csstransition.esm-4d025c04.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js",
+      "_index.esm-26c769ed.js",
+      "_index.esm-d80e96df.js",
+      "_index.esm-4dd38ef7.js",
+      "_dialog.esm-84a5e061.js",
+      "_fieldset.esm-1a01d11e.js",
+      "_editor.esm-330fbb63.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Catalogos/Partials/TablaClientes.jsx"
   },
   "resources/js/Pages/Catalogos/Partials/TablaUsuarios.jsx": {
-    "file": "assets/TablaUsuarios-04a3e5b9.js",
+    "file": "assets/TablaUsuarios-02c20983.js",
     "imports": [
       "resources/js/app.jsx",
-      "_progressspinner.esm-cdabcb6e.js",
-      "_message.esm-1a1e6f10.js",
-      "_toast.esm-6e989c17.js",
-      "_confirmdialog.esm-dc3e748a.js",
-      "_column.esm-c6806a2f.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_message.esm-2c2b0b53.js",
+      "_toast.esm-b4d4ac55.js",
+      "_confirmdialog.esm-7f1ebc12.js",
+      "_column.esm-212fd85e.js",
       "resources/js/Pages/Catalogos/Partials/NewUsuarioDialog.jsx",
-      "_button.esm-9fdd79ba.js",
-      "_ripple.esm-80139cd0.js",
-      "_index.esm-8e62f4d7.js",
-      "_index.esm-d0f281b3.js",
-      "_tooltip.esm-705f6f13.js",
-      "_dialog.esm-9ecdf0e6.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_inputnumber.esm-4baffdac.js",
-      "_index.esm-08b88e95.js",
-      "_inputtext.esm-0428364e.js",
-      "_index.esm-efa2cd0d.js",
-      "_dropdown.esm-4239ca6c.js",
-      "_index.esm-0f0b731f.js",
-      "_index.esm-d29e245c.js",
-      "_index.esm-e45aff0a.js",
-      "_fieldset.esm-06a343b0.js"
+      "_button.esm-46e694e9.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-bc560454.js",
+      "_iconbase.esm-565044fd.js",
+      "_csstransition.esm-4d025c04.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_index.esm-c88ad067.js",
+      "_ripple.esm-bef0a74b.js",
+      "_dialog.esm-84a5e061.js",
+      "_index.esm-727a66c6.js",
+      "_index.esm-caaa0bd1.js",
+      "_inputnumber.esm-b35cac15.js",
+      "_index.esm-a09854cd.js",
+      "_inputtext.esm-21a8a940.js",
+      "_index.esm-e233148e.js",
+      "_dropdown.esm-e750cd64.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-26c769ed.js",
+      "_index.esm-d80e96df.js",
+      "_index.esm-4dd38ef7.js",
+      "_fieldset.esm-1a01d11e.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Catalogos/Partials/TablaUsuarios.jsx"
   },
   "resources/js/Pages/Catalogos/Partials/TablasCatalogos.jsx": {
-    "file": "assets/TablasCatalogos-294657be.js",
+    "file": "assets/TablasCatalogos-e6b38157.js",
     "imports": [
       "resources/js/app.jsx",
-      "_column.esm-c6806a2f.js",
-      "_button.esm-9fdd79ba.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js",
-      "_inputnumber.esm-4baffdac.js",
-      "_index.esm-08b88e95.js",
-      "_inputtext.esm-0428364e.js",
-      "_index.esm-efa2cd0d.js",
-      "_dropdown.esm-4239ca6c.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_index.esm-d0f281b3.js",
-      "_index.esm-8e62f4d7.js",
-      "_index.esm-0f0b731f.js",
-      "_index.esm-d29e245c.js",
-      "_index.esm-e45aff0a.js"
+      "_column.esm-212fd85e.js",
+      "_button.esm-46e694e9.js",
+      "_componentbase.esm-1becf919.js",
+      "_iconbase.esm-565044fd.js",
+      "_index.esm-caaa0bd1.js",
+      "_ripple.esm-bef0a74b.js",
+      "_inputnumber.esm-b35cac15.js",
+      "_index.esm-a09854cd.js",
+      "_inputtext.esm-21a8a940.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_index.esm-e233148e.js",
+      "_dropdown.esm-e750cd64.js",
+      "_index.esm-727a66c6.js",
+      "_index.esm-c88ad067.js",
+      "_csstransition.esm-4d025c04.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js",
+      "_index.esm-26c769ed.js",
+      "_index.esm-d80e96df.js",
+      "_index.esm-4dd38ef7.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Catalogos/Partials/TablasCatalogos.jsx"
   },
   "resources/js/Pages/Catalogos/UsuariosSys.jsx": {
-    "file": "assets/UsuariosSys-e7c22de3.js",
+    "file": "assets/UsuariosSys-7ccd789b.js",
     "imports": [
       "resources/js/app.jsx",
-      "_layout-8f92791d.js",
+      "_layout-87baac1f.js",
       "resources/js/Pages/Catalogos/Partials/TablaUsuarios.jsx",
-      "_ripple.esm-80139cd0.js",
-      "_index.esm-d0f281b3.js",
-      "_button.esm-9fdd79ba.js",
-      "_tooltip.esm-705f6f13.js",
-      "_inputswitch.esm-40083b6a.js",
-      "_progressspinner.esm-cdabcb6e.js",
-      "_message.esm-1a1e6f10.js",
-      "_index.esm-8e62f4d7.js",
-      "_toast.esm-6e989c17.js",
-      "_confirmdialog.esm-dc3e748a.js",
-      "_dialog.esm-9ecdf0e6.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_column.esm-c6806a2f.js",
-      "_inputnumber.esm-4baffdac.js",
-      "_index.esm-08b88e95.js",
-      "_inputtext.esm-0428364e.js",
-      "_index.esm-efa2cd0d.js",
-      "_dropdown.esm-4239ca6c.js",
-      "_index.esm-0f0b731f.js",
-      "_index.esm-d29e245c.js",
-      "_index.esm-e45aff0a.js",
+      "_componentbase.esm-1becf919.js",
+      "_ripple.esm-bef0a74b.js",
+      "_csstransition.esm-4d025c04.js",
+      "_button.esm-46e694e9.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_inputswitch.esm-370bc1bb.js",
+      "_index.esm-c88ad067.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_message.esm-2c2b0b53.js",
+      "_index.esm-bc560454.js",
+      "_toast.esm-b4d4ac55.js",
+      "_confirmdialog.esm-7f1ebc12.js",
+      "_dialog.esm-84a5e061.js",
+      "_index.esm-727a66c6.js",
+      "_column.esm-212fd85e.js",
+      "_inputnumber.esm-b35cac15.js",
+      "_index.esm-a09854cd.js",
+      "_inputtext.esm-21a8a940.js",
+      "_index.esm-e233148e.js",
+      "_dropdown.esm-e750cd64.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-26c769ed.js",
+      "_index.esm-d80e96df.js",
+      "_index.esm-4dd38ef7.js",
       "resources/js/Pages/Catalogos/Partials/NewUsuarioDialog.jsx",
-      "_fieldset.esm-06a343b0.js"
+      "_fieldset.esm-1a01d11e.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Catalogos/UsuariosSys.jsx"
   },
   "resources/js/Pages/Cotizaciones/Index.jsx": {
-    "file": "assets/Index-cb3e0db7.js",
+    "file": "assets/Index-89c3e3c1.js",
     "imports": [
       "resources/js/app.jsx",
-      "_layout-8f92791d.js",
+      "_layout-87baac1f.js",
       "resources/js/Pages/Cotizaciones/partials/ConceptoTabla.jsx",
+      "_selectbutton.esm-bc587bba.js",
+      "_componentbase.esm-1becf919.js",
+      "_ripple.esm-bef0a74b.js",
+      "_csstransition.esm-4d025c04.js",
+      "_button.esm-46e694e9.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_inputswitch.esm-370bc1bb.js",
+      "_index.esm-c88ad067.js",
+      "_index-f3d9d141.js",
+      "_column.esm-212fd85e.js",
+      "_inputnumber.esm-b35cac15.js",
+      "_index.esm-a09854cd.js",
+      "_inputtext.esm-21a8a940.js",
+      "_index.esm-e233148e.js",
+      "_dropdown.esm-e750cd64.js",
+      "_index.esm-727a66c6.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js",
+      "_index.esm-26c769ed.js",
+      "_index.esm-d80e96df.js",
+      "_index.esm-4dd38ef7.js",
+      "_toast.esm-b4d4ac55.js",
       "resources/js/Pages/Cotizaciones/partials/Dialogo.jsx",
-      "_ripple.esm-80139cd0.js",
-      "_index.esm-d0f281b3.js",
-      "_button.esm-9fdd79ba.js",
-      "_tooltip.esm-705f6f13.js",
-      "_inputswitch.esm-40083b6a.js",
-      "resources/js/Pages/Cotizaciones/partials/ExcelPersonalizador.jsx",
-      "_dialog.esm-9ecdf0e6.js",
-      "_progressspinner.esm-cdabcb6e.js",
-      "_toast.esm-6e989c17.js",
-      "_index.esm-8e62f4d7.js",
-      "_column.esm-c6806a2f.js",
-      "_inputnumber.esm-4baffdac.js",
-      "_index.esm-08b88e95.js",
-      "_inputtext.esm-0428364e.js",
-      "_index.esm-efa2cd0d.js",
-      "_dropdown.esm-4239ca6c.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_index.esm-0f0b731f.js",
-      "_index.esm-d29e245c.js",
-      "_index.esm-e45aff0a.js",
-      "resources/js/Pages/Cotizaciones/partials/ConfirmarEliminacion.jsx",
-      "_avatar.esm-6382ab9d.js",
-      "resources/js/Pages/Cotizaciones/partials/ConfirmarDuplicacion.jsx",
-      "_badge.esm-1a7a725f.js",
-      "resources/js/Pages/Cotizaciones/partials/VistaPreviaCotizacion.jsx",
-      "resources/js/Pages/Cotizaciones/partials/CodigosDialog.jsx",
-      "_calendar.esm-0c370d01.js",
-      "_confirmdialog.esm-dc3e748a.js",
-      "resources/js/Pages/Cotizaciones/partials/BusquedaCotizacion.jsx",
-      "_message.esm-1a1e6f10.js",
-      "resources/js/Pages/Cotizaciones/partials/BusquedaAvanzadaCotizacion.jsx",
-      "_floatlabel.esm-7b908c2b.js",
+      "_dialog.esm-84a5e061.js",
+      "_floatlabel.esm-9aa8bf0c.js",
+      "_calendar.esm-e19123ec.js",
       "resources/js/Pages/Cotizaciones/partials/SelectorFilter.jsx",
-      "_divider.esm-c5d6b65f.js",
-      "_fieldset.esm-06a343b0.js"
+      "_confirmdialog.esm-7f1ebc12.js",
+      "_divider.esm-f47843a3.js",
+      "_fieldset.esm-1a01d11e.js",
+      "resources/js/Pages/Cotizaciones/partials/ConfirmarEliminacion.jsx",
+      "_avatar.esm-61520b2c.js",
+      "resources/js/Pages/Cotizaciones/partials/ConfirmarDuplicacion.jsx",
+      "_badge.esm-a1474c6d.js",
+      "resources/js/Pages/Cotizaciones/partials/VistaPreviaCotizacion.jsx",
+      "_progressspinner.esm-67f32af2.js",
+      "resources/js/Pages/Cotizaciones/partials/CodigosDialog.jsx",
+      "resources/js/Pages/Cotizaciones/partials/BusquedaCotizacion.jsx",
+      "_message.esm-2c2b0b53.js",
+      "resources/js/Pages/Cotizaciones/partials/BusquedaAvanzadaCotizacion.jsx",
+      "resources/js/Pages/Cotizaciones/partials/ExcelPersonalizador.jsx"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Cotizaciones/Index.jsx"
   },
   "resources/js/Pages/Cotizaciones/detalleCaptura.jsx": {
-    "file": "assets/detalleCaptura-ca0e4daa.js",
+    "file": "assets/detalleCaptura-afe2c6fb.js",
     "imports": [
       "resources/js/app.jsx",
-      "_layout-8f92791d.js",
+      "_layout-87baac1f.js",
       "resources/js/Pages/Cotizaciones/partials/DetalleCotizacionTabla.jsx",
       "resources/js/Pages/Cotizaciones/partials/DialogDetalleCotizacion.jsx",
-      "_button.esm-9fdd79ba.js",
+      "_button.esm-46e694e9.js",
       "resources/js/Pages/Cotizaciones/partials/BusquedaConceptos.jsx",
-      "resources/js/Pages/Cotizaciones/partials/ExcelPersonalizador.jsx",
+      "_index-f3d9d141.js",
       "resources/js/Pages/Cotizaciones/partials/VistaPreviaCotizacion.jsx",
-      "_ripple.esm-80139cd0.js",
-      "_index.esm-d0f281b3.js",
-      "_inputswitch.esm-40083b6a.js",
-      "_tooltip.esm-705f6f13.js",
-      "_confirmdialog.esm-dc3e748a.js",
-      "_dialog.esm-9ecdf0e6.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_toast.esm-6e989c17.js",
-      "_index.esm-8e62f4d7.js",
+      "resources/js/Pages/Cotizaciones/partials/ExcelPersonalizador.jsx",
+      "_componentbase.esm-1becf919.js",
+      "_ripple.esm-bef0a74b.js",
+      "_csstransition.esm-4d025c04.js",
+      "_inputswitch.esm-370bc1bb.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_index.esm-c88ad067.js",
+      "_iconbase.esm-565044fd.js",
+      "_confirmdialog.esm-7f1ebc12.js",
+      "_dialog.esm-84a5e061.js",
+      "_index.esm-727a66c6.js",
+      "_toast.esm-b4d4ac55.js",
+      "_index.esm-bc560454.js",
+      "_toolbar.esm-4deb11a8.js",
       "_purify.es-851ec8c9.js",
-      "_progressspinner.esm-cdabcb6e.js",
+      "_progressspinner.esm-67f32af2.js",
       "resources/js/Pages/Cotizaciones/partials/FormItemDetalle.jsx",
-      "_inputnumber.esm-4baffdac.js",
-      "_index.esm-08b88e95.js",
-      "_inputtext.esm-0428364e.js",
-      "_divider.esm-c5d6b65f.js",
-      "_dropdown.esm-4239ca6c.js",
-      "_editor.esm-c48e70ce.js",
-      "_badge.esm-1a7a725f.js",
+      "_inputnumber.esm-b35cac15.js",
+      "_index.esm-a09854cd.js",
+      "_inputtext.esm-21a8a940.js",
+      "_slider.esm-1d1c7285.js",
+      "_divider.esm-f47843a3.js",
+      "_dropdown.esm-e750cd64.js",
+      "_index.esm-caaa0bd1.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_editor.esm-330fbb63.js",
+      "_badge.esm-a1474c6d.js",
       "resources/js/Pages/Cotizaciones/partials/TableConceptosGral.jsx",
-      "_column.esm-c6806a2f.js",
-      "_index.esm-efa2cd0d.js",
-      "_index.esm-0f0b731f.js",
-      "_index.esm-d29e245c.js",
-      "_index.esm-e45aff0a.js"
+      "_column.esm-212fd85e.js",
+      "_index.esm-e233148e.js",
+      "_index.esm-26c769ed.js",
+      "_index.esm-d80e96df.js",
+      "_index.esm-4dd38ef7.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Cotizaciones/detalleCaptura.jsx"
   },
   "resources/js/Pages/Cotizaciones/partials/BusquedaAvanzadaCotizacion.jsx": {
-    "file": "assets/BusquedaAvanzadaCotizacion-6c0c0d7e.js",
+    "file": "assets/BusquedaAvanzadaCotizacion-ae466897.js",
     "imports": [
       "resources/js/app.jsx",
-      "_button.esm-9fdd79ba.js",
-      "_dialog.esm-9ecdf0e6.js",
-      "_progressspinner.esm-cdabcb6e.js",
-      "_inputtext.esm-0428364e.js",
-      "_dropdown.esm-4239ca6c.js",
-      "_calendar.esm-0c370d01.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js",
-      "_index.esm-d0f281b3.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_index.esm-8e62f4d7.js",
-      "_index.esm-d29e245c.js"
+      "_button.esm-46e694e9.js",
+      "_dialog.esm-84a5e061.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_inputtext.esm-21a8a940.js",
+      "_dropdown.esm-e750cd64.js",
+      "_calendar.esm-e19123ec.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_csstransition.esm-4d025c04.js",
+      "_index.esm-c88ad067.js",
+      "_index.esm-727a66c6.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js",
+      "_index.esm-d80e96df.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Cotizaciones/partials/BusquedaAvanzadaCotizacion.jsx"
   },
   "resources/js/Pages/Cotizaciones/partials/BusquedaConceptos.jsx": {
-    "file": "assets/BusquedaConceptos-1cb13a4e.js",
+    "file": "assets/BusquedaConceptos-4769261e.js",
     "imports": [
       "resources/js/app.jsx",
-      "_button.esm-9fdd79ba.js",
-      "_dialog.esm-9ecdf0e6.js",
+      "_button.esm-46e694e9.js",
+      "_dialog.esm-84a5e061.js",
       "resources/js/Pages/Cotizaciones/partials/TableConceptosGral.jsx",
-      "_inputtext.esm-0428364e.js",
-      "_progressspinner.esm-cdabcb6e.js",
-      "_dropdown.esm-4239ca6c.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js",
-      "_index.esm-d0f281b3.js",
-      "_column.esm-c6806a2f.js",
-      "_inputnumber.esm-4baffdac.js",
-      "_index.esm-08b88e95.js",
-      "_index.esm-efa2cd0d.js",
-      "_index.esm-0f0b731f.js",
-      "_index.esm-8e62f4d7.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_index.esm-d29e245c.js",
-      "_index.esm-e45aff0a.js",
-      "_confirmdialog.esm-dc3e748a.js",
-      "_toast.esm-6e989c17.js",
+      "_inputtext.esm-21a8a940.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_dropdown.esm-e750cd64.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_csstransition.esm-4d025c04.js",
+      "_index.esm-c88ad067.js",
+      "_column.esm-212fd85e.js",
+      "_inputnumber.esm-b35cac15.js",
+      "_index.esm-a09854cd.js",
+      "_index.esm-e233148e.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-26c769ed.js",
+      "_index.esm-bc560454.js",
+      "_index.esm-727a66c6.js",
+      "_index.esm-d80e96df.js",
+      "_index.esm-4dd38ef7.js",
+      "_confirmdialog.esm-7f1ebc12.js",
+      "_toast.esm-b4d4ac55.js",
       "_purify.es-851ec8c9.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Cotizaciones/partials/BusquedaConceptos.jsx"
   },
   "resources/js/Pages/Cotizaciones/partials/BusquedaCotizacion.jsx": {
-    "file": "assets/BusquedaCotizacion-c4029bc3.js",
+    "file": "assets/BusquedaCotizacion-4870f3c6.js",
     "imports": [
       "resources/js/app.jsx",
-      "_dropdown.esm-4239ca6c.js",
-      "_button.esm-9fdd79ba.js",
-      "_ripple.esm-80139cd0.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_tooltip.esm-705f6f13.js",
-      "_index.esm-d0f281b3.js",
-      "_index.esm-8e62f4d7.js"
+      "_dropdown.esm-e750cd64.js",
+      "_button.esm-46e694e9.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-727a66c6.js",
+      "_iconbase.esm-565044fd.js",
+      "_index.esm-caaa0bd1.js",
+      "_index.esm-c88ad067.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_csstransition.esm-4d025c04.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_ripple.esm-bef0a74b.js",
+      "_index.esm-bc560454.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Cotizaciones/partials/BusquedaCotizacion.jsx"
   },
   "resources/js/Pages/Cotizaciones/partials/CodigosDialog.jsx": {
-    "file": "assets/CodigosDialog-633dc1d0.js",
+    "file": "assets/CodigosDialog-97537c0a.js",
     "imports": [
       "resources/js/app.jsx",
-      "_dialog.esm-9ecdf0e6.js",
-      "_button.esm-9fdd79ba.js",
-      "_inputtext.esm-0428364e.js",
-      "_calendar.esm-0c370d01.js",
-      "_column.esm-c6806a2f.js",
-      "_toast.esm-6e989c17.js",
-      "_confirmdialog.esm-dc3e748a.js",
-      "_progressspinner.esm-cdabcb6e.js",
-      "_ripple.esm-80139cd0.js",
-      "_index.esm-d0f281b3.js",
-      "_tooltip.esm-705f6f13.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_index.esm-d29e245c.js",
-      "_dropdown.esm-4239ca6c.js",
-      "_index.esm-8e62f4d7.js",
-      "_inputnumber.esm-4baffdac.js",
-      "_index.esm-08b88e95.js",
-      "_index.esm-efa2cd0d.js",
-      "_index.esm-0f0b731f.js",
-      "_index.esm-e45aff0a.js"
+      "_dialog.esm-84a5e061.js",
+      "_button.esm-46e694e9.js",
+      "_inputtext.esm-21a8a940.js",
+      "_calendar.esm-e19123ec.js",
+      "_column.esm-212fd85e.js",
+      "_toast.esm-b4d4ac55.js",
+      "_confirmdialog.esm-7f1ebc12.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_componentbase.esm-1becf919.js",
+      "_csstransition.esm-4d025c04.js",
+      "_index.esm-c88ad067.js",
+      "_iconbase.esm-565044fd.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_ripple.esm-bef0a74b.js",
+      "_index.esm-caaa0bd1.js",
+      "_index.esm-727a66c6.js",
+      "_index.esm-d80e96df.js",
+      "_dropdown.esm-e750cd64.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js",
+      "_inputnumber.esm-b35cac15.js",
+      "_index.esm-a09854cd.js",
+      "_index.esm-e233148e.js",
+      "_index.esm-26c769ed.js",
+      "_index.esm-4dd38ef7.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Cotizaciones/partials/CodigosDialog.jsx"
@@ -1028,387 +1375,935 @@
     "css": [
       "assets/ConceptoTabla-4e27d271.css"
     ],
-    "file": "assets/ConceptoTabla-ee72246f.js",
+    "file": "assets/ConceptoTabla-19d150c1.js",
     "imports": [
       "resources/js/app.jsx",
-      "resources/js/Pages/Cotizaciones/partials/ExcelPersonalizador.jsx",
-      "_column.esm-c6806a2f.js",
-      "_button.esm-9fdd79ba.js",
-      "_toast.esm-6e989c17.js",
+      "_index-f3d9d141.js",
+      "_column.esm-212fd85e.js",
+      "_button.esm-46e694e9.js",
+      "_toast.esm-b4d4ac55.js",
       "resources/js/Pages/Cotizaciones/partials/Dialogo.jsx",
       "resources/js/Pages/Cotizaciones/partials/ConfirmarEliminacion.jsx",
       "resources/js/Pages/Cotizaciones/partials/ConfirmarDuplicacion.jsx",
-      "_tooltip.esm-705f6f13.js",
-      "_badge.esm-1a7a725f.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_badge.esm-a1474c6d.js",
       "resources/js/Pages/Cotizaciones/partials/VistaPreviaCotizacion.jsx",
       "resources/js/Pages/Cotizaciones/partials/CodigosDialog.jsx",
       "resources/js/Pages/Cotizaciones/partials/BusquedaCotizacion.jsx",
-      "_progressspinner.esm-cdabcb6e.js",
-      "_message.esm-1a1e6f10.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_message.esm-2c2b0b53.js",
       "resources/js/Pages/Cotizaciones/partials/BusquedaAvanzadaCotizacion.jsx",
-      "_dialog.esm-9ecdf0e6.js",
-      "_ripple.esm-80139cd0.js",
-      "_index.esm-d0f281b3.js",
-      "_inputswitch.esm-40083b6a.js",
-      "_inputnumber.esm-4baffdac.js",
-      "_index.esm-08b88e95.js",
-      "_inputtext.esm-0428364e.js",
-      "_index.esm-efa2cd0d.js",
-      "_dropdown.esm-4239ca6c.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_index.esm-8e62f4d7.js",
-      "_index.esm-0f0b731f.js",
-      "_index.esm-d29e245c.js",
-      "_index.esm-e45aff0a.js",
-      "_floatlabel.esm-7b908c2b.js",
-      "_calendar.esm-0c370d01.js",
+      "resources/js/Pages/Cotizaciones/partials/ExcelPersonalizador.jsx",
+      "_componentbase.esm-1becf919.js",
+      "_iconbase.esm-565044fd.js",
+      "_index.esm-caaa0bd1.js",
+      "_ripple.esm-bef0a74b.js",
+      "_inputnumber.esm-b35cac15.js",
+      "_index.esm-a09854cd.js",
+      "_inputtext.esm-21a8a940.js",
+      "_index.esm-e233148e.js",
+      "_dropdown.esm-e750cd64.js",
+      "_index.esm-727a66c6.js",
+      "_index.esm-c88ad067.js",
+      "_csstransition.esm-4d025c04.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js",
+      "_index.esm-26c769ed.js",
+      "_index.esm-d80e96df.js",
+      "_index.esm-4dd38ef7.js",
+      "_dialog.esm-84a5e061.js",
+      "_floatlabel.esm-9aa8bf0c.js",
+      "_calendar.esm-e19123ec.js",
       "resources/js/Pages/Cotizaciones/partials/SelectorFilter.jsx",
-      "_confirmdialog.esm-dc3e748a.js",
-      "_divider.esm-c5d6b65f.js",
-      "_fieldset.esm-06a343b0.js",
-      "_avatar.esm-6382ab9d.js"
+      "_confirmdialog.esm-7f1ebc12.js",
+      "_selectbutton.esm-bc587bba.js",
+      "_divider.esm-f47843a3.js",
+      "_fieldset.esm-1a01d11e.js",
+      "_avatar.esm-61520b2c.js",
+      "_inputswitch.esm-370bc1bb.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Cotizaciones/partials/ConceptoTabla.jsx"
   },
   "resources/js/Pages/Cotizaciones/partials/ConfirmarDuplicacion.jsx": {
-    "file": "assets/ConfirmarDuplicacion-40727c3b.js",
+    "file": "assets/ConfirmarDuplicacion-7092b5e8.js",
     "imports": [
       "resources/js/app.jsx",
-      "_button.esm-9fdd79ba.js",
-      "_avatar.esm-6382ab9d.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js"
+      "_button.esm-46e694e9.js",
+      "_avatar.esm-61520b2c.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Cotizaciones/partials/ConfirmarDuplicacion.jsx"
   },
   "resources/js/Pages/Cotizaciones/partials/ConfirmarEliminacion.jsx": {
-    "file": "assets/ConfirmarEliminacion-9a82e13d.js",
+    "file": "assets/ConfirmarEliminacion-9b8445bc.js",
     "imports": [
       "resources/js/app.jsx",
-      "_button.esm-9fdd79ba.js",
-      "_avatar.esm-6382ab9d.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js"
+      "_button.esm-46e694e9.js",
+      "_avatar.esm-61520b2c.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Cotizaciones/partials/ConfirmarEliminacion.jsx"
   },
   "resources/js/Pages/Cotizaciones/partials/DetalleCotizacionTabla.jsx": {
-    "file": "assets/DetalleCotizacionTabla-160f5d8b.js",
+    "file": "assets/DetalleCotizacionTabla-9337319f.js",
     "imports": [
       "resources/js/app.jsx",
-      "_button.esm-9fdd79ba.js",
+      "_button.esm-46e694e9.js",
       "resources/js/Pages/Cotizaciones/partials/DialogDetalleCotizacion.jsx",
-      "_confirmdialog.esm-dc3e748a.js",
-      "_toast.esm-6e989c17.js",
-      "_ripple.esm-80139cd0.js",
+      "_confirmdialog.esm-7f1ebc12.js",
+      "_toast.esm-b4d4ac55.js",
+      "_toolbar.esm-4deb11a8.js",
       "_purify.es-851ec8c9.js",
-      "_progressspinner.esm-cdabcb6e.js",
-      "_tooltip.esm-705f6f13.js",
-      "_dialog.esm-9ecdf0e6.js",
-      "_index.esm-d0f281b3.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_dialog.esm-84a5e061.js",
+      "_csstransition.esm-4d025c04.js",
+      "_index.esm-c88ad067.js",
       "resources/js/Pages/Cotizaciones/partials/FormItemDetalle.jsx",
-      "_inputnumber.esm-4baffdac.js",
-      "_index.esm-08b88e95.js",
-      "_inputtext.esm-0428364e.js",
-      "_divider.esm-c5d6b65f.js",
-      "_dropdown.esm-4239ca6c.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_index.esm-8e62f4d7.js",
-      "_editor.esm-c48e70ce.js",
-      "_badge.esm-1a7a725f.js"
+      "_inputnumber.esm-b35cac15.js",
+      "_index.esm-a09854cd.js",
+      "_inputtext.esm-21a8a940.js",
+      "_slider.esm-1d1c7285.js",
+      "_divider.esm-f47843a3.js",
+      "_dropdown.esm-e750cd64.js",
+      "_index.esm-727a66c6.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js",
+      "_editor.esm-330fbb63.js",
+      "_badge.esm-a1474c6d.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Cotizaciones/partials/DetalleCotizacionTabla.jsx"
   },
   "resources/js/Pages/Cotizaciones/partials/DialogDetalleCotizacion.jsx": {
-    "file": "assets/DialogDetalleCotizacion-b8b228e0.js",
+    "file": "assets/DialogDetalleCotizacion-3985f731.js",
     "imports": [
       "resources/js/app.jsx",
-      "_button.esm-9fdd79ba.js",
-      "_dialog.esm-9ecdf0e6.js",
+      "_button.esm-46e694e9.js",
+      "_dialog.esm-84a5e061.js",
       "resources/js/Pages/Cotizaciones/partials/FormItemDetalle.jsx",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js",
-      "_index.esm-d0f281b3.js",
-      "_inputnumber.esm-4baffdac.js",
-      "_index.esm-08b88e95.js",
-      "_inputtext.esm-0428364e.js",
-      "_divider.esm-c5d6b65f.js",
-      "_dropdown.esm-4239ca6c.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_index.esm-8e62f4d7.js",
-      "_toast.esm-6e989c17.js",
-      "_progressspinner.esm-cdabcb6e.js",
-      "_editor.esm-c48e70ce.js",
-      "_badge.esm-1a7a725f.js"
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_csstransition.esm-4d025c04.js",
+      "_index.esm-c88ad067.js",
+      "_inputnumber.esm-b35cac15.js",
+      "_index.esm-a09854cd.js",
+      "_inputtext.esm-21a8a940.js",
+      "_slider.esm-1d1c7285.js",
+      "_divider.esm-f47843a3.js",
+      "_dropdown.esm-e750cd64.js",
+      "_index.esm-727a66c6.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js",
+      "_toast.esm-b4d4ac55.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_editor.esm-330fbb63.js",
+      "_badge.esm-a1474c6d.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Cotizaciones/partials/DialogDetalleCotizacion.jsx"
   },
-  "resources/js/Pages/Cotizaciones/partials/Dialogo.css": {
-    "file": "assets/Dialogo-3ba77e69.css",
-    "src": "resources/js/Pages/Cotizaciones/partials/Dialogo.css"
-  },
   "resources/js/Pages/Cotizaciones/partials/Dialogo.jsx": {
-    "css": [
-      "assets/Dialogo-3ba77e69.css"
-    ],
-    "file": "assets/Dialogo-fed029fe.js",
+    "file": "assets/Dialogo-96bda2b3.js",
     "imports": [
       "resources/js/app.jsx",
-      "_button.esm-9fdd79ba.js",
-      "_dialog.esm-9ecdf0e6.js",
-      "_inputtext.esm-0428364e.js",
-      "_floatlabel.esm-7b908c2b.js",
-      "_calendar.esm-0c370d01.js",
+      "_button.esm-46e694e9.js",
+      "_dialog.esm-84a5e061.js",
+      "_inputtext.esm-21a8a940.js",
+      "_floatlabel.esm-9aa8bf0c.js",
+      "_calendar.esm-e19123ec.js",
       "resources/js/Pages/Cotizaciones/partials/SelectorFilter.jsx",
-      "_toast.esm-6e989c17.js",
-      "_confirmdialog.esm-dc3e748a.js",
-      "_divider.esm-c5d6b65f.js",
-      "_fieldset.esm-06a343b0.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js",
-      "_index.esm-d0f281b3.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_index.esm-d29e245c.js",
-      "_dropdown.esm-4239ca6c.js",
-      "_index.esm-8e62f4d7.js",
-      "_index.esm-e45aff0a.js"
+      "_toast.esm-b4d4ac55.js",
+      "_confirmdialog.esm-7f1ebc12.js",
+      "_selectbutton.esm-bc587bba.js",
+      "_divider.esm-f47843a3.js",
+      "_fieldset.esm-1a01d11e.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_csstransition.esm-4d025c04.js",
+      "_index.esm-c88ad067.js",
+      "_index.esm-727a66c6.js",
+      "_index.esm-d80e96df.js",
+      "_dropdown.esm-e750cd64.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js",
+      "_index.esm-4dd38ef7.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Cotizaciones/partials/Dialogo.jsx"
   },
   "resources/js/Pages/Cotizaciones/partials/ExcelPersonalizador.jsx": {
-    "file": "assets/ExcelPersonalizador-0fc62904.js",
+    "file": "assets/ExcelPersonalizador-7a9b9c71.js",
     "imports": [
       "resources/js/app.jsx",
-      "_button.esm-9fdd79ba.js",
-      "_dialog.esm-9ecdf0e6.js",
-      "_progressspinner.esm-cdabcb6e.js",
-      "_inputswitch.esm-40083b6a.js",
-      "_toast.esm-6e989c17.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js",
-      "_index.esm-d0f281b3.js",
-      "_index.esm-8e62f4d7.js"
+      "_button.esm-46e694e9.js",
+      "_dialog.esm-84a5e061.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_inputswitch.esm-370bc1bb.js",
+      "_index-f3d9d141.js",
+      "_toast.esm-b4d4ac55.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_csstransition.esm-4d025c04.js",
+      "_index.esm-c88ad067.js",
+      "_index.esm-bc560454.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Cotizaciones/partials/ExcelPersonalizador.jsx"
   },
   "resources/js/Pages/Cotizaciones/partials/FormItemDetalle.jsx": {
-    "file": "assets/FormItemDetalle-a733bc19.js",
+    "file": "assets/FormItemDetalle-28cc4680.js",
     "imports": [
       "resources/js/app.jsx",
-      "_inputnumber.esm-4baffdac.js",
-      "_ripple.esm-80139cd0.js",
-      "_inputtext.esm-0428364e.js",
-      "_tooltip.esm-705f6f13.js",
-      "_divider.esm-c5d6b65f.js",
-      "_dropdown.esm-4239ca6c.js",
-      "_button.esm-9fdd79ba.js",
-      "_toast.esm-6e989c17.js",
-      "_progressspinner.esm-cdabcb6e.js",
-      "_editor.esm-c48e70ce.js",
-      "_badge.esm-1a7a725f.js",
-      "_index.esm-08b88e95.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_index.esm-d0f281b3.js",
-      "_index.esm-8e62f4d7.js"
+      "_inputnumber.esm-b35cac15.js",
+      "_slider.esm-1d1c7285.js",
+      "_divider.esm-f47843a3.js",
+      "_inputtext.esm-21a8a940.js",
+      "_dropdown.esm-e750cd64.js",
+      "_button.esm-46e694e9.js",
+      "_toast.esm-b4d4ac55.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_editor.esm-330fbb63.js",
+      "_badge.esm-a1474c6d.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-a09854cd.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_index.esm-727a66c6.js",
+      "_index.esm-caaa0bd1.js",
+      "_index.esm-c88ad067.js",
+      "_csstransition.esm-4d025c04.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Cotizaciones/partials/FormItemDetalle.jsx"
   },
   "resources/js/Pages/Cotizaciones/partials/Menu.jsx": {
-    "file": "assets/Menu-cba82ac4.js",
+    "file": "assets/Menu-507549bd.js",
     "imports": [
       "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js",
-      "_index.esm-08b88e95.js",
-      "_index.esm-efa2cd0d.js",
-      "_index.esm-0f0b731f.js"
+      "_megamenu.esm-db294cf3.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-a09854cd.js",
+      "_iconbase.esm-565044fd.js",
+      "_index.esm-e233148e.js",
+      "_index.esm-26c769ed.js",
+      "_ripple.esm-bef0a74b.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Cotizaciones/partials/Menu.jsx"
   },
   "resources/js/Pages/Cotizaciones/partials/MenuDetalle.jsx": {
-    "file": "assets/MenuDetalle-0821e8e4.js",
+    "file": "assets/MenuDetalle-9b90ddf8.js",
     "imports": [
       "resources/js/app.jsx",
-      "_ripple.esm-80139cd0.js",
-      "_index.esm-0f0b731f.js",
-      "_index.esm-08b88e95.js",
-      "_index.esm-efa2cd0d.js",
+      "_menubar.esm-8a4a686b.js",
       "resources/js/Pages/Cotizaciones/partials/DialogDetalleCotizacion.jsx",
-      "_button.esm-9fdd79ba.js",
-      "_tooltip.esm-705f6f13.js",
-      "_dialog.esm-9ecdf0e6.js",
-      "_index.esm-d0f281b3.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-26c769ed.js",
+      "_iconbase.esm-565044fd.js",
+      "_index.esm-a09854cd.js",
+      "_index.esm-e233148e.js",
+      "_ripple.esm-bef0a74b.js",
+      "_button.esm-46e694e9.js",
+      "_index.esm-caaa0bd1.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_dialog.esm-84a5e061.js",
+      "_csstransition.esm-4d025c04.js",
+      "_index.esm-c88ad067.js",
       "resources/js/Pages/Cotizaciones/partials/FormItemDetalle.jsx",
-      "_inputnumber.esm-4baffdac.js",
-      "_inputtext.esm-0428364e.js",
-      "_divider.esm-c5d6b65f.js",
-      "_dropdown.esm-4239ca6c.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_index.esm-8e62f4d7.js",
-      "_toast.esm-6e989c17.js",
-      "_progressspinner.esm-cdabcb6e.js",
-      "_editor.esm-c48e70ce.js",
-      "_badge.esm-1a7a725f.js"
+      "_inputnumber.esm-b35cac15.js",
+      "_inputtext.esm-21a8a940.js",
+      "_slider.esm-1d1c7285.js",
+      "_divider.esm-f47843a3.js",
+      "_dropdown.esm-e750cd64.js",
+      "_index.esm-727a66c6.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js",
+      "_toast.esm-b4d4ac55.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_editor.esm-330fbb63.js",
+      "_badge.esm-a1474c6d.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Cotizaciones/partials/MenuDetalle.jsx"
   },
   "resources/js/Pages/Cotizaciones/partials/SelectorFilter.jsx": {
-    "file": "assets/SelectorFilter-5e941231.js",
+    "file": "assets/SelectorFilter-e722e6f6.js",
     "imports": [
       "resources/js/app.jsx",
-      "_dropdown.esm-4239ca6c.js",
-      "_ripple.esm-80139cd0.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_tooltip.esm-705f6f13.js",
-      "_index.esm-d0f281b3.js",
-      "_index.esm-8e62f4d7.js"
+      "_dropdown.esm-e750cd64.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-727a66c6.js",
+      "_iconbase.esm-565044fd.js",
+      "_index.esm-caaa0bd1.js",
+      "_index.esm-c88ad067.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_csstransition.esm-4d025c04.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_ripple.esm-bef0a74b.js",
+      "_index.esm-bc560454.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Cotizaciones/partials/SelectorFilter.jsx"
   },
   "resources/js/Pages/Cotizaciones/partials/TableConceptosGral.jsx": {
-    "file": "assets/TableConceptosGral-d23ad0b3.js",
+    "file": "assets/TableConceptosGral-4623b500.js",
     "imports": [
       "resources/js/app.jsx",
-      "_column.esm-c6806a2f.js",
-      "_confirmdialog.esm-dc3e748a.js",
-      "_toast.esm-6e989c17.js",
-      "_button.esm-9fdd79ba.js",
+      "_column.esm-212fd85e.js",
+      "_confirmdialog.esm-7f1ebc12.js",
+      "_toast.esm-b4d4ac55.js",
+      "_button.esm-46e694e9.js",
       "_purify.es-851ec8c9.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js",
-      "_inputnumber.esm-4baffdac.js",
-      "_index.esm-08b88e95.js",
-      "_inputtext.esm-0428364e.js",
-      "_index.esm-efa2cd0d.js",
-      "_dropdown.esm-4239ca6c.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_index.esm-d0f281b3.js",
-      "_index.esm-8e62f4d7.js",
-      "_index.esm-0f0b731f.js",
-      "_index.esm-d29e245c.js",
-      "_index.esm-e45aff0a.js",
-      "_dialog.esm-9ecdf0e6.js"
+      "_componentbase.esm-1becf919.js",
+      "_iconbase.esm-565044fd.js",
+      "_index.esm-caaa0bd1.js",
+      "_ripple.esm-bef0a74b.js",
+      "_inputnumber.esm-b35cac15.js",
+      "_index.esm-a09854cd.js",
+      "_inputtext.esm-21a8a940.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_index.esm-e233148e.js",
+      "_dropdown.esm-e750cd64.js",
+      "_index.esm-727a66c6.js",
+      "_index.esm-c88ad067.js",
+      "_csstransition.esm-4d025c04.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js",
+      "_index.esm-26c769ed.js",
+      "_index.esm-d80e96df.js",
+      "_index.esm-4dd38ef7.js",
+      "_dialog.esm-84a5e061.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Cotizaciones/partials/TableConceptosGral.jsx"
   },
   "resources/js/Pages/Cotizaciones/partials/VistaPreviaCotizacion.jsx": {
-    "file": "assets/VistaPreviaCotizacion-8ab1f975.js",
+    "file": "assets/VistaPreviaCotizacion-2b088f7e.js",
     "imports": [
       "resources/js/app.jsx",
-      "_button.esm-9fdd79ba.js",
-      "_dialog.esm-9ecdf0e6.js",
-      "_progressspinner.esm-cdabcb6e.js",
-      "_inputswitch.esm-40083b6a.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js",
-      "_index.esm-d0f281b3.js"
+      "_button.esm-46e694e9.js",
+      "_dialog.esm-84a5e061.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_inputswitch.esm-370bc1bb.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_csstransition.esm-4d025c04.js",
+      "_index.esm-c88ad067.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Cotizaciones/partials/VistaPreviaCotizacion.jsx"
   },
   "resources/js/Pages/Dashboard.jsx": {
-    "file": "assets/Dashboard-58acb9ae.js",
+    "file": "assets/Dashboard-2a07da5a.js",
     "imports": [
       "resources/js/app.jsx",
-      "_layout-8f92791d.js",
-      "_DashboardInfoCard-d0b169e4.js",
-      "_progressspinner.esm-cdabcb6e.js",
-      "_toast.esm-6e989c17.js",
-      "_ripple.esm-80139cd0.js",
-      "_index.esm-d0f281b3.js",
-      "_button.esm-9fdd79ba.js",
-      "_tooltip.esm-705f6f13.js",
-      "_inputswitch.esm-40083b6a.js",
-      "_index.esm-8e62f4d7.js"
+      "_layout-87baac1f.js",
+      "_DashboardInfoCard-074f3a4a.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_toast.esm-b4d4ac55.js",
+      "_componentbase.esm-1becf919.js",
+      "_ripple.esm-bef0a74b.js",
+      "_csstransition.esm-4d025c04.js",
+      "_button.esm-46e694e9.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_inputswitch.esm-370bc1bb.js",
+      "_index.esm-c88ad067.js",
+      "_index.esm-bc560454.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Dashboard.jsx"
   },
+  "resources/js/Pages/LogsActividades/index.jsx": {
+    "file": "assets/index-2d7d9b67.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_layout-87baac1f.js",
+      "resources/js/Pages/LogsActividades/partials/ConceptoTabla.jsx",
+      "_componentbase.esm-1becf919.js",
+      "_ripple.esm-bef0a74b.js",
+      "_csstransition.esm-4d025c04.js",
+      "_button.esm-46e694e9.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_inputswitch.esm-370bc1bb.js",
+      "_index.esm-c88ad067.js",
+      "_column.esm-212fd85e.js",
+      "_inputnumber.esm-b35cac15.js",
+      "_index.esm-a09854cd.js",
+      "_inputtext.esm-21a8a940.js",
+      "_index.esm-e233148e.js",
+      "_dropdown.esm-e750cd64.js",
+      "_index.esm-727a66c6.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js",
+      "_index.esm-26c769ed.js",
+      "_index.esm-d80e96df.js",
+      "_index.esm-4dd38ef7.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/LogsActividades/index.jsx"
+  },
+  "resources/js/Pages/LogsActividades/partials/BusquedaAvanzadaCotizacion.jsx": {
+    "file": "assets/BusquedaAvanzadaCotizacion-b7081f15.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_button.esm-46e694e9.js",
+      "_dialog.esm-84a5e061.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_inputtext.esm-21a8a940.js",
+      "_dropdown.esm-e750cd64.js",
+      "_calendar.esm-e19123ec.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_csstransition.esm-4d025c04.js",
+      "_index.esm-c88ad067.js",
+      "_index.esm-727a66c6.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js",
+      "_index.esm-d80e96df.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/LogsActividades/partials/BusquedaAvanzadaCotizacion.jsx"
+  },
+  "resources/js/Pages/LogsActividades/partials/BusquedaConceptos.jsx": {
+    "file": "assets/BusquedaConceptos-fd8fe9d9.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_button.esm-46e694e9.js",
+      "_dialog.esm-84a5e061.js",
+      "resources/js/Pages/LogsActividades/partials/TableConceptosGral.jsx",
+      "_inputtext.esm-21a8a940.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_dropdown.esm-e750cd64.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_csstransition.esm-4d025c04.js",
+      "_index.esm-c88ad067.js",
+      "_column.esm-212fd85e.js",
+      "_inputnumber.esm-b35cac15.js",
+      "_index.esm-a09854cd.js",
+      "_index.esm-e233148e.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-26c769ed.js",
+      "_index.esm-bc560454.js",
+      "_index.esm-727a66c6.js",
+      "_index.esm-d80e96df.js",
+      "_index.esm-4dd38ef7.js",
+      "_confirmdialog.esm-7f1ebc12.js",
+      "_toast.esm-b4d4ac55.js",
+      "_purify.es-851ec8c9.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/LogsActividades/partials/BusquedaConceptos.jsx"
+  },
+  "resources/js/Pages/LogsActividades/partials/BusquedaCotizacion.jsx": {
+    "file": "assets/BusquedaCotizacion-05e7a765.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_dropdown.esm-e750cd64.js",
+      "_button.esm-46e694e9.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-727a66c6.js",
+      "_iconbase.esm-565044fd.js",
+      "_index.esm-caaa0bd1.js",
+      "_index.esm-c88ad067.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_csstransition.esm-4d025c04.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_ripple.esm-bef0a74b.js",
+      "_index.esm-bc560454.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/LogsActividades/partials/BusquedaCotizacion.jsx"
+  },
+  "resources/js/Pages/LogsActividades/partials/CodigosDialog.jsx": {
+    "file": "assets/CodigosDialog-a7f45cab.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_dialog.esm-84a5e061.js",
+      "_button.esm-46e694e9.js",
+      "_inputtext.esm-21a8a940.js",
+      "_calendar.esm-e19123ec.js",
+      "_column.esm-212fd85e.js",
+      "_toast.esm-b4d4ac55.js",
+      "_confirmdialog.esm-7f1ebc12.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_componentbase.esm-1becf919.js",
+      "_csstransition.esm-4d025c04.js",
+      "_index.esm-c88ad067.js",
+      "_iconbase.esm-565044fd.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_ripple.esm-bef0a74b.js",
+      "_index.esm-caaa0bd1.js",
+      "_index.esm-727a66c6.js",
+      "_index.esm-d80e96df.js",
+      "_dropdown.esm-e750cd64.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js",
+      "_inputnumber.esm-b35cac15.js",
+      "_index.esm-a09854cd.js",
+      "_index.esm-e233148e.js",
+      "_index.esm-26c769ed.js",
+      "_index.esm-4dd38ef7.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/LogsActividades/partials/CodigosDialog.jsx"
+  },
+  "resources/js/Pages/LogsActividades/partials/ConceptoTabla.jsx": {
+    "file": "assets/ConceptoTabla-f876d550.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_column.esm-212fd85e.js",
+      "_componentbase.esm-1becf919.js",
+      "_iconbase.esm-565044fd.js",
+      "_index.esm-caaa0bd1.js",
+      "_ripple.esm-bef0a74b.js",
+      "_inputnumber.esm-b35cac15.js",
+      "_index.esm-a09854cd.js",
+      "_inputtext.esm-21a8a940.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_index.esm-e233148e.js",
+      "_dropdown.esm-e750cd64.js",
+      "_index.esm-727a66c6.js",
+      "_index.esm-c88ad067.js",
+      "_csstransition.esm-4d025c04.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js",
+      "_index.esm-26c769ed.js",
+      "_index.esm-d80e96df.js",
+      "_button.esm-46e694e9.js",
+      "_index.esm-4dd38ef7.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/LogsActividades/partials/ConceptoTabla.jsx"
+  },
+  "resources/js/Pages/LogsActividades/partials/ConfirmarDuplicacion.jsx": {
+    "file": "assets/ConfirmarDuplicacion-fd640840.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_button.esm-46e694e9.js",
+      "_avatar.esm-61520b2c.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/LogsActividades/partials/ConfirmarDuplicacion.jsx"
+  },
+  "resources/js/Pages/LogsActividades/partials/ConfirmarEliminacion.jsx": {
+    "file": "assets/ConfirmarEliminacion-8a8c9ea0.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_button.esm-46e694e9.js",
+      "_avatar.esm-61520b2c.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/LogsActividades/partials/ConfirmarEliminacion.jsx"
+  },
+  "resources/js/Pages/LogsActividades/partials/DetalleCotizacionTabla.jsx": {
+    "file": "assets/DetalleCotizacionTabla-5b3d3889.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_button.esm-46e694e9.js",
+      "resources/js/Pages/LogsActividades/partials/DialogDetalleCotizacion.jsx",
+      "_confirmdialog.esm-7f1ebc12.js",
+      "_toast.esm-b4d4ac55.js",
+      "_toolbar.esm-4deb11a8.js",
+      "_purify.es-851ec8c9.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_dialog.esm-84a5e061.js",
+      "_csstransition.esm-4d025c04.js",
+      "_index.esm-c88ad067.js",
+      "resources/js/Pages/LogsActividades/partials/FormItemDetalle.jsx",
+      "_inputnumber.esm-b35cac15.js",
+      "_index.esm-a09854cd.js",
+      "_inputtext.esm-21a8a940.js",
+      "_slider.esm-1d1c7285.js",
+      "_divider.esm-f47843a3.js",
+      "_dropdown.esm-e750cd64.js",
+      "_index.esm-727a66c6.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js",
+      "_editor.esm-330fbb63.js",
+      "_badge.esm-a1474c6d.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/LogsActividades/partials/DetalleCotizacionTabla.jsx"
+  },
+  "resources/js/Pages/LogsActividades/partials/DialogDetalleCotizacion.jsx": {
+    "file": "assets/DialogDetalleCotizacion-978cd60e.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_button.esm-46e694e9.js",
+      "_dialog.esm-84a5e061.js",
+      "resources/js/Pages/LogsActividades/partials/FormItemDetalle.jsx",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_csstransition.esm-4d025c04.js",
+      "_index.esm-c88ad067.js",
+      "_inputnumber.esm-b35cac15.js",
+      "_index.esm-a09854cd.js",
+      "_inputtext.esm-21a8a940.js",
+      "_slider.esm-1d1c7285.js",
+      "_divider.esm-f47843a3.js",
+      "_dropdown.esm-e750cd64.js",
+      "_index.esm-727a66c6.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js",
+      "_toast.esm-b4d4ac55.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_editor.esm-330fbb63.js",
+      "_badge.esm-a1474c6d.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/LogsActividades/partials/DialogDetalleCotizacion.jsx"
+  },
+  "resources/js/Pages/LogsActividades/partials/Dialogo.jsx": {
+    "file": "assets/Dialogo-13ec0b7b.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_button.esm-46e694e9.js",
+      "_dialog.esm-84a5e061.js",
+      "_inputtext.esm-21a8a940.js",
+      "_floatlabel.esm-9aa8bf0c.js",
+      "_calendar.esm-e19123ec.js",
+      "resources/js/Pages/LogsActividades/partials/SelectorFilter.jsx",
+      "_toast.esm-b4d4ac55.js",
+      "_confirmdialog.esm-7f1ebc12.js",
+      "_selectbutton.esm-bc587bba.js",
+      "_divider.esm-f47843a3.js",
+      "_fieldset.esm-1a01d11e.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_csstransition.esm-4d025c04.js",
+      "_index.esm-c88ad067.js",
+      "_index.esm-727a66c6.js",
+      "_index.esm-d80e96df.js",
+      "_dropdown.esm-e750cd64.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js",
+      "_index.esm-4dd38ef7.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/LogsActividades/partials/Dialogo.jsx"
+  },
+  "resources/js/Pages/LogsActividades/partials/ExcelPersonalizador.jsx": {
+    "file": "assets/ExcelPersonalizador-80b06246.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_button.esm-46e694e9.js",
+      "_dialog.esm-84a5e061.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_inputswitch.esm-370bc1bb.js",
+      "_index-f3d9d141.js",
+      "_toast.esm-b4d4ac55.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_csstransition.esm-4d025c04.js",
+      "_index.esm-c88ad067.js",
+      "_index.esm-bc560454.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/LogsActividades/partials/ExcelPersonalizador.jsx"
+  },
+  "resources/js/Pages/LogsActividades/partials/FormItemDetalle.jsx": {
+    "file": "assets/FormItemDetalle-c55963a8.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_inputnumber.esm-b35cac15.js",
+      "_slider.esm-1d1c7285.js",
+      "_divider.esm-f47843a3.js",
+      "_inputtext.esm-21a8a940.js",
+      "_dropdown.esm-e750cd64.js",
+      "_button.esm-46e694e9.js",
+      "_toast.esm-b4d4ac55.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_editor.esm-330fbb63.js",
+      "_badge.esm-a1474c6d.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-a09854cd.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_index.esm-727a66c6.js",
+      "_index.esm-caaa0bd1.js",
+      "_index.esm-c88ad067.js",
+      "_csstransition.esm-4d025c04.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/LogsActividades/partials/FormItemDetalle.jsx"
+  },
+  "resources/js/Pages/LogsActividades/partials/Menu.jsx": {
+    "file": "assets/Menu-c8e5a9e5.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_megamenu.esm-db294cf3.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-a09854cd.js",
+      "_iconbase.esm-565044fd.js",
+      "_index.esm-e233148e.js",
+      "_index.esm-26c769ed.js",
+      "_ripple.esm-bef0a74b.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/LogsActividades/partials/Menu.jsx"
+  },
+  "resources/js/Pages/LogsActividades/partials/MenuDetalle.jsx": {
+    "file": "assets/MenuDetalle-4e18bfb8.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_menubar.esm-8a4a686b.js",
+      "resources/js/Pages/LogsActividades/partials/DialogDetalleCotizacion.jsx",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-26c769ed.js",
+      "_iconbase.esm-565044fd.js",
+      "_index.esm-a09854cd.js",
+      "_index.esm-e233148e.js",
+      "_ripple.esm-bef0a74b.js",
+      "_button.esm-46e694e9.js",
+      "_index.esm-caaa0bd1.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_dialog.esm-84a5e061.js",
+      "_csstransition.esm-4d025c04.js",
+      "_index.esm-c88ad067.js",
+      "resources/js/Pages/LogsActividades/partials/FormItemDetalle.jsx",
+      "_inputnumber.esm-b35cac15.js",
+      "_inputtext.esm-21a8a940.js",
+      "_slider.esm-1d1c7285.js",
+      "_divider.esm-f47843a3.js",
+      "_dropdown.esm-e750cd64.js",
+      "_index.esm-727a66c6.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js",
+      "_toast.esm-b4d4ac55.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_editor.esm-330fbb63.js",
+      "_badge.esm-a1474c6d.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/LogsActividades/partials/MenuDetalle.jsx"
+  },
+  "resources/js/Pages/LogsActividades/partials/SelectorFilter.jsx": {
+    "file": "assets/SelectorFilter-05eb4db1.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_dropdown.esm-e750cd64.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-727a66c6.js",
+      "_iconbase.esm-565044fd.js",
+      "_index.esm-caaa0bd1.js",
+      "_index.esm-c88ad067.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_csstransition.esm-4d025c04.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_ripple.esm-bef0a74b.js",
+      "_index.esm-bc560454.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/LogsActividades/partials/SelectorFilter.jsx"
+  },
+  "resources/js/Pages/LogsActividades/partials/TableConceptosGral.jsx": {
+    "file": "assets/TableConceptosGral-5705bb7f.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_column.esm-212fd85e.js",
+      "_confirmdialog.esm-7f1ebc12.js",
+      "_toast.esm-b4d4ac55.js",
+      "_button.esm-46e694e9.js",
+      "_purify.es-851ec8c9.js",
+      "_componentbase.esm-1becf919.js",
+      "_iconbase.esm-565044fd.js",
+      "_index.esm-caaa0bd1.js",
+      "_ripple.esm-bef0a74b.js",
+      "_inputnumber.esm-b35cac15.js",
+      "_index.esm-a09854cd.js",
+      "_inputtext.esm-21a8a940.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_index.esm-e233148e.js",
+      "_dropdown.esm-e750cd64.js",
+      "_index.esm-727a66c6.js",
+      "_index.esm-c88ad067.js",
+      "_csstransition.esm-4d025c04.js",
+      "_virtualscroller.esm-572a5462.js",
+      "_index.esm-bc560454.js",
+      "_index.esm-26c769ed.js",
+      "_index.esm-d80e96df.js",
+      "_index.esm-4dd38ef7.js",
+      "_dialog.esm-84a5e061.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/LogsActividades/partials/TableConceptosGral.jsx"
+  },
+  "resources/js/Pages/LogsActividades/partials/VistaPreviaCotizacion.jsx": {
+    "file": "assets/VistaPreviaCotizacion-2985b444.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_button.esm-46e694e9.js",
+      "_dialog.esm-84a5e061.js",
+      "_progressspinner.esm-67f32af2.js",
+      "_inputswitch.esm-370bc1bb.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_csstransition.esm-4d025c04.js",
+      "_index.esm-c88ad067.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/LogsActividades/partials/VistaPreviaCotizacion.jsx"
+  },
   "resources/js/Pages/Profile/Edit.jsx": {
-    "file": "assets/Edit-44e55ef4.js",
+    "file": "assets/Edit-0300b145.js",
     "imports": [
       "resources/js/app.jsx",
       "resources/js/Pages/Profile/Partials/DeleteUserForm.jsx",
       "resources/js/Pages/Profile/Partials/UpdatePasswordForm.jsx",
       "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.jsx",
-      "_layout-8f92791d.js",
-      "_button.esm-9fdd79ba.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js",
-      "_InputError-5a6c15f8.js",
-      "_InputLabel-7effa553.js",
-      "_dialog.esm-9ecdf0e6.js",
-      "_index.esm-d0f281b3.js",
-      "_inputtext.esm-0428364e.js",
-      "_PrimaryButton-7bae8caf.js",
-      "_TextInput-10250c23.js",
-      "_transition-2b934df4.js",
-      "_inputswitch.esm-40083b6a.js"
+      "_layout-87baac1f.js",
+      "_button.esm-46e694e9.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_InputError-45e2f5e0.js",
+      "_InputLabel-10dd3bd5.js",
+      "_dialog.esm-84a5e061.js",
+      "_csstransition.esm-4d025c04.js",
+      "_index.esm-c88ad067.js",
+      "_inputtext.esm-21a8a940.js",
+      "_PrimaryButton-5709b939.js",
+      "_TextInput-1b43b077.js",
+      "_transition-be919f73.js",
+      "_inputswitch.esm-370bc1bb.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Profile/Edit.jsx"
   },
   "resources/js/Pages/Profile/Partials/DeleteUserForm.jsx": {
-    "file": "assets/DeleteUserForm-8366538c.js",
+    "file": "assets/DeleteUserForm-4b6690ef.js",
     "imports": [
       "resources/js/app.jsx",
-      "_button.esm-9fdd79ba.js",
-      "_InputError-5a6c15f8.js",
-      "_InputLabel-7effa553.js",
-      "_dialog.esm-9ecdf0e6.js",
-      "_inputtext.esm-0428364e.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js",
-      "_index.esm-d0f281b3.js"
+      "_button.esm-46e694e9.js",
+      "_InputError-45e2f5e0.js",
+      "_InputLabel-10dd3bd5.js",
+      "_dialog.esm-84a5e061.js",
+      "_inputtext.esm-21a8a940.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_csstransition.esm-4d025c04.js",
+      "_index.esm-c88ad067.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Profile/Partials/DeleteUserForm.jsx"
   },
   "resources/js/Pages/Profile/Partials/UpdatePasswordForm.jsx": {
-    "file": "assets/UpdatePasswordForm-2ec40955.js",
+    "file": "assets/UpdatePasswordForm-64934dd5.js",
     "imports": [
       "resources/js/app.jsx",
-      "_InputError-5a6c15f8.js",
-      "_InputLabel-7effa553.js",
-      "_PrimaryButton-7bae8caf.js",
-      "_TextInput-10250c23.js",
-      "_inputtext.esm-0428364e.js",
-      "_transition-2b934df4.js",
-      "_button.esm-9fdd79ba.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js"
+      "_InputError-45e2f5e0.js",
+      "_InputLabel-10dd3bd5.js",
+      "_PrimaryButton-5709b939.js",
+      "_TextInput-1b43b077.js",
+      "_inputtext.esm-21a8a940.js",
+      "_transition-be919f73.js",
+      "_button.esm-46e694e9.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Profile/Partials/UpdatePasswordForm.jsx"
   },
   "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.jsx": {
-    "file": "assets/UpdateProfileInformationForm-6553fe19.js",
+    "file": "assets/UpdateProfileInformationForm-ae63230d.js",
     "imports": [
       "resources/js/app.jsx",
-      "_InputError-5a6c15f8.js",
-      "_PrimaryButton-7bae8caf.js",
-      "_inputtext.esm-0428364e.js",
-      "_transition-2b934df4.js",
-      "_button.esm-9fdd79ba.js",
-      "_ripple.esm-80139cd0.js",
-      "_tooltip.esm-705f6f13.js"
+      "_InputError-45e2f5e0.js",
+      "_PrimaryButton-5709b939.js",
+      "_inputtext.esm-21a8a940.js",
+      "_transition-be919f73.js",
+      "_button.esm-46e694e9.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_ripple.esm-bef0a74b.js",
+      "_tooltip.esm-3383bdb1.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.jsx"
   },
   "resources/js/Pages/Welcome.jsx": {
-    "file": "assets/Welcome-a1e7ce56.js",
+    "file": "assets/Welcome-76bcddab.js",
     "imports": [
       "resources/js/app.jsx"
     ],
@@ -1416,17 +2311,21 @@
     "src": "resources/js/Pages/Welcome.jsx"
   },
   "resources/js/Pages/main/uikit/button/page.jsx": {
-    "file": "assets/page-1901db66.js",
+    "file": "assets/page-6cdd0ac6.js",
     "imports": [
       "resources/js/app.jsx",
-      "_button.esm-9fdd79ba.js",
-      "_ripple.esm-80139cd0.js",
-      "_overlayservice.esm-2156cf47.js",
-      "_index.esm-d0f281b3.js",
-      "_tooltip.esm-705f6f13.js",
-      "_index.esm-efa2cd0d.js",
-      "_layout-8f92791d.js",
-      "_inputswitch.esm-40083b6a.js"
+      "_button.esm-46e694e9.js",
+      "_componentbase.esm-1becf919.js",
+      "_index.esm-727a66c6.js",
+      "_csstransition.esm-4d025c04.js",
+      "_tooltip.esm-3383bdb1.js",
+      "_index.esm-e233148e.js",
+      "_ripple.esm-bef0a74b.js",
+      "_layout-87baac1f.js",
+      "_index.esm-caaa0bd1.js",
+      "_iconbase.esm-565044fd.js",
+      "_inputswitch.esm-370bc1bb.js",
+      "_index.esm-c88ad067.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/main/uikit/button/page.jsx"
@@ -1449,6 +2348,11 @@
       "assets/app-db17d6b7.css"
     ],
     "dynamicImports": [
+      "resources/js/Pages/Actividades/Index.jsx",
+      "resources/js/Pages/Actividades/Partials/BusquedaActividad.jsx",
+      "resources/js/Pages/Actividades/Partials/Comentario.jsx",
+      "resources/js/Pages/Actividades/Partials/DetalleActividad.jsx",
+      "resources/js/Pages/Actividades/Partials/ListadoActividad.jsx",
       "resources/js/Pages/Auth/ConfirmPassword.jsx",
       "resources/js/Pages/Auth/ForgotPassword.jsx",
       "resources/js/Pages/Auth/Login.jsx",
@@ -1494,6 +2398,24 @@
       "resources/js/Pages/Cotizaciones/partials/TableConceptosGral.jsx",
       "resources/js/Pages/Cotizaciones/partials/VistaPreviaCotizacion.jsx",
       "resources/js/Pages/Dashboard.jsx",
+      "resources/js/Pages/LogsActividades/index.jsx",
+      "resources/js/Pages/LogsActividades/partials/BusquedaAvanzadaCotizacion.jsx",
+      "resources/js/Pages/LogsActividades/partials/BusquedaConceptos.jsx",
+      "resources/js/Pages/LogsActividades/partials/BusquedaCotizacion.jsx",
+      "resources/js/Pages/LogsActividades/partials/CodigosDialog.jsx",
+      "resources/js/Pages/LogsActividades/partials/ConceptoTabla.jsx",
+      "resources/js/Pages/LogsActividades/partials/ConfirmarDuplicacion.jsx",
+      "resources/js/Pages/LogsActividades/partials/ConfirmarEliminacion.jsx",
+      "resources/js/Pages/LogsActividades/partials/DetalleCotizacionTabla.jsx",
+      "resources/js/Pages/LogsActividades/partials/DialogDetalleCotizacion.jsx",
+      "resources/js/Pages/LogsActividades/partials/Dialogo.jsx",
+      "resources/js/Pages/LogsActividades/partials/ExcelPersonalizador.jsx",
+      "resources/js/Pages/LogsActividades/partials/FormItemDetalle.jsx",
+      "resources/js/Pages/LogsActividades/partials/Menu.jsx",
+      "resources/js/Pages/LogsActividades/partials/MenuDetalle.jsx",
+      "resources/js/Pages/LogsActividades/partials/SelectorFilter.jsx",
+      "resources/js/Pages/LogsActividades/partials/TableConceptosGral.jsx",
+      "resources/js/Pages/LogsActividades/partials/VistaPreviaCotizacion.jsx",
       "resources/js/Pages/Profile/Edit.jsx",
       "resources/js/Pages/Profile/Partials/DeleteUserForm.jsx",
       "resources/js/Pages/Profile/Partials/UpdatePasswordForm.jsx",
@@ -1501,8 +2423,12 @@
       "resources/js/Pages/Welcome.jsx",
       "resources/js/Pages/main/uikit/button/page.jsx"
     ],
-    "file": "assets/app-954e5f69.js",
+    "file": "assets/app-dcb6f552.js",
     "isEntry": true,
     "src": "resources/js/app.jsx"
+  },
+  "selectbutton.css": {
+    "file": "assets/selectbutton-3ba77e69.css",
+    "src": "selectbutton.css"
   }
 }
