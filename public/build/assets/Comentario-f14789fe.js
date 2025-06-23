@@ -1,2 +1,0 @@
-import{j as e}from"./app-dcb6f552.js";import{C as r}from"./card.esm-256fdd22.js";import"./componentbase.esm-1becf919.js";const o=s=>e.jsx("div",{className:"card",children:e.jsx(r,{title:"Simple Card",children:e.jsx("p",{className:"m-0",children:"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!"})})});export{o as default};
-//# sourceMappingURL=Comentario-f14789fe.js.map

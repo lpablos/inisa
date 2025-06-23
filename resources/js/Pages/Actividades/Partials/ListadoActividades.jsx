@@ -36,248 +36,89 @@ const ListadoActividades = () => {
         { label: 'Realizado', value: 'realizado' },
     ];
 
+     const tareas = Array.from({ length: 10 }, (_, i) => ({
+        id: i + 1,
+        titulo: `Tarea ${i + 1}`,
+        fecha: '20/06/2025',
+        descripcion: 'Enviar reporte semanal de ventas'
+    }));
 
+    
     return (
 
         <div className="card">
+             <div className="grid m-1">                  
+                        <div className="col-12 text-right">                           
+                          
+                            <Button
+                                severity="success"
+                                size="small"
+                                icon="pi pi-paperclip"
+                                tooltip="Nueva Actividad"
+                                tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
+                                className="p-button-rounded p-button-info p-button-sm mr-1"
+                                onClick={() => setVistraPreviaPDF(true)}
+                            />                            
+                        </div>
+                    </div>
+
+
             <Accordion activeIndex={0}>
-                <AccordionTab
-                    header={
-                        <span className="flex align-items-center gap-2 w-full">
-                            <span className="font-bold white-space-nowrap">20/06/2025 - <strong>Enviar reporte semanal de ventas</strong></span>
-                            <Badge value="20/06/2025" className="ml-auto" />
-                        </span>
-                    }
-                >
-                    <div className="flex flex-column gap-3">
-                        <div className="flex flex-wrap gap-3 mb-4">
-                            {/* Responsable */}
-                            <div className="flex-auto min-w-[250px]">
-                                <label htmlFor="responsable" className="font-bold block mb-2">Responsable</label>
-                                <InputText
-                                    id="responsable"
-                                    value={responsable}
-                                    onChange={(e) => setResponsable(e.target.value)}
-                                    className="w-full"
-                                    placeholder="Nombre del responsable"
-                                />
+                {tareas.map((tarea, index) => (
+                    <AccordionTab
+                        key={tarea.id}
+                        header={
+                            <span className="flex align-items-center gap-2 w-full">
+                                <span className="font-bold white-space-nowrap">
+                                    {tarea.fecha} - <strong>{tarea.descripcion}</strong>
+                                </span>
+                                <Badge value={tarea.fecha} className="ml-auto" />
+                            </span>
+                        }
+                    >
+                        {/* Formulario dentro de cada acordeón */}
+                        <div className="flex flex-column gap-3">
+                            <div className="flex flex-wrap gap-3 mb-4">
+                                <div className="flex-auto min-w-[250px]">
+                                    <label htmlFor={`responsable-${index}`} className="font-bold block mb-2">Responsable</label>
+                                    <InputText id={`responsable-${index}`} value={responsable} onChange={(e) => setResponsable(e.target.value)} className="w-full" placeholder="Nombre del responsable" />
+                                </div>
+
+                                <div className="flex-auto min-w-[250px]">
+                                    <label htmlFor={`prioridad-${index}`} className="font-bold block mb-2">Prioridad</label>
+                                    <Dropdown inputId={`prioridad-${index}`} value={prioridad} options={prioridades} onChange={(e) => setPrioridad(e.value)} placeholder="Selecciona Prioridad" className="w-full" />
+                                </div>
+
+                                <div className="flex-auto min-w-[250px]">
+                                    <label htmlFor={`estatus-${index}`} className="font-bold block mb-2">Estatus</label>
+                                    <Dropdown inputId={`estatus-${index}`} value={estatus} options={estatuses} onChange={(e) => setEstatus(e.value)} placeholder="Selecciona Estatus" className="w-full" />
+                                </div>
+
+                                <div className="flex-auto min-w-[250px]">
+                                    <label htmlFor={`fecha-${index}`} className="font-bold block mb-2">Fecha</label>
+                                    <Calendar inputId={`fecha-${index}`} value={fecha} onChange={(e) => setFecha(e.value)} dateFormat="dd/mm/yy" className="w-full" showIcon />
+                                </div>
                             </div>
 
-                            {/* Prioridad */}
-                            <div className="flex-auto min-w-[250px]">
-                                <label htmlFor="prioridad" className="font-bold block mb-2">Prioridad</label>
-                                <Dropdown
-                                    inputId="prioridad"
-                                    value={prioridad}
-                                    options={prioridades}
-                                    onChange={(e) => setPrioridad(e.value)}
-                                    placeholder="Selecciona Prioridad"
-                                    className="w-full"
-                                />
+                            <Editor value={text} onTextChange={(e) => setText(e.htmlValue)} style={{ height: '120px' }} />
+
+                            <div className="flex items-center gap-3 mb-4 p-4">
+                                <div className="p-inputgroup w-[500px]">
+                                    <Button icon="pi pi-search" label="Cotización" />
+                                    <InputText placeholder="Vote" value="052025/001" />
+                                    <Button icon="pi pi-eye" label="Visualizar" />
+                                </div>
+                                
+                                <div className="flex gap-2">
+                                    <Button label="Actualizar" />
+                                    <Button label="Eliminar" className="p-button-danger p-1" />
+                                </div>
                             </div>
 
-                            {/* Estatus */}
-                            <div className="flex-auto min-w-[250px]">
-                                <label htmlFor="estatus" className="font-bold block mb-2">Estatus</label>
-                                <Dropdown
-                                    inputId="estatus"
-                                    value={estatus}
-                                    options={estatuses}
-                                    onChange={(e) => setEstatus(e.value)}
-                                    placeholder="Selecciona Estatus"
-                                    className="w-full"
-                                />
-                            </div>
-
-                            {/* Fecha */}
-                            <div className="flex-auto min-w-[250px]">
-                                <label htmlFor="fecha" className="font-bold block mb-2">Fecha</label>
-                                <Calendar
-                                    inputId="fecha"
-                                    value={fecha}
-                                    onChange={(e) => setFecha(e.value)}
-                                    dateFormat="dd/mm/yy"
-                                    className="w-full"
-                                    showIcon
-                                />
-                            </div>
                         </div>
-                    </div>   
-                    <Editor value={text} onTextChange={(e) => setText(e.htmlValue)} style={{ height: '120px' }} />
-                    <div className="flex flex-wrap items-center gap-3 mb-4 p-4">
-                        {/* Grupo: Search + InputText */}
-                        <div className="p-inputgroup flex-1">
-                            <Button icon="pi pi-search" label="Cotizacion"/>
-                            <InputText placeholder="Vote" value='052025/001'/>
-                            <Button icon="pi pi-eye" label="Visualizar"/>
-                        </div>
-
-                        {/* Botón Submit */}
-                        <div>
-                            <Button label="Actualizar" />
-                        </div>
-                    </div>
-
-                </AccordionTab>
-                {/* ------- */}
-                     <AccordionTab
-                    header={
-                        <span className="flex align-items-center gap-2 w-full">
-                            <span className="font-bold white-space-nowrap">20/06/2025 - <strong>Enviar reporte semanal de ventas</strong></span>
-                            <Badge value="20/06/2025" className="ml-auto" />
-                        </span>
-                    }
-                >
-                    <div className="flex flex-column gap-3">
-                        <div className="flex flex-wrap gap-3 mb-4">
-                            {/* Responsable */}
-                            <div className="flex-auto min-w-[250px]">
-                                <label htmlFor="responsable" className="font-bold block mb-2">Responsable</label>
-                                <InputText
-                                    id="responsable"
-                                    value={responsable}
-                                    onChange={(e) => setResponsable(e.target.value)}
-                                    className="w-full"
-                                    placeholder="Nombre del responsable"
-                                />
-                            </div>
-
-                            {/* Prioridad */}
-                            <div className="flex-auto min-w-[250px]">
-                                <label htmlFor="prioridad" className="font-bold block mb-2">Prioridad</label>
-                                <Dropdown
-                                    inputId="prioridad"
-                                    value={prioridad}
-                                    options={prioridades}
-                                    onChange={(e) => setPrioridad(e.value)}
-                                    placeholder="Selecciona Prioridad"
-                                    className="w-full"
-                                />
-                            </div>
-
-                            {/* Estatus */}
-                            <div className="flex-auto min-w-[250px]">
-                                <label htmlFor="estatus" className="font-bold block mb-2">Estatus</label>
-                                <Dropdown
-                                    inputId="estatus"
-                                    value={estatus}
-                                    options={estatuses}
-                                    onChange={(e) => setEstatus(e.value)}
-                                    placeholder="Selecciona Estatus"
-                                    className="w-full"
-                                />
-                            </div>
-
-                            {/* Fecha */}
-                            <div className="flex-auto min-w-[250px]">
-                                <label htmlFor="fecha" className="font-bold block mb-2">Fecha</label>
-                                <Calendar
-                                    inputId="fecha"
-                                    value={fecha}
-                                    onChange={(e) => setFecha(e.value)}
-                                    dateFormat="dd/mm/yy"
-                                    className="w-full"
-                                    showIcon
-                                />
-                            </div>
-                        </div>
-                    </div>   
-                    <Editor value={text} onTextChange={(e) => setText(e.htmlValue)} style={{ height: '120px' }} />
-                    <div className="flex flex-wrap items-center gap-3 mb-4 p-4">
-                        {/* Grupo: Search + InputText */}
-                        <div className="p-inputgroup flex-1">
-                            <Button icon="pi pi-search" label="Cotizacion"/>
-                            <InputText placeholder="Vote" value='052025/001'/>
-                            <Button icon="pi pi-eye" label="Visualizar"/>
-                        </div>
-
-                        {/* Botón Submit */}
-                        <div>
-                            <Button label="Actualizar" />
-                        </div>
-                    </div>
-
-                </AccordionTab>
-                {/* ----------- */}
-
-                     <AccordionTab
-                    header={
-                        <span className="flex align-items-center gap-2 w-full">
-                            <span className="font-bold white-space-nowrap">20/06/2025 - <strong>Enviar reporte semanal de ventas</strong></span>
-                            <Badge value="20/06/2025" className="ml-auto" />
-                        </span>
-                    }
-                >
-                    <div className="flex flex-column gap-3">
-                        <div className="flex flex-wrap gap-3 mb-4">
-                            {/* Responsable */}
-                            <div className="flex-auto min-w-[250px]">
-                                <label htmlFor="responsable" className="font-bold block mb-2">Responsable</label>
-                                <InputText
-                                    id="responsable"
-                                    value={responsable}
-                                    onChange={(e) => setResponsable(e.target.value)}
-                                    className="w-full"
-                                    placeholder="Nombre del responsable"
-                                />
-                            </div>
-
-                            {/* Prioridad */}
-                            <div className="flex-auto min-w-[250px]">
-                                <label htmlFor="prioridad" className="font-bold block mb-2">Prioridad</label>
-                                <Dropdown
-                                    inputId="prioridad"
-                                    value={prioridad}
-                                    options={prioridades}
-                                    onChange={(e) => setPrioridad(e.value)}
-                                    placeholder="Selecciona Prioridad"
-                                    className="w-full"
-                                />
-                            </div>
-
-                            {/* Estatus */}
-                            <div className="flex-auto min-w-[250px]">
-                                <label htmlFor="estatus" className="font-bold block mb-2">Estatus</label>
-                                <Dropdown
-                                    inputId="estatus"
-                                    value={estatus}
-                                    options={estatuses}
-                                    onChange={(e) => setEstatus(e.value)}
-                                    placeholder="Selecciona Estatus"
-                                    className="w-full"
-                                />
-                            </div>
-
-                            {/* Fecha */}
-                            <div className="flex-auto min-w-[250px]">
-                                <label htmlFor="fecha" className="font-bold block mb-2">Fecha</label>
-                                <Calendar
-                                    inputId="fecha"
-                                    value={fecha}
-                                    onChange={(e) => setFecha(e.value)}
-                                    dateFormat="dd/mm/yy"
-                                    className="w-full"
-                                    showIcon
-                                />
-                            </div>
-                        </div>
-                    </div>   
-                    <Editor value={text} onTextChange={(e) => setText(e.htmlValue)} style={{ height: '120px' }} />
-                    <div className="flex flex-wrap items-center gap-3 mb-4 p-4">
-                        {/* Grupo: Search + InputText */}
-                        <div className="p-inputgroup flex-1">
-                            <Button icon="pi pi-search" label="Cotizacion"/>
-                            <InputText placeholder="Vote" value='052025/001'/>
-                            <Button icon="pi pi-eye" label="Visualizar"/>
-                        </div>
-
-                        {/* Botón Submit */}
-                        <div>
-                            <Button label="Actualizar" />
-                        </div>
-                    </div>
-
-                </AccordionTab>
+                    </AccordionTab>
+                ))}
+               
             </Accordion>
             <Paginator first={first} rows={rows} totalRecords={120}  onPageChange={onPageChange} />
         

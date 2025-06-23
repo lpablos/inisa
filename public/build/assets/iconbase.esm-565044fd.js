@@ -1,2 +1,0 @@
-import{O as a,c as i}from"./app-dcb6f552.js";var t={defaultProps:{__TYPE:"IconBase",className:null,label:null,spin:!1},getProps:function(e){return a.getMergedProps(e,t.defaultProps)},getOtherProps:function(e){return a.getDiffProps(e,t.defaultProps)},getPTI:function(e){var r=a.isEmpty(e.label),l=t.getOtherProps(e),n={className:i("p-icon",{"p-icon-spin":e.spin},e.className),role:r?void 0:"img","aria-label":r?void 0:e.label,"aria-hidden":e.label?r:void 0};return a.getMergedProps(l,n)}};export{t as I};
-//# sourceMappingURL=iconbase.esm-565044fd.js.map
