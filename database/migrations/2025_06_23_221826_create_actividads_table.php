@@ -11,8 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('actividads', function (Blueprint $table) {
+        Schema::create('actividades', function (Blueprint $table) {
             $table->id();
+            $table->string('titulo');
+            $table->text('descripcion')->nullable();
+            $table->date('fecha')->nullable();          
+            $table->enum('prioridad', ['Baja', 'Media', 'Alta']);            
+            $table->enum('estatus', ['Pendiente', 'Realizado']);  
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('cotizacion_id')->nullable();
+            $table->foreign('cotizacion_id')->references('id')->on('cotizaciones');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

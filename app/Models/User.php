@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Actividad;
 
 class User extends Authenticatable
 {
@@ -50,4 +51,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function actividades()
+    {
+        return $this->hasMany(Actividad::class, 'user_id', 'id'); // Referencia a la clave foránea y primaria
+    }
+    
 }

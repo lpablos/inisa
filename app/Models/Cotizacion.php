@@ -16,6 +16,7 @@ use App\Models\CatMoneda;
 use App\Models\CatEstatu;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Codigo;
+use App\Models\Actividad;
 
 
 
@@ -60,8 +61,6 @@ class Cotizacion extends Model
         'costo_mano_obra',
         'baja_logica',
         'responsable_id'
-
-
     ];
 
     protected static function boot()
@@ -202,5 +201,11 @@ class Cotizacion extends Model
             $this->total = $this->detalles()->sum('obra_material_subtotal');
         }
         $this->save();
+    }
+
+
+     public function actividades()
+    {
+        return $this->hasMany(Actividad::class, 'cotizacion_id', 'id'); // Referencia a la clave foránea y primaria
     }
 }
