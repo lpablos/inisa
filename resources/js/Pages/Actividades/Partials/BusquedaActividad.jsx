@@ -5,11 +5,13 @@ import { Button } from 'primereact/button';
 
 export default function BusquedaActividad() {
     const [usuarios, setUsuarios] = useState([]);
+    const [date1, setDate1] = useState(new Date());
+    const [date2, setDate2] = useState(new Date());
 
     // Formulario
     const [selectPersona, setSelectPersona] = useState({name: "Todos", code: "*"});
-    const [date1, setDate1] = useState(new Date());
-    const [date2, setDate2] = useState(new Date());
+    const [fecha1, setFecha1] = useState()
+    const [fecha2, setFecha2] = useState()
     const [selectedPrioridad, setSelectedPrioridad] = useState(null);
     const [selectedStatus, setSelectedStatus] = useState(null);
     // --------------------
@@ -17,6 +19,17 @@ export default function BusquedaActividad() {
         obtenerCatUsuarios()
     },[])
 
+    
+    useEffect(()=>{
+        if(date1){
+            let fechaFormato1 = date1 ? date1.toISOString().slice(0, 10) : null;
+            setFecha1(fechaFormato1)
+        }
+        if(date2){
+            let fechaFormato2 = date2 ? date2.toISOString().slice(0, 10) : null;
+            setFecha2(fechaFormato2)
+        }
+    },[date1, date2]);
 
     const obtenerCatUsuarios = async () =>{
         try {
@@ -44,12 +57,13 @@ export default function BusquedaActividad() {
         }
     }
     const status = [
-        { name: 'Normal', code: '1' },
-        { name: 'Urgente', code: '2' },
+        {name:'Pendiente', code:'Pendiente'},
+        {name:'Realizado', code:'Realizado'},
     ];
     const prioridad = [
-        { name: 'Realizado', code: '1' },
-        { name: 'Pendiente', code: '2' },
+        {name: 'Baja', code:'Baja'},
+        {name: 'Media', code:'Media'},
+        {name: 'Alta', code:'Alta'},
     ];
 
 
@@ -57,50 +71,72 @@ export default function BusquedaActividad() {
             e.preventDefault(); // Evita que el formulario recargue la página
             // setLoading(true)
             // setDesabilitar(true)
+
+            // axios.get('/api/busqueda', {
+            // params: {
+            //     page: 2,
+            //     selectPersona: { code: "3" },
+            //     fecha1: "2025-06-25",
+            //     fecha2: "2025-06-26",
+            //     selectedPrioridad: { code: "Alta" },
+            //     selectedStatus: { code: "Pendiente" },
+            // }
+            // }); 
+
             const datos = {
+                page: 1,
                 selectPersona: selectPersona,
-                setDate1:setDate1,
-                setDate2:setDate2,
+                fecha1:fecha1,
+                fecha2:fecha2,
                 selectedPrioridad: selectedPrioridad,
                 selectedStatus: selectedStatus,
             }
+            try {
+                const response = axios.get(route("busqueda.actividades"), {
+                                    params: datos
+                                });
+                console.log("Esta es la respuesta", response);
+                                
+            } catch (error) {
+                console.error(error);
+                alert("Error")
+                   
+            }
 
-            console.log("Esto es lo que se va a buscar");
-            
-            
-
-            // try {
-            //     const response = await axios.post(route("activiades.store"), datos);            
-            //     const { data, status} = response
-            //     console.log("Esto es", response);
+            /*try {
+                const response = await axios.get(route("busqueda.actividades"), datos);            
+                console.log("Este es el response ", response);*/
                 
-            //     if (status === 200) {
-            //         toast.current.show({
-            //             severity: "success",
-            //             summary: "Success",
-            //             detail: `${data.success}`,
-            //             life: 3000,
-            //         });
-            //         limpiarFormulario()
-            //         setVisible(false)
-            //         setDesabilitar(false)
-            //         setTimeout(() => {
-            //             setLoading(false)
-            //         }, 1000);
+                // const { data, status} = response
+                // console.log("Esto es", response);
+                
+                // if (status === 200) {
+                //     toast.current.show({
+                //         severity: "success",
+                //         summary: "Success",
+                //         detail: `${data.success}`,
+                //         life: 3000,
+                //     });
+                //     limpiarFormulario()
+                //     setVisible(false)
+                //     setDesabilitar(false)
+                //     setTimeout(() => {
+                //         setLoading(false)
+                //     }, 1000);
 
                
-            //     }
-            // } catch (error) {
-            //     console.error(error);
-            //     setLoading(false)
-            //     toast.current.show({
-            //         severity: "error",
-            //         summary: "Error",
-            //         detail: "Error al registrar la actividad",
-            //         life: 3000,
-            //     });
-            //     setDesabilitar(false)
-            // }
+                // }
+            //} catch (error) {
+                // console.error(error);
+                // setLoading(false)
+                // toast.current.show({
+                //     severity: "error",
+                //     summary: "Error",
+                //     detail: "Error al registrar la actividad",
+                //     life: 3000,
+                // });
+                // setDesabilitar(false)
+            //}
         };
 
 
@@ -121,18 +157,6 @@ export default function BusquedaActividad() {
                         />
                     </div>
                     <div className="flex-auto min-w-[250px]">
-                        <label htmlFor="estatus" className="font-bold block mb-2">Estatus</label>
-                        <Dropdown
-                            inputId="estatus"
-                            value={selectedPrioridad}
-                            onChange={(e) => setSelectedPrioridad(e.value)}
-                            options={prioridad}
-                            optionLabel="name"
-                            placeholder="Selecciona Estatus"
-                            className="w-full"
-                        />
-                    </div>
-                    <div className="flex-auto min-w-[250px]">
                         <label htmlFor="prioridad" className="font-bold block mb-2">Prioridad</label>
                         <Dropdown
                             inputId="prioridad"
@@ -144,6 +168,19 @@ export default function BusquedaActividad() {
                             className="w-full"
                         />
                     </div>
+                    <div className="flex-auto min-w-[250px]">
+                        <label htmlFor="estatus" className="font-bold block mb-2">Estatus</label>
+                        <Dropdown
+                            inputId="estatus"
+                            value={selectedPrioridad}
+                            onChange={(e) => setSelectedPrioridad(e.value)}
+                            options={prioridad}
+                            optionLabel="name"
+                            placeholder="Selecciona Estatus"
+                            className="w-full"
+                        />
+                    </div>
+                  
                 </div>
                 <div className="flex flex-wrap gap-3 mb-4">
                     <div className="flex-auto min-w-[250px]">

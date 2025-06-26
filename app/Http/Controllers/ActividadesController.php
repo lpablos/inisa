@@ -92,4 +92,17 @@ class ActividadesController extends Controller
     {
         //
     }
+
+    public function busqueda(Request $request){
+        //dd($request->all());
+        $actividades = Actividad::with('usuario')
+            ->when($request->selectPersona['code'] !== '*',fn($q) => $q->where('user_id', $request->selectPersona['code']))
+            ->when($request->filled('fecha1') && $request->filled('fecha2'), function($q) use ($request) {
+                $q->whereDate('created_at', '>=', $request->fecha1)->whereDate('created_at', '<=', $request->fecha2);
+            })
+            ->when(!empty($request->selectedPrioridad),fn($q) => $q->where('prioridad', $request->selectedPrioridad['code']))
+            ->when(!empty($request->selectedStatus),fn($q) => $q->where('estatus', $request->selectedStatus['code']))
+            ->paginate(10); // o ->simplePaginate(10)
+        return response()->json($actividades);
+    }
 }
