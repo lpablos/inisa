@@ -15,6 +15,7 @@ class Actividad extends Model
     protected $primaryKey = 'id';
 
        protected $fillable = [
+        
         'id',
         'titulo',
         'descripcion',
@@ -23,6 +24,7 @@ class Actividad extends Model
         'estatus',
         'user_id',
         'cotizacion_id',
+        
     ];
 
     public function usuario()

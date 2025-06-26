@@ -8,8 +8,12 @@ import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { Calendar } from 'primereact/calendar';
 import { Button } from 'primereact/button';
+import NuevaActividad from './NuevaActividad';
 
-const ListadoActividades = () => {
+const ListadoActividades = ({nombre}) => {
+
+    const [usuario, setUsuario] = useState(nombre);
+
 
     const [first, setFirst] = useState(0);
     const [rows, setRows] = useState(10);
@@ -42,6 +46,7 @@ const ListadoActividades = () => {
         fecha: '20/06/2025',
         descripcion: 'Enviar reporte semanal de ventas'
     }));
+   
 
     
     return (
@@ -49,16 +54,7 @@ const ListadoActividades = () => {
         <div className="card">
              <div className="grid m-1">                  
                         <div className="col-12 text-right">                           
-                          
-                            <Button
-                                severity="success"
-                                size="small"
-                                icon="pi pi-paperclip"
-                                tooltip="Nueva Actividad"
-                                tooltipOptions={{ position: "bottom", showDelay: 200, hideDelay: 300 }}
-                                className="p-button-rounded p-button-info p-button-sm mr-1"
-                                onClick={() => setVistraPreviaPDF(true)}
-                            />                            
+                            <NuevaActividad usuario={nombre}/>                        
                         </div>
                     </div>
 

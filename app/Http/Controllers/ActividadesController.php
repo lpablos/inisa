@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Actividad;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ActividadesController extends Controller
 {
@@ -30,6 +33,32 @@ class ActividadesController extends Controller
     public function store(Request $request)
     {
         //
+
+        $validated = $request->validate([
+            'titulo' => 'required|string|max:255',
+            'responsable' => 'required|string|max:255',
+            'descripcion' => 'nullable|string',
+            'fecha' => 'nullable|date',
+            'prioridad' => 'required|string', // o enum si aplica
+            'estatus' => 'required|string',   // o enum si aplica
+        ]);
+      
+        try {
+            $actividad = new Actividad;
+            $actividad->titulo          = $validated['titulo'];
+            $actividad->descripcion     = $validated['descripcion'];
+            $actividad->fecha           = $validated['fecha'];
+            $actividad->prioridad       = $validated['prioridad'];
+            $actividad->estatus         = $validated['estatus'];
+            $actividad->user_id         = Auth::user()->id;
+            $actividad->save();            
+            return response()->json(['success' => 'Actividad Registrada'], 200);
+        } catch (\Exception $e) {
+            Log::error('Error al registrar actividad', ['error' => $e->getMessage()]);
+            return response()->json(['status' => 'error','message' => 'No se pudo crear la actividad'], 404);
+        }
+
+        
     }
 
     /**
