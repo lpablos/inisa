@@ -11,7 +11,7 @@ import { Button } from 'primereact/button';
 import NuevaActividad from './NuevaActividad';
 
 const ListadoActividades = ({nombre}) => {
-
+    
     const [usuario, setUsuario] = useState(nombre);
 
 

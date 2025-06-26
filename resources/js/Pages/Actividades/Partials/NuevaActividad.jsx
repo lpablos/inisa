@@ -55,11 +55,21 @@ const NuevaActividad = ({usuario}) => {
             setFechaAsociada(null)
             setText('')
         }
+        // Funcion de validacion de informacion
+        const validarDatos = ({ responsable, titulo, descripcion, prioridad, estatus, fecha }) => {
+            if (!responsable) return "Debes seleccionar un responsable.";
+            if (!titulo?.trim()) return "El título es obligatorio.";
+            if (!descripcion?.trim()) return "La descripción es obligatoria.";
+            if (!prioridad) return "Selecciona una prioridad.";
+            if (!estatus) return "Selecciona un estatus.";
+            if (!fecha) return "Selecciona una fecha.";
+
+            return null; // Todo correcto
+        };
 
         const handleSubmit = async (e) => {
             e.preventDefault(); // Evita que el formulario recargue la página
-            setLoading(true)
-            setDesabilitar(true)
+           
             const datos = {
                 responsable: responsable,
                 titulo:titulo,
@@ -68,7 +78,19 @@ const NuevaActividad = ({usuario}) => {
                 estatus: estatus,
                 fecha: fechaAsociada,
             }
-            
+            const error = validarDatos(datos);
+            if (error) {
+                toast.current.show({
+                    severity: "error",
+                    summary: "Error",
+                    detail: error,
+                    life: 3000,
+                });
+                return;
+            }
+
+            setLoading(true)
+            setDesabilitar(true)
 
             try {
                 const response = await axios.post(route("activiades.store"), datos);            
@@ -118,7 +140,7 @@ const NuevaActividad = ({usuario}) => {
                 className="p-button-rounded p-button-info p-button-sm mr-1"
             />
 
-            <Dialog header="Header" visible={visible} maximizable style={{ width: '50vw' }} onHide={() => {if (!visible) return; setVisible(false); }}>
+            <Dialog header="Actividad" visible={visible} maximizable style={{ width: '50vw' }} onHide={() => {if (!visible) return; setVisible(false); }}>
                 <form action="" onSubmit={handleSubmit}>
                     <div className="flex flex-column gap-3">
                         <div className="flex flex-wrap gap-3 mb-4">
@@ -128,22 +150,22 @@ const NuevaActividad = ({usuario}) => {
                             </div>
                           
                             <div className="flex-auto min-w-[250px]">
-                                <label htmlFor={`prioridad`} className="font-bold block mb-2">Prioridad</label>
-                                <Dropdown inputId={`prioridad`} value={prioridad} options={prioridades} onChange={(e) => setPrioridad(e.value)} placeholder="Selecciona Prioridad" className="w-full" />
+                                <label htmlFor={`prioridad`} className="font-bold block mb-2">Prioridad *</label>
+                                <Dropdown inputId={`prioridad`} value={prioridad} options={prioridades} onChange={(e) => setPrioridad(e.value)} placeholder="Selecciona Prioridad" className="w-full"/>
                             </div>
 
                             <div className="flex-auto min-w-[250px]">
-                                <label htmlFor={`estatus`} className="font-bold block mb-2">Estatus</label>
-                                <Dropdown inputId={`estatus`} value={estatus} options={estatuses} onChange={(e) => setEstatus(e.value)} placeholder="Selecciona Estatus" className="w-full" />
+                                <label htmlFor={`estatus`} className="font-bold block mb-2">Estatus *</label>
+                                <Dropdown inputId={`estatus`} value={estatus} options={estatuses} onChange={(e) => setEstatus(e.value)} placeholder="Selecciona Estatus" className="w-full"/>
                             </div>
 
                             <div className="flex-auto min-w-[250px]">
-                                <label htmlFor={`fecha`} className="font-bold block mb-2">Fecha</label>
-                                <Calendar inputId={`fecha`} value={fecha} onChange={(e) => setFecha(e.value)} dateFormat="dd/mm/yy" className="w-full" showIcon />
+                                <label htmlFor={`fecha`} className="font-bold block mb-2">Fecha Limite *</label>
+                                <Calendar inputId={`fecha`} value={fecha} onChange={(e) => setFecha(e.value)} dateFormat="dd/mm/yy" className="w-full" showIcon/>
                             </div>
                             <div className="flex-auto min-w-[250px]">
-                                <label htmlFor={`titulo`} className="font-bold block mb-2">Titulo</label>
-                                <InputText id={`titulo`} value={titulo} onChange={(e) => setTitulo(e.target.value)} className="w-full" placeholder="Nombre de la actividad" />
+                                <label htmlFor={`titulo`} className="font-bold block mb-2">Titulo *</label>
+                                <InputText id={`titulo`} value={titulo} onChange={(e) => setTitulo(e.target.value)} className="w-full" placeholder="Nombre de la actividad"/>
                             </div>
                         </div>
 
