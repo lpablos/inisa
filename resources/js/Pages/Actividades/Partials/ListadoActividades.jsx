@@ -13,7 +13,12 @@ import NuevaActividad from './NuevaActividad';
 const ListadoActividades = ({nombre, registros = []}) => {
 
     console.log("Estos son los registros", registros);
+
+    const [tareasListado, setTareasListado] = useState([]);
     
+    useEffect(()=>{
+        setTareasListado(registros);
+    },[registros])
     
     const [usuario, setUsuario] = useState(nombre);
 
@@ -38,24 +43,34 @@ const ListadoActividades = ({nombre, registros = []}) => {
         {name:'Realizado', code:'Realizado'},
     ];
 
-    const manejoTitulo = (valor, posicion) =>{
-
-    }
-
-    const manejoPrioridad = (valor, posicion) =>{
-        
+    const manejoTitulo = (nuevoTitulo, index) => {
+        const nuevasTareas = [...tareasListado];
+        nuevasTareas[index].titulo = nuevoTitulo;
+        setTareasListado(nuevasTareas);
     };
 
-    const manejoEstatus = (valor, posicion) =>{
-        
+    const manejoPrioridad = (nuevaPrioridad, index) =>{
+        const nuevasTareas = [...tareasListado];
+        nuevasTareas[index].prioridad = nuevaPrioridad.code;
+        setTareasListado(nuevasTareas);
     };
 
-    const manejoFecha = (valor, posicion) =>{
+    const manejoEstatus = (nuevoEstatus, index) =>{
+        const nuevasTareas = [...tareasListado];
+        nuevasTareas[index].prioridad = nuevoEstatus.code;
+        setTareasListado(nuevasTareas);
+    };
 
+    const manejoFecha = (nuevaFecha, index) =>{
+        const nuevasTareas = [...tareasListado];
+        nuevasTareas[index].fecha = nuevaFecha;
+        setTareasListado(nuevasTareas);
     }
 
-    const manejoDescripcion = (valor, posicion) => {
-
+    const manejoDescripcion = (nuevaDescripcion, index) => {
+        const nuevasTareas = [...tareasListado];
+        nuevasTareas[index].descripcion = nuevaDescripcion;
+        setTareasListado(nuevasTareas);
     }
    
 
@@ -71,7 +86,7 @@ const ListadoActividades = ({nombre, registros = []}) => {
 
           
             <Accordion activeIndex={0}>
-                {registros.map((tarea, index) => (
+                {tareasListado.map((tarea, index) => (
                     <AccordionTab
                         key={tarea.id}
                         header={
