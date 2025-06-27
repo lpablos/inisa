@@ -7,13 +7,21 @@ import { LogarithmicScale } from "chart.js";
 const Index = (props) => {
     
     const [nombre, setNombre] = useState(props?.auth?.user?.name ?? "");
+    const [registros, setRegistros] = useState([]);
+    console.log("registros--->", registros);
     
+    
+
+
+    const resultadoBusqueda = (resultado = []) =>  { 
+        setRegistros(resultado);
+    }
     return (
         <Layout>
             <div className="card grid">
                 <div className="w-12 pr-3">
-                    <BusquedaActividad/>    
-                    <ListadoActividades nombre={nombre}/>            
+                    <BusquedaActividad resultadoBusqueda={resultadoBusqueda}/>    
+                    <ListadoActividades nombre={nombre} registros={registros}/>           
                 </div>
             </div>
         </Layout>

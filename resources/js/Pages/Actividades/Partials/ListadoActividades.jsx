@@ -10,7 +10,10 @@ import { Calendar } from 'primereact/calendar';
 import { Button } from 'primereact/button';
 import NuevaActividad from './NuevaActividad';
 
-const ListadoActividades = ({nombre}) => {
+const ListadoActividades = ({nombre, registros = []}) => {
+
+    console.log("Estos son los registros", registros);
+    
     
     const [usuario, setUsuario] = useState(nombre);
 
@@ -24,28 +27,36 @@ const ListadoActividades = ({nombre}) => {
         setRows(event.rows);
     };
 
-    const [responsable, setResponsable] = useState('');
-    const [prioridad, setPrioridad] = useState(null);
-    const [estatus, setEstatus] = useState(null);
-    const [fecha, setFecha] = useState(null);
-
-    const prioridades = [
-        { label: 'Alta', value: 'alta' },
-        { label: 'Media', value: 'media' },
-        { label: 'Baja', value: 'baja' },
+    const prioridad = [
+        {name: 'Baja', code:'Baja'},
+        {name: 'Media', code:'Media'},
+        {name: 'Alta', code:'Alta'},
     ];
 
-    const estatuses = [
-        { label: 'Pendiente', value: 'pendiente' },
-        { label: 'Realizado', value: 'realizado' },
+    const estatus = [
+        {name:'Pendiente', code:'Pendiente'},
+        {name:'Realizado', code:'Realizado'},
     ];
 
-     const tareas = Array.from({ length: 10 }, (_, i) => ({
-        id: i + 1,
-        titulo: `Tarea ${i + 1}`,
-        fecha: '20/06/2025',
-        descripcion: 'Enviar reporte semanal de ventas'
-    }));
+    const manejoTitulo = (valor, posicion) =>{
+
+    }
+
+    const manejoPrioridad = (valor, posicion) =>{
+        
+    };
+
+    const manejoEstatus = (valor, posicion) =>{
+        
+    };
+
+    const manejoFecha = (valor, posicion) =>{
+
+    }
+
+    const manejoDescripcion = (valor, posicion) => {
+
+    }
    
 
     
@@ -58,61 +69,92 @@ const ListadoActividades = ({nombre}) => {
                         </div>
                     </div>
 
-
+          
             <Accordion activeIndex={0}>
-                {tareas.map((tarea, index) => (
+                {registros.map((tarea, index) => (
                     <AccordionTab
                         key={tarea.id}
                         header={
                             <span className="flex align-items-center gap-2 w-full">
                                 <span className="font-bold white-space-nowrap">
-                                    {tarea.fecha} - <strong>{tarea.descripcion}</strong>
+                                    <strong>{tarea.titulo}</strong>
                                 </span>
                                 <Badge value={tarea.fecha} className="ml-auto" />
                             </span>
                         }
                     >
-                        {/* Formulario dentro de cada acordeón */}
-                        <div className="flex flex-column gap-3">
+
+                         <div className="flex flex-column gap-3">
                             <div className="flex flex-wrap gap-3 mb-4">
                                 <div className="flex-auto min-w-[250px]">
                                     <label htmlFor={`responsable-${index}`} className="font-bold block mb-2">Responsable</label>
-                                    <InputText id={`responsable-${index}`} value={responsable} onChange={(e) => setResponsable(e.target.value)} className="w-full" placeholder="Nombre del responsable" />
+                                    <InputText id={`responsable-${index}`} value={tarea.usuario.name} className="w-full" placeholder="Nombre del responsable" readOnly={true}/>
                                 </div>
 
                                 <div className="flex-auto min-w-[250px]">
+                                    <label htmlFor={`titulo-${index}`} className="font-bold block mb-2">Títutlo</label>
+                                    <InputText 
+                                        id={`titulo-${index}`} 
+                                        value={tarea.titulo} 
+                                        className="w-full" 
+                                        placeholder="Titulo"
+                                        onChange={(e) => manejoTitulo(e.value, index)}
+                                    />
+                                </div>
+
+
+                                <div className="flex-auto min-w-[250px]">
                                     <label htmlFor={`prioridad-${index}`} className="font-bold block mb-2">Prioridad</label>
-                                    <Dropdown inputId={`prioridad-${index}`} value={prioridad} options={prioridades} onChange={(e) => setPrioridad(e.value)} placeholder="Selecciona Prioridad" className="w-full" />
+                                     <Dropdown
+                                        inputId={`prioridad-${index}`}
+                                        value={prioridad.find(p => p.code === tarea.prioridad)}
+                                        onChange={(e) => manejoPrioridad(e.value, index)}
+                                        options={prioridad}
+                                        optionLabel="name"
+                                        placeholder="Selecciona Prioridad"
+                                        className="w-full"
+                                    />
                                 </div>
 
                                 <div className="flex-auto min-w-[250px]">
                                     <label htmlFor={`estatus-${index}`} className="font-bold block mb-2">Estatus</label>
-                                    <Dropdown inputId={`estatus-${index}`} value={estatus} options={estatuses} onChange={(e) => setEstatus(e.value)} placeholder="Selecciona Estatus" className="w-full" />
+                                    <Dropdown
+                                        inputId={`estatus-${index}`}                                        
+                                        value={estatus.find(p => p.code === tarea.estatus)}
+                                        onChange={(e) => manejoEstatus(e.value)}
+                                        options={estatus}
+                                        optionLabel="name"
+                                        placeholder="Selecciona Estatus"
+                                        className="w-full"
+                                    />
                                 </div>
 
                                 <div className="flex-auto min-w-[250px]">
-                                    <label htmlFor={`fecha-${index}`} className="font-bold block mb-2">Fecha</label>
-                                    <Calendar inputId={`fecha-${index}`} value={fecha} onChange={(e) => setFecha(e.value)} dateFormat="dd/mm/yy" className="w-full" showIcon />
+                                    <label htmlFor={`fecha-${index}`} className="font-bold block mb-2">Fecha Limite</label>
+                                    <Calendar 
+                                        inputId={`fecha-${index}`} 
+                                        value={tarea.fecha ? new Date(tarea.fecha) : null}
+                                        onChange={(e) => manejoFecha(e.value, index)} 
+                                        dateFormat="dd/mm/yy" 
+                                        className="w-full" 
+                                        showIcon/>
                                 </div>
                             </div>
-
-                            <Editor value={text} onTextChange={(e) => setText(e.htmlValue)} style={{ height: '120px' }} />
-
+                            <Editor value={tarea.descripcion} onTextChange={(e) => manejoDescripcion(e.htmlValue, index)} style={{ height: '120px' }} />
                             <div className="flex items-center gap-3 mb-4 p-4">
                                 <div className="p-inputgroup w-[500px]">
-                                    <Button icon="pi pi-search" label="Cotización" />
-                                    <InputText placeholder="Vote" value="052025/001" />
-                                    <Button icon="pi pi-eye" label="Visualizar" />
+                                    <Button icon="pi pi-search" label="Cotización" className="p-button-sm" />
+                                    <InputText placeholder="Vote" value="052025/001" className="text-sm" />
+                                    <Button icon="pi pi-eye" label="Visualizar" className="p-button-sm" />
                                 </div>
-                                
+
                                 <div className="flex gap-2">
-                                    <Button label="Actualizar" />
-                                    <Button label="Eliminar" className="p-button-danger p-1" />
+                                    <Button label="Actualizar" className="p-button-sm" />
+                                    <Button label="Eliminar" className="p-button-sm p-button-danger" />
                                 </div>
                             </div>
-
                         </div>
-                    </AccordionTab>
+                    </AccordionTab> 
                 ))}
                
             </Accordion>

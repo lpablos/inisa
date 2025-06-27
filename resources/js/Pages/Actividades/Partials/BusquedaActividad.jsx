@@ -3,7 +3,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { Calendar } from 'primereact/calendar';
 import { Button } from 'primereact/button';
 
-export default function BusquedaActividad() {
+export default function BusquedaActividad({resultadoBusqueda}) {
     const [usuarios, setUsuarios] = useState([]);
     const [date1, setDate1] = useState(new Date());
     const [date2, setDate2] = useState(new Date());
@@ -68,21 +68,7 @@ export default function BusquedaActividad() {
 
 
       const handleSubmit = async (e) => {
-            e.preventDefault(); // Evita que el formulario recargue la página
-            // setLoading(true)
-            // setDesabilitar(true)
-
-            // axios.get('/api/busqueda', {
-            // params: {
-            //     page: 2,
-            //     selectPersona: { code: "3" },
-            //     fecha1: "2025-06-25",
-            //     fecha2: "2025-06-26",
-            //     selectedPrioridad: { code: "Alta" },
-            //     selectedStatus: { code: "Pendiente" },
-            // }
-            // }); 
-
+            e.preventDefault(); // Evita que el formulario recargue la página         
             const datos = {
                 page: 1,
                 selectPersona: selectPersona,
@@ -92,10 +78,33 @@ export default function BusquedaActividad() {
                 selectedStatus: selectedStatus,
             }
             try {
-                const response = axios.get(route("busqueda.actividades"), {
-                                    params: datos
-                                });
-                console.log("Esta es la respuesta", response);
+                const response = await axios.get(route("busqueda.actividades"), {params: datos});
+                
+                const {status} = response
+                if (status === 200) {
+                    const {
+                        data, 
+                        current_page, 
+                        first_page_url, 
+                        prev_page_url,
+                        total
+                    } = response.data;
+                    resultadoBusqueda(data)
+                    /*toast.current.show({
+                        severity: "success",
+                        summary: "Success",
+                        detail: `${data.success}`,
+                        life: 3000,
+                    });*/
+                    /*limpiarFormulario()
+                    setVisible(false)
+                    setDesabilitar(false)
+                    setTimeout(() => {
+                        setLoading(false)
+                    }, 1000);*/
+
+               
+                }
                                 
             } catch (error) {
                 console.error(error);
