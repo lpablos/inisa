@@ -79,7 +79,7 @@ const ListadoActividades = ({nombre, registros = []}) => {
                                 <span className="font-bold white-space-nowrap">
                                     <strong>{tarea.titulo}</strong>
                                 </span>
-                                <Badge value={tarea.fecha} className="ml-auto" />
+                                <Badge value={new Date(tarea.created_at).toLocaleDateString('es-MX')} className="ml-auto" />
                             </span>
                         }
                     >

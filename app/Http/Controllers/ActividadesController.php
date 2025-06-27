@@ -102,6 +102,7 @@ class ActividadesController extends Controller
             })
             ->when(!empty($request->selectedPrioridad),fn($q) => $q->where('prioridad', $request->selectedPrioridad['code']))
             ->when(!empty($request->selectedStatus),fn($q) => $q->where('estatus', $request->selectedStatus['code']))
+            ->orderBy('created_at', 'desc')
             ->paginate(10); // o ->simplePaginate(10)
         return response()->json($actividades);
     }
