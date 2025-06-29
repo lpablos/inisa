@@ -24,6 +24,7 @@ class Actividad extends Model
         'estatus',
         'user_id',
         'cotizacion_id',
+        'motivo_delete',
         
     ];
 

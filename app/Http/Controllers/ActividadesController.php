@@ -88,8 +88,18 @@ class ActividadesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, $id)
     {
+        try {
+            $actividad = Actividad::findOrFail($id);
+            $actividad->motivo_delete = $request->descripcion;
+            $actividad->update();
+            $actividad->delete();
+            return response()->json(['success' => 'Actividad Eliminada'], 200);
+        } catch (\Exception $e) {
+            Log::error('Error al eliminar actividad', ['error' => $e->getMessage()]);
+            return response()->json(['status' => 'error','message' => 'No se pudo eliminar la actividad'], 404);
+        }
         //
     }
 

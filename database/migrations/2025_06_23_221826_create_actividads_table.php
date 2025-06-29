@@ -18,12 +18,14 @@ return new class extends Migration
             $table->date('fecha')->nullable();          
             $table->enum('prioridad', ['Baja', 'Media', 'Alta']);            
             $table->enum('estatus', ['Pendiente', 'Realizado']);  
+            $table->text('motivo_delete')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('cotizacion_id')->nullable();
             $table->foreign('cotizacion_id')->references('id')->on('cotizaciones');
             $table->softDeletes();
             $table->timestamps();
+
         });
     }
 

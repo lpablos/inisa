@@ -9,6 +9,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { Calendar } from 'primereact/calendar';
 import { Button } from 'primereact/button';
 import NuevaActividad from './NuevaActividad';
+import EliminarMotivo from './EliminarMotivo';
 
 const ListadoActividades = ({nombre, registros = []}) => {
 
@@ -72,8 +73,19 @@ const ListadoActividades = ({nombre, registros = []}) => {
         nuevasTareas[index].descripcion = nuevaDescripcion;
         setTareasListado(nuevasTareas);
     }
-   
 
+
+    const [preguntaEliminar, setPreguntaEliminar] = useState(false)
+    const [identyDelete, setIdentyDelete] = useState(null);
+
+    const manejoEliminarActividad = (tarea,index)=>{
+        setPreguntaEliminar(true)
+        setIdentyDelete(tarea)
+    }
+
+    
+   
+  
     
     return (
 
@@ -165,7 +177,7 @@ const ListadoActividades = ({nombre, registros = []}) => {
 
                                 <div className="flex gap-2">
                                     <Button label="Actualizar" className="p-button-sm" />
-                                    <Button label="Eliminar" className="p-button-sm p-button-danger" />
+                                    <Button label="Eliminar" className="p-button-sm p-button-danger" onClick={()=>manejoEliminarActividad(tarea.id, index)}/>
                                 </div>
                             </div>
                         </div>
@@ -173,6 +185,7 @@ const ListadoActividades = ({nombre, registros = []}) => {
                 ))}
                
             </Accordion>
+            <EliminarMotivo activarEliminar={preguntaEliminar} setPreguntaEliminar={setPreguntaEliminar} identyDelete={identyDelete} setIdentyDelete={setIdentyDelete}/>
             <Paginator first={first} rows={rows} totalRecords={120}  onPageChange={onPageChange} />
         
         </div>

@@ -18,7 +18,7 @@ const NuevaActividad = ({usuario}) => {
     const [estatus, setEstatus] = useState(null);
     const [fecha, setFecha] = useState(null);
     const [fechaAsociada, setFechaAsociada] = useState(null)
-    const [text, setText] = useState('Generar y enviar el informe de ventas correspondiente a la semana actual al equipo de dirección.');
+    const [text, setText] = useState('');
     const [visible, setVisible] = useState(false);
     const [desabilitar, setDesabilitar] = useState(false)
     const toast = useRef(null);
@@ -177,7 +177,7 @@ const NuevaActividad = ({usuario}) => {
                         )}
                         <div className="flex items-center gap-3 mb-4 p-4">
                             <div className="ml-auto flex gap-2">
-                                <Button label="Submit" disabled={desabilitar}/>
+                                <Button label="Guardar" disabled={desabilitar}/>
                             </div>
                         </div>           
                     </div>
