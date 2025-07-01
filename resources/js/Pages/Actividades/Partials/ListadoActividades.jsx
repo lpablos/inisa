@@ -11,27 +11,15 @@ import { Button } from 'primereact/button';
 import NuevaActividad from './NuevaActividad';
 import EliminarMotivo from './EliminarMotivo';
 
-const ListadoActividades = ({nombre, registros = []}) => {
-
-    console.log("Estos son los registros", registros);
-
-    const [tareasListado, setTareasListado] = useState([]);
-    
-    useEffect(()=>{
-        setTareasListado(registros);
-    },[registros])
-    
+const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total,onPageChange,recargar}) => {
+    const [first, setFirst] = useState((paginaActual - 1) * perPage);
+    const [preguntaEliminar, setPreguntaEliminar] = useState(false)
+    const [identyDelete, setIdentyDelete] = useState(null);
+    const [tareasListado, setTareasListado] = useState([]);    
     const [usuario, setUsuario] = useState(nombre);
-
-
-    const [first, setFirst] = useState(0);
-    const [rows, setRows] = useState(10);
     const [text, setText] = useState('Generar y enviar el informe de ventas correspondiente a la semana actual al equipo de dirección.');
-
-    const onPageChange = (event) => {
-        setFirst(event.first);
-        setRows(event.rows);
-    };
+    
+  
 
     const prioridad = [
         {name: 'Baja', code:'Baja'},
@@ -75,16 +63,23 @@ const ListadoActividades = ({nombre, registros = []}) => {
     }
 
 
-    const [preguntaEliminar, setPreguntaEliminar] = useState(false)
-    const [identyDelete, setIdentyDelete] = useState(null);
+    const handlePageChange = (event) => {
+        const nuevaPagina = event.page + 1; // PrimeReact comienza desde 0          
+        onPageChange(nuevaPagina);  
+    };
 
     const manejoEliminarActividad = (tarea,index)=>{
         setPreguntaEliminar(true)
         setIdentyDelete(tarea)
     }
 
-    
-   
+    useEffect(()=>{
+        setTareasListado(registros);
+    },[registros])
+
+    useEffect(() => {
+            setFirst((paginaActual - 1) * perPage);
+    }, [paginaActual, perPage]);
   
     
     return (
@@ -185,8 +180,15 @@ const ListadoActividades = ({nombre, registros = []}) => {
                 ))}
                
             </Accordion>
-            <EliminarMotivo activarEliminar={preguntaEliminar} setPreguntaEliminar={setPreguntaEliminar} identyDelete={identyDelete} setIdentyDelete={setIdentyDelete}/>
-            <Paginator first={first} rows={rows} totalRecords={120}  onPageChange={onPageChange} />
+            <EliminarMotivo activarEliminar={preguntaEliminar} setPreguntaEliminar={setPreguntaEliminar} identyDelete={identyDelete} setIdentyDelete={setIdentyDelete} recargar={recargar}/>
+            <Paginator
+                first={first}
+                rows={perPage}
+                totalRecords={total}
+                onPageChange={handlePageChange}
+                rowsPerPageOptions={[20]}
+            />
+            {/* <Paginator first={first} rows={rows} totalRecords={120}  onPageChange={onPageChange} /> */}
         
         </div>
     );

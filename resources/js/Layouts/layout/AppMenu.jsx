@@ -6,7 +6,7 @@ import { Link } from "@inertiajs/react";
 
 const AppMenu = () => {
     const { layoutConfig } = useContext(LayoutContext);
-    console.log("Este es el rol",window?.user?.roles);
+    // console.log("Este es el rol",window?.user?.roles);
     
     // window.user = @json(auth()->user());
     // console.log(window.user);

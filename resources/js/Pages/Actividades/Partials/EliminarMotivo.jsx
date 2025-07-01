@@ -6,7 +6,7 @@ import { Toast } from 'primereact/toast';
 import { SplitButton } from 'primereact/splitbutton';
 
 
-const EliminarMotivo = ({activarEliminar, setPreguntaEliminar, identyDelete, setIdentyDelete}) => {
+const EliminarMotivo = ({activarEliminar, setPreguntaEliminar, identyDelete, setIdentyDelete, recargar}) => {
     const [visible, setVisible] = useState(false);
     const [text, setText] = useState('');
     const [loader,setLoader] = useState(false);
@@ -77,6 +77,7 @@ const EliminarMotivo = ({activarEliminar, setPreguntaEliminar, identyDelete, set
                 setVisible(false)
                 setLoader(false)
                 setPreguntaEliminar(false)
+                recargar() // Llamada Externa Funcion Hermano
             }
         } catch (error) {
             toast.current.show({
@@ -90,8 +91,8 @@ const EliminarMotivo = ({activarEliminar, setPreguntaEliminar, identyDelete, set
 
     };
     return (    
-        <div className="card flex justify-content-center">
-             <Toast ref={toast} />
+        <div className="flex justify-content-center">
+            <Toast ref={toast} />
             <Dialog header="Baja Registro" visible={visible} style={{ width: '50vw' }} onHide={() => {if (!visible) return; setVisible(false); }}>
                 <form action="" onSubmit={handleSubmit}>
                     <p className="m-0">

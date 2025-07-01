@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Models\Actividad;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class ActividadesController extends Controller
 {
@@ -108,12 +109,14 @@ class ActividadesController extends Controller
         $actividades = Actividad::with('usuario')
             ->when($request->selectPersona['code'] !== '*',fn($q) => $q->where('user_id', $request->selectPersona['code']))
             ->when($request->filled('fecha1') && $request->filled('fecha2'), function($q) use ($request) {
-                $q->whereDate('created_at', '>=', $request->fecha1)->whereDate('created_at', '<=', $request->fecha2);
+                $fechaInicio = Carbon::parse($request->fecha1)->startOfDay(); // 2025-06-29 00:00:00
+                $fechaFin = Carbon::parse($request->fecha2)->endOfDay();     // 2025-06-29 23:59:59
+                $q->whereBetween('created_at', [$fechaInicio, $fechaFin]);
             })
             ->when(!empty($request->selectedPrioridad),fn($q) => $q->where('prioridad', $request->selectedPrioridad['code']))
             ->when(!empty($request->selectedStatus),fn($q) => $q->where('estatus', $request->selectedStatus['code']))
             ->orderBy('created_at', 'desc')
-            ->paginate(10); // o ->simplePaginate(10)
+            ->paginate(20); // o ->simplePaginate(10)
         return response()->json($actividades);
     }
 }
