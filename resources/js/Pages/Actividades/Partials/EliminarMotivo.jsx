@@ -77,7 +77,7 @@ const EliminarMotivo = ({activarEliminar, setPreguntaEliminar, identyDelete, set
                 setVisible(false)
                 setLoader(false)
                 setPreguntaEliminar(false)
-                recargar() // Llamada Externa Funcion Hermano
+                recargar(1) // Llamada Externa Funcion Hermano
             }
         } catch (error) {
             toast.current.show({

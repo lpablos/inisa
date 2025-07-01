@@ -13,8 +13,8 @@ const BusquedaActividad = forwardRef(({setRegistros, setPaginaActual, setPerPage
 
     const [filtros, setFiltros] = useState({
         selectPersona: { name: "Todos", code: "*" },
-        fecha1: null,
-        fecha2: null,
+        fecha1: new Date().toISOString().slice(0, 10),
+        fecha2: new Date().toISOString().slice(0, 10),
         selectedPrioridad: null,
         selectedStatus: null,
     });
@@ -112,8 +112,6 @@ const BusquedaActividad = forwardRef(({setRegistros, setPaginaActual, setPerPage
 
     const consultar = async (datos) =>{
         try {
-            console.log("Estos son los datos",datos);
-            
             const response = await axios.get(route("busqueda.actividades"), {params: datos});
             const {status} = response
             if (status === 200) {
@@ -143,6 +141,8 @@ const BusquedaActividad = forwardRef(({setRegistros, setPaginaActual, setPerPage
                 ...filtros,
                 page: pagina
             };
+            console.log("Estos son los filtros",filtrosConPagina);
+            
             consultar(filtrosConPagina);
         }
     }));
