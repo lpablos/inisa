@@ -289,8 +289,8 @@ const NuevaCotizacion = ({preguntaNuevaCotizacion, setPreguntaNuevaCotizacion, i
     return(
         <div className="flex justify-content-center">
 
-             <Toast ref={toast} />
-            <Button label="Show" icon="pi pi-external-link" onClick={() => setVisible(true)} />
+            <Toast ref={toast} />
+            
             <Dialog header="Cotización Generada a Partir de una Actividad" visible={visible} maximizable style={{ width: '50vw' }} onHide={() => {if (!visible) return; setVisible(false); }}>
                 
                 <p className="m-0 mb-4 font-bold text-center">
