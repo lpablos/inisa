@@ -85,6 +85,32 @@ class ActividadesController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        
+        $validated = $request->validate([
+            'titulo' => 'required|string|max:255',
+            'descripcion' => 'nullable|string',
+            'fecha' => 'nullable|date',
+            'prioridad' => 'required|string', // o enum si aplica
+            'estatus' => 'required|string',   // o enum si aplica
+        ]);
+
+        try {
+            
+            $actividad = Actividad::findOrFail($id);
+            $actividad->titulo = $validated['titulo'];
+            $actividad->descripcion = $validated['descripcion'];
+            $actividad->fecha = $validated['fecha'];
+            $actividad->prioridad = $validated['prioridad'];
+            $actividad->estatus = $validated['estatus'];
+            $actividad->update();            
+            return response()->json(['success' => 'Actividad Actualizada'], 200);
+            
+        } catch (\Throwable $th) {
+            Log::error('Error al actualizar la actividad', ['error' => $e->getMessage()]);
+            return response()->json(['status' => 'error','message' => 'No se pudo actualizar la actividad'], 404);
+        }
+
+
     }
 
     /**

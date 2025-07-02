@@ -1,5 +1,7 @@
 import React, { useRef, useState, useEffect} from 'react';
 import { Accordion, AccordionTab } from 'primereact/accordion';
+import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
+import { Toast } from 'primereact/toast';
 import { Avatar } from 'primereact/avatar';
 import { Badge } from 'primereact/badge';
 import { Paginator } from 'primereact/paginator';
@@ -13,6 +15,8 @@ import EliminarMotivo from './EliminarMotivo';
 import NuevaCotizacion from './NuevaCotizacion';
 
 const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total,onPageChange,recargar}) => {
+    const toast = useRef(null);
+
     const [first, setFirst] = useState((paginaActual - 1) * perPage);
     const [preguntaEliminar, setPreguntaEliminar] = useState(false)
     const [preguntaNuevaCotizacion, setPreguntaNuevaCotizacion] = useState(false)
@@ -20,6 +24,7 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
     const [identyDelete, setIdentyDelete] = useState(null);
     const [identyNewCotizacion, setIdentyNewCotizacion] = useState(null)
     const [tareasListado, setTareasListado] = useState([]);    
+    
     const [usuario, setUsuario] = useState(nombre);
     const [text, setText] = useState('Generar y enviar el informe de ventas correspondiente a la semana actual al equipo de dirección.');
     
@@ -37,8 +42,12 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
     ];
 
     const manejoTitulo = (nuevoTitulo, index) => {
+        console.log("esto entra", nuevoTitulo);
+        
         const nuevasTareas = [...tareasListado];
         nuevasTareas[index].titulo = nuevoTitulo;
+        console.log("esta es a tarea",nuevasTareas );
+        
         setTareasListado(nuevasTareas);
     };
 
@@ -89,8 +98,82 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
     useEffect(() => {
             setFirst((paginaActual - 1) * perPage);
     }, [paginaActual, perPage]);
-  
+
+    const validarDatos = ({ responsable, titulo, descripcion, prioridad, estatus, fecha }) => {
+        if (!titulo?.trim()) return "El título es obligatorio.";
+        if (!descripcion?.trim()) return "La descripción es obligatoria.";
+        if (!prioridad) return "Selecciona una prioridad.";
+        if (!estatus) return "Selecciona un estatus.";
+        if (!fecha) return "Selecciona una fecha.";
+        return null; // Todo correcto
+    };
+
+    const actualizaActividad = async(tarea, index) => {     
+        const datos = {
+            titulo: tareasListado[index]['titulo'],
+            descripcion: tareasListado[index]['descripcion'],
+            prioridad: tareasListado[index]['prioridad'],
+            estatus: tareasListado[index]['estatus'],
+            fecha: tareasListado[index]['fecha'],
+        }
+
+        const error = validarDatos(datos);
+
+        if (error) {
+            toast.current.show({
+                severity: "error",
+                summary: "Error",
+                detail: error,
+                life: 3000,
+            });
+            return;
+        }
+        
+        
+        try {
+            const response = await axios.put(route('activiades.update', tarea), datos);    
+            console.log("Este es el reponse ", response);
+                    
+            const { data, status} = response
     
+            if (status === 200) {
+                toast.current.show({
+                    severity: "success",
+                    summary: "Success",
+                    detail: `${data.success}`,
+                    life: 3000,
+                });
+                recargar(1) 
+            }
+        } catch (error) {
+            console.error(error);
+            setLoading(false)
+            toast.current.show({
+                severity: "error",
+                summary: "Error",
+                detail: "Error al actualizar la actividad",
+                life: 3000,
+            });
+            setDesabilitar(false)
+        } 
+        
+    }
+
+    const reject = () => {
+        toast.current.show({ severity: 'warn', summary: 'Rejected', detail: 'No se realizo ningun cambio', life: 3000 });
+    }
+
+    const manejoActualizacion = (tarea, index)=>{
+        confirmDialog({
+            message: '¿Estas seguro que deseas actualizar este registro?',
+            header: 'Confirmation',
+            icon: 'pi pi-exclamation-triangle',
+            defaultFocus: 'accept',
+            accept: () => actualizaActividad(tarea, index),
+            reject
+        });
+    }
+
     return (
 
         <div className="card">
@@ -99,7 +182,7 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
                     <NuevaActividad usuario={nombre}/>                        
                 </div>
             </div>
-
+            
             {tareasListado.length === 0 ? (
                 <div className="p-4 text-gray-500 text-center italic">
                     No hay actividades registradas en el rango de fechas.
@@ -129,13 +212,13 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
                                         </div>
 
                                         <div className="flex-auto min-w-[250px]">
-                                            <label htmlFor={`titulo-${index}`} className="font-bold block mb-2">Títutlo</label>
+                                            <label htmlFor={`titulo-${index}`} className="font-bold block mb-2">Titulo</label>
                                             <InputText 
                                                 id={`titulo-${index}`} 
                                                 value={tarea.titulo} 
                                                 className="w-full" 
                                                 placeholder="Titulo"
-                                                onChange={(e) => manejoTitulo(e.value, index)}
+                                                onChange={(e) => manejoTitulo(e.target.value, index)}
                                             />
                                         </div>
 
@@ -203,7 +286,7 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
                                     <div className="flex justify-center">
                                         <div className="flex gap-2 p-4">
                                             <Button label="Nueva Cotización" className="p-button-sm" onClick={()=> manejoNuevaCotizacion(tarea.id, index)}/>
-                                            <Button label="Actualizar" className="p-button-sm" />
+                                            <Button label="Actualizar" className="p-button-sm" onClick={()=> manejoActualizacion(tarea.id, index)}/>
                                             <Button label="Eliminar" className="p-button-sm p-button-danger" onClick={() => manejoEliminarActividad(tarea.id, index)} />
                                         </div>
                                     </div>
@@ -235,7 +318,8 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
                 rowsPerPageOptions={[20]}
             />
             
-        
+            <ConfirmDialog />
+            <Toast ref={toast} />
         </div>
     );
 };
