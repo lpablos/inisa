@@ -182,7 +182,7 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
                                         <>
                                             <p>Cotizaciones Asociadas</p>
                                             <div className="flex justify-center">
-                                                <div className="flex gap-1">
+                                                <div className="flex gap-2">
                                                     {tarea.cotizaciones.map((cotizacion, index) => (
                                                         <Button
                                                             outlined
@@ -191,7 +191,7 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
                                                             severity="secondary"
                                                             size="small"
                                                             onClick={() =>
-                                                                window.open(`/cotizaciones/${cotizacion.id}`, '_blank')
+                                                                window.open(route("cotizacion.captura.detalle", { identy: cotizacion.id }), '_blank')
                                                             }
                                                         />
                                                     ))}
