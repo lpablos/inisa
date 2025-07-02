@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Actividad;
+use App\Models\Cotizacion;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
@@ -106,7 +107,9 @@ class ActividadesController extends Controller
 
     public function busqueda(Request $request){
         //dd($request->all());
-        $actividades = Actividad::with('usuario')
+        $actividades = Actividad::with(['usuario','cotizaciones'=> function ($q) {
+                $q->select('id', 'folio', 'actividad_id'); 
+            }])
             ->when($request->selectPersona['code'] !== '*',fn($q) => $q->where('user_id', $request->selectPersona['code']))
             ->when($request->filled('fecha1') && $request->filled('fecha2'), function($q) use ($request) {
                 $fechaInicio = Carbon::parse($request->fecha1)->startOfDay(); // 2025-06-29 00:00:00
@@ -118,5 +121,18 @@ class ActividadesController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(20); // o ->simplePaginate(10)
         return response()->json($actividades);
+    }
+
+    public function asociarActividadCotizacion(Request $request){   
+        try {
+            $cotizacion = Cotizacion::findOrFail($request->cotizacion_id);
+            $cotizacion->actividad_id = $request->actividad_id;
+            $cotizacion->update();
+            return response()->json(['success' => 'Actividad Asociada Correctamente'], 201);
+        } catch (\Exception $e) {
+            Log::error('Error al asociar Actividad y Cotizacion', ['error' => $e->getMessage()]);
+            return response()->json(['status' => 'error','message' => 'No se pudo Asociar Actividad y Cotizacion'], 404);
+        }
+
     }
 }

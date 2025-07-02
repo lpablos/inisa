@@ -60,7 +60,8 @@ class Cotizacion extends Model
         'costo_material',
         'costo_mano_obra',
         'baja_logica',
-        'responsable_id'
+        'responsable_id',
+        'actividad_id'
     ];
 
     protected static function boot()
@@ -204,8 +205,13 @@ class Cotizacion extends Model
     }
 
 
-     public function actividades()
+    //  public function actividades()
+    // {
+    //     return $this->hasMany(Actividad::class, 'cotizacion_id', 'id'); // Referencia a la clave foránea y primaria
+    // }
+
+    public function actividad()
     {
-        return $this->hasMany(Actividad::class, 'cotizacion_id', 'id'); // Referencia a la clave foránea y primaria
+        return $this->belongsTo(Actividad::class,'id', 'actividad_id');
     }
 }

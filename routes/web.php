@@ -352,6 +352,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
 
     Route::resource('activiades', ActividadesController::class);
+    Route::post('asociar-actividad-cotizacion', [ActividadesController::class, 'asociarActividadCotizacion'])->name('asociar.activid.cotizacion');
     Route::get('busqueda-actividades', [ActividadesController::class, 'busqueda'])->name('busqueda.actividades');
 
     // 📌 Rutas de exportación dentro del grupo 'admin'

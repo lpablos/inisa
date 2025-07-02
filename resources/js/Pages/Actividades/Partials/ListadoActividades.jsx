@@ -10,11 +10,15 @@ import { Calendar } from 'primereact/calendar';
 import { Button } from 'primereact/button';
 import NuevaActividad from './NuevaActividad';
 import EliminarMotivo from './EliminarMotivo';
+import NuevaCotizacion from './NuevaCotizacion';
 
 const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total,onPageChange,recargar}) => {
     const [first, setFirst] = useState((paginaActual - 1) * perPage);
     const [preguntaEliminar, setPreguntaEliminar] = useState(false)
+    const [preguntaNuevaCotizacion, setPreguntaNuevaCotizacion] = useState(false)
+    
     const [identyDelete, setIdentyDelete] = useState(null);
+    const [identyNewCotizacion, setIdentyNewCotizacion] = useState(null)
     const [tareasListado, setTareasListado] = useState([]);    
     const [usuario, setUsuario] = useState(nombre);
     const [text, setText] = useState('Generar y enviar el informe de ventas correspondiente a la semana actual al equipo de dirección.');
@@ -71,6 +75,11 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
     const manejoEliminarActividad = (tarea,index)=>{
         setPreguntaEliminar(true)
         setIdentyDelete(tarea)
+    }
+
+    const manejoNuevaCotizacion = (tarea, index)=>{
+        setPreguntaNuevaCotizacion(true)
+        setIdentyNewCotizacion(tarea)
     }
 
     useEffect(()=>{
@@ -169,16 +178,33 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
                                         </div>
                                     </div>
                                     <Editor value={tarea.descripcion} onTextChange={(e) => manejoDescripcion(e.htmlValue, index)} style={{ height: '120px' }} />
-                                    <div className="flex items-center gap-3 mb-4 p-4">
-                                        <div className="p-inputgroup w-[500px]">
-                                            <Button icon="pi pi-search" label="Cotización" className="p-button-sm" />
-                                            <InputText placeholder="Vote" value="052025/001" className="text-sm" />
-                                            <Button icon="pi pi-eye" label="Visualizar" className="p-button-sm" />
-                                        </div>
+                                    {tarea.cotizaciones?.length > 0 && (
+                                        <>
+                                            <p>Cotizaciones Asociadas</p>
+                                            <div className="flex justify-center">
+                                                <div className="flex gap-1">
+                                                    {tarea.cotizaciones.map((cotizacion, index) => (
+                                                        <Button
+                                                            outlined
+                                                            key={cotizacion.id}
+                                                            label={cotizacion.folio ?? 'Cotización'}
+                                                            severity="secondary"
+                                                            size="small"
+                                                            onClick={() =>
+                                                                window.open(`/cotizaciones/${cotizacion.id}`, '_blank')
+                                                            }
+                                                        />
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </>
+                                    )}
 
-                                        <div className="flex gap-2">
+                                    <div className="flex justify-center">
+                                        <div className="flex gap-2 p-4">
+                                            <Button label="Nueva Cotización" className="p-button-sm" onClick={()=> manejoNuevaCotizacion(tarea.id, index)}/>
                                             <Button label="Actualizar" className="p-button-sm" />
-                                            <Button label="Eliminar" className="p-button-sm p-button-danger" onClick={()=>manejoEliminarActividad(tarea.id, index)}/>
+                                            <Button label="Eliminar" className="p-button-sm p-button-danger" onClick={() => manejoEliminarActividad(tarea.id, index)} />
                                         </div>
                                     </div>
                                 </div>
@@ -188,7 +214,19 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
                     </Accordion>
                 </>
             )}
-            <EliminarMotivo activarEliminar={preguntaEliminar} setPreguntaEliminar={setPreguntaEliminar} identyDelete={identyDelete} setIdentyDelete={setIdentyDelete} recargar={recargar}/>
+            <NuevaCotizacion 
+                preguntaNuevaCotizacion={preguntaNuevaCotizacion}
+                setPreguntaNuevaCotizacion={setPreguntaNuevaCotizacion}
+                identyNewCotizacion={identyNewCotizacion}
+                recargar={recargar}
+            />
+            <EliminarMotivo 
+                activarEliminar={preguntaEliminar} 
+                setPreguntaEliminar={setPreguntaEliminar} 
+                identyDelete={identyDelete} 
+                setIdentyDelete={setIdentyDelete} 
+                recargar={recargar}
+            />
             <Paginator
                 first={first}
                 rows={perPage}

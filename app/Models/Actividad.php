@@ -23,7 +23,6 @@ class Actividad extends Model
         'prioridad',
         'estatus',
         'user_id',
-        'cotizacion_id',
         'motivo_delete',
         
     ];
@@ -33,8 +32,8 @@ class Actividad extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function cotizacion()
+   public function cotizaciones()
     {
-        return $this->belongsTo(Cotizacion::class, 'cotizacion_id');
+         return $this->hasMany(Cotizacion::class, 'actividad_id');
     }
 }
