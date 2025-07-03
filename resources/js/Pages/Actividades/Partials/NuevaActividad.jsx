@@ -95,7 +95,7 @@ const NuevaActividad = ({usuario}) => {
             try {
                 const response = await axios.post(route("activiades.store"), datos);            
                 const { data, status} = response
-                console.log("Esto es", response);
+                // console.log("Esto es", response);
                 
                 if (status === 200) {
                     toast.current.show({

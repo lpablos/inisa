@@ -90,7 +90,7 @@ const BuscadorCotizacion = ({preguntaBusquedaCotizaciones,setPreguntaBusquedaCot
     const consultar = async (datos) =>{
         try {
             const response = await axios.get(route("busqueda.actividades.cotizacion"), {params: datos});
-            console.log("Este es el response", response);
+            
             
             const {status, data} = response
             if (status === 200) {
@@ -100,7 +100,6 @@ const BuscadorCotizacion = ({preguntaBusquedaCotizaciones,setPreguntaBusquedaCot
                             
         } catch (error) {
             setLoading(false)
-            console.error(error);
             alert("Error")                
         }
     }
@@ -159,7 +158,7 @@ const BuscadorCotizacion = ({preguntaBusquedaCotizaciones,setPreguntaBusquedaCot
             }
         } 
         catch (error) {
-            console.error(error);
+            
             setLoading(false)
             toast.current.show({
                 severity: "error",
@@ -174,8 +173,7 @@ const BuscadorCotizacion = ({preguntaBusquedaCotizaciones,setPreguntaBusquedaCot
 
 
     return (    
-        <div className="card flex justify-content-center">
-            <Button label="Show" icon="pi pi-external-link" onClick={() => setVisible(true)} />
+        <div className="flex justify-content-center">
             <Dialog header="Asociar de Tarea y Cotización" visible={visible} maximizable style={{ width: '50vw' }} onHide={() => {if (!visible) return; setVisible(false); }}>
                 <form onSubmit={handleSubmit}>
                     <div className="flex flex-wrap gap-3 mb-4">

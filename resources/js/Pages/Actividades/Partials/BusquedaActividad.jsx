@@ -141,7 +141,7 @@ const BusquedaActividad = forwardRef(({setRegistros, setPaginaActual, setPerPage
                 ...filtros,
                 page: pagina
             };
-            console.log("Estos son los filtros",filtrosConPagina);
+            // console.log("Estos son los filtros",filtrosConPagina);
             
             consultar(filtrosConPagina);
         }

@@ -45,11 +45,11 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
     ];
 
     const manejoTitulo = (nuevoTitulo, index) => {
-        console.log("esto entra", nuevoTitulo);
+        // console.log("esto entra", nuevoTitulo);
         
         const nuevasTareas = [...tareasListado];
         nuevasTareas[index].titulo = nuevoTitulo;
-        console.log("esta es a tarea",nuevasTareas );
+        // console.log("esta es a tarea",nuevasTareas );
         
         setTareasListado(nuevasTareas);
     };
@@ -135,7 +135,7 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
         
         try {
             const response = await axios.put(route('activiades.update', tarea), datos);    
-            console.log("Este es el reponse ", response);
+            // console.log("Este es el reponse ", response);
                     
             const { data, status} = response
     
