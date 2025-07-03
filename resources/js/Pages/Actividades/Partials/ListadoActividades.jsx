@@ -13,6 +13,7 @@ import { Button } from 'primereact/button';
 import NuevaActividad from './NuevaActividad';
 import EliminarMotivo from './EliminarMotivo';
 import NuevaCotizacion from './NuevaCotizacion';
+import BuscadorCotizacion from './BuscadorCotizacion';
 
 const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total,onPageChange,recargar}) => {
     const toast = useRef(null);
@@ -20,9 +21,11 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
     const [first, setFirst] = useState((paginaActual - 1) * perPage);
     const [preguntaEliminar, setPreguntaEliminar] = useState(false)
     const [preguntaNuevaCotizacion, setPreguntaNuevaCotizacion] = useState(false)
+    const [preguntaBusquedaCotizaciones, setPreguntaBusquedaCotizaciones] = useState(false)
     
     const [identyDelete, setIdentyDelete] = useState(null);
     const [identyNewCotizacion, setIdentyNewCotizacion] = useState(null)
+    const [identyAsociaActividad, setIdentyAsociaActividad] = useState(null);
     const [tareasListado, setTareasListado] = useState([]);    
     
     const [usuario, setUsuario] = useState(nombre);
@@ -174,6 +177,11 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
         });
     }
 
+    const manejoBusquedaCotizaciones = (tarea, index) =>{
+        setPreguntaBusquedaCotizaciones(true)
+        setIdentyAsociaActividad(tarea)
+    }
+
     return (
 
         <div className="card">
@@ -285,6 +293,7 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
 
                                     <div className="flex justify-center">
                                         <div className="flex gap-2 p-4">
+                                            <Button label="Asociar Cotización" className="p-button-sm" onClick={()=> manejoBusquedaCotizaciones(tarea.id, index)}/>
                                             <Button label="Nueva Cotización" className="p-button-sm" onClick={()=> manejoNuevaCotizacion(tarea.id, index)}/>
                                             <Button label="Actualizar" className="p-button-sm" onClick={()=> manejoActualizacion(tarea.id, index)}/>
                                             <Button label="Eliminar" className="p-button-sm p-button-danger" onClick={() => manejoEliminarActividad(tarea.id, index)} />
@@ -297,6 +306,13 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
                     </Accordion>
                 </>
             )}
+            <Paginator
+                first={first}
+                rows={perPage}
+                totalRecords={total}
+                onPageChange={handlePageChange}
+                rowsPerPageOptions={[20]}
+            />
             <NuevaCotizacion 
                 preguntaNuevaCotizacion={preguntaNuevaCotizacion}
                 setPreguntaNuevaCotizacion={setPreguntaNuevaCotizacion}
@@ -310,12 +326,12 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
                 setIdentyDelete={setIdentyDelete} 
                 recargar={recargar}
             />
-            <Paginator
-                first={first}
-                rows={perPage}
-                totalRecords={total}
-                onPageChange={handlePageChange}
-                rowsPerPageOptions={[20]}
+            <BuscadorCotizacion 
+                preguntaBusquedaCotizaciones={preguntaBusquedaCotizaciones}
+                setPreguntaBusquedaCotizaciones={setPreguntaBusquedaCotizaciones}
+                identyAsociaActividad={identyAsociaActividad}
+                setIdentyAsociaActividad={setIdentyAsociaActividad}
+                recargar={recargar}
             />
             
             <ConfirmDialog />

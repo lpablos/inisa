@@ -1053,6 +1053,8 @@ class CotizacionController extends Controller
         }
     }
 
+  
+
     public function editCodigoAsc($identy, Request $request){
 
         try {
@@ -1075,6 +1077,33 @@ class CotizacionController extends Controller
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error','message' => 'No se pudo eliminar... Intenta mas tarde'], 404);
         }
+    }
+
+
+    public function buscadorExistencia(Request $request){
+        $folio = $request->input('cotizacion') ?: null;
+        $titulo = $request->input('titulo') ?: null;
+        $fecha = $request->input('fecha') ?:  null;
+
+        $cotizaciones = Cotizacion::query()
+            ->when($folio, function ($query, $folio) {
+                if(!is_null($folio)){
+                    $query->where('folio', 'like', '%' . $folio . '%');
+                }
+            })
+            ->when($titulo, function ($query, $titulo) {
+                if(!is_null($titulo)){
+                    $query->where('titulo', 'like', '%' . $titulo . '%');
+                }
+            })
+            ->when($fecha, function ($query, $fecha) {
+                if(!is_null($fecha)){
+                    $query->whereDate('fecha', $fecha); // puede usarse whereDate para exactitud
+                }
+            })
+            ->select('id', 'folio', 'titulo', 'fecha') 
+            ->get();
+        return response()->json($cotizaciones);
     }
 
 

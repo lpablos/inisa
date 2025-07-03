@@ -161,4 +161,17 @@ class ActividadesController extends Controller
         }
 
     }
+
+     public function asociarActividadExistenteCotizacion(Request $request){   
+        try {
+            $cotizacion = Cotizacion::findOrFail($request->id_cotizacion);
+            $cotizacion->actividad_id = $request->id_actividad;
+            $cotizacion->update();
+            return response()->json(['success' => 'Actividad Asociada Correctamente'], 201);
+        } catch (\Exception $e) {
+            Log::error('Error al asociar Actividad y Cotizacion', ['error' => $e->getMessage()]);
+            return response()->json(['status' => 'error','message' => 'No se pudo Asociar Actividad y Cotizacion'], 404);
+        }
+
+    }
 }

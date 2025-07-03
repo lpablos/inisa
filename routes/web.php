@@ -352,8 +352,12 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
 
     Route::resource('activiades', ActividadesController::class);
-    Route::post('asociar-actividad-cotizacion', [ActividadesController::class, 'asociarActividadCotizacion'])->name('asociar.activid.cotizacion');
+    Route::post('asociar-actividad-cotizacion', [ActividadesController::class, 'asociarActividadCotizacion'])->name('asociar.activid.cotizacion'); // cuando este recien hecho
     Route::get('busqueda-actividades', [ActividadesController::class, 'busqueda'])->name('busqueda.actividades');
+    Route::get('busqueda-cotizaciones-actividad', [CotizacionController::class, 'buscadorExistencia'])->name('busqueda.actividades.cotizacion');
+    Route::post('asociar-cotizacion-actividad', [ActividadesController::class, 'asociarActividadExistenteCotizacion'])->name('asociar.cotizacion.actividad');// Cuando una cotizacion ya existe
+
+
 
     // 📌 Rutas de exportación dentro del grupo 'admin'
     Route::get('/exportar-excel-cotizacion', [ExportController::class, 'exportarDetalles'])
