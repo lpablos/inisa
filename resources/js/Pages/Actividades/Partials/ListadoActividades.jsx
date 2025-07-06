@@ -99,12 +99,8 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
     ];
 
     const manejoTitulo = (nuevoTitulo, index) => {
-        // console.log("esto entra", nuevoTitulo);
-        
         const nuevasTareas = [...tareasListado];
         nuevasTareas[index].titulo = nuevoTitulo;
-        // console.log("esta es a tarea",nuevasTareas );
-        
         setTareasListado(nuevasTareas);
     };
 
@@ -116,7 +112,7 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
 
     const manejoEstatus = (nuevoEstatus, index) =>{
         const nuevasTareas = [...tareasListado];
-        nuevasTareas[index].prioridad = nuevoEstatus.code;
+        nuevasTareas[index].estatus = nuevoEstatus.code;
         setTareasListado(nuevasTareas);
     };
 
@@ -304,8 +300,8 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
                                             <label htmlFor={`estatus-${index}`} className="font-bold block mb-2">Estatus</label>
                                             <Dropdown
                                                 inputId={`estatus-${index}`}                                        
-                                                value={estatus.find(p => p.code === tarea.estatus)}
-                                                onChange={(e) => manejoEstatus(e.value)}
+                                                value={estatus.find(p => p.code == tarea['estatus'])}
+                                                onChange={(e) => manejoEstatus(e.value, index)}
                                                 options={estatus}
                                                 optionLabel="name"
                                                 placeholder="Selecciona Estatus"
