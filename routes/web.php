@@ -356,7 +356,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('busqueda-actividades', [ActividadesController::class, 'busqueda'])->name('busqueda.actividades');
     Route::get('busqueda-cotizaciones-actividad', [CotizacionController::class, 'buscadorExistencia'])->name('busqueda.actividades.cotizacion');
     Route::post('asociar-cotizacion-actividad', [ActividadesController::class, 'asociarActividadExistenteCotizacion'])->name('asociar.cotizacion.actividad');// Cuando una cotizacion ya existe
-
+    Route::post('desvicular-cotizacion', [CotizacionController::class, 'desvincularCotizacion'])->name('desvincula.cotizacion');
 
 
     // 📌 Rutas de exportación dentro del grupo 'admin'

@@ -10,6 +10,7 @@ use App\Models\DetalleCotizacion;
 use App\Models\Codigo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Activity;
+use Log;
 
 class CotizacionController extends Controller
 {
@@ -1104,6 +1105,18 @@ class CotizacionController extends Controller
             ->select('id', 'folio', 'titulo', 'fecha') 
             ->get();
         return response()->json($cotizaciones);
+    }
+
+    public function desvincularCotizacion(Request $request){
+        try {
+            $cotizaciones = Cotizacion::findOrFail($request->cotizacion_id);
+            $cotizaciones->actividad_id = null;
+            $cotizaciones->update();
+            return response()->json(['success' => 'Actividad Desvinculada Correctamente'], 201);
+        } catch (\Exception $e) {
+            Log::error('Error al asociar Actividad y Cotizacion', ['error' => $e->getMessage()]);
+            return response()->json(['status' => 'error','message' => 'No se pudo Asociar Actividad y Cotizacion'], 404);
+        }
     }
 
 

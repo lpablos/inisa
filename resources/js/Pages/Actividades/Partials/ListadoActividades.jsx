@@ -14,6 +14,7 @@ import NuevaActividad from './NuevaActividad';
 import EliminarMotivo from './EliminarMotivo';
 import NuevaCotizacion from './NuevaCotizacion';
 import BuscadorCotizacion from './BuscadorCotizacion';
+import { SplitButton } from 'primereact/splitbutton';
 
 const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total,onPageChange,recargar}) => {
     const toast = useRef(null);
@@ -31,7 +32,60 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
     const [usuario, setUsuario] = useState(nombre);
     const [text, setText] = useState('Generar y enviar el informe de ventas correspondiente a la semana actual al equipo de dirección.');
     
-  
+    const opcionesActividad = (cotizaciones) => [       
+        {
+            label: 'Desvincular',
+            icon: 'pi pi-times',
+            command: () => {
+                confirmDialog({
+                    message: '¿Estas seguro que deseas desvincular este registro?',
+                    header: 'Confirmation',
+                    icon: 'pi pi-exclamation-triangle',
+                    defaultFocus: 'accept',
+                    accept: () => {
+                        setTimeout(() => {
+                            cotizacionDesvincular(cotizaciones)
+                        },10)
+                    },
+                    reject
+                });
+                // toast.current.show({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted' });
+            }
+        },       
+    ];
+
+    const cotizacionDesvincular = async(cotizaciones) => {     
+        const datos = {
+            cotizacion_id: cotizaciones,
+        }
+        try {
+            const response = await axios.post(route('desvincula.cotizacion'), datos);   
+            console.log("Este es el desmadre", response);
+                    
+            const { data, status} = response
+    
+            if (status === 201) {
+                toast.current.show({
+                    severity: "success",
+                    summary: "Success",
+                    detail: `${data.success}`,
+                    life: 3000,
+                });
+                recargar(1) 
+            }
+        } catch (error) {
+            console.error(error);
+            setLoading(false)
+            toast.current.show({
+                severity: "error",
+                summary: "Error",
+                detail: "Error al actualizar la actividad",
+                life: 3000,
+            });
+            setDesabilitar(false)
+        } 
+        
+    }
 
     const prioridad = [
         {name: 'Baja', code:'Baja'},
@@ -182,6 +236,8 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
         setIdentyAsociaActividad(tarea)
     }
 
+   
+
     return (
 
         <div className="card">
@@ -275,16 +331,31 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
                                             <div className="flex justify-center">
                                                 <div className="flex gap-2">
                                                     {tarea.cotizaciones.map((cotizacion, index) => (
-                                                        <Button
-                                                            outlined
-                                                            key={cotizacion.id}
-                                                            label={cotizacion.folio ?? 'Cotización'}
-                                                            severity="secondary"
+                                                        
+                                                       
+                                                        <SplitButton 
+                                                            key={index} 
                                                             size="small"
-                                                            onClick={() =>
-                                                                window.open(route("cotizacion.captura.detalle", { identy: cotizacion.id }), '_blank')
-                                                            }
+                                                            label={cotizacion.folio ?? 'Cotización'}
+                                                            icon="pi pi-external-link" 
+                                                            onClick={()=>{                                                                
+                                                                setTimeout(() => {
+                                                                    window.open(route("cotizacion.captura.detalle", { identy: cotizacion.id }), '_blank');
+                                                                }, 10);
+                                                            }} 
+                                                            model={opcionesActividad(cotizacion.id, index)} 
                                                         />
+                                                        
+                                                        // <Button
+                                                        //     outlined
+                                                        //     key={cotizacion.id}
+                                                        //     label={cotizacion.folio ?? 'Cotización'}
+                                                        //     severity="secondary"
+                                                        //     size="small"
+                                                        //     onClick={() =>
+                                                        //         window.open(route("cotizacion.captura.detalle", { identy: cotizacion.id }), '_blank')
+                                                        //     }
+                                                        // />
                                                     ))}
                                                 </div>
                                             </div>

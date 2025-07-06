@@ -94,6 +94,9 @@ const BuscadorCotizacion = ({preguntaBusquedaCotizaciones,setPreguntaBusquedaCot
             
             const {status, data} = response
             if (status === 200) {
+                if(data.length == 0){
+                    toast.current.show({severity:'info', summary: 'Info', detail:'No se encontraron suficientes registros', life: 5000});
+                }
                 setCotizaciones(data)
                 setLoading(false)
             }

@@ -175,9 +175,9 @@ const NuevaActividad = ({usuario}) => {
                                 <ProgressSpinner />
                             </div>
                         )}
-                        <div className="flex items-center gap-3 mb-4 p-4">
+                        <div className="flex items-center gap-3 p-4">
                             <div className="ml-auto flex gap-2">
-                                <Button label="Guardar" disabled={desabilitar}/>
+                                <Button label="Guardar" disabled={desabilitar} size="small"/>
                             </div>
                         </div>           
                     </div>

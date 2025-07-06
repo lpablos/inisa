@@ -29,15 +29,15 @@ const detalleCaptura =({cotizacion, detalle}) => {
                     <div className="grid m-1">
                         <div className="col-10 text-center">
                             <h3>Detalle de la cotización</h3>
-
-                        </div>  
+                            <h5>Folio: {detalle.folio}</h5>
+                            <p>COMPAÑIA:{detalle?.cliente?.nombre}</p>
+                            <p>Título: {detalle?.titulo}</p>
+                        </div>   
+                        
                         <div className="col-2 text-right">
                             <Button icon="pi pi-history" rounded severity="help" aria-label="Regresar Cotizaciones"  tooltip="Regresar Cotizaciones" tooltipOptions={{ position: 'left' }} onClick={() => window.location.href = route('cotizacion.show.index')}/>
                         </div>
-                        <div className="col-9 text-center">
-                            <p>COMPAÑIA:{detalle?.cliente?.nombre}</p>
-                            <p>Título: {detalle?.titulo}</p>
-                        </div>                      
+                                        
                         <div className="col-3 text-right">
                             <DialogDetalleCotizacion  cotizacion={cotizacion} detalleItem={detalle} modo={'Registrar'} recargarListado={recargarListado}/>
                             <BusquedaConceptos  cotizacion={cotizacion} setReloadList={setReloadList}/>
