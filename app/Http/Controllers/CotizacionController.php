@@ -1040,13 +1040,13 @@ class CotizacionController extends Controller
             $codigosAsc = Codigo::find($identy);
             $codigosAsc->delete();
             activity()
-                ->causedBy(auth()->user())
-                ->withProperties([
-                    'modulo' => 'Cotizaciones',
-                    'eliminacion_codigo' => $codigosAsc->id,
-                    'codigo' => $codigosAsc->codigo
-                ])
-                ->log('El usuario eliminó un código de cotización');
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Cotizaciones',
+                'eliminacion_codigo' => $codigosAsc->id,
+                'codigo' => $codigosAsc->codigo
+            ])
+            ->log('El usuario eliminó un código de cotización');
 
             return response()->json(['success' => 'Código eliminado exitosamente'], 200);
         } catch (\Throwable $th) {
@@ -1066,14 +1066,13 @@ class CotizacionController extends Controller
             $codigosAsc->save();
 
             activity()
-                ->causedBy(auth()->user())
-                ->withProperties([
-                    'modulo' => 'Cotizaciones',
-                    'actualizacion_codigo' => $codigosAsc->id,
-                    'codigo' => $codigosAsc->codigo
-                ])
-                ->log('El usuario actualizó un código de cotización');
-
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Cotizaciones',
+                'actualizacion_codigo' => $codigosAsc->id,
+                'codigo' => $codigosAsc->codigo
+            ])
+            ->log('El usuario actualizó un código de cotización');
             return response()->json(['success' => 'Código editado exitosamente'], 200);
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error','message' => 'No se pudo eliminar... Intenta mas tarde'], 404);
@@ -1085,7 +1084,6 @@ class CotizacionController extends Controller
         $folio = $request->input('cotizacion') ?: null;
         $titulo = $request->input('titulo') ?: null;
         $fecha = $request->input('fecha') ?:  null;
-
         $cotizaciones = Cotizacion::query()
             ->when($folio, function ($query, $folio) {
                 if(!is_null($folio)){
@@ -1112,6 +1110,13 @@ class CotizacionController extends Controller
             $cotizaciones = Cotizacion::findOrFail($request->cotizacion_id);
             $cotizaciones->actividad_id = null;
             $cotizaciones->update();
+            activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Cotizacion',
+                'registro_cliente' => $cotizaciones->titulo
+            ])
+            ->log('El usuario desvinculo la cotizacion : '.$cotizacion->titulo.' , de la actividad'); 
             return response()->json(['success' => 'Actividad Desvinculada Correctamente'], 201);
         } catch (\Exception $e) {
             Log::error('Error al asociar Actividad y Cotizacion', ['error' => $e->getMessage()]);

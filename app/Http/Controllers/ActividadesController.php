@@ -9,6 +9,7 @@ use App\Models\Cotizacion;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Activity;
 
 class ActividadesController extends Controller
 {
@@ -53,7 +54,14 @@ class ActividadesController extends Controller
             $actividad->prioridad       = $validated['prioridad'];
             $actividad->estatus         = $validated['estatus'];
             $actividad->user_id         = Auth::user()->id;
-            $actividad->save();            
+            $actividad->save();        
+            activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Actividades',
+                'registro_cliente' => $actividad->titulo
+            ])
+            ->log('El usuario registró una nueva actividad : '.$actividad->titulo);    
             return response()->json(['success' => 'Actividad Registrada'], 200);
         } catch (\Exception $e) {
             Log::error('Error al registrar actividad', ['error' => $e->getMessage()]);
@@ -103,6 +111,13 @@ class ActividadesController extends Controller
             $actividad->prioridad = $validated['prioridad'];
             $actividad->estatus = $validated['estatus'];
             $actividad->update();            
+            activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Actividades',
+                'registro_cliente' => $actividad->titulo
+            ])
+            ->log('El usuario actualizo la actividad : '.$actividad->titulo);   
             return response()->json(['success' => 'Actividad Actualizada'], 200);
             
         } catch (\Throwable $th) {
@@ -123,6 +138,13 @@ class ActividadesController extends Controller
             $actividad->motivo_delete = $request->descripcion;
             $actividad->update();
             $actividad->delete();
+            activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Actividades',
+                'registro_cliente' => $actividad->titulo
+            ])
+            ->log('El usuario elimino la actividad : '.$actividad->titulo);   
             return response()->json(['success' => 'Actividad Eliminada'], 200);
         } catch (\Exception $e) {
             Log::error('Error al eliminar actividad', ['error' => $e->getMessage()]);
@@ -154,6 +176,13 @@ class ActividadesController extends Controller
             $cotizacion = Cotizacion::findOrFail($request->cotizacion_id);
             $cotizacion->actividad_id = $request->actividad_id;
             $cotizacion->update();
+            activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Actividades',
+                'registro_cliente' => $actividad->titulo
+            ])
+            ->log('El usuario asocio la Cotizacion : '.$cotizacion->folio); 
             return response()->json(['success' => 'Actividad Asociada Correctamente'], 201);
         } catch (\Exception $e) {
             Log::error('Error al asociar Actividad y Cotizacion', ['error' => $e->getMessage()]);
@@ -167,6 +196,13 @@ class ActividadesController extends Controller
             $cotizacion = Cotizacion::findOrFail($request->id_cotizacion);
             $cotizacion->actividad_id = $request->id_actividad;
             $cotizacion->update();
+            activity()
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'modulo' => 'Actividades',
+                'registro_cliente' => $actividad->titulo
+            ])
+            ->log('El usuario asocio la Cotizacion : '.$cotizacion->folio.' a una actividad'); 
             return response()->json(['success' => 'Actividad Asociada Correctamente'], 201);
         } catch (\Exception $e) {
             Log::error('Error al asociar Actividad y Cotizacion', ['error' => $e->getMessage()]);
