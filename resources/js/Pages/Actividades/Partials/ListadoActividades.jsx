@@ -32,7 +32,7 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
     const [usuario, setUsuario] = useState(nombre);
     const [text, setText] = useState('Generar y enviar el informe de ventas correspondiente a la semana actual al equipo de dirección.');
     
-    const opcionesActividad = (cotizaciones) => [       
+    const opcionesActividad = (cotizaciones, index, estatusAct) => [       
         {
             label: 'Desvincular',
             icon: 'pi pi-times',
@@ -43,13 +43,21 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
                     icon: 'pi pi-exclamation-triangle',
                     defaultFocus: 'accept',
                     accept: () => {
-                        setTimeout(() => {
-                            cotizacionDesvincular(cotizaciones)
-                        },10)
+                        if(estatusAct=='Realizado'){
+                            toast.current.show({ 
+                                severity: 'warn', 
+                                summary: 'Delete', 
+                                detail: 'No es posible desvincular la activad, cuando ya fue Realizada' 
+                            });
+                        }else{
+                            setTimeout(() => {
+                                cotizacionDesvincular(cotizaciones)
+                            },10)
+                        }
                     },
                     reject
                 });
-                // toast.current.show({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted' });
+                
             }
         },       
     ];
@@ -239,7 +247,7 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
         <div className="card">
             <div className="grid m-1">                  
                 <div className="col-12 text-right">                           
-                    <NuevaActividad usuario={nombre}/>                        
+                    <NuevaActividad usuario={nombre} recargar={recargar}/>                        
                 </div>
             </div>
             
@@ -268,7 +276,11 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
                                     <div className="flex flex-wrap gap-3 mb-4">
                                         <div className="flex-auto min-w-[250px]">
                                             <label htmlFor={`responsable-${index}`} className="font-bold block mb-2">Responsable</label>
-                                            <InputText id={`responsable-${index}`} value={tarea.usuario.name} className="w-full" placeholder="Nombre del responsable" readOnly={true}/>
+                                            <InputText id={`responsable-${index}`} 
+                                                value={tarea.usuario.name} 
+                                                className="w-full" 
+                                                placeholder="Nombre del responsable" 
+                                                readOnly={true}/>
                                         </div>
 
                                         <div className="flex-auto min-w-[250px]">
@@ -279,6 +291,7 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
                                                 className="w-full" 
                                                 placeholder="Titulo"
                                                 onChange={(e) => manejoTitulo(e.target.value, index)}
+                                                readOnly = {tarea['estatus'] === 'Realizado'}
                                             />
                                         </div>
 
@@ -293,6 +306,7 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
                                                 optionLabel="name"
                                                 placeholder="Selecciona Prioridad"
                                                 className="w-full"
+                                                disabled={tarea['estatus'] === 'Realizado'}
                                             />
                                         </div>
 
@@ -317,18 +331,23 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
                                                 onChange={(e) => manejoFecha(e.value, index)} 
                                                 dateFormat="dd/mm/yy" 
                                                 className="w-full" 
-                                                showIcon/>
+                                                showIcon
+                                                disabled={tarea['estatus'] === 'Realizado'}
+                                            />
                                         </div>
                                     </div>
-                                    <Editor value={tarea.descripcion} onTextChange={(e) => manejoDescripcion(e.htmlValue, index)} style={{ height: '120px' }} />
+                                    <Editor 
+                                        value={tarea.descripcion} 
+                                        onTextChange={(e) => manejoDescripcion(e.htmlValue, index)} 
+                                        style={{ height: '120px' }} 
+                                        readOnly={tarea['estatus'] === 'Realizado'}
+                                    />
                                     {tarea.cotizaciones?.length > 0 && (
                                         <>
                                             <p>Cotizaciones Asociadas</p>
                                             <div className="flex justify-center">
                                                 <div className="flex gap-2">
                                                     {tarea.cotizaciones.map((cotizacion, index) => (
-                                                        
-                                                       
                                                         <SplitButton 
                                                             key={index} 
                                                             size="small"
@@ -339,19 +358,8 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
                                                                     window.open(route("cotizacion.captura.detalle", { identy: cotizacion.id }), '_blank');
                                                                 }, 10);
                                                             }} 
-                                                            model={opcionesActividad(cotizacion.id, index)} 
+                                                            model={opcionesActividad(cotizacion.id, index,tarea['estatus'])} 
                                                         />
-                                                        
-                                                        // <Button
-                                                        //     outlined
-                                                        //     key={cotizacion.id}
-                                                        //     label={cotizacion.folio ?? 'Cotización'}
-                                                        //     severity="secondary"
-                                                        //     size="small"
-                                                        //     onClick={() =>
-                                                        //         window.open(route("cotizacion.captura.detalle", { identy: cotizacion.id }), '_blank')
-                                                        //     }
-                                                        // />
                                                     ))}
                                                 </div>
                                             </div>
@@ -360,10 +368,10 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
 
                                     <div className="flex justify-center">
                                         <div className="flex gap-2 p-4">
-                                            <Button label="Asociar Cotización" className="p-button-sm" onClick={()=> manejoBusquedaCotizaciones(tarea.id, index)}/>
-                                            <Button label="Nueva Cotización" className="p-button-sm" onClick={()=> manejoNuevaCotizacion(tarea.id, index)}/>
+                                            <Button label="Asociar Cotización" className="p-button-sm" onClick={()=> manejoBusquedaCotizaciones(tarea.id, index)} disabled={tarea['estatus'] === 'Realizado'}/>
+                                            <Button label="Nueva Cotización" className="p-button-sm" onClick={()=> manejoNuevaCotizacion(tarea.id, index)} disabled={tarea['estatus'] === 'Realizado'}/>
                                             <Button label="Actualizar" className="p-button-sm" onClick={()=> manejoActualizacion(tarea.id, index)}/>
-                                            <Button label="Eliminar" className="p-button-sm p-button-danger" onClick={() => manejoEliminarActividad(tarea.id, index)} />
+                                            <Button label="Eliminar" className="p-button-sm p-button-danger" onClick={() => manejoEliminarActividad(tarea.id, index)} disabled={tarea['estatus'] === 'Realizado'}/>
                                         </div>
                                     </div>
                                 </div>

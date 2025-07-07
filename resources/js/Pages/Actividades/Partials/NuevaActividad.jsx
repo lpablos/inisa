@@ -11,7 +11,7 @@ import { Toast } from 'primereact/toast';
 import { ProgressSpinner } from 'primereact/progressspinner';    
 import axios from "axios";
 
-const NuevaActividad = ({usuario}) => {
+const NuevaActividad = ({usuario, recargar}) => {
     const [responsable, setResponsable] = useState('');
     const [titulo, setTitulo] = useState('');
     const [prioridad, setPrioridad] = useState(null);
@@ -43,89 +43,88 @@ const NuevaActividad = ({usuario}) => {
     
     
 
-        useEffect(()=>{
-            setResponsable(usuario);
-        },[])
+    useEffect(()=>{
+        setResponsable(usuario);
+    },[])
 
-        const limpiarFormulario = () =>{
-            setTitulo('')
-            setPrioridad(null)
-            setEstatus(null)
-            setFecha(null)
-            setFechaAsociada(null)
-            setText('')
+    const limpiarFormulario = () =>{
+        setTitulo('')
+        setPrioridad(null)
+        setEstatus(null)
+        setFecha(null)
+        setFechaAsociada(null)
+        setText('')
+    }
+    // Funcion de validacion de informacion
+    const validarDatos = ({ responsable, titulo, descripcion, prioridad, estatus, fecha }) => {
+        if (!responsable) return "Debes seleccionar un responsable.";
+        if (!titulo?.trim()) return "El título es obligatorio.";
+        if (!descripcion?.trim()) return "La descripción es obligatoria.";
+        if (!prioridad) return "Selecciona una prioridad.";
+        if (!estatus) return "Selecciona un estatus.";
+        if (!fecha) return "Selecciona una fecha.";
+
+        return null; // Todo correcto
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // Evita que el formulario recargue la página        
+        const datos = {
+            responsable: responsable,
+            titulo:titulo,
+            descripcion:text,
+            prioridad: prioridad,
+            estatus: estatus,
+            fecha: fechaAsociada,
         }
-        // Funcion de validacion de informacion
-        const validarDatos = ({ responsable, titulo, descripcion, prioridad, estatus, fecha }) => {
-            if (!responsable) return "Debes seleccionar un responsable.";
-            if (!titulo?.trim()) return "El título es obligatorio.";
-            if (!descripcion?.trim()) return "La descripción es obligatoria.";
-            if (!prioridad) return "Selecciona una prioridad.";
-            if (!estatus) return "Selecciona un estatus.";
-            if (!fecha) return "Selecciona una fecha.";
+        const error = validarDatos(datos);
+        if (error) {
+            toast.current.show({
+                severity: "error",
+                summary: "Error",
+                detail: error,
+                life: 3000,
+            });
+            return;
+        }
 
-            return null; // Todo correcto
-        };
+        setLoading(true)
+        setDesabilitar(true)
 
-        const handleSubmit = async (e) => {
-            e.preventDefault(); // Evita que el formulario recargue la página
-           
-            const datos = {
-                responsable: responsable,
-                titulo:titulo,
-                descripcion:text,
-                prioridad: prioridad,
-                estatus: estatus,
-                fecha: fechaAsociada,
-            }
-            const error = validarDatos(datos);
-            if (error) {
+        try {
+            const response = await axios.post(route("activiades.store"), datos);            
+            const { data, status} = response
+            // console.log("Esto es", response);
+            
+            if (status === 200) {
                 toast.current.show({
-                    severity: "error",
-                    summary: "Error",
-                    detail: error,
+                    severity: "success",
+                    summary: "Success",
+                    detail: `${data.success}`,
                     life: 3000,
                 });
-                return;
-            }
-
-            setLoading(true)
-            setDesabilitar(true)
-
-            try {
-                const response = await axios.post(route("activiades.store"), datos);            
-                const { data, status} = response
-                // console.log("Esto es", response);
-                
-                if (status === 200) {
-                    toast.current.show({
-                        severity: "success",
-                        summary: "Success",
-                        detail: `${data.success}`,
-                        life: 3000,
-                    });
-                    limpiarFormulario()
-                    setVisible(false)
-                    setDesabilitar(false)
-                    setTimeout(() => {
-                        setLoading(false)
-                    }, 1000);
-
-                    // Aqui tiene que funcionar
-                    // reloadRegistros()
-                }
-            } catch (error) {
-                console.error(error);
-                setLoading(false)
-                toast.current.show({
-                    severity: "error",
-                    summary: "Error",
-                    detail: "Error al registrar la actividad",
-                    life: 3000,
-                });
+                recargar(1)
+                limpiarFormulario()
+                setVisible(false)
                 setDesabilitar(false)
+                setTimeout(() => {
+                    setLoading(false)
+                }, 1000);
+                // Aqui tiene que funcionar
+                // reloadRegistros()
             }
-        };
+        } catch (error) {
+            console.error(error);
+            setLoading(false)
+            toast.current.show({
+                severity: "error",
+                summary: "Error",
+                detail: "Error al registrar la actividad",
+                life: 3000,
+            });
+            setDesabilitar(false)
+        }
+    };
 
 
     return (    
@@ -175,7 +174,7 @@ const NuevaActividad = ({usuario}) => {
                                 <ProgressSpinner />
                             </div>
                         )}
-                        <div className="flex items-center gap-3 p-4">
+                        <div className="flex items-center gap-3">
                             <div className="ml-auto flex gap-2">
                                 <Button label="Guardar" disabled={desabilitar} size="small"/>
                             </div>
