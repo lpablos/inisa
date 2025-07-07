@@ -164,26 +164,26 @@ const BusquedaActividad = forwardRef(({setRegistros, setPaginaActual, setPerPage
                         />
                     </div>
                     <div className="flex-auto min-w-[250px]">
-                        <label htmlFor="prioridad" className="font-bold block mb-2">Prioridad</label>
+                        <label htmlFor="estatus" className="font-bold block mb-2">Estatus</label>                        
                         <Dropdown
                             inputId="prioridad"
                             value={selectedStatus}
                             onChange={(e) => setSelectedStatus(e.value)}
                             options={status}
                             optionLabel="name"
-                            placeholder="Selecciona Prioridad"
+                            placeholder="Selecciona Estatus"
                             className="w-full"
                         />
                     </div>
                     <div className="flex-auto min-w-[250px]">
-                        <label htmlFor="estatus" className="font-bold block mb-2">Estatus</label>
+                        <label htmlFor="prioridad" className="font-bold block mb-2">Prioridad</label>
                         <Dropdown
                             inputId="estatus"
                             value={selectedPrioridad}
                             onChange={(e) => setSelectedPrioridad(e.value)}
                             options={prioridad}
                             optionLabel="name"
-                            placeholder="Selecciona Estatus"
+                            placeholder="Selecciona Prioridad"
                             className="w-full"
                         />
                     </div>
