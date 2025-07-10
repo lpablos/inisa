@@ -3,9 +3,13 @@ import AppMenuitem from "./AppMenuitem";
 import { LayoutContext } from "./context/layoutcontext";
 import { MenuProvider } from "./context/menucontext";
 import { Link } from "@inertiajs/react";
+import { usePage } from '@inertiajs/react';
 
 const AppMenu = () => {
     const { layoutConfig } = useContext(LayoutContext);
+
+    const { auth } = usePage().props;
+    const rol = auth?.user?.rol || '';
     // console.log("Este es el rol",window?.user?.roles);
     
     // window.user = @json(auth()->user());
@@ -34,6 +38,7 @@ const AppMenu = () => {
                 {
                     label: "Historico",
                     icon: "pi pi-fw pi-eye-slash",
+                    visible: rol === 'AdministradorSis' || rol === 'Direccion' || rol === 'Aux Dirección',  // Mostrar solo a esos roles
                     to: route("logs.historico.index"),
                 },
                  {

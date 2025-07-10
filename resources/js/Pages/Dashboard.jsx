@@ -38,13 +38,9 @@ const Dashboard = () => {
     const [lineOptions, setLineOptions] = useState({});
     const {layoutConfig} = useContext(LayoutContext);
 
-
-
     const [loading, setLoading] = useState(false)
     const [estadisticoCotizaciones, setEstadisticoCotizaciones] = useState([]);
-    console.log("Estoes -->",estadisticoCotizaciones);
     
-
     const recuadroIem = estadisticoCotizaciones.map(estadistica=>
         <DashboardInfoCard title="Cotizaciones"
                 value={'Registros'+estadistica.total+' = '+estadistica.costo}

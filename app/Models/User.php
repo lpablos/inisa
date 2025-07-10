@@ -39,7 +39,8 @@ class User extends Authenticatable
         'empresa_id',
         'created_at',
         'updated_at',
-        'deleted_at'
+        'deleted_at',
+        'roles'
     ];
 
     /**
@@ -55,6 +56,13 @@ class User extends Authenticatable
     public function actividades()
     {
         return $this->hasMany(Actividad::class, 'user_id', 'id'); // Referencia a la clave foránea y primaria
+    }
+
+    protected $appends = ['rol']; // <- este es el nombre del atributo calculado
+
+    public function getRolAttribute()
+    {
+        return $this->getRoleNames()->first(); // devuelve el primer rol como string
     }
     
 }
