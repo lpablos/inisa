@@ -191,18 +191,19 @@ class ActividadesController extends Controller
 
     }
 
-     public function asociarActividadExistenteCotizacion(Request $request){   
+     public function asociarActividadExistenteCotizacion(Request $request){  
         try {
             $cotizacion = Cotizacion::findOrFail($request->id_cotizacion);
             $cotizacion->actividad_id = $request->id_actividad;
             $cotizacion->update();
+            
             activity()
             ->causedBy(auth()->user())
             ->withProperties([
                 'modulo' => 'Actividades',
-                'registro_cliente' => $actividad->titulo
+                'actividad_cotiacion' => $cotizacion->actividad_id.'_'.$cotizacion->folio
             ])
-            ->log('El usuario asocio la Cotizacion : '.$cotizacion->folio.' a una actividad'); 
+            ->log('El usuario asocio la Cotizacion : '.$cotizacion->folio.', a la actividad : ',$cotizacion->actividad->titulo); 
             return response()->json(['success' => 'Actividad Asociada Correctamente'], 201);
         } catch (\Exception $e) {
             Log::error('Error al asociar Actividad y Cotizacion', ['error' => $e->getMessage()]);

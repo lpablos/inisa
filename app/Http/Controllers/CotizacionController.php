@@ -1106,17 +1106,19 @@ class CotizacionController extends Controller
     }
 
     public function desvincularCotizacion(Request $request){
+        
         try {
-            $cotizaciones = Cotizacion::findOrFail($request->cotizacion_id);
-            $cotizaciones->actividad_id = null;
-            $cotizaciones->update();
+            $cotizacion = Cotizacion::findOrFail($request->cotizacion_id);
+            $actividad = $cotizacion->actividad->titulo;
+            $cotizacion->actividad_id = null;
+            $cotizacion->update();
             activity()
             ->causedBy(auth()->user())
             ->withProperties([
-                'modulo' => 'Cotizacion',
-                'registro_cliente' => $cotizaciones->titulo
+                'modulo' => 'Actividad',
+                'actividad_cotizacion' => $cotizacion->titulo
             ])
-            ->log('El usuario desvinculo la cotizacion : '.$cotizacion->titulo.' , de la actividad'); 
+            ->log('El usuario desvinculo la cotizacion : '.$cotizacion->titulo.' , de la actividad : '.$actividad); 
             return response()->json(['success' => 'Actividad Desvinculada Correctamente'], 201);
         } catch (\Exception $e) {
             Log::error('Error al asociar Actividad y Cotizacion', ['error' => $e->getMessage()]);
