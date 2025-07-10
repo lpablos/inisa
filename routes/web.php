@@ -346,7 +346,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
     Route::prefix('historico')->group(function () {
         Route::get('index', [LogsActividadesController::class, 'index'])->name('logs.historico.index');
-        Route::get('logs-actividades-data', [LogsActividadesController::class, 'listLocgsActividades'])->name('logs.historico.list');
+        Route::get('logs-historico-data', [LogsActividadesController::class, 'listLocgsActividades'])->name('logs.historico.list');
     });
 
 

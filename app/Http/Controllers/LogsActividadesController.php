@@ -7,7 +7,7 @@ use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Support\Carbon;
 use Inertia\Inertia;
-
+use Illuminate\Support\Facades\Log;
 
 class LogsActividadesController extends Controller
 {
@@ -20,23 +20,26 @@ class LogsActividadesController extends Controller
     }
 
 
-    public function listLocgsActividades()
+    public function listLocgsActividades(Request $request)
     {
-
-        // $user = auth()->user();
-        // $rol = $user->getRoleNames()->first();
-        // dd($user, $rol);
-
-
-        // dd($user, $rol);
-
-
-
-        $logsActividades = Activity::with('causer')->get()->map(function ($item) {
-            $item->fecha_formateada = $item->created_at->format('Y-m-d H:i:s');
-            return $item;
-        });
-        return response()->json($logsActividades, 200);
+        $fechInicio = $request->input('fecha_inicio');
+        $fechFinal = $request->input('fecha_fin');
+        try {
+            $logsHistorial = Activity::with('causer')->whereBetween('created_at', [
+                $fechInicio.' 00:00:00',
+                $fechFinal.' 23:59:59',
+            ])
+            ->orderBy('created_at', 'desc')
+            ->get() 
+            ->map(function ($log) {
+                $log->fecha_formateada = $log->created_at->format('d/m/Y H:i:s');
+                return $log;
+            });
+            return response()->json($logsHistorial, 200);
+        } catch (\Exception $e) {
+            Log::error('Error al consultar el log de historico', ['error' => $e->getMessage()]);
+            return response()->json(['status' => 'error','message' => 'No se pudo crear la actividad'], 404);
+        }
     }
 
     /**
