@@ -336,11 +336,13 @@ const ListadoActividades = ({nombre, registros = [] , paginaActual,perPage,total
                                             />
                                         </div>
                                     </div>
+                                    {tarea['estatus']}
                                     <Editor 
                                         value={tarea.descripcion} 
                                         onTextChange={(e) => manejoDescripcion(e.htmlValue, index)} 
                                         style={{ height: '120px' }} 
-                                        readOnly={tarea['estatus'] === 'Realizado'}
+                                        readOnly={tarea?.estatus === 'Realizado'} 
+                                        key={tarea.estatus} // fuerza re-render cuando cambia el estatus
                                     />
                                     {tarea.cotizaciones?.length > 0 && (
                                         <>
