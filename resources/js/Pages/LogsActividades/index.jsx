@@ -8,7 +8,7 @@ const Index = (props) => {
     return (
         <Layout>
             <div className="card grid">
-                <h3>Actividades</h3>
+                <h3>Historico</h3>
                 <div className="col-12">
                     <ConceptoTabla />
                 </div>
