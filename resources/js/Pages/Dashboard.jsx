@@ -47,7 +47,9 @@ const Dashboard = () => {
                 icon="chart-line"
                 iconColor="blue"
                 mostrarBoto="false"
-                descriptionText={estadistica.descripcion}>
+                descriptionText={estadistica.descripcion}
+                key={estadistica.id}
+                >
                     
         </DashboardInfoCard>
     )

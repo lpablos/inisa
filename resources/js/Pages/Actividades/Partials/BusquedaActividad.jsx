@@ -10,6 +10,7 @@ const BusquedaActividad = forwardRef(({setRegistros, setPaginaActual, setPerPage
     const [usuarios, setUsuarios] = useState([]);
     const [date1, setDate1] = useState(new Date());
     const [date2, setDate2] = useState(new Date());
+    const [loading, setLoading] = useState(false);
 
     const [filtros, setFiltros] = useState({
         selectPersona: { name: "Todos", code: "*" },
@@ -23,8 +24,8 @@ const BusquedaActividad = forwardRef(({setRegistros, setPaginaActual, setPerPage
     const [selectPersona, setSelectPersona] = useState({name: "Todos", code: "*"});
     const [fecha1, setFecha1] = useState(null)
     const [fecha2, setFecha2] = useState(null)
-    const [selectedPrioridad, setSelectedPrioridad] = useState(null);
-    const [selectedStatus, setSelectedStatus] = useState(null);
+    const [selectedPrioridad, setSelectedPrioridad] = useState({name: 'Todas', code:'*'},);
+    const [selectedStatus, setSelectedStatus] = useState({name:'Todos', code:'*'},);
     // --------------------
     useEffect(()=>{
         obtenerCatUsuarios()
@@ -86,10 +87,12 @@ const BusquedaActividad = forwardRef(({setRegistros, setPaginaActual, setPerPage
         }
     }
     const status = [
+        {name:'Todos', code:'*'},
         {name:'Pendiente', code:'Pendiente'},
         {name:'Realizado', code:'Realizado'},
     ];
     const prioridad = [
+        {name: 'Todas', code:'*'},
         {name: 'Baja', code:'Baja'},
         {name: 'Media', code:'Media'},
         {name: 'Alta', code:'Alta'},
@@ -111,8 +114,12 @@ const BusquedaActividad = forwardRef(({setRegistros, setPaginaActual, setPerPage
     };
 
     const consultar = async (datos) =>{
+        setLoading(true)
         try {
+
             const response = await axios.get(route("busqueda.actividades"), {params: datos});
+            console.log("Esto es", response);
+            
             const {status} = response
             if (status === 200) {
                 const {
@@ -125,10 +132,12 @@ const BusquedaActividad = forwardRef(({setRegistros, setPaginaActual, setPerPage
                 setPaginaActual(current_page)
                 setPerPage(per_page)
                 setTotal(total)
+                setLoading(false)
             }
                             
         } catch (error) {
             console.error(error);
+            setLoading(false)
             alert("Error")
                 
         }
@@ -213,7 +222,7 @@ const BusquedaActividad = forwardRef(({setRegistros, setPaginaActual, setPerPage
                         />
                     </div>
                     <div className="min-w-[250px]  items-end p-4">
-                        <Button label="Buscar" />
+                        <Button label="Buscar" loading={loading}/>
                     </div>
                 </div>
             </form>            

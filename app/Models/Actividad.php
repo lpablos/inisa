@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 
 class Actividad extends Model
 {
@@ -35,5 +36,10 @@ class Actividad extends Model
    public function cotizaciones()
     {
          return $this->hasMany(Cotizacion::class, 'actividad_id');
+    }
+
+    public function getFechaAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d\T00:00:00');
     }
 }

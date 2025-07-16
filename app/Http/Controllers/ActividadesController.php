@@ -107,7 +107,7 @@ class ActividadesController extends Controller
             $actividad = Actividad::findOrFail($id);
             $actividad->titulo = $validated['titulo'];
             $actividad->descripcion = $validated['descripcion'];
-            $actividad->fecha = $validated['fecha'];
+            $actividad->fecha = substr($validated['fecha'], 0, 10);
             $actividad->prioridad = $validated['prioridad'];
             $actividad->estatus = $validated['estatus'];
             $actividad->update();            
@@ -120,7 +120,7 @@ class ActividadesController extends Controller
             ->log('El usuario actualizo la actividad : '.$actividad->titulo);   
             return response()->json(['success' => 'Actividad Actualizada'], 200);
             
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
             Log::error('Error al actualizar la actividad', ['error' => $e->getMessage()]);
             return response()->json(['status' => 'error','message' => 'No se pudo actualizar la actividad'], 404);
         }
@@ -154,20 +154,52 @@ class ActividadesController extends Controller
     }
 
     public function busqueda(Request $request){
-        //dd($request->all());
+        /*
+        $fechInicio = Carbon::parse($request->fecha1)->startOfDay();
+        $fechFin = Carbon::parse($request->fecha2)->endOfDay();
+        $prioridad = $request->selectedPrioridad['code']==='*'? null: $request->selectedPrioridad['code'];
+        $status = $request->selectedStatus['code']==='*'? null: $request->selectedStatus['code'];
         $actividades = Actividad::with(['usuario','cotizaciones'=> function ($q) {
                 $q->select('id', 'folio', 'actividad_id'); 
             }])
             ->when($request->selectPersona['code'] !== '*',fn($q) => $q->where('user_id', $request->selectPersona['code']))
-            ->when($request->filled('fecha1') && $request->filled('fecha2'), function($q) use ($request) {
-                $fechaInicio = Carbon::parse($request->fecha1)->startOfDay(); // 2025-06-29 00:00:00
-                $fechaFin = Carbon::parse($request->fecha2)->endOfDay();     // 2025-06-29 23:59:59
-                $q->whereBetween('created_at', [$fechaInicio, $fechaFin]);
+            ->when($request->filled('fecha1') && $request->filled('fecha2'), function($q) use ($request, $fechInicio, $fechFin) {
+                $q->whereBetween('created_at', [$fechInicio, $fechFin]);
             })
-            ->when(!empty($request->selectedPrioridad),fn($q) => $q->where('prioridad', $request->selectedPrioridad['code']))
-            ->when(!empty($request->selectedStatus),fn($q) => $q->where('estatus', $request->selectedStatus['code']))
+            ->when(!empty($request->selectedPrioridad),fn($q) => $q->where('prioridad', $prioridad))
+            ->when(!empty($request->selectedStatus),fn($q) => $q->where('estatus', $status))
             ->orderBy('created_at', 'desc')
-            ->paginate(20); // o ->simplePaginate(10)
+            ->paginate(20); 
+        return response()->json($actividades);*/
+
+         // Validar fechas
+        $fechInicio = $request->filled('fecha1') ? Carbon::parse($request->fecha1)->startOfDay() : null;
+        $fechFin = $request->filled('fecha2') ? Carbon::parse($request->fecha2)->endOfDay() : null;
+
+        // Validar prioridad y status
+        $prioridad = isset($request->selectedPrioridad['code']) && $request->selectedPrioridad['code'] !== '*' 
+            ? $request->selectedPrioridad['code'] 
+            : null;
+
+        $status = isset($request->selectedStatus['code']) && $request->selectedStatus['code'] !== '*' 
+            ? $request->selectedStatus['code'] 
+            : null;
+
+        $persona = isset($request->selectPersona['code']) && $request->selectPersona['code'] !== '*'
+            ? $request->selectPersona['code']
+            : null;
+
+        // Consulta principal
+        $actividades = Actividad::with(['usuario', 'cotizaciones' => function ($q) {
+                $q->select('id', 'folio', 'actividad_id'); 
+            }])
+            ->when($persona, fn($q) => $q->where('user_id', $persona))
+            ->when($fechInicio && $fechFin, fn($q) => $q->whereBetween('created_at', [$fechInicio, $fechFin]))
+            ->when($prioridad, fn($q) => $q->where('prioridad', $prioridad))
+            ->when($status, fn($q) => $q->where('estatus', $status))
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
+
         return response()->json($actividades);
     }
 
@@ -180,7 +212,7 @@ class ActividadesController extends Controller
             ->causedBy(auth()->user())
             ->withProperties([
                 'modulo' => 'Actividades',
-                'registro_cliente' => $actividad->titulo
+                'registro_cliente' => $cotizacion->titulo
             ])
             ->log('El usuario asocio la Cotizacion : '.$cotizacion->folio); 
             return response()->json(['success' => 'Actividad Asociada Correctamente'], 201);
